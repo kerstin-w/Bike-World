@@ -153,7 +153,7 @@ a {
 
 /*=============== Hero Banner ===============*/
 .hero {
-    background: url("../hero.jpg") no-repeat;
+    background: url("/media/homepage-images/hero.jpg") no-repeat;
     background-size: cover;
     height: 90vh;
     max-width: 100%;
@@ -224,11 +224,45 @@ a {
     letter-spacing: 1.1px;
 }
 
+/*=============== Category Callout ===============*/
+.category-callout {
+    width: 100%;
+    height: 60vh;
+}
+
+.category-callout1 {
+    background: url("/media/homepage-images/wms-bike.webp") no-repeat;
+    background-size: cover;
+    width: 100%;
+    object-fit: cover;
+    object-position: 100% 0;
+}
+
+.category-callout2 {
+    background: url("/media/homepage-images/sale.webp") no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    object-fit: cover;
+    object-position: 100% 0;
+}
+
+.category-callout1 p,
+.category-callout2 p {
+    font-size: 1.5rem;
+    letter-spacing: 1.1px;
+    padding-top: 1rem;
+    color: #fff;
+    width: fit-content;
+    background-color: #cd4c1d;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+}
+
 /*=============== Media ===============*/
 
 @media only screen and (max-width: 454px) {
     .hero {
-        background: url("../hero-mobile.jpg") no-repeat;
+        background: url("/media/homepage-images/hero-mobile.jpg") no-repeat;
     }
 
     .reasons-why-banner p {
@@ -237,6 +271,11 @@ a {
 
     .circle {
         right: 5%;
+    }
+
+    .category-callout1 p,
+    .category-callout2 p {
+        font-size: 1rem;
     }
 }
 
@@ -248,6 +287,12 @@ a {
 
     .dropdown:hover .dropdown-menu {
         display: block;
+    }
+}
+
+@media (max-width: 945px) {
+    .category-callout1 {
+        background-position: center;
     }
 }
 
