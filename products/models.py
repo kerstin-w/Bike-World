@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Model
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.html import mark_safe
 
 
 class Category(Model):
@@ -60,3 +61,12 @@ class Product(Model):
 
     def get_gender_display(self):
         return dict(GENDER)[self.gender]
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe(
+                '<img src="/media/%s" style="width:150px;height:120px;'
+                'object-fit:contain;">' % (self.image)
+            )
+        else:
+            return "No Image Found"

@@ -13,10 +13,12 @@ class ProductAdmin(admin.ModelAdmin):
         "title",
         "category",
         "rating",
-        "image",
+        'image_tag',
     )
 
     ordering = ("sku",)
+    list_filter = ("category", "sale", "gender", "brand")
+    search_fields = ["title", "sku"]
 
 
 @admin.register(Category)
@@ -26,5 +28,4 @@ class CategoryAdmin(admin.ModelAdmin):
     """
 
     list_display = ("friendly_name", "pk")
-
     ordering = ("friendly_name",)
