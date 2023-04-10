@@ -13,6 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
         "title",
         "category",
         "rating",
+        "stock",
         'image_tag',
     )
 
