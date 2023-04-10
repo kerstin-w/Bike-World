@@ -118,6 +118,15 @@ a {
     text-align: center;
 }
 
+.dropdown-item p:hover {
+    font-weight: 500;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
 .sale {
     width: fit-content;
     background-color: #cd4c1d;
@@ -140,4 +149,66 @@ a {
 
 .search-box .btn-outline-secondary {
     color: none !important;
+}
+
+
+/*=============== Media ===============*/
+/* For desktop */
+@media (min-width: 768px) {
+    .dropdown .dropdown-menu {
+        display: none;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}
+
+/* For mobile */
+@media (max-width: 767px) {
+    .dropdown .dropdown-menu {
+        display: none;
+    }
+
+    .dropdown-menu.show {
+        display: block;
+    }
+
+    .nav-item {
+        height: auto;
+    }
+
+    .brand-logo {
+        position: absolute;
+        top: 4px;
+        left: 25%;
+    }
+
+    .user-nav {
+        position: fixed;
+        top: 1%;
+        right: 0;
+    }
+
+    .dropdown-img {
+        display: none;
+    }
+
+    .dropdown-img-brand {
+        display: none;
+    }
+
+    .activity .d-flex,
+    .brand .d-flex {
+        flex-direction: column;
+    }
+
+    .dropdown-menu-brand-heading {
+        text-underline-offset: 0.4rem;
+        text-decoration: underline;
+    }
+
+    .dropdown-menu p {
+        border-top: none;
+    }
 }
