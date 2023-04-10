@@ -49,7 +49,7 @@ class Product(Model):
     )
     image = models.ImageField(null=True, blank=True)
     brand = models.CharField(max_length=100)
-    type = models.CharField(max_length=200)
+    bike_type = models.CharField(max_length=200)
     gender = models.IntegerField(choices=GENDER, default=0)
     material = models.CharField(max_length=100, null=True, blank=True)
     derailleur = models.CharField(max_length=100, null=True, blank=True)
