@@ -51,15 +51,15 @@
 </head>
 
 <body>
-    <header></header>
+    {% include "components/navbar.html" %}
 
     {% block content %}
     {% endblock %}
 
+    {% include 'components/footer.html' %}
+
     {% block postloadjs %}
     {% endblock %}
-
-
 </body>
 
 </html>
