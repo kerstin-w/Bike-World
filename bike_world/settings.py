@@ -44,13 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    #Allauth
+    # Allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 
-    #Project Apps
+    # Project Apps
     'home',
+    'products',
 ]
 
 MIDDLEWARE = [
