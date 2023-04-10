@@ -258,6 +258,22 @@ a {
     clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
 }
 
+/*=============== Top Products ===============*/
+.liner {
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.liner:after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background: #000000;
+    min-width: 20px;
+    margin: auto;
+}
+
 /*=============== Media ===============*/
 
 @media only screen and (max-width: 454px) {
