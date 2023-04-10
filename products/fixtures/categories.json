@@ -1,0 +1,41 @@
+[{
+    "pk": 1,
+    "model": "products.category",
+    "fields": {
+      "name": "all_mountain",
+      "friendly_name": "All Mountain"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "products.category",
+    "fields": {
+      "name": "cross_country",
+      "friendly_name": "Cross Country"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "products.category",
+    "fields": {
+      "name": "enduro",
+      "friendly_name": "Enduro"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "products.category",
+    "fields": {
+      "name": "trail",
+      "friendly_name": "Trail"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "products.category",
+    "fields": {
+      "name": "sale",
+      "friendly_name": "Sale"
+    }
+  }
+]
