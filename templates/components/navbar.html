@@ -11,7 +11,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="brand-logo" href="#"><img class="brand-logo" src="{% static 'logo.png' %}"
-                    alt="Bike World Logo" /></a>
+                    alt="Bike World Logo"></a>
             <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -23,13 +23,85 @@
                         <a class="nav-link dropdown-toggle" id="dropdownMenuActivity" data-bs-toggle="dropdown"
                             data-bs-display="static" aria-expanded="false" href="#">Activity</a>
                         <ul class="dropdown-menu activity mb-2" aria-labelledby="dropdownMenuActivity">
+                            <div class="d-flex justify-content-center">
+                                <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                    <a class="dropdown-item d-flex flex-column" href="#">
+                                        <p>All Mountain</p>
+                                        <img src="{% static 'all-mountain.jpg' %}" alt="Picture of Mountain"
+                                            class="dropdown-img">
+                                    </a>
+                                </li>
+                                <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                    <a class="dropdown-item d-flex flex-column" href="#">
+                                        <p>Enduro</p>
+                                        <img src="{% static 'enduro.jpg' %}" alt="Picture of Mountain"
+                                            class="dropdown-img">
+                                    </a>
+                                </li>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                    <a class="dropdown-item d-flex flex-column" href="#">
+                                        <p>Cross Country</p>
+                                        <img src="{% static 'cross-country.webp' %}" alt="Picture of Mountain"
+                                            class="dropdown-img">
+                                    </a>
+                                </li>
+
+                                <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                    <a class="dropdown-item d-flex flex-column" href="#">
+                                        <p>Trail</p>
+                                        <img src="{% static 'trail.webp' %}" alt="Picture of Mountain"
+                                            class="dropdown-img">
+                                    </a>
+                                </li>
+                            </div>
                         </ul>
                     </li>
                     <!-- Dropw Down Brand-->
                     <li class="nav-item dropdown mx-1 dropdown-hover">
-                        <a class="nav-link dropdown-toggle" id="dropdownMenuBrand" data-mdb-toggle="dropdown"
-                            aria-expanded="false" href="#">Brands</a>
+                        <a class="nav-link dropdown-toggle" id="dropdownMenuBrand" data-bs-toggle="dropdown"
+                            data-bs-display="static" aria-expanded="false" href="#">Brands</a>
                         <ul class="dropdown-menu dropwdown-menu-brand brand mb-2" aria-labelledby="dropdownMenuBrand">
+                            <p class="mx-3 my-2 dropdown-menu-brand-heading">
+                                Top Brands
+                            </p>
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                            <p>Cannondale</p>
+                                            <img src="{% static 'cannondale.svg' %}" alt="Cannondale Logo"
+                                                class="dropdown-img-brand">
+                                        </a>
+                                    </li>
+                                    <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                            <p>Fuji</p>
+                                            <img src="{% static 'fuji.png' %}" alt="Fuji Logo"
+                                                class="dropdown-img-brand">
+                                        </a>
+                                    </li>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                            <p>Scott</p>
+                                            <img src="{% static 'scott.png' %}" alt="Scott Logo"
+                                                class="dropdown-img-brand">
+                                        </a>
+                                    </li>
+                                    <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
+                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                            <p>Specialized</p>
+                                            <img src="{% static 'specialized.png' %}" alt="Specialized Logo"
+                                                class="dropdown-img-brand">
+                                        </a>
+                                    </li>
+                                </div>
+                            </div>
                         </ul>
                     </li>
                     <li class="nav-item sale mx-1">
@@ -62,7 +134,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="fa-regular fa-user"><span class="visually-hidden">Profile</span></i>
+                        <i class="fa-regular fa-user fs-4 mx-2"><span class="visually-hidden">Profile</span></i>
                     </a>
                 </li>
             </ul>

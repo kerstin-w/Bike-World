@@ -1,3 +1,14 @@
 .brand-logo {
     height: 40px;
 }
+
+.dropdown-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.dropdown-img-brand {
+    height: 100px;
+    object-fit: cover;
+}
