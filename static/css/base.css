@@ -274,6 +274,22 @@ a {
     margin: auto;
 }
 
+/*=============== Footer ===============*/
+footer {
+    background-color: #dfdfdf;
+}
+
+footer h4 {
+    text-decoration: underline;
+    text-decoration-color: #cd4c1d;
+    text-underline-offset: 0.5rem;
+}
+
+footer ul {
+    list-style-type: none;
+    padding-left: 0.5rem;
+}
+
 /*=============== Media ===============*/
 
 @media only screen and (max-width: 454px) {
