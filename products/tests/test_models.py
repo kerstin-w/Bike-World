@@ -116,7 +116,7 @@ class ProductModelTest(TestCase):
         Test product has rating
         """
         self.assertEquals(self.product.rating, 4)
-        
+
     def test_product_has_brand(self):
         """
         Test product has brand
@@ -128,4 +128,23 @@ class ProductModelTest(TestCase):
         Test product has bike_type
         """
         self.assertEquals(self.product.bike_type, "Mountain Bike")
+    
+    def test_product_has_gender(self):
+        """
+        Test product has gender
+        """
+        self.assertEquals(self.product.get_gender_display(), "Unisex")
+
+    def test_product_has_material(self):
+        """
+        Test product has material
+        """
+        self.assertEquals(self.product.material, "Test Material A")
+        
+    def test_product_has_derailleur(self):
+        """
+        Test product has derailleur
+        """
+        self.assertEquals(self.product.derailleur, "Test Derailleur A")
+
 
