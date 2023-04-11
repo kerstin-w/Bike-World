@@ -81,7 +81,7 @@ class ProductModelTest(TestCase):
         """
         self.assertEquals(str(self.product.category), "Test friendly name")
     
-     def test_product_has_description(self):
+    def test_product_has_description(self):
         """
         Test product has description
         """
@@ -93,3 +93,20 @@ class ProductModelTest(TestCase):
         """
         self.assertEquals(self.product.wheel_size, "26 inches")
 
+    def test_product_has_retail_price(self):
+        """
+        Test product has retail_price
+        """
+        self.assertAlmostEqual(float(self.product.retail_price), 15.99)
+
+    def test_product_has_sale_price(self):
+        """
+        Test product has sale_price
+        """
+        self.assertAlmostEqual(float(self.product.sale_price), 10.99)
+        
+    def test_product_has_sale(self):
+        """
+        Test product has sale 
+        """
+        self.assertTrue(self.product.sale)
