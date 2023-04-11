@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.db.models import Q, Case, When, F, DecimalField
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 from .models import Product, Category
 
 
@@ -29,13 +29,13 @@ class ProductListView(ListView):
         if brand_name:
             queryset = queryset.filter(brand__iexact=brand_name)
         return queryset
-    
+
     def filter_by_gender(self, queryset):
         # Filter the queryset by gender
-        gender = self.request.GET.get('gender', None)
-        if gender == 'Womens':
+        gender = self.request.GET.get("gender", None)
+        if gender == "Womens":
             queryset = queryset.filter(gender=1)
-        elif gender == 'Mens':
+        elif gender == "Mens":
             queryset = queryset.filter(gender=2)
         else:
             queryset = queryset.all()
@@ -128,3 +128,17 @@ class ProductListView(ListView):
         ).distinct()
 
         return context
+
+
+class ProductDetailView(DetailView):
+    """
+    Displays the details of a product
+    """
+    model = Product
+    template_name = 'products/product_detail.html'
+    context_object_name = 'product'
+
+    def get_object(self):
+        # Get the product object based on the pk
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Product, pk=pk)
