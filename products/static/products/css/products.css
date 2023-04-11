@@ -91,6 +91,13 @@
     transition: all 0.3s linear;
 }
 
+.add-wishlist-pdp:hover,
+.add-wishlist-pdp:active {
+    color: #cd4c1d;
+    font-size: calc(1vw + 1vh + 1vmin);
+    transition: all 0.3s ease;
+}
+
 .back-button:hover {
     font-weight: bold;
     transition: all 500ms;

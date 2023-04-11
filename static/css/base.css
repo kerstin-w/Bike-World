@@ -367,6 +367,13 @@ footer ul {
     right: 0;
 }
 
+.add-wishlist:hover,
+.add-wishlist:active {
+    color: #cd4c1d;
+    font-size: calc(1vw + 1vh + 1vmin);
+    transition: all 0.3s ease;
+}
+
 .product-container {
     position: relative;
     border: 1px solid #eaeaea;
