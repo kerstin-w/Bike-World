@@ -15,6 +15,10 @@ a {
     text-decoration: none;
 }
 
+.page-container {
+    min-height: 70vh;
+}
+
 .bg-orange {
     background-color: #cd4c1d;
 }

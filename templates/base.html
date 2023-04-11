@@ -48,10 +48,13 @@
 </head>
 
 <body>
-    {% include "components/navbar.html" %}
+    <div class="page-container">
+        {% include "components/navbar.html" %}
 
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
+
+    </div>
 
     {% include 'components/footer.html' %}
     <!-- Fontawsome -->
@@ -59,6 +62,7 @@
 
     {% block postloadjs %}
     {% endblock %}
+
 </body>
 
 </html>
