@@ -17,6 +17,8 @@
     background-color: #6c757d;
     color: #fff;
     border: none;
+    cursor: pointer;
+    padding: 0.44rem 0.75rem;
 }
 
 #selected-category-filter span,
@@ -26,4 +28,9 @@
     border: #6c757d 1px solid;
     padding: 0.275rem 0.65rem;
     border-radius: 0.25rem;
+}
+
+#category-checkboxes .form-check,
+#brand-checkboxes .form-check {
+    margin-left: 3px;
 }
