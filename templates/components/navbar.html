@@ -10,7 +10,7 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="brand-logo" href="#"><img class="brand-logo" src="{% static 'logo.png' %}"
+            <a class="brand-logo" href="#"><img class="brand-logo" src="{{ MEDIA_URL }}/media/homepage-images/logo.png"
                     alt="Bike World Logo"></a>
             <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarToggler">
@@ -27,14 +27,15 @@
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                     <a class="dropdown-item d-flex flex-column" href="#product">
                                         <p>All Mountain</p>
-                                        <img src="{% static 'all-mountain.jpg' %}" alt="Picture of Mountainbike"
-                                            class="dropdown-img">
+                                        <img src="{{ MEDIA_URL }}/media/homepage-images/all-mountain.jpg"
+                                            alt="Picture of Mountainbike" class="dropdown-img">
                                     </a>
                                 </li>
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                     <a class="dropdown-item d-flex flex-column" href="#">
                                         <p>Enduro</p>
-                                        <img src="{% static 'enduro.jpg' %}" alt="" class="dropdown-img">
+                                        <img src="{{ MEDIA_URL }}/media/homepage-images/enduro.jpg" alt=""
+                                            class="dropdown-img">
                                     </a>
                                 </li>
                             </div>
@@ -42,14 +43,16 @@
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                     <a class="dropdown-item d-flex flex-column" href="#">
                                         <p>Cross Country</p>
-                                        <img src="{% static 'cross-country.webp' %}" alt="" class="dropdown-img">
+                                        <img src="{{ MEDIA_URL }}/media/homepage-images/cross-country.webp" alt=""
+                                            class="dropdown-img">
                                     </a>
                                 </li>
 
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                     <a class="dropdown-item d-flex flex-column" href="#">
                                         <p>Trail</p>
-                                        <img src="{% static 'trail.webp' %}" alt="" class="dropdown-img">
+                                        <img src="{{ MEDIA_URL }}/media/homepage-images/trail.webp" alt=""
+                                            class="dropdown-img">
                                     </a>
                                 </li>
                             </div>
@@ -68,13 +71,15 @@
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                         <a class="dropdown-item d-flex flex-column" href="#">
                                             <p>Cannondale</p>
-                                            <img src="{% static 'cannondale.svg' %}" alt="" class="dropdown-img-brand">
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/cannondale.svg" alt=""
+                                                class="dropdown-img-brand">
                                         </a>
                                     </li>
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                         <a class="dropdown-item d-flex flex-column" href="#">
                                             <p>Fuji</p>
-                                            <img src="{% static 'fuji.png' %}" alt="" class="dropdown-img-brand">
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/fuji.png" alt=""
+                                                class="dropdown-img-brand">
                                         </a>
                                     </li>
                                 </div>
@@ -84,13 +89,15 @@
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                         <a class="dropdown-item d-flex flex-column" href="#">
                                             <p>Scott</p>
-                                            <img src="{% static 'scott.png' %}" alt="" class="dropdown-img-brand">
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/scott.png" alt=""
+                                                class="dropdown-img-brand">
                                         </a>
                                     </li>
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
                                         <a class="dropdown-item d-flex flex-column" href="#">
                                             <p>Specialized</p>
-                                            <img src="{% static 'specialized.png' %}" alt="" class="dropdown-img-brand">
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/specialized.png" alt=""
+                                                class="dropdown-img-brand">
                                         </a>
                                     </li>
                                 </div>
