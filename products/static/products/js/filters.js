@@ -174,6 +174,14 @@ $(document).ready(function () {
         }
     }
 
+    // Reset all filters and selected sorting option
+    const resetFilters = function () {
+        $('input[type="checkbox"]').prop('checked', false);
+        $('#sort-by').prop('selectedIndex', 0);
+
+        window.location.href = '/products/';
+    }
+
     // Set initial filter states on page load
     const queryParams = getCurrentQueryParams();
     const selectedSort = queryParams.sort_by || '';
@@ -181,4 +189,7 @@ $(document).ready(function () {
     $('input[name="category"][value="all"]').prop('checked', true);
     $('input[name="brand"][value="all"]').prop('checked', true);
     updateSelectedFilters();
+
+    // Connect reset button click event to the resetFilters function
+    $('#reset').click(resetFilters);
 });
