@@ -1,17 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
 
-
-
 {% block content %}
-<div class="container">
-    <div class="row">
-        { }
-        <div class="col">
+<!-- Product List -->
+<section>
+    <div class="container-fluid margin-top">
+        <div class="row justify-content-center">
             {% for product in products %}
-            <li>{{ product.title }}</li>
-            {% endfor %}
+            <div
+                class="col-lg-2 col-md-3 col-sm-3 col-12 d-flex flex-column align-items-center product-container mb-5 mx-2 py-3">
+                <a href="#productdetail">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img class="product-img" src="{{ product.image.url }}" alt="{{ product.title }}">
+                        </div>
+                        {% for i in "x"|ljust:product.rating %}
+                        <i class="fa fa-star fa-xs"></i>
+                        {% endfor %}
+                        {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
+                        <i class="fa fa-star-o fa-xs"></i>
+                        {% endfor %}
+                    </div>
+                    <div class="product-content d-flex flex-column align-items-start">
+                        <span class="rating"><i class="mdi mdi-star"></i>{{ product.review }}</span>
+                        <p class="product-title mb-2"><a href="#0">{{product.title}}</a></p>
+                </a>
+                <div class="d-flex flex-column justify-content-end h-100">
+                    {% if product.sale %}
+                    <p class="product-sale-price price mb-0">{{ product.sale_price }}€</p>
+                    <p class="strike-price">{{ product.retail_price }}€</p>
+                    {% else %}
+                    <p class="price">{{ product.retail_price }}€</p>
+                    {% endif %}
+                    <div class="d-flex">
+                        <a href="#" class="btn btn-shop-now bg-orange justify-content-end">Add to
+                            Cart</a>
+                        <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
+                            <i class="fa-regular fa-heart fa-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

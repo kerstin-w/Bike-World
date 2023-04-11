@@ -290,6 +290,85 @@ footer ul {
     padding-left: 0.5rem;
 }
 
+/*=============== Product List ===============*/
+.product-content {
+    height: 100%;
+    width: 100%;
+}
+
+.product-card {
+    width: 100%;
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 15px;
+    object-fit: scale-down;
+    object-position: center;
+}
+
+.product-image-container {
+    width: 100%;
+    height: 100px;
+}
+
+.product-title {
+    font-size: 1rem;
+}
+
+.product-title a {
+    color: #000;
+}
+
+
+.price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: .5px;
+}
+
+.product-sale-price {
+    color: #cd4c1d;
+}
+
+.strike-price {
+    text-decoration: line-through;
+}
+
+.btn-shop-now {
+    text-transform: capitalize;
+    transition: all .4s ease;
+    white-space: nowrap;
+    border-radius: 0;
+    color: #fff;
+}
+
+.btn-shop-now:hover {
+    color: #fff;
+    transform: scale(1.02);
+}
+
+.add-wishlist {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 24px;
+    color: #cd4c1d;
+    z-index: 9;
+    transition: all 0.3s linear;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.product-container {
+    position: relative;
+    border: 1px solid #eaeaea;
+    transition: border-color .3s;
+}
+
 /*=============== Media ===============*/
 
 @media only screen and (max-width: 454px) {
