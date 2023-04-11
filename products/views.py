@@ -29,6 +29,17 @@ class ProductListView(ListView):
         if brand_name:
             queryset = queryset.filter(brand__iexact=brand_name)
         return queryset
+    
+    def filter_by_gender(self, queryset):
+        # Filter the queryset by gender
+        gender = self.request.GET.get('gender', None)
+        if gender == 'Womens':
+            queryset = queryset.filter(gender=1)
+        elif gender == 'Mens':
+            queryset = queryset.filter(gender=2)
+        else:
+            queryset = queryset.all()
+        return queryset
 
     def search_products(self, queryset):
         # Filter by matching the search keyword
@@ -82,6 +93,7 @@ class ProductListView(ListView):
         # Apply filters to the queryset
         queryset = self.filter_by_category(queryset)
         queryset = self.filter_by_brand(queryset)
+        queryset = self.filter_by_gender(queryset)
         queryset = self.search_products(queryset)
         queryset = self.sort_queryset(queryset)
 

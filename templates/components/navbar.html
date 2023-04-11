@@ -10,13 +10,13 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="brand-logo" href="#"><img class="brand-logo" src="{{ MEDIA_URL }}/media/homepage-images/logo.png"
-                    alt="Bike World Logo"></a>
+            <a class="brand-logo" href="{% url 'index' %}"><img class="brand-logo"
+                    src="{{ MEDIA_URL }}/media/homepage-images/logo.png" alt="Bike World Logo"></a>
             <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item mx-1">
-                        <a class="nav-link text-nowrap" href="#">All Bikes</a>
+                        <a class="nav-link text-nowrap" href="{% url 'products' %}">All Bikes</a>
                     </li>
                     <!-- Dropw Down Category-->
                     <li class="nav-item dropdown mx-1 dropdown-hover">
@@ -25,34 +25,38 @@
                         <ul class="dropdown-menu activity mb-2" aria-labelledby="dropdownMenuActivity">
                             <div class="d-flex justify-content-center">
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                    <a class="dropdown-item d-flex flex-column" href="#product">
+                                    <a class="dropdown-item d-flex flex-column"
+                                        href="{% url 'products' %}?category=all_mountain">
                                         <p>All Mountain</p>
                                         <img src="{{ MEDIA_URL }}/media/homepage-images/all-mountain.jpg"
                                             alt="Picture of Mountainbike" class="dropdown-img">
                                     </a>
                                 </li>
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                    <a class="dropdown-item d-flex flex-column" href="#">
+                                    <a class="dropdown-item d-flex flex-column"
+                                        href="{% url 'products' %}?category=enduro">
                                         <p>Enduro</p>
-                                        <img src="{{ MEDIA_URL }}/media/homepage-images/enduro.jpg" alt=""
-                                            class="dropdown-img">
+                                        <img src="{{ MEDIA_URL }}/media/homepage-images/enduro.jpg"
+                                            alt="Picture of Mountainbike" class="dropdown-img">
                                     </a>
                                 </li>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                    <a class="dropdown-item d-flex flex-column" href="#">
+                                    <a class="dropdown-item d-flex flex-column"
+                                        href="{% url 'products' %}?category=cross_country">
                                         <p>Cross Country</p>
-                                        <img src="{{ MEDIA_URL }}/media/homepage-images/cross-country.webp" alt=""
-                                            class="dropdown-img">
+                                        <img src="{{ MEDIA_URL }}/media/homepage-images/cross-country.webp"
+                                            alt="Picture of Mountainbike" class="dropdown-img">
                                     </a>
                                 </li>
 
                                 <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                    <a class="dropdown-item d-flex flex-column" href="#">
+                                    <a class="dropdown-item d-flex flex-column"
+                                        href="{% url 'products' %}?category=trail">
                                         <p>Trail</p>
-                                        <img src="{{ MEDIA_URL }}/media/homepage-images/trail.webp" alt=""
-                                            class="dropdown-img">
+                                        <img src="{{ MEDIA_URL }}/media/homepage-images/trail.webp"
+                                            alt="Picture of Mountainbike" class="dropdown-img">
                                     </a>
                                 </li>
                             </div>
@@ -69,16 +73,18 @@
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-center">
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                        <a class="dropdown-item d-flex flex-column"
+                                            href="{% url 'products' %}?brand=Cannondale">
                                             <p>Cannondale</p>
-                                            <img src="{{ MEDIA_URL }}/media/homepage-images/cannondale.svg" alt=""
-                                                class="dropdown-img-brand">
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/cannondale.svg"
+                                                alt="Cannondale Logo" class="dropdown-img-brand">
                                         </a>
                                     </li>
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                        <a class="dropdown-item d-flex flex-column"
+                                            href="{% url 'products' %}?brand=Fuji">
                                             <p>Fuji</p>
-                                            <img src="{{ MEDIA_URL }}/media/homepage-images/fuji.png" alt=""
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/fuji.png" alt="Fuji Logo"
                                                 class="dropdown-img-brand">
                                         </a>
                                     </li>
@@ -87,17 +93,19 @@
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-center">
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                        <a class="dropdown-item d-flex flex-column"
+                                            href="{% url 'products' %}?brand=Scott">
                                             <p>Scott</p>
-                                            <img src="{{ MEDIA_URL }}/media/homepage-images/scott.png" alt=""
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/scott.png" alt="Scott Logo"
                                                 class="dropdown-img-brand">
                                         </a>
                                     </li>
                                     <li class="mx-sm-0 mx-md-3 mx-lg-5 my-sm-1 my-md-3">
-                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                        <a class="dropdown-item d-flex flex-column"
+                                            href="{% url 'products' %}?brand=Specialied">
                                             <p>Specialized</p>
-                                            <img src="{{ MEDIA_URL }}/media/homepage-images/specialized.png" alt=""
-                                                class="dropdown-img-brand">
+                                            <img src="{{ MEDIA_URL }}/media/homepage-images/specialized.png"
+                                                alt="Specialized Logo" class="dropdown-img-brand">
                                         </a>
                                     </li>
                                 </div>
@@ -105,7 +113,7 @@
                         </ul>
                     </li>
                     <li class="nav-item sale mx-1">
-                        <a class="nav-link mx-2 px-3 text-nowrap" href="#">Sale</a>
+                        <a class="nav-link mx-2 px-3 text-nowrap" href="{% url 'products' %}?category=sale">Sale</a>
                     </li>
                     <!--Search Bar -->
                     <li class="nav-item search-box pt-2 pt-md-0 ms-0 ms-md-2">

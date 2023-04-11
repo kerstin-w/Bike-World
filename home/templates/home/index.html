@@ -9,7 +9,7 @@
             <div class="circle">
                 <div class="hero-content">
                     <h1 class="upper">Ride like a pro, shop with us!</h1>
-                    <button class="btn btn-cta upper"><a href="#">Shop Now</a></button>
+                    <button class="btn btn-cta upper"><a href="{% url 'products' %}">Shop Now</a></button>
                 </div>
             </div>
         </div>
@@ -28,14 +28,14 @@
         <div class="container-fluid px-4 py-3 py-md-5">
             <div class="row category-callout-container gx-3 gx-md-5">
                 <div class="col d-flex category-callout justify-content-center pb-4">
-                    <a href="#" class="link-hover">
+                    <a href="{% url 'products' %}?gender=Womens" class="link-hover">
                         <div class="p-3 category-callout1 h-100 d-flex align-items-end">
                             <p class="px-5 py-2 upper">Shop Women's Bikes</p>
                         </div>
                     </a>
                 </div>
                 <div class="col category-callout d-flex justify-content-center pb-4">
-                    <a href="#" class="link-hover">
+                    <a href="{% url 'products' %}?category=sale" class="link-hover">
                         <div class="p-3 category-callout2 h-100 d-flex align-items-end">
                             <p class="px-5 py-2 upper">Shop Sale</p>
                         </div>
