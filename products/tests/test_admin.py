@@ -67,3 +67,11 @@ class ProductAdminTestCase(TestCase):
             "image_tag",
         )
         self.assertEqual(self.product_admin.list_display, expected)
+
+    def test_ordering(self):
+        """
+        Test product order
+        """
+        expected = ("sku",)
+        self.assertEqual(self.product_admin.ordering, expected)
+
