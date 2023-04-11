@@ -80,3 +80,16 @@ class ProductModelTest(TestCase):
         Test category of the product
         """
         self.assertEquals(str(self.product.category), "Test friendly name")
+    
+     def test_product_has_description(self):
+        """
+        Test product has description
+        """
+        self.assertEquals(self.product.description, "Test description A")
+
+    def test_product_has_wheel_size(self):
+        """
+        Test product has wheel_size
+        """
+        self.assertEquals(self.product.wheel_size, "26 inches")
+
