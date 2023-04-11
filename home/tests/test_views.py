@@ -1,8 +1,7 @@
-import os
 from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
-from products.models import GENDER, Product, Category
+from products.models import Product, Category
 
 
 class HomePageViewTest(TestCase):
@@ -17,7 +16,6 @@ class HomePageViewTest(TestCase):
         self.url = reverse("index")
         self.response = self.client.get(self.url)
 
-        # Create test data for products and a category to be used in the product instances
         self.category = Category.objects.create(name="Test Category")
         self.product_1 = Product.objects.create(
             title="Product A",
