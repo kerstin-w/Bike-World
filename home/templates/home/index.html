@@ -54,7 +54,8 @@
                     class="col-lg-2 {% if forloop.counter == 3 %}d-none d-md-flex{% elif forloop.counter == 4 %}d-none d-lg-flex{% endif %} col-md-3 col-sm-4 col-12 d-flex flex-column align-items-center product-container mb-5 mx-3 py-3">
                     <div class="product-card">
                         <div class="product-image-container">
-                            <img class="product-img" src="{{ product.image.url }}" alt="{{ product.title }}">
+                            <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
+                                    src="{{ product.image.url }}" alt="{{ product.title }}"></a>
                         </div>
                         {% for i in "x"|ljust:product.rating %}
                         <i class="fa fa-star fa-xs"></i>
@@ -64,9 +65,10 @@
                         {% endfor %}
                     </div>
                     <div class="product-content d-flex flex-column align-items-start">
-                        <span class="rating"><i class="mdi mdi-star"></i>{{ product.review }}</span>
-                        <p class="product-title mb-2"><a href="#0">{{ product.title }}</a></p>
 
+                        <p class="product-title mb-2"><a
+                                href="{% url 'product_detail' product.pk %}">{{ product.title }}</p>
+                        </a>
                         <div class="d-flex flex-column justify-content-end h-100">
                             {% if product.sale %}
                             <p class="product-sale-price price mb-0">{{ product.sale_price }}€</p>

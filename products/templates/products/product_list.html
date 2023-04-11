@@ -17,10 +17,11 @@
             {% for product in products %}
             <div
                 class="col-lg-2 col-md-3 col-sm-3 col-12 d-flex flex-column align-items-center product-container mb-5 mx-2 py-3">
-                <a href="#productdetail">
+                <a href="{% url 'product_detail' product.pk %}">
                     <div class="product-card">
                         <div class="product-image-container">
-                            <img class="product-img" src="{{ product.image.url }}" alt="{{ product.title }}">
+                            <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
+                                    src="{{ product.image.url }}" alt="{{ product.title }}"></a>
                         </div>
                         {% for i in "x"|ljust:product.rating %}
                         <i class="fa fa-star fa-xs text-dark"></i>
@@ -30,34 +31,33 @@
                         {% endfor %}
                     </div>
                     <div class="product-content d-flex flex-column align-items-start">
-                        <span class="rating"><i class="mdi mdi-star"></i>{{ product.review }}</span>
-                        <p class="product-title mb-2"><a href="#0">{{product.title}}</a></p>
-                </a>
-                <div class="d-flex flex-column justify-content-end h-100">
-                    {% if product.sale %}
-                    <p class="product-sale-price price mb-0">{{ product.sale_price }}€</p>
-                    <p class="strike-price">{{ product.retail_price }}€</p>
-                    {% else %}
-                    <p class="price">{{ product.retail_price }}€</p>
-                    {% endif %}
-                    <div class="d-flex">
-                        <a href="#" class="btn btn-shop-now bg-orange justify-content-end">Add to
-                            Cart</a>
-                        <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
-                            <i class="fa-regular fa-heart fa-sm"></i>
-                        </a>
+                        <p class="product-title mb-2"><a
+                                href="{% url 'product_detail' product.pk %}">{{product.title}}</a></p>
+                        <div class="d-flex flex-column justify-content-end h-100">
+                            {% if product.sale %}
+                            <p class="product-sale-price price mb-0">{{ product.sale_price }}€</p>
+                            <p class="strike-price">{{ product.retail_price }}€</p>
+                            {% else %}
+                            <p class="price">{{ product.retail_price }}€</p>
+                            {% endif %}
+                            <div class="d-flex">
+                                <a href="#" class="btn btn-shop-now bg-orange justify-content-end">Add to
+                                    Cart</a>
+                                <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
+                                    <i class="fa-regular fa-heart fa-sm"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="d-flex flex-column align-items-center no-search-result p-5">
+                <p>No search results found for <strong>{{ request.GET.q|title }}.</strong></p>
+                <button class="btn btn-cta upper"><a href="{% url 'products' %}">Show all products</a></button>
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
-        {% else %}
-        <div class="d-flex flex-column align-items-center no-search-result p-5">
-            <p>No search results found for <strong>{{ request.GET.q|title }}.</strong></p>
-            <button class="btn btn-cta upper"><a href="{% url 'products' %}">Show all products</a></button>
-            {% endif %}
-        </div>
-    </div>
 </section>
 <!-- Back to Top Button -->
 <button type="button" class="btn btn-floating" id="btn-back-to-top">
