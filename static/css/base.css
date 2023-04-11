@@ -392,6 +392,10 @@ footer ul {
     .category-callout2 p {
         font-size: 1rem;
     }
+
+    .margin-top {
+        margin-top: 5rem;
+    }
 }
 
 /* For desktop */
