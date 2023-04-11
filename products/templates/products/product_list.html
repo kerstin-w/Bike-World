@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<!-- Products CSS -->
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
 {% block content %}
 <!-- Product List -->
 <section>
@@ -45,4 +50,13 @@
         {% endfor %}
     </div>
 </section>
+<!-- Back to Top Button -->
+<button type="button" class="btn btn-floating" id="btn-back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+{% endblock %}
+
+{% block postloadjs %}
+<!-- Products JS -->
+<script src="{% static 'products/js/back_to_top.js' %}"></script>
 {% endblock %}
