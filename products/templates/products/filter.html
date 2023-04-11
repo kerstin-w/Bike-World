@@ -1,6 +1,9 @@
 <!-- Sorting & Filters-->
-<div class="d-flex flex-row flex-wrap">
+<div class="d-flex flex-row flex-wrap ps-0">
     <!-- Sorting -->
+    <div class="form-group ps-3 mb-3">
+        <button type="button" class="btn btn-outline-secondary" id="reset">&#10006;</button>
+    </div>
     <form method="get" id="sort-form">
         <div class="form-group ps-3">
             <label for="sort-by" hidden>Sort By:</label>
@@ -75,11 +78,8 @@
             </div>
         </div>
     </form>
-    <div class="form-group ps-3 mb-3">
-        <button type="button" class="btn btn-outline-secondary" id="reset">&#10006;</button>
-    </div>
 </div>
-<div class="selected-filters-container d-flex flex-row mb-3 ps-4">
+<div class="selected-filters-container d-flex flex-row mb-3 ps-3">
     <div id="selected-category-filter" class="me-2"></div>
     <div id="selected-brand-filter" class="me-2"></div>
 </div>
