@@ -89,4 +89,19 @@ class ProductAdminTestCase(TestCase):
         expected = ["title", "sku"]
         self.assertEqual(self.product_admin.search_fields, expected)
 
+    def test_image_tag_with_image(self):
+        """
+        Test image_tag in Admin Panel
+        """
+        result = self.product_with_image.image_tag()
+        expected = '<img src="/media/path/to/image.jpg" style="width:150px;height:120px;object-fit:contain;">'
+        self.assertEqual(result, expected)
+
+    def test_image_tag_without_image(self):
+        """
+        Test image_tag returns 'No Image Found' for product without image
+        """
+        result = self.product_without_image.image_tag()
+        expected = 'No Image Found'
+        self.assertEqual(result, expected)
 
