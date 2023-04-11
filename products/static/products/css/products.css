@@ -13,6 +13,7 @@
     border: #dfdfdf 1px solid;
 }
 
+/*=============== Sorting and Filters ===============*/
 #sort-form select {
     background-color: #6c757d;
     color: #fff;
@@ -33,4 +34,22 @@
 #category-checkboxes .form-check,
 #brand-checkboxes .form-check {
     margin-left: 3px;
+}
+
+/*=============== Pagination ===============*/
+.page-link {
+    border: none;
+    color: #000;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.page-item.active .page-link {
+    background-color: #cd4c1e;
+}
+
+.page-link:focus,
+.page-link:hover {
+    background-color: none;
+    color: #000;
 }
