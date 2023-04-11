@@ -9,31 +9,32 @@ class HomePageViewTest(TestCase):
     """
     Test HomePageView
     """
+
     def setUp(self):
         """
         Test Data
         """
-        self.url = reverse('index')
+        self.url = reverse("index")
         self.response = self.client.get(self.url)
 
         # Create test data for products and a category to be used in the product instances
-        self.category = Category.objects.create(name='Test Category')
+        self.category = Category.objects.create(name="Test Category")
         self.product_1 = Product.objects.create(
             title="Product A",
             sku="SKU001",
             category=self.category,
             description="Test description A",
             wheel_size="26 inches",
-            retail_price=Decimal('399.00'),
-            sale_price=Decimal('349.00'),
+            retail_price=Decimal("399.00"),
+            sale_price=Decimal("349.00"),
             sale=True,
             rating=4,
-            image='Image.jpg',
+            image="Image.jpg",
             brand="Scott",
             bike_type="Mountain Bike",
             material="Test Material A",
             derailleur="Test Derailleur A",
-            stock=5
+            stock=5,
         )
         self.product_2 = Product.objects.create(
             title="Product B",
@@ -41,16 +42,16 @@ class HomePageViewTest(TestCase):
             category=self.category,
             description="Test description B",
             wheel_size="28 inches",
-            retail_price=Decimal('299.00'),
+            retail_price=Decimal("299.00"),
             sale_price=None,
             sale=False,
             rating=5,
-            image='Image.jpg',
+            image="Image.jpg",
             brand="Canyon",
             bike_type="Road Bike",
             material="Test Material B",
             derailleur="Test Derailleur B",
-            stock=10
+            stock=10,
         )
 
     def test_home_page_view_returns_200(self):
@@ -65,7 +66,7 @@ class HomePageViewTest(TestCase):
         Test that the view is using the correct template
         """
         response = self.client.get(self.url)
-        self.assertTemplateUsed(response, 'home/index.html')
+        self.assertTemplateUsed(response, "home/index.html")
 
     def test_home_page_view_includes_top_rated_products(self):
         """
@@ -73,5 +74,16 @@ class HomePageViewTest(TestCase):
         """
         top_rated_products = [self.product_2, self.product_1]
         response = self.client.get(self.url)
-        self.assertCountEqual(response.context['top_rated_products'], top_rated_products)
+        self.assertCountEqual(
+            response.context["top_rated_products"], top_rated_products
+        )
 
+    def test_home_page_view_displays_top_rated_products(self):
+        """
+        Test that the view displays the top-rated products correctly
+        """
+        top_rated_products = [self.product_2, self.product_1]
+        response = self.client.get(self.url)
+        for i, product in enumerate(top_rated_products):
+            self.assertContains(response, product.title)
+            self.assertContains(response, str(product.retail_price))
