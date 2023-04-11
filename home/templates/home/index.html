@@ -48,6 +48,44 @@
     <section>
         <div class="container-fluid px-4 pb-4">
             <h2 class="liner upper">Top Products&nbsp;</h2>
+            <div class="row top-products justify-content-center">
+                {% for product in top_rated_products|slice:":4" %}
+                <div
+                    class="col-lg-2 {% if forloop.counter == 3 %}d-none d-md-flex{% elif forloop.counter == 4 %}d-none d-lg-flex{% endif %} col-md-3 col-sm-4 col-12 d-flex flex-column align-items-center product-container mb-5 mx-3 py-3">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img class="product-img" src="{{ product.image.url }}" alt="{{ product.title }}">
+                        </div>
+                        {% for i in "x"|ljust:product.rating %}
+                        <i class="fa fa-star fa-xs"></i>
+                        {% endfor %}
+                        {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
+                        <i class="fa fa-star-o fa-xs"></i>
+                        {% endfor %}
+                    </div>
+                    <div class="product-content d-flex flex-column align-items-start">
+                        <span class="rating"><i class="mdi mdi-star"></i>{{ product.review }}</span>
+                        <p class="product-title mb-2"><a href="#0">{{ product.title }}</a></p>
+
+                        <div class="d-flex flex-column justify-content-end h-100">
+                            {% if product.sale %}
+                            <p class="product-sale-price price mb-0">{{ product.sale_price }}€</p>
+                            <p class="strike-price">{{ product.retail_price }}€</p>
+                            {% else %}
+                            <p class="price">{{ product.retail_price }}€</p>
+                            {% endif %}
+                            <div class="d-flex">
+                                <a href="#" class="btn btn-shop-now bg-orange justify-content-end">Add to
+                                    Cart</a>
+                                <a class="add-wishlist" href="#">
+                                    <i class="fa-regular fa-heart fa-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 </main>
