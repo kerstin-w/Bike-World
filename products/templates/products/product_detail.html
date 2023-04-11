@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block extra_css %}
 <!-- Products CSS -->
@@ -25,10 +26,10 @@
                 <p class="mb-2 mt-4">Size:</p>
                 <p class="product-size">{{ product.wheel_size }}</p>
                 {% if product.sale %}
-                <p class="product-sale-price price mb-0 mt-4">{{ product.sale_price }}€</p>
-                <p class="strike-price">{{ product.retail_price }}€</p>
+                <p class="product-sale-price price mb-0 mt-4">{{ product.sale_price|intcomma }}€</p>
+                <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
                 {% else %}
-                <p class="price mt-4">{{ product.retail_price }}€</p>
+                <p class="price mt-4">{{ product.retail_price|intcomma }}€</p>
                 {% endif %}
                 <div class="d-flex align-items-center">
                     <a href="#" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end"><i

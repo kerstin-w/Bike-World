@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block extra_css %}
 <!-- Products CSS -->
@@ -35,10 +36,10 @@
                                 href="{% url 'product_detail' product.pk %}">{{product.title}}</a></p>
                         <div class="d-flex flex-column justify-content-end h-100">
                             {% if product.sale %}
-                            <p class="product-sale-price price mb-0">{{ product.sale_price }}€</p>
-                            <p class="strike-price">{{ product.retail_price }}€</p>
+                            <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
+                            <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
                             {% else %}
-                            <p class="price">{{ product.retail_price }}€</p>
+                            <p class="price">{{ product.retail_price|intcomma }}€</p>
                             {% endif %}
                             <div class="d-flex">
                                 <a href="#" class="btn btn-shop-now bg-orange justify-content-end">Add to

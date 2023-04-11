@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <main>
@@ -17,7 +18,7 @@
     <!-- Reasons Why Banner -->
     <div class="reasons-why-banner d-flex justify-content-center align-items-center upper bg-orange">
         <p class="mx-3 mb-0">
-            <i class="bi bi-truck"></i> Free Shipping Over {{ free_delivery_threshold }}€
+            <i class="bi bi-truck"></i> Free Shipping Over {{ free_delivery_threshold|intcomma }}€
         </p>
         <p class="mx-3 mb-0">
             <i class="bi bi-box-seam"></i> Free Return Shipment
@@ -71,10 +72,10 @@
                         </a>
                         <div class="d-flex flex-column justify-content-end h-100">
                             {% if product.sale %}
-                            <p class="product-sale-price price mb-0">{{ product.sale_price }}€</p>
-                            <p class="strike-price">{{ product.retail_price }}€</p>
+                            <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
+                            <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
                             {% else %}
-                            <p class="price">{{ product.retail_price }}€</p>
+                            <p class="price">{{ product.retail_price|intcomma }}€</p>
                             {% endif %}
                             <div class="d-flex">
                                 <a href="#" class="btn btn-shop-now bg-orange justify-content-end">Add to
