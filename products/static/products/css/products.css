@@ -53,3 +53,40 @@
     background-color: none;
     color: #000;
 }
+
+/*=============== PDP ===============*/
+.product-size {
+    width: fit-content;
+    display: flex;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #F0F0F0;
+    color: #707070;
+    font-size: 1rem;
+    letter-spacing: .00625rem;
+    white-space: nowrap;
+    padding: 8px 8px;
+}
+
+.btn-shop-lg {
+    padding: 14px 14px;
+    letter-spacing: .00625rem;
+}
+
+#product-detail .price {
+    font-size: 1.4rem;
+}
+
+.add-wishlist-pdp {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 24px;
+    color: #cd4c1d;
+    z-index: 9;
+    transition: all 0.3s linear;
+}

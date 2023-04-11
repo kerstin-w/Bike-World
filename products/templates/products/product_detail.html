@@ -1,6 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<!-- Products CSS -->
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1> test </h1>
+<section id="product-detail" class="margin-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 pb-4">
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
+            </div>
+            <div class="col-md-6 ps-4">
+                <h2>{{ product.title }}</h2>
+                {% for i in "x"|ljust:product.rating %}
+                <i class="fa fa-star fa-xs"></i>
+                {% endfor %}
+                {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
+                <i class="fa fa-star-o fa-xs"></i>
+                {% endfor %}
+                <p class="mb-2 mt-4">Size:</p>
+                <p class="product-size">{{ product.wheel_size }}</p>
+                {% if product.sale %}
+                <p class="product-sale-price price mb-0 mt-4">{{ product.sale_price }}€</p>
+                <p class="strike-price">{{ product.retail_price }}€</p>
+                {% else %}
+                <p class="price mt-4">{{ product.retail_price }}€</p>
+                {% endif %}
+                <div class="d-flex">
+                    <a href="#" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end"><i
+                            class="fa-solid fa-cart-shopping"></i> Add to
+                        Cart</a>
+                    <a class="add-wishlist-pdp ms-3" href="#">
+                        <i class="fa-regular fa-heart fa-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
