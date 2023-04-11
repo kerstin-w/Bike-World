@@ -81,7 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'bag.context_processor.bag_contents'
+                'bag.context_processors.bag_contents'
             ],
         },
     },
@@ -168,3 +168,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Shipping Terms
+
+FREE_DELIVERY_THRESHOLD = 1000
+STANDARD_DELIVERY_COST = 10
