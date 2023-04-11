@@ -23,10 +23,10 @@
                             <img class="product-img" src="{{ product.image.url }}" alt="{{ product.title }}">
                         </div>
                         {% for i in "x"|ljust:product.rating %}
-                        <i class="fa fa-star fa-xs"></i>
+                        <i class="fa fa-star fa-xs text-dark"></i>
                         {% endfor %}
                         {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
-                        <i class="fa fa-star-o fa-xs"></i>
+                        <i class="fa fa-star-o fa-xs text-dark"></i>
                         {% endfor %}
                     </div>
                     <div class="product-content d-flex flex-column align-items-start">
