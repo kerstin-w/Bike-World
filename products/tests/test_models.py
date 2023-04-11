@@ -14,11 +14,11 @@ class CategoryModelTest(TestCase):
             friendly_name='Test friendly name'
         )
 
-    def test_category_has_name_attr(self):
+    def test_category_has_name(self):
         """Test category has 'name' attribute as expected"""
         self.assertEquals(self.category.name, 'test_category')
 
-    def test_category_has_friendly_name_attr(self):
+    def test_category_has_friendly_name(self):
         """
         Test category has friendly_name
         """
@@ -146,5 +146,11 @@ class ProductModelTest(TestCase):
         Test product has derailleur
         """
         self.assertEquals(self.product.derailleur, "Test Derailleur A")
+    
+    def test_product_has_stock(self):
+        """
+        Test product has stock
+        """
+        self.assertEquals(self.product.stock, 5)
 
 
