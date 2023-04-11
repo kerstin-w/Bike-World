@@ -12,3 +12,9 @@
     background-color: #dfdfdf45;
     border: #dfdfdf 1px solid;
 }
+
+#sort-form select {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}

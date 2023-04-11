@@ -11,6 +11,7 @@
 <section>
     <div class="container-fluid margin-top">
         <div class="row justify-content-center">
+            {% include "products/filter.html" %}
             {% if products %}
             <p>Results: {{ request.GET.q|title }} ({{ products.paginator.count  }} products found)</p>
             {% for product in products %}
@@ -52,7 +53,7 @@
         {% endfor %}
         {% else %}
         <div class="d-flex flex-column align-items-center no-search-result p-5">
-            <p>No search results found.</p>
+            <p>No search results found for <strong>{{ request.GET.q|title }}.</strong></p>
             <button class="btn btn-cta upper"><a href="{% url 'products' %}">Show all products</a></button>
             {% endif %}
         </div>
@@ -67,4 +68,5 @@
 {% block postloadjs %}
 <!-- Products JS -->
 <script src="{% static 'products/js/back_to_top.js' %}"></script>
+<script src="{% static 'products/js/filters.js' %}"></script>
 {% endblock %}
