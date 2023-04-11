@@ -20,7 +20,7 @@ def bag_contents(request):
 
     # Calculate delivery cost
     delivery = (
-        total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
+        total + Decimal(settings.STANDARD_DELIVERY_COST)
         if free_delivery_delta > 0
         else 0
     )
