@@ -1,49 +1,48 @@
 from django.test import TestCase
 from products.models import Category, Product
 
+
 class CategoryModelTest(TestCase):
     """
     Test for Category Data Model
     """
+
     def setUp(self):
         """
         Test Data
         """
         self.category = Category.objects.create(
-            name='test_category',
-            friendly_name='Test friendly name'
+            name="test_category", friendly_name="Test friendly name"
         )
 
     def test_category_has_name(self):
         """Test category has 'name' attribute as expected"""
-        self.assertEquals(self.category.name, 'test_category')
+        self.assertEquals(self.category.name, "test_category")
 
     def test_category_has_friendly_name(self):
         """
         Test category has friendly_name
         """
-        self.assertEquals(self.category.friendly_name, 'Test friendly name')
+        self.assertEquals(self.category.friendly_name, "Test friendly name")
 
     def test_category_str_method(self):
         """
         Test the __str__ method of Category model
         """
-        self.assertEquals(str(self.category), 'Test friendly name')
-
-
+        self.assertEquals(str(self.category), "Test friendly name")
 
 
 class ProductModelTest(TestCase):
     """
     Test for Product Data Model
     """
+
     def setUp(self):
         """
         Test Data
         """
         self.category = Category.objects.create(
-            name='test_category',
-            friendly_name='Test friendly name'
+            name="test_category", friendly_name="Test friendly name"
         )
         self.product = Product.objects.create(
             title="Product A",
@@ -60,7 +59,7 @@ class ProductModelTest(TestCase):
             gender=0,
             material="Test Material A",
             derailleur="Test Derailleur A",
-            stock=5
+            stock=5,
         )
 
     def test_product_has_title(self):
@@ -73,14 +72,14 @@ class ProductModelTest(TestCase):
         """
         Test product has 'sku'
         """
-        self.assertEquals(self.product.sku, 'SKU001')
-    
+        self.assertEquals(self.product.sku, "SKU001")
+
     def test_product_has_category(self):
         """
         Test category of the product
         """
         self.assertEquals(str(self.product.category), "Test friendly name")
-    
+
     def test_product_has_description(self):
         """
         Test product has description
@@ -107,10 +106,10 @@ class ProductModelTest(TestCase):
 
     def test_product_has_sale(self):
         """
-        Test product has sale 
+        Test product has sale
         """
         self.assertTrue(self.product.sale)
-    
+
     def test_product_has_rating(self):
         """
         Test product has rating
@@ -128,7 +127,7 @@ class ProductModelTest(TestCase):
         Test product has bike_type
         """
         self.assertEquals(self.product.bike_type, "Mountain Bike")
-    
+
     def test_product_has_gender(self):
         """
         Test product has gender
@@ -140,17 +139,27 @@ class ProductModelTest(TestCase):
         Test product has material
         """
         self.assertEquals(self.product.material, "Test Material A")
-        
+
     def test_product_has_derailleur(self):
         """
         Test product has derailleur
         """
         self.assertEquals(self.product.derailleur, "Test Derailleur A")
-    
+
     def test_product_has_stock(self):
         """
         Test product has stock
         """
         self.assertEquals(self.product.stock, 5)
 
+    def test_product_str_(self):
+        """
+        Test the __str__ method of Product model
+        """
+        self.assertEquals(str(self.product), "Product A")
 
+    def test_get_gender_display(self):
+        """
+        Test the genders are displayed
+        """
+        self.assertEquals(self.product.get_gender_display(), "Unisex")
