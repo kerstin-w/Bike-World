@@ -6,3 +6,9 @@
     border: #000 1px solid;
     border-radius: 50%;
 }
+
+.no-search-result {
+    width: fit-content;
+    background-color: #dfdfdf45;
+    border: #dfdfdf 1px solid;
+}
