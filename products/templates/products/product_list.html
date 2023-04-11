@@ -11,6 +11,8 @@
 <section>
     <div class="container-fluid margin-top">
         <div class="row justify-content-center">
+            {% if products %}
+            <p>Search results: {{ request.GET.q|title }} ({{ products.paginator.count  }} products found)</p>
             {% for product in products %}
             <div
                 class="col-lg-2 col-md-3 col-sm-3 col-12 d-flex flex-column align-items-center product-container mb-5 mx-2 py-3">
@@ -48,6 +50,12 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <div class="d-flex flex-column align-items-center">
+            <p>No search results found.</p>
+            <button class="btn btn-cta upper"><a href="{% url 'products' %}">Show all products</a></button>
+            {% endif %}
+        </div>
     </div>
 </section>
 <!-- Back to Top Button -->
