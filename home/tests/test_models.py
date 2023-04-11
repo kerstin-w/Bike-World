@@ -104,9 +104,28 @@ class ProductModelTest(TestCase):
         Test product has sale_price
         """
         self.assertAlmostEqual(float(self.product.sale_price), 10.99)
-        
+
     def test_product_has_sale(self):
         """
         Test product has sale 
         """
         self.assertTrue(self.product.sale)
+    
+    def test_product_has_rating(self):
+        """
+        Test product has rating
+        """
+        self.assertEquals(self.product.rating, 4)
+        
+    def test_product_has_brand(self):
+        """
+        Test product has brand
+        """
+        self.assertEquals(self.product.brand, "Scott")
+
+    def test_product_has_bike_type(self):
+        """
+        Test product has bike_type
+        """
+        self.assertEquals(self.product.bike_type, "Mountain Bike")
+
