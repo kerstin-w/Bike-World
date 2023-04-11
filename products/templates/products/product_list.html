@@ -13,7 +13,7 @@
         <div class="row justify-content-center">
             {% include "products/filter.html" %}
             {% if products %}
-            <p>Results: {{ request.GET.q|title }} ({{ products.paginator.count  }} products found)</p>
+            <p class="ps-4">Results: {{ request.GET.q|title }} ({{ products.paginator.count  }} products found)</p>
             {% for product in products %}
             <div
                 class="col-lg-2 col-md-3 col-sm-3 col-12 d-flex flex-column align-items-center product-container mb-5 mx-2 py-3">
