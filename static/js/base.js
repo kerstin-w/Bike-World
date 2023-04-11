@@ -1,6 +1,7 @@
 const dropdownHoverElems = document.querySelectorAll(".dropdown-hover");
 const navbar = document.querySelector(".navbar");
 const toggleButton = document.querySelector(".navbar-toggler");
+const body = document.querySelector("body");
 
 // For each dropdown element, add a click event listener
 dropdownHoverElems.forEach(function (dropdownHoverElem) {
@@ -19,5 +20,15 @@ toggleButton.addEventListener("click", function () {
         navbar.classList.remove("position-absolute");
     } else {
         navbar.classList.add("position-absolute");
+    }
+});
+
+// Add a click event listener to the body that closes the category and brand dropdowns when the user clicks outside
+body.addEventListener("click", function (event) {
+    if (!event.target.closest('.dropdown-hover')) {
+        const dropdownMenusFilter = document.querySelectorAll('.dropdown-hover > .dropdown-menu');
+        dropdownMenusFilter.forEach(function (dropdownMenusFilter) {
+            dropdownMenusFilter.classList.remove('show');
+        });
     }
 });
