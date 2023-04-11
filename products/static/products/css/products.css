@@ -90,3 +90,8 @@
     z-index: 9;
     transition: all 0.3s linear;
 }
+
+.back-button:hover {
+    font-weight: bold;
+    transition: all 500ms;
+}

@@ -9,6 +9,7 @@
 {% block content %}
 <section id="product-detail" class="margin-top">
     <div class="container">
+        <button class="btn pb-4 back-button" onclick="goBack()">&larr; Back</button>
         <div class="row">
             <div class="col-md-6 pb-4">
                 <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
@@ -41,4 +42,11 @@
         </div>
     </div>
 </section>
+{% endblock %}
+{% block extra_js %}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 {% endblock %}
