@@ -68,3 +68,15 @@ class ProductModelTest(TestCase):
         Test product has 'title'
         """
         self.assertEquals(self.product.title, "Product A")
+
+    def test_product_has_sku(self):
+        """
+        Test product has 'sku'
+        """
+        self.assertEquals(self.product.sku, 'SKU001')
+    
+    def test_product_has_category(self):
+        """
+        Test category of the product
+        """
+        self.assertEquals(str(self.product.category), "Test friendly name")
