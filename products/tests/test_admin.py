@@ -70,8 +70,23 @@ class ProductAdminTestCase(TestCase):
 
     def test_ordering(self):
         """
-        Test product order
+        Test product order in Admin Panel
         """
         expected = ("sku",)
         self.assertEqual(self.product_admin.ordering, expected)
+
+    def test_list_filter(self):
+        """
+        Test list filter in Admin Panel
+        """
+        expected = ("category", "sale", "gender", "brand")
+        self.assertEqual(self.product_admin.list_filter, expected)
+
+    def test_search_fields(self):
+        """
+        Test search fields in Admin Panel
+        """
+        expected = ["title", "sku"]
+        self.assertEqual(self.product_admin.search_fields, expected)
+
 
