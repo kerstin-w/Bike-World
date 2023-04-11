@@ -1,10 +1,10 @@
 <!-- Sorting & Filters-->
-<div class="d-flex flex-row pb-3">
+<div class="d-flex flex-row flex-wrap">
     <!-- Sorting -->
     <form method="get" id="sort-form">
         <div class="form-group ps-3">
             <label for="sort-by" hidden>Sort By:</label>
-            <select name="sort_by" id="sort-by" class="form-control">
+            <select name="sort_by" id="sort-by" class="form-control mb-3">
                 <option value="">Sort by: &darr;</option>
                 <option value="price_asc">Price (Low to High)</option>
                 <option value="price_desc">Price (High to Low)</option>
@@ -16,7 +16,7 @@
     <form method="get">
         <div class="form-group d-flex flex-row">
             <label for="category" hidden>Category:</label>
-            <div id="category-checkboxes" class="dropdown dropdown-hover ps-3">
+            <div id="category-checkboxes" class="dropdown dropdown-hover ps-3 mb-3">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="category-dropdown"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filter Category:&darr;
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <label for="brand" hidden>Brands:</label>
-            <div id="brand-checkboxes" class="dropdown dropdown-hover ps-3">
+            <div id="brand-checkboxes" class="dropdown dropdown-hover ps-3 mb-3">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="brand-dropdown"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filter Brand:&darr;
@@ -75,11 +75,11 @@
             </div>
         </div>
     </form>
-    <div class="form-group ps-3">
+    <div class="form-group ps-3 mb-3">
         <button type="button" class="btn btn-outline-secondary" id="reset">&#10006;</button>
     </div>
 </div>
-<div class="selected-filters-container d-flex flex-row mb-4 ps-4">
+<div class="selected-filters-container d-flex flex-row mb-3 ps-4">
     <div id="selected-category-filter" class="me-2"></div>
     <div id="selected-brand-filter" class="me-2"></div>
 </div>
