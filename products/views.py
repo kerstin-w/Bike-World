@@ -38,7 +38,7 @@ class ProductListView(ListView):
             queryset = queryset.filter(
                 Q(title__icontains=search_keyword)
                 | Q(brand__icontains=search_keyword)
-                | Q(type__icontains=search_keyword)
+                | Q(bike_type__icontains=search_keyword)
             )
         return queryset
 
