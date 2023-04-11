@@ -29,3 +29,42 @@ class CategoryModelTest(TestCase):
         Test the __str__ method of Category model
         """
         self.assertEquals(str(self.category), 'Test friendly name')
+
+
+
+
+class ProductModelTest(TestCase):
+    """
+    Test for Product Data Model
+    """
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.category = Category.objects.create(
+            name='test_category',
+            friendly_name='Test friendly name'
+        )
+        self.product = Product.objects.create(
+            title="Product A",
+            sku="SKU001",
+            category=self.category,
+            description="Test description A",
+            wheel_size="26 inches",
+            retail_price=15.99,
+            sale_price=10.99,
+            sale=True,
+            rating=4,
+            brand="Scott",
+            bike_type="Mountain Bike",
+            gender=0,
+            material="Test Material A",
+            derailleur="Test Derailleur A",
+            stock=5
+        )
+
+    def test_product_has_title(self):
+        """
+        Test product has 'title'
+        """
+        self.assertEquals(self.product.title, "Product A")
