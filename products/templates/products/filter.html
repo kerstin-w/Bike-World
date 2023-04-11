@@ -12,4 +12,71 @@
             </select>
         </div>
     </form>
+    <!-- Filters -->
+    <form method="get">
+        <div class="form-group d-flex flex-row">
+            <label for="category" hidden>Category:</label>
+            <div id="category-checkboxes" class="dropdown dropdown-hover ps-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="category-dropdown"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter Category:&darr;
+                </button>
+                <div class="dropdown-menu" aria-labelledby="category-dropdown">
+                    <div class="form-check">
+                        {% if not selected_category %}
+                        <input class="form-check-input" type="checkbox" name="category_all" id="category_all" checked>
+                        {% else %}
+                        <input class="form-check-input" type="checkbox" name="category_all" id="category_all">
+                        {% endif %}
+                        <label class="form-check-label" for="category_all">All</label>
+                    </div>
+                    {% for category in categories %}
+                    <div class="form-check">
+                        {% if category.name == selected_category %}
+                        <input class="form-check-input" type="checkbox" name="category" id="{{ category.name }}"
+                            value="{{ category.name }}" checked>
+                        {% else %}
+                        <input class="form-check-input" type="checkbox" name="category" id="{{ category.name }}"
+                            value="{{ category.name }}">
+                        {% endif %}
+                        <label class="form-check-label" for="{{ category.name }}">{{ category.friendly_name }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <label for="brand" hidden>Brands:</label>
+            <div id="category-checkboxes" class="dropdown dropdown-hover ps-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="brand-dropdown"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter Brand:&darr;
+                </button>
+                <div class="dropdown-menu" aria-labelledby="brand-dropdown">
+                    <div class="form-check">
+                        {% if not selected_brand %}
+                        <input class="form-check-input" type="checkbox" name="brand_all" id="brand_all" checked>
+                        {% else %}
+                        <input class="form-check-input" type="checkbox" name="brand_all" id="brand_all">
+                        {% endif %}
+                        <label class="form-check-label" for="brand_all">All</label>
+                    </div>
+                    {% for brand in brands %}
+                    <div class="form-check">
+                        {% if brand == selected_brand %}
+                        <input class="form-check-input" type="checkbox" name="brand" id="{{ brand }}"
+                            value="{{ brand }}" checked>
+                        {% else %}
+                        <input class="form-check-input" type="checkbox" name="brand" id="{{ brand}}"
+                            value="{{ brand }}">
+                        {% endif %}
+                        <label class="form-check-label" for="{{ brand}}">{{ brand }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="selected-filters-container d-flex flex-row mb-4">
+    <div id="selected-category-filter" class="me-2"></div>
+    <div id="selected-brand-filter" class="me-2"></div>
 </div>

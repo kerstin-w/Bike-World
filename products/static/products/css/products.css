@@ -18,3 +18,12 @@
     color: #fff;
     border: none;
 }
+
+#selected-category-filter span,
+#selected-brand-filter span {
+    width: fit-content;
+    color: #6c757d;
+    border: #6c757d 1px solid;
+    padding: 0.275rem 0.65rem;
+    border-radius: 0.25rem;
+}
