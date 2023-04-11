@@ -54,12 +54,24 @@ class HomePageViewTest(TestCase):
         )
 
     def test_home_page_view_returns_200(self):
-        # Test that the view is returning a status code of 200 OK
+        """
+        Test that the view is returning a status code of 200 OK
+        """
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_home_page_view_uses_correct_template(self):
-        # Test that the view is using the correct template
+        """
+        Test that the view is using the correct template
+        """
         response = self.client.get(self.url)
         self.assertTemplateUsed(response, 'home/index.html')
+
+    def test_home_page_view_includes_top_rated_products(self):
+        """
+        Test that the view includes the top-rated products in the context
+        """
+        top_rated_products = [self.product_2, self.product_1]
+        response = self.client.get(self.url)
+        self.assertCountEqual(response.context['top_rated_products'], top_rated_products)
 
