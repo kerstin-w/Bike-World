@@ -11,13 +11,13 @@
 {% block content %}
 <main>
     <!-- Shopping Bag -->
-    <div class="container margin-top">
+    <div class="margin-top">
         <h1>Bag</h1>
         {% if bag_items %}
         <div class="d-flex flex-md-row flex-column justify-content-around">
             <div class="d-flex flex-column">
                 {% for item in bag_items %}
-                <div class="d-flex flex-md-row flex-column align-items-center product-container-bag mb-4 py-2 px-4">
+                <div class="d-flex flex-sm-row flex-column align-items-center product-container-bag mb-4 py-2 px-4">
                     <div class="product-image-container-bag">
                         <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
                                 src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
@@ -103,6 +103,9 @@
                         </td>
                     </tr>
                 </table>
+                <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end mb-2">
+                    Place Order
+                </button>
                 {% if free_delivery_delta > 0 %}
                 <p class="mb-1 free-deliver-delta">
                     Spending just <strong>{{ free_delivery_delta|intcomma }}&nbsp;€</strong> more and get free delivery!
