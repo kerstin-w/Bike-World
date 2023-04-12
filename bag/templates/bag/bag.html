@@ -73,7 +73,8 @@
                         <a class="btn btn-sm btn-qty-update-bag bg-orange update-link justify-content-end">
                             Update
                         </a>
-                        <a class="btn btn-sm btn-qty-update-bag bg-orange remove-item justify-content-end ms-3">
+                        <a class="btn btn-sm btn-qty-update-bag bg-orange remove-item justify-content-end ms-3"
+                            id="remove_{{ item.item_id }}">
                             <i class="fa-regular fa-trash-can"></i>
                         </a>
                     </div>
@@ -139,10 +140,23 @@
 {% include 'products/components/quantity_input_script.html' %}
 <script type="text/javascript">
     // Update quantity on click
-    $('.update-link').click(function (e) {
+    $('.update-link').on('click', function (e) {
         e.preventDefault();
-        var form = $(this).closest('div').find('.update-form');
+        const form = $(this).closest('div').find('.update-form');
         form.submit();
     });
+    // Remove item and reload on click
+    $('.remove-item').on('click', function (e) {
+        e.preventDefault();
+        const itemId = $(this).attr('id').split('remove_')[1];
+        const url = `/bag/remove/${itemId}/`;
+        const data = {
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+        };
+
+        $.post(url, data, () => {
+            location.reload();
+        });
+    })
 </script>
 {% endblock %}
