@@ -1,0 +1,39 @@
+.input-group {
+    position: relative;
+}
+
+.qty-label {
+    position: absolute;
+    top: 9px;
+    left: 13px;
+    color: #000;
+    pointer-events: none;
+    transition: 0.2s;
+}
+
+.qty_input {
+    border-color: #000;
+    border-radius: 0;
+}
+
+.qty_input:focus+.qty-label,
+.qty_input:not(:placeholder-shown)+.qty-label {
+    top: -10px;
+    left: 50px;
+    font-size: .9rem;
+    color: #000;
+    background-color: white;
+    letter-spacing: .5px;
+    border-top-right-radius: 3px;
+}
+
+.input-group>.form-control {
+    flex: none;
+    width: 95px;
+
+}
+
+.input-group-prepend button,
+.input-group-append button {
+    border-radius: 50%;
+}
