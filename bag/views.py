@@ -31,5 +31,4 @@ class AddToBagView(View):
         request.session['bag'] = bag
 
         request.session['bag'] = bag
-        print(request.session['bag'])
         return redirect(redirect_url)
