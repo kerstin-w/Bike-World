@@ -28,7 +28,7 @@
 
 .shopping-cart .input-group>.form-control {
     flex: none;
-    width: fit-content;
+    width: 60px;
 }
 
 .btn-qty-update-bag {
