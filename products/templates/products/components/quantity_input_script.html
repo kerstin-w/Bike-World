@@ -1,0 +1,21 @@
+<script type="text/javascript">
+    function handleQuantityChange(selector, increaseBy) {
+        $(selector).click(function (e) {
+            e.preventDefault();
+            const closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+
+            // Parse the integer value of the closest input element and set it as currentValue variable
+            let currentValue = parseInt($(closestInput).val());
+
+            // Increase or decrease the currentValue and update the closest input element's value
+            $(closestInput).val(currentValue + increaseBy);
+
+            // Get the data-item_id attribute of the clicked element and set it as itemId variable
+            const itemId = $(this).data('item_id');
+        });
+    }
+
+    // Call the handleQuantityChange function with the given selectors and increaseBy values
+    handleQuantityChange('.increment-qty', 1);
+    handleQuantityChange('.decrement-qty', -1);
+</script>
