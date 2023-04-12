@@ -31,6 +31,18 @@
     width: fit-content;
 }
 
+.btn-qty-update-bag {
+    transition: all .4s ease;
+    white-space: nowrap;
+    border-radius: 0;
+    color: #fff;
+}
+
+.btn-qty-update-bag:hover {
+    color: #fff;
+    transform: scale(1.02);
+}
+
 @media only screen and (max-width: 454px) {
     .product-image-container-bag {
         width: auto;

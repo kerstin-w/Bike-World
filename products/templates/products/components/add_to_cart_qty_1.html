@@ -1,10 +1,8 @@
 <form class="form" action="{% url 'add_to_bag' product.id %}" method="POST">
     {% csrf_token %}
-    <input class="form-control qty_input" type="number" name="quantity" value="1"
-        style="display:none;" required>
+    <input class="form-control qty_input" type="number" name="quantity" value="1" style="display:none;" required>
     <input type="hidden" name="redirect_url" value="{{ request.path }}">
-    <button type="submit"
-        class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end">
+    <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end">
         <i class="fa-solid fa-cart-shopping"></i> Add to Bag
     </button>
 </form>

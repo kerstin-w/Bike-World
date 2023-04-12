@@ -12,7 +12,7 @@
 <main>
     <!-- Shopping Bag -->
     <div class="margin-top shopping-cart mx-3">
-        <h1 class="liner">Shopping Bag</h1>
+        <h1 class="liner upper">Shopping Bag</h1>
         <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg my-3 d-md-none">
             Place Order
         </button>
@@ -44,7 +44,7 @@
                             <div class="form-row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <div class="input-group mb-3 d-flex align-items-center">
+                                        <div class="input-group mb-3 d-flex flex-nowrap align-items-center">
                                             <div class="input-group-prepend pe-2">
                                                 <button class="decrement-qty btn btn-black btn-outline-dark btn-sm"
                                                     data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
@@ -67,10 +67,12 @@
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <a class="btn btn-shop-now bg-orange update-link justify-content-end">
+                                        <a
+                                            class="btn btn-sm btn-qty-update-bag bg-orange update-link justify-content-end">
                                             Update
                                         </a>
-                                        <a class="btn btn-shop-now bg-orange remove-item justify-content-end ms-3">
+                                        <a
+                                            class="btn btn-sm btn-qty-update-bag bg-orange remove-item justify-content-end ms-3">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </a>
                                     </div>
