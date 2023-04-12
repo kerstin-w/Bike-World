@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views import View
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 
 
 class BagView(TemplateView):
@@ -29,6 +29,24 @@ class AddToBagView(View):
             bag[item_id] = quantity
 
         request.session['bag'] = bag
+        return redirect(redirect_url)
+
+class AdjustBagView(View):
+    """
+    View to adjust items in the shopping bag
+    """
+    def post(self, request, item_id):
+        """
+        Add quantity of the product to the shopping bag
+        """
+
+        quantity = int(request.POST.get('quantity'))
+        bag = request.session.get('bag', {})
+
+        if quantity > 0:
+            bag[item_id] = quantity
+        else:
+            bag.pop['item_id']
 
         request.session['bag'] = bag
-        return redirect(redirect_url)
+        return redirect(reverse('view_bag'))
