@@ -11,7 +11,7 @@ def bag_contents(request):
     bag_items = []
     total = 0
     product_count = 0
-    bag = request.session.get('bag', {})
+    bag = request.session.get("bag", {})
 
     # Calculate total cost and count of items in the bag
     for item_id, quantity in bag.items():
@@ -24,20 +24,20 @@ def bag_contents(request):
 
         total += quantity * price
         product_count += quantity
-        bag_items.append({
-            'item_id': item_id,
-            'quantity': quantity,
-            'product': product,
-        })
+        bag_items.append(
+            {
+                "item_id": item_id,
+                "quantity": quantity,
+                "product": product,
+            }
+        )
 
     # Calculate amount needed to reach the free delivery threshold
     free_delivery_delta = max(settings.FREE_DELIVERY_THRESHOLD - total, 0)
 
     # Calculate delivery cost
     delivery = (
-        total + Decimal(settings.STANDARD_DELIVERY_COST)
-        if free_delivery_delta > 0
-        else 0
+        settings.STANDARD_DELIVERY_COST if free_delivery_delta > 0 else 0
     )
 
     # Calculate the grand total, which is the sum of the total
