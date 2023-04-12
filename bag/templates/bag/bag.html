@@ -13,25 +13,35 @@
     <div class="container margin-top">
         <h1>Bag</h1>
         {% if bag_items %}
-        <div class="row">
-            {% for item in bag_items %}
-            <div class="col-8 d-flex align-items-center product-container-bag mb-4">
-                <div class="product-image-container-bag">
-                    <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
-                            src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
+        <div class="d-flex flex-row justify-content-around">
+            <div class="d-flex flex-column">
+                {% for item in bag_items %}
+                <div class="d-flex align-items-center product-container-bag mb-4 py-2 pe-4">
+                    <div class="product-image-container-bag">
+                        <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
+                                src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
+                    </div>
+                    <div>
+                        <p class="mt-2 ms-1"><strong>{{ item.product.title }}</strong></p>
+                        <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
+                        {% if item.product.sale %}
+                        <p class="product-sale-price price mb-0 mt-4">{{ item.product.sale_price|intcomma }}€</p>
+                        <p class="strike-price">{{ item.product.retail_price|intcomma }}€</p>
+                        {% else %}
+                        <p class="price mt-4">{{ item.product.retail_price|intcomma }}€</p>
+                        {% endif %}
+                    </div>
                 </div>
-                <div>
-                    <p class="mt-2 ms-1"><strong>{{ item.product.title }}</strong></p>
-                    <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
-                    {% if item.product.sale %}
-                    <p class="product-sale-price price mb-0 mt-4">{{ item.product.sale_price|intcomma }}€</p>
-                    <p class="strike-price">{{ item.product.retail_price|intcomma }}€</p>
-                    {% else %}
-                    <p class="price mt-4">{{ item.product.retail_price|intcomma }}€</p>
-                    {% endif %}
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <div class="order-summary p-4">
+                <h2>Summary</h2>
+                <p>Order Subtotal</p>
+                <hr class="divder-bag">
+                <p>Shipping</p>
+                <hr class="divder-bag">
+                <p>Order Total</p>
+            </div>
         </div>
     </div>
     {% else %}
