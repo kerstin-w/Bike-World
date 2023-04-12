@@ -5,6 +5,7 @@
 {% block extra_css %}
 <!-- Bag CSS -->
 <link rel="stylesheet" href="{% static 'bag/css/bag.css' %}">
+<link rel="stylesheet" href="{% static 'css/quantity_input.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,7 +17,7 @@
         <div class="d-flex flex-row justify-content-around">
             <div class="d-flex flex-column">
                 {% for item in bag_items %}
-                <div class="d-flex align-items-center product-container-bag mb-4 py-2 pe-4">
+                <div class="d-flex align-items-center product-container-bag mb-4 py-2 px-4">
                     <div class="product-image-container-bag">
                         <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
                                 src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
@@ -31,16 +32,60 @@
                         <p class="price mt-4">{{ item.product.retail_price|intcomma }}€</p>
                         {% endif %}
                     </div>
+                    <form class="form" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="input-group mb-3 d-flex align-items-center">
+                                        <div class="input-group-prepend pe-2">
+                                            <button class="decrement-qty btn btn-black btn-outline-dark btn-sm"
+                                                data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
+                                                <span class="icon">
+                                                    <i class="fas fa-minus"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <input class="form-control qty_input" type="number" name="quantity" value="1"
+                                            min="1" max="99" data-item_id="{{ product.id }}"
+                                            id="id_qty_{{ product.id }}" required>
+                                        <label for="id_qty_{{ product.id }}" class="qty-label px-1">Quantity:</label>
+                                        <div class="input-group-append ps-2">
+                                            <button class="increment-qty btn btn-black btn-outline-dark btn-sm"
+                                                data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
+                                                <span class="icon">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <a class="btn btn-shop-now bg-orange update-link justify-content-end">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-shop-now bg-orange remove-item justify-content-end ms-3">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 {% endfor %}
             </div>
             <div class="order-summary p-4">
                 <h2>Summary</h2>
-                <p>Order Subtotal</p>
+                <p><strong>Order Subtotal:&nbsp;</strong>{{ total|intcomma }}&nbsp;€</p>
                 <hr class="divder-bag">
-                <p>Shipping</p>
+                <p><strong>Delivery:&nbsp;</strong>{{ delivery|intcomma }}&nbsp;€</p>
                 <hr class="divder-bag">
-                <p>Order Total</p>
+                <p><strong>Order Total:&nbsp;</strong>{{ grand_total|intcomma }}&nbsp;€</p>
+                {% if free_delivery_delta > 0 %}
+                <p class="mb-1 free-deliver-delta">
+                    Spending just <strong>{{ free_delivery_delta|intcomma }}&nbsp;€</strong> more and get free delivery!
+                </p>
+                {% endif %}
             </div>
         </div>
     </div>
