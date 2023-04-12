@@ -42,8 +42,7 @@
                             <p class="price">{{ product.retail_price|intcomma }}€</p>
                             {% endif %}
                             <div class="d-flex">
-                                <a href="#" class="btn btn-shop-now bg-orange justify-content-end">Add to
-                                    Cart</a>
+                                {% include 'products/components/add_to_cart_qty_1.html' %}
                                 <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
                                     <i class="fa-regular fa-heart fa-sm"></i>
                                 </a>
