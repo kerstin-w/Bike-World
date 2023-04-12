@@ -1,21 +1,41 @@
 <script type="text/javascript">
+    // Function to handle enabling/disabling of decrement/increment buttons depending on the value of the input
+    function handleEnableDisable(itemId) {
+        const currentValue = parseInt($(`#id_qty_${itemId}`).val());
+        const minusDisabled = currentValue < 2;
+        const plusDisabled = currentValue > 98;
+        $(`#decrement-qty_${itemId}`).prop('disabled', minusDisabled);
+        $(`#increment-qty_${itemId}`).prop('disabled', plusDisabled);
+    }
+
+    // Function to handle change of Quantity
     function handleQuantityChange(selector, increaseBy) {
         $(selector).click(function (e) {
             e.preventDefault();
-            const closestInput = $(this).closest('.input-group').find('.qty_input')[0];
-
-            // Parse the integer value of the closest input element and set it as currentValue variable
-            let currentValue = parseInt($(closestInput).val());
+            let currentValue = +$(this).closest('.input-group').find('.qty_input').val();
 
             // Increase or decrease the currentValue and update the closest input element's value
-            $(closestInput).val(currentValue + increaseBy);
+            $(this).closest('.input-group').find('.qty_input').val(currentValue + increaseBy);
 
-            // Get the data-item_id attribute of the clicked element and set it as itemId variable
+            // Get the data-item_id attribute of the clicked element and call the handleEnableDisable function
             const itemId = $(this).data('item_id');
+            handleEnableDisable(itemId);
         });
     }
 
     // Call the handleQuantityChange function with the given selectors and increaseBy values
     handleQuantityChange('.increment-qty', 1);
     handleQuantityChange('.decrement-qty', -1);
+
+    // Enabling/disabling of all inputs on page load
+    $('.qty_input').each(function () {
+        const itemId = $(this).data('item_id');
+        handleEnableDisable(itemId);
+    });
+
+    // Check enable/disable every time the input is changed
+    $('.qty_input').on('change', function () {
+        const itemId = $(this).data('item_id');
+        handleEnableDisable(itemId);
+    });
 </script>
