@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views import View
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, HttpResponse
 
 
 class BagView(TemplateView):
@@ -31,6 +31,7 @@ class AddToBagView(View):
         request.session['bag'] = bag
         return redirect(redirect_url)
 
+
 class AdjustBagView(View):
     """
     View to adjust items in the shopping bag
@@ -50,3 +51,21 @@ class AdjustBagView(View):
 
         request.session['bag'] = bag
         return redirect(reverse('view_bag'))
+
+
+class RemoveItemFromBagView(View):
+    """
+    View to remove items in the shopping bag
+    """
+    def post(self, request, item_id):
+        """
+        Remove item from Shopping Bag
+        """
+        try:
+            bag = request.session.get('bag', {})
+            bag.pop(item_id)
+
+            request.session['bag'] = bag
+            return HttpResponse(status=200)
+        except Exception as e:
+            return HttpResponse(status=500)
