@@ -11,6 +11,10 @@
     height: fit-content
 }
 
+.order-total {
+    border-top: dashed 1px #a7a7a7;
+}
+
 .divder-bag {
     max-width: 90%;
     border-top: dashed 1px #000;
