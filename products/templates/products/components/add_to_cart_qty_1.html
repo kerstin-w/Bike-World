@@ -1,4 +1,4 @@
-<form class="form" action="{% url 'add_to_bag' product.id %}" method="POST">
+<form class="form" action="{% url 'add_to_bag' product.id %}?{{ request.GET.urlencode }}" method="POST">
     {% csrf_token %}
     <input class="form-control qty_input" type="number" name="quantity" value="1" style="display:none;" required>
     <input type="hidden" name="redirect_url" value="{{ request.path }}">
