@@ -1,23 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+<!-- Bag CSS -->
+<link rel="stylesheet" href="{% static 'bag/css/bag.css' %}">
+{% endblock %}
+
 {% block content %}
 <main>
-    <!-- Hero Banner-->
+    <!-- Shopping Bag -->
     <div class="container margin-top">
         <h1>Bag</h1>
         {% if bag_items %}
-        <div class="table-responsive rounded">
-            {{ bag_items }}
+        <div class="row">
+            {% for item in bag_items %}
+            <div class="col-8 d-flex align-items-center product-container-bag mb-4">
+                <div class="product-image-container-bag">
+                    <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
+                            src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
+                </div>
+                <div>
+                    <p class="mt-2 ms-1"><strong>{{ item.product.title }}</strong></p>
+                    <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
+                    {% if item.product.sale %}
+                    <p class="product-sale-price price mb-0 mt-4">{{ item.product.sale_price|intcomma }}€</p>
+                    <p class="strike-price">{{ item.product.retail_price|intcomma }}€</p>
+                    {% else %}
+                    <p class="price mt-4">{{ item.product.retail_price|intcomma }}€</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% else %}
-        <p class="lead mb-5">Your bag is empty.</p>
-        <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
-            <span class="icon">
-                <i class="fas fa-chevron-left"></i>
-            </span>
-            <span class="text-uppercase">Keep Shopping</span>
-        </a>
-        {% endif %}
+    </div>
+    {% else %}
+    <p class="lead mb-5">Your bag is empty.</p>
+    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+        <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+        </span>
+        <span class="text-uppercase">Keep Shopping</span>
+    </a>
+    {% endif %}
     </div>
 
 </main>
