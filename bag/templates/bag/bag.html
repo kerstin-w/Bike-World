@@ -28,8 +28,8 @@
                             <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
                                     src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
                         </div>
-                        <div>
-                            <p class="mt-2 ms-1"><strong>{{ item.product.title }}</strong></p>
+                        <div class="ms-1">
+                            <p class="mt-2 mb-1"><strong>{{ item.product.title }}</strong></p>
                             <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
                             {% if item.product.sale %}
                             <p class="product-sale-price price mb-0 mt-4">{{ item.product.sale_price|intcomma }}€</p>
@@ -48,18 +48,18 @@
                                     <div class="input-group mb-3 d-flex flex-nowrap align-items-center">
                                         <div class="input-group-prepend pe-2">
                                             <button class="decrement-qty btn btn-black btn-outline-dark btn-sm"
-                                                data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
+                                                data-item_id="{{ item.item_id }}" id="decrement-qty_{{ item.item_id }}">
                                                 <span class="icon">
                                                     <i class="fas fa-minus"></i>
                                                 </span>
                                             </button>
                                         </div>
                                         <input class="form-control qty_input" type="number" name="quantity"
-                                            value="{{ item.quantity }}" min="1" max="99" data-item_id="{{ product.id }}"
-                                            id="id_qty_{{ product.id }}" required>
+                                            value="{{ item.quantity }}" min="1" max="99"
+                                            data-item_id="{{ item.item_id }}" id="id_qty_{{ item.item_id }}" required>
                                         <div class="input-group-append ps-2">
                                             <button class="increment-qty btn btn-black btn-outline-dark btn-sm"
-                                                data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
+                                                data-item_id="{{ item.item_id }}" id="increment-qty_{{ item.item_id }}">
                                                 <span class="icon">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
