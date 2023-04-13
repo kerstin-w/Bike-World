@@ -1,0 +1,61 @@
+<div class="accordion my-5" id="accordionDetail">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Description
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionDetail">
+            <div class="accordion-body">
+                <p>{{ product.description }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Tech Details
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+            data-bs-parent="#accordionDetail">
+            <div class="accordion-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Brand:</td>
+                            <td>{{ product.brand }}</td>
+                        </tr>
+                        <tr>
+                            <td>Gender:</td>
+                            <td>{{ product.get_gender_display }}</td>
+                        </tr>
+                        <tr>
+                            <td>Size:</td>
+                            <td>{{ product.wheel_size }}</td>
+                        </tr>
+                        <tr>
+                            <td>Type:</td>
+                            <td>{{ product.bike_type }}</td>
+                        </tr>
+                        <tr>
+                            <td>Material:</td>
+                            <td>{{ product.material }}</td>
+                        </tr>
+                        <tr>
+                            <td>Derailleur :</td>
+                            <td>{{ product.derailleur  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Item number :</td>
+                            <td>{{ product.sku  }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

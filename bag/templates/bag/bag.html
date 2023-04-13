@@ -48,86 +48,12 @@
                         </div>
                     </div>
                     <!-- Shopping Bag Item Qty Update -->
-                    <div>
-                        <form class="form update-form" action="{% url 'adjust_bag' item.item_id %}" method="POST">
-                            {% csrf_token %}
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <div class="input-group mb-3 d-flex flex-nowrap align-items-center">
-                                        <div class="input-group-prepend pe-2">
-                                            <button class="decrement-qty btn btn-black btn-outline-dark btn-sm"
-                                                data-item_id="{{ item.item_id }}" id="decrement-qty_{{ item.item_id }}">
-                                                <span class="icon">
-                                                    <i class="fas fa-minus"></i>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <input class="form-control qty_input" type="number" name="quantity"
-                                            value="{{ item.quantity }}" min="1" max="99"
-                                            data-item_id="{{ item.item_id }}" id="id_qty_{{ item.item_id }}" required>
-                                        <div class="input-group-append ps-2">
-                                            <button class="increment-qty btn btn-black btn-outline-dark btn-sm"
-                                                data-item_id="{{ item.item_id }}" id="increment-qty_{{ item.item_id }}">
-                                                <span class="icon">
-                                                    <i class="fas fa-plus"></i>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-                        <a class="btn btn-sm btn-qty-update-bag bg-orange update-link justify-content-end">
-                            Update
-                        </a>
-                        <a class="btn btn-sm btn-qty-update-bag bg-orange remove-item justify-content-end ms-3"
-                            id="remove_{{ item.item_id }}">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </a>
-                    </div>
+                    {% include 'bag/components/bag_form_update_and_remove_qty.html' %}
                 </div>
                 {% endfor %}
             </div>
             <!-- Order Summary -->
-            <div class="order-summary p-lg-5 ms-md-2 ms-0 mb-4">
-                <h2>Summary</h2>
-                <hr class="divder-bag">
-                <table>
-                    <tr>
-                        <td>
-                            <p>Subtotal:&nbsp;</p>
-                        </td>
-                        <td>
-                            <p>{{ total|intcomma }}&nbsp;€</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Delivery:&nbsp;</p>
-                        </td>
-                        <td>
-                            <p>{{ delivery|intcomma }}&nbsp;€</p>
-                        </td>
-                    </tr>
-                    <tr class="order-total">
-                        <td>
-                            <p class="pt-2"><strong>Order Total:&nbsp;</strong></p>
-                        </td>
-                        <td>
-                            <p class="pt-2">{{ grand_total|intcomma }}&nbsp;€</p>
-                        </td>
-                    </tr>
-                </table>
-                <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg mb-2">
-                    Place Order
-                </button>
-                {% if free_delivery_delta > 0 %}
-                <p class="mb-1 free-deliver-delta">
-                    Spending just <strong>{{ free_delivery_delta|intcomma }}&nbsp;€</strong> more and get free delivery!
-                </p>
-                {% endif %}
-            </div>
+            {% include 'bag/components/bag_order_summary.html' %}
         </div>
     </div>
     {% else %}
