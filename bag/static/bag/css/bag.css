@@ -50,6 +50,24 @@
     }
 }
 
+/* For mobile */
+@media (max-width: 767px) {
+    .shopping-cart .product-container-bag p {
+        font-size: .8rem;
+    }
+
+    .product-container-bag input {
+        padding: 0.35rem 0.5rem;
+        font-size: .8rem;
+    }
+
+    .decrement-qty,
+    .increment-qty {
+        font-size: .65rem
+    }
+
+}
+
 @media only screen and (max-width: 454px) {
     .product-image-container-bag {
         width: auto;

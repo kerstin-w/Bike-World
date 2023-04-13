@@ -29,16 +29,21 @@
                             <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
                                     src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
                         </div>
-                        <div class="ms-1">
+                        <div class="ms-1 w-100">
                             <p class="mt-2 mb-1"><strong>{{ item.product.title }}</strong></p>
-                            <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
+                            <p class="my-0 small text-muted">Size: {{ item.product.wheel_size }}</p>
                             {% if item.product.sale %}
-                            <p class="product-sale-price price mb-0 mt-4">
+                            <p class="price price mb-0 mt-4 me-3 text-end">Total:
                                 {{ item.product.sale_price | multiply_price_by_quantity:item.quantity |intcomma}}€</p>
-                            <p class="strike-price">{{ item.product.retail_price|intcomma }}€</p>
+                            {% if item.quantity > 1%}
+                            <p class="text-end me-3">{{ item.product.sale_price |intcomma}}€</p>
+                            {% endif %}
                             {% else %}
-                            <p class="price mt-4">
+                            <p class="price mb-0 mt-4 text-end me-3">Total:
                                 {{ item.product.retail_price| multiply_price_by_quantity:item.quantity|intcomma  }}€</p>
+                            {% if item.quantity > 1%}
+                            <p class="text-end me-3">{{ item.product.retail_price |intcomma}}€</p>
+                            {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -91,7 +96,7 @@
                 <table>
                     <tr>
                         <td>
-                            <p>Order Subtotal:&nbsp;</p>
+                            <p>Subtotal:&nbsp;</p>
                         </td>
                         <td>
                             <p>{{ total|intcomma }}&nbsp;€</p>
