@@ -99,6 +99,7 @@ class AdjustBagView(View):
             bag.pop(item_id)
 
         request.session["bag"] = bag
+        messages.get_messages(request) # NEEDS TESTING ONCE MESSAGES ARE INSTALLED
         return redirect(reverse("view_bag"))
 
 
