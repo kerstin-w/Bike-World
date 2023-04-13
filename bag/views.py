@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views import View
 from django.shortcuts import render, redirect, reverse, HttpResponse
+from products.models import Product
 
 
 class BagView(TemplateView):
@@ -21,6 +23,7 @@ class AddToBagView(View):
         Add quantity of the product to the shopping bag
         """
 
+        product = Product.objects.get(pk=item_id)
         quantity = int(request.POST.get("quantity"))
         redirect_url = request.POST.get("redirect_url")
         bag = request.session.get("bag", {})
@@ -29,7 +32,9 @@ class AddToBagView(View):
             bag[item_id] += quantity
         else:
             bag[item_id] = quantity
-
+            
+        print("Success")
+        messages.success(request, f'Added {product.title} to bag!')
         request.session["bag"] = bag
 
         """

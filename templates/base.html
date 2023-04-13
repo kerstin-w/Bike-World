@@ -50,6 +50,14 @@
 <body>
     <div class="page-container">
         {% include "components/navbar.html" %}
+        <!--Toast-->
+        {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+            {% include 'components/toasts/toast_success.html' %}
+            {% endfor %}
+        </div>
+        {% endif %}
 
         {% block content %}
         {% endblock %}
@@ -61,6 +69,23 @@
     {% include 'components/scripts.html' %}
 
     {% block postloadjs %}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const toastElList = Array.from(document.querySelectorAll('.toast'))
+            const toastList = toastElList.map(toastEl => new bootstrap.Toast(toastEl))
+
+            const showAllToasts = () => toastList.forEach(toast => toast.show())
+            const hideAllToasts = () => toastList.forEach(toast => toast.hide())
+
+            showAllToasts()
+
+            document.addEventListener('click', event => {
+                if (!toastElList.some(toastEl => toastEl.contains(event.target))) {
+                    hideAllToasts()
+                }
+            })
+        })
+    </script>
     {% endblock %}
 
 </body>

@@ -87,7 +87,10 @@ TEMPLATES = [
         },
     },
 ]
-#Allauth config
+# Toasts
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+# Allauth config
 
 SITE_ID = 1
 
