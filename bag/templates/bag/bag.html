@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load bag_tools %}
 
 {% block extra_css %}
 <!-- Bag CSS -->
@@ -32,10 +33,12 @@
                             <p class="mt-2 mb-1"><strong>{{ item.product.title }}</strong></p>
                             <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
                             {% if item.product.sale %}
-                            <p class="product-sale-price price mb-0 mt-4">{{ item.product.sale_price|intcomma }}€</p>
+                            <p class="product-sale-price price mb-0 mt-4">
+                                {{ item.product.sale_price | multiply_price_by_quantity:item.quantity |intcomma}}€</p>
                             <p class="strike-price">{{ item.product.retail_price|intcomma }}€</p>
                             {% else %}
-                            <p class="price mt-4">{{ item.product.retail_price|intcomma }}€</p>
+                            <p class="price mt-4">
+                                {{ item.product.retail_price| multiply_price_by_quantity:item.quantity|intcomma  }}€</p>
                             {% endif %}
                         </div>
                     </div>
