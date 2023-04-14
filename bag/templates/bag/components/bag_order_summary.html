@@ -28,9 +28,11 @@
             </td>
         </tr>
     </table>
-    <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg mb-2">
-        Place Order
-    </button>
+    <a href="{% url 'checkout' %}">
+        <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg mb-2">
+            Place Order
+        </button>
+    </a>
     {% if free_delivery_delta > 0 %}
     <p class="mb-1 free-deliver-delta">
         Spending just <strong>{{ free_delivery_delta|intcomma }}&nbsp;€</strong> more and get free delivery!

@@ -4,6 +4,8 @@
 {% load bag_tools %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'bag/css/bag.css' %}">
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,10 +13,85 @@
     <!-- Checkout -->
     <div class="margin-top shopping-cart mx-3">
         <h1 class="liner upper">Checkout</h1>
-        <div class="d-flex row justify-content-around mt-md-3">
+        <a href="{% url 'view_bag' %}">
+            <button class="btn pb-4 back-button">&larr; Back to Shopping Bag</button>
+        </a>
+        <div class="d-flex felx-column justify-content-around mt-md-3">
+            <div class="d-flex flex-row w-50">
+                <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
+                    {% csrf_token %}
+                    <p class="text-muted">Please enter your Details to complete your order.</p>
+                    <fieldset class="rounded mb-4">
+                        <legend class="fieldset-label small px-2 auto text-black">Details</legend>
+                        {{ order_form.full_name | as_crispy_field }}
+                        {{ order_form.email | as_crispy_field }}
+                    </fieldset>
+                    <fieldset class="rounded mb-4">
+                        <legend class="fieldset-label small text-black px-2 w-auto">Delivery</legend>
+                        {{ order_form.phone_number | as_crispy_field }}
+                        {{ order_form.country | as_crispy_field }}
+                        {{ order_form.postcode | as_crispy_field }}
+                        {{ order_form.town_or_city | as_crispy_field }}
+                        {{ order_form.street_address1 | as_crispy_field }}
+                        {{ order_form.street_address2 | as_crispy_field }}
+                        <div class="form-check form-check-inline float-right mr-0">
+                            {% if user.is_authenticated %}
+                            <label class="form-check-label" for="id-save-info">Save this delivery information to my
+                                profile</label>
+                            <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info"
+                                checked>
+                            {% else %}
+                            <label class="form-check-label" for="id-save-info">
+                                <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
+                                <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                            </label>
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <fieldset class="">
+                        <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
+                        <!-- A Stripe card element will go here -->
+                        <div class="mb-3" id="card-element"></div>
 
+                        <!-- Used to display form errors -->
+                        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                    </fieldset>
+                </form>
+            </div>
             <!-- Order Summary -->
-            {% include 'bag/components/bag_order_summary.html' %}
+            <div class="order-summary p-lg-5 ms-md-2 ms-0 mb-4">
+                <h2>Summary</h2>
+                <hr class="divder-bag">
+                <table>
+                    <tr>
+                        <td>
+                            <p>Subtotal:&nbsp;</p>
+                        </td>
+                        <td>
+                            <p>{{ total|intcomma }}&nbsp;€</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Delivery:&nbsp;</p>
+                        </td>
+                        <td>
+                            <p>{{ delivery|intcomma }}&nbsp;€</p>
+                        </td>
+                    </tr>
+                    <tr class="order-total">
+                        <td>
+                            <p class="pt-2"><strong>Order Total:&nbsp;</strong></p>
+                        </td>
+                        <td>
+                            <p class="pt-2">{{ grand_total|intcomma }}&nbsp;€</p>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg mb-2">
+                    Complete Order
+                </button>
+            </div>
         </div>
     </div>
     </div>
