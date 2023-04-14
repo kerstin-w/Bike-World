@@ -80,8 +80,8 @@
         if (quantity >= 1 && quantity <= 99) {
             form.submit();
         } else {
-            messages.error(request, 'Please enter a quantity between 1 and 99');
-            return false;
+            input[0].setCustomValidity('Please enter a quantity between 1 and 99');
+            input[0].reportValidity();
         }
     });
     // Remove item and reload on click
