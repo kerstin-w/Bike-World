@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'bag/css/bag.css' %}">
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Checkout -->
+    <div class="margin-top shopping-cart mx-3">
+        <h1 class="liner upper">Thank You for your order</h1>
+        <p class="text-black">Your order information is below. A confirmation email will be sent to
+            <strong>{{ order.email }}</strong>.</p>
+        <div class="d-flex flex-column flex-sm-row justify-content-around mt-md-3">
+            <div class="d-flex flex-row checkout-details p-lg-5 p-4">
+            </div>
+            <!-- Order Summary -->
+            <div class="order-summary p-lg-5 ms-md-2 ms-0 mb-4">
+                <h2>Summary</h2>
+                <hr class="divder-bag">
+                <table>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+{% block postloadjs %}
+{{ block.super }}
+{{ stripe_public_key|json_script:"id_stripe_public_key" }}
+{{ client_secret|json_script:"id_client_secret" }}
+<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{% endblock %}
