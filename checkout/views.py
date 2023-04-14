@@ -4,6 +4,8 @@ from django.contrib import messages
 from .forms import OrderForm
 from bag.context_processors import bag_contents
 
+import stripe
+
 
 def checkout(request):
     """
