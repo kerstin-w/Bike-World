@@ -70,6 +70,7 @@
 {% endblock %}
 
 {% block postloadjs %}
+{{ block.super }}
 <!-- Products JS -->
 <script src="{% static 'products/js/back_to_top.js' %}"></script>
 <script src="{% static 'products/js/filters.js' %}"></script>
