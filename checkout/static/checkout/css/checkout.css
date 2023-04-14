@@ -1,0 +1,29 @@
+.checkout-details {
+    width: 50%;
+    background-color: #dfdfdf;
+}
+
+.fieldset-label {
+    position: relative;
+    right: .5rem;
+}
+
+.form-control {
+    background-color: transparent;
+}
+
+.form-control:focus {
+    background-color: #ffffff63;
+}
+
+#payment-form .form-control,
+#card-element {
+    color: #000;
+    border: 1.5px solid #717171;
+}
+
+@media only screen and (max-width: 575px) {
+    .checkout-details {
+        width: 100%;
+    }
+}
