@@ -37,3 +37,22 @@ let card = elements.create('card', {
     style: style
 });
 card.mount('#card-element');
+
+// Handle realtime validation errors on the card element
+card.addEventListener('change', function (event) {
+    let errorDiv = document.getElementById('card-errors');
+    // If there is an error
+    if (event.error) {
+        let html = `
+            <span class="icon" role="alert">
+                <i class="fas fa-times"></i>
+            </span>
+            <span>${event.error.message}</span>
+        `;
+        // Update errorDiv with error
+        $(errorDiv).html(html);
+    } else {
+        // Update errorDiv with blank string
+        errorDiv.textContent = '';
+    }
+});
