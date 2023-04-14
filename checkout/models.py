@@ -2,8 +2,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
-from django.db.models import Model
-from django.db.models import Sum
+from django.db.models import Model, Sum
 
 from products.models import Product
 
@@ -37,9 +36,15 @@ class Order(Model):
         max_length=settings.STREET_ADDRESS2_MAX_LENGTH, null=True, blank=True
     )
     date = models.DateTimeField(auto_now_add=True)
-    delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, null=False, default=0)
-    order_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
+    delivery_cost = models.DecimalField(
+        max_digits=6, decimal_places=2, null=False, default=0
+    )
+    order_total = models.DecimalField(
+        max_digits=10, decimal_places=2, null=False, default=0
+    )
+    grand_total = models.DecimalField(
+        max_digits=10, decimal_places=2, null=False, default=0
+    )
 
     def _generate_order_number(self):
         """
