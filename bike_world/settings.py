@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
 
+    # Crispy
+    'crispy_forms',
+    "crispy_bootstrap5",
+
     # Allauth
     'allauth',
     'allauth.account',
@@ -85,9 +89,20 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'bag.context_processors.bag_contents'
             ],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_field',
+            ]
         },
     },
 ]
+
+# Crispy Forms
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 # Toasts
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
