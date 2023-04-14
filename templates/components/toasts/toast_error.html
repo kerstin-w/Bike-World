@@ -1,11 +1,12 @@
-<div id="toast" class="toast fade mx-auto custom-toast" data-bs-autohide="false" role="alert" aria-live="assertive"
-    aria-atomic="true">
-    <div class="toast-header bg-white text-dark">
+<div id="toast" class="toast fade mx-auto custom-toast rounded" data-bs-autohide="false" role="alert"
+    aria-live="assertive" aria-atomic="true">
+    <div class="arrow-up"></div>
+    <div class="toast-header bg-white text-dark rounded-top">
         <strong class="me-auto text-danger"><i class="fa-solid fa-triangle-exclamation">&nbsp;Error!</i></strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
         </button>
     </div>
-    <div class="toast-body bg-white">
+    <div class="toast-body bg-white rounded-bottom">
         {{ message|safe }}
     </div>
 </div>
