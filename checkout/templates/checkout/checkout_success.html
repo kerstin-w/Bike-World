@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load bag_tools %}
+
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'bag/css/bag.css' %}">
@@ -14,24 +16,99 @@
         <h1 class="liner upper">Thank You for your order</h1>
         <p class="text-black">Your order information is below. A confirmation email will be sent to
             <strong>{{ order.email }}</strong>.</p>
-        <div class="d-flex flex-column flex-sm-row justify-content-around mt-md-3">
-            <div class="d-flex flex-row checkout-details p-lg-5 p-4">
+        <div class="d-flex flex-column flex-lg-row justify-content-around mt-md-3">
+            <div class="d-flex flex-row p-lg-5 p-4">
+                <div class="d-flex flex-column">
+                    {% for item in order.lineitems.all %}
+                    <!-- Shopping Bag Item Details -->
+                    <div
+                        class="d-flex flex-sm-row flex-column align-items-center justify-content-between product-container-bag mb-4 py-2 px-4">
+                        <div class="d-flex flex-row align-items-center w-100">
+                            <div class="product-image-container-bag">
+                                <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
+                                        src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
+                            </div>
+                            <div class="ms-1 w-100">
+                                <p class="mt-2 mb-1"><strong>{{ item.product.title }}</strong></p>
+                                <p class="my-0 small text-muted">Size: {{ item.product.wheel_size }}</p>
+                                <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                                {% if item.product.sale %}
+                                <p class="price price mb-0 mt-4 me-3 text-end">Total:
+                                    {{ item.product.sale_price | multiply_price_by_quantity:item.quantity |intcomma}}€
+                                </p>
+                                {% else %}
+                                <p class="price mb-0 mt-4 text-end me-3">Total:
+                                    {{ item.product.retail_price| multiply_price_by_quantity:item.quantity|intcomma  }}€
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-            <!-- Order Summary -->
-            <div class="order-summary p-lg-5 ms-md-2 ms-0 mb-4">
-                <h2>Summary</h2>
+            <!-- CheckOut Order Summary -->
+            <div class="order-summary checked-out-order-summary p-lg-5 ms-md-2 ms-0 mb-4">
+                <h2 class="upper">Order Summary:</h2>
                 <hr class="divder-bag">
-                <table>
-                </table>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-black font-weight-bold">Order Number</p>
+                    </div>
+                    <div class="col-6 text-md-right">
+                        <p class="mb-0">{{ order.order_number }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-black font-weight-bold">Order Date</p>
+                    </div>
+                    <div class="col-6 text-md-right">
+                        <p class="mb-0">{{ order.date }}</p>
+                    </div>
+                </div>
+                <hr class="divder-bag">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-black font-weight-bold">Delivery/Billing</p>
+                    </div>
+                    <div class="col-6 text-md-right">
+                        <p class="mb-0">{{ order.full_name }}</p>
+                        <p class="mb-0">{{ order.street_address1 }}</p>
+                        <p class="mb-0">{{ order.street_address2 }}</p>
+                        <p class="mb-0">{{ order.town_or_city }}</p>
+                        <p class="mb-0">{{ order.postal_code }}</p>
+                        <p class="mb-0">{{ order.country }}</p>
+                        <p class="mb-0">{{ order.phone_number }}</p>
+                    </div>
+                </div>
+                <hr class="divder-bag">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-black font-weight-bold">Order Total</p>
+                    </div>
+                    <div class="col-3 text-start">
+                        <p class="mb-0">{{ order.order_total }}&nbsp;€</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-black font-weight-bold">Delivery</p>
+                    </div>
+                    <div class="col-3 text-start">
+                        <p class="mb-0">{{ order.delivery_cost }}&nbsp;€</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-black font-weight-bold"><strong>Grand Total</strong></p>
+                    </div>
+                    <div class="col-3 text-start">
+                        <p class="mb-0"><strong>{{ order.grand_total }}&nbsp;€</strong></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </main>
 {% endblock content %}
-
-{% block postloadjs %}
-{{ block.super }}
-{{ stripe_public_key|json_script:"id_stripe_public_key" }}
-{{ client_secret|json_script:"id_client_secret" }}
-<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
-{% endblock %}
