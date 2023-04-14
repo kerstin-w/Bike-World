@@ -12,7 +12,7 @@ class Order(Model):
     Data Model for Order
     """
 
-    order_number = models.CharField(max_length=32, null=False, editable=False)
+    order_number = models.CharField(max_length=10, null=False, editable=False)
     full_name = models.CharField(
         max_length=settings.FULL_NAME_MAX_LENGTH, null=False, blank=False
     )
