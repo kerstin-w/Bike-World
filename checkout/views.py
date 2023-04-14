@@ -112,3 +112,31 @@ def checkout(request):
         "client_secret": intent.client_secret,
     }
     return render(request, template, context)
+
+
+def checkout_success(request, order_number):
+    """
+    Handle successful checkouts
+    """
+    # Get save_info flag from the session
+    save_info = request.session.get("save_info")
+    # Get the order
+    order = get_object_or_404(Order, order_number=order_number)
+    # Display a success message to the user with the order number and email
+    messages.success(
+        request,
+        f"Order successfully processed! \
+        Your order number is {order_number}. A confirmation \
+        email will be sent to {order.email}.",
+    )
+
+    # Delete bag from the session
+    if "bag" in request.session:
+        del request.session["bag"]
+
+    # Render the checkout success template
+    template = "checkout/checkout_success.html"
+    context = {
+        "order": order,
+    }
+    return render(request, template, context)
