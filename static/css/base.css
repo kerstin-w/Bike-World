@@ -396,7 +396,11 @@ footer ul {
 .toast {
     width: auto;
     max-width: 320px;
+    background-color: #ebedef;
+    color: #40464f;
+    border-color: #dadee1;
 }
+
 
 
 /*=============== Media ===============*/
