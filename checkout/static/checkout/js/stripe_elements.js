@@ -9,9 +9,9 @@
     https://stackoverflow.com/questions/43824382/custom-font-src-with-stripe/56985340
 */
 
-let stripe_public_key = $('#id_stripe_public_key').text().slice(1, -1);
-let client_secret = $('#id_client_secret').text().slice(1, -1);
-let stripe = Stripe(stripe_public_key);
+let stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
+let clientSecret = $('#id_client_secret').text().slice(1, -1);
+let stripe = Stripe(stripePublicKey);
 let elements = stripe.elements({
     fonts: [{
         // integrate Google Fonts Montserrat into stripe
@@ -55,4 +55,41 @@ card.addEventListener('change', function (event) {
         // Update errorDiv with blank string
         errorDiv.textContent = '';
     }
+});
+
+// Handle form submit
+let form = document.getElementById('payment-form');
+
+form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    card.update({
+        'disabled': true
+    });
+    $('#submit-button').attr('disabled', true);
+    stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+            card: card,
+        }
+    }).then(function (result) {
+        // Display any card errors
+        if (result.error) {
+            let errorDiv = document.getElementById('card-errors');
+            let html = `
+                <span class="icon" role="alert">
+                <i class="fas fa-times"></i>
+                </span>
+                <span>${result.error.message}</span>`;
+            $(errorDiv).html(html);
+            card.update({
+                'disabled': false
+            });
+            // Enable submit button
+            $('#submit-button').attr('disabled', false);
+        } else {
+            // Submit form if payment intent is succesfull
+            if (result.paymentIntent.status === 'succeeded') {
+                form.submit();
+            }
+        }
+    });
 });
