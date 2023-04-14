@@ -21,11 +21,11 @@ let elements = stripe.elements({
 let style = {
     base: {
         color: '#000',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontFamily: 'Roboto, sans-serif',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
         '::placeholder': {
-            color: '#aab7c4'
+            color: '#717171'
         }
     },
     invalid: {
