@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views import View
-from django.shortcuts import render, redirect, reverse, HttpResponse
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from products.models import Product
 
 
@@ -23,18 +23,18 @@ class AddToBagView(View):
         Add quantity of the product to the shopping bag
         """
 
-        product = Product.objects.get(pk=item_id)
+        product = get_object_or_404(Product, pk=item_id)
         quantity = int(request.POST.get("quantity"))
         redirect_url = request.POST.get("redirect_url")
         bag = request.session.get("bag", {})
 
         if item_id in list(bag.keys()):
             bag[item_id] += quantity
+            messages.success(request, f'You updated <strong>{product.title}</strong> quantity to <strong>{bag[item_id]}</strong>!')
         else:
             bag[item_id] = quantity
-            
-        print("Success")
-        messages.success(request, f'Added {product.title} to bag!')
+            messages.success(request, f'You added <strong>{product.title}</strong> to bag!')
+
         request.session["bag"] = bag
 
         """
@@ -71,6 +71,7 @@ class AddToBagView(View):
         Save the query parameters when adding item to cart from the CLP
         """
 
+        product = get_object_or_404(Product, pk=item_id)
         current_filters = request.GET.copy()
         current_filters.pop("category_all", None)
         current_filters.pop("brand_all", None)
@@ -81,6 +82,8 @@ class AddToBagView(View):
             + "?"
             + current_filters.urlencode()
         )
+    
+        messages.success(request, f'You added <strong>{product.title}</strong> to bag!')
 
         return redirect(redirect_url_with_filters)
 
@@ -97,14 +100,16 @@ class AdjustBagView(View):
 
         quantity = int(request.POST.get("quantity"))
         bag = request.session.get("bag", {})
+        product = get_object_or_404(Product, pk=item_id)
 
         if quantity > 0:
             bag[item_id] = quantity
+            messages.success(request, f'You updated <strong>{product.title}</strong> quantity to <strong>{bag[item_id]}</strong>!')
         else:
             bag.pop(item_id)
+            messages.success(request, f'You removed <strong>{product.title}</strong>!')
 
         request.session["bag"] = bag
-        messages.get_messages(request) # NEEDS TESTING ONCE MESSAGES ARE INSTALLED
         return redirect(reverse("view_bag"))
 
 
@@ -117,11 +122,15 @@ class RemoveItemFromBagView(View):
         """
         Remove item from Shopping Bag
         """
+        product = get_object_or_404(Product, pk=item_id)
+
         try:
             bag = request.session.get("bag", {})
             bag.pop(item_id)
 
             request.session["bag"] = bag
+            messages.success(request, f'You removed <strong>{product.title}</strong>!')
             return HttpResponse(status=200)
         except Exception as e:
+            messages.error(request, f'Error removing item: {e}')
             return HttpResponse(status=500)
