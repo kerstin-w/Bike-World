@@ -40,6 +40,10 @@ a {
     box-shadow: rgb(0 0 0 / 20%) 0 10px 12px;
 }
 
+.free-deliver-delta {
+    color: #cd4c1e;
+}
+
 /*=============== Navbar ===============*/
 .navbar {
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
@@ -398,9 +402,28 @@ footer ul {
     max-width: 320px;
     background-color: #ebedef;
     color: #40464f;
-    border-color: #dadee1;
+    border-color: #cd4c1d;
 }
 
+
+/* from CSS-tricks.com: https://css-tricks.com/snippets/css/css-triangle/ */
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 11px solid black;
+    position: absolute;
+    top: -10px;
+    right: 70px;
+    border-bottom-color: #cd4c1e !important;
+}
+
+.bag-notification-wrapper {
+    max-height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 
 
 /*=============== Media ===============*/
@@ -491,5 +514,9 @@ footer ul {
 
     .dropdown-menu p {
         border-top: none;
+    }
+
+    .arrow-up {
+        right: 32px;
     }
 }
