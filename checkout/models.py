@@ -2,13 +2,17 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Model
 from django.db.models import Sum
 
+from products.models import Product
 
-class Order(models.Model):
+
+class Order(Model):
     """
     Data Model for Order
     """
+
     order_number = models.CharField(max_length=32, null=False, editable=False)
     full_name = models.CharField(
         max_length=settings.FULL_NAME_MAX_LENGTH, null=False, blank=False
@@ -66,3 +70,38 @@ class Order(models.Model):
 
     def __str__(self):
         return self.order_number
+
+
+class OrderLineItem(Model):
+    """
+    Data Model for Order Line Items
+    """
+
+    order = models.ForeignKey(
+        Order,
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE,
+        related_name="lineitems",
+    )
+    product = models.ForeignKey(
+        Product, null=False, blank=False, on_delete=models.CASCADE
+    )
+    quantity = models.IntegerField(null=False, blank=False, default=0)
+    lineitem_total = models.DecimalField(
+        max_digits=6, decimal_places=2, null=False, blank=False, editable=False
+    )
+
+    def save(self, *args, **kwargs):
+        """
+        Override the original save method to set the lineitem total
+        and update the order total.
+        """
+        if self.product.sale:
+            self.lineitem_total = self.product.sale_price * self.quantity
+        else:
+            self.lineitem_total = self.product.retail_price * self.quantity
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"SKU {self.product.sku} on order {self.order.order_number}"
