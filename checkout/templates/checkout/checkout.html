@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load bag_tools %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Checkout -->
+    <div class="margin-top shopping-cart mx-3">
+        <h1 class="liner upper">Checkout</h1>
+        <div class="d-flex row justify-content-around mt-md-3">
+
+            <!-- Order Summary -->
+            {% include 'bag/components/bag_order_summary.html' %}
+        </div>
+    </div>
+    </div>
+</main>
+{% endblock content %}
