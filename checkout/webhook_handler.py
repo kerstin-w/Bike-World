@@ -78,7 +78,10 @@ class StripeWH_Handler:
         # If the order exists, return a success response
         if order_exists:
             return HttpResponse(
-                content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
+                content=(
+                    f'Webhook received: {event["type"]} '
+                    '| SUCCESS: Verified order already in database'
+                ),
                 status=200,
             )
         else:
@@ -106,7 +109,8 @@ class StripeWH_Handler:
                     )
                     order_line_item.save()
             except Exception as e:
-                # If there was an error, delete the order and return an error response
+                # If there was an error, delete the order and return
+                # an error response
                 if order:
                     order.delete()
                 return HttpResponse(
@@ -115,7 +119,10 @@ class StripeWH_Handler:
                 )
         # If the Order was successfully created, return a success response
         return HttpResponse(
-            content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
+            content=(
+                f'Webhook received: {event["type"]} '
+                '| SUCCESS: Created order in webhook'
+            ),
             status=200,
         )
 
