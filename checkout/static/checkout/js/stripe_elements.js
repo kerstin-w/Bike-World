@@ -70,10 +70,36 @@ form.addEventListener('submit', function (ev) {
     $('#payment-form').fadeToggle(100);
     // Fade in loader overlay
     $('#loading-overlay').fadeToggle(100);
+    // Confirm card payment
     stripe.confirmCardPayment(clientSecret, {
+        // Set payment method
         payment_method: {
             card: card,
-        }
+            // Set billing details
+            billing_details: {
+                name: $.trim(form.full_name.value),
+                phone: $.trim(form.phone_number.value),
+                email: $.trim(form.email.value),
+                address: {
+                    line1: $.trim(form.street_address1.value),
+                    line2: $.trim(form.street_address2.value),
+                    city: $.trim(form.town_or_city.value),
+                    country: $.trim(form.country.value),
+                }
+            }
+        },
+        // Set shipping details
+        shipping: {
+            name: $.trim(form.full_name.value),
+            phone: $.trim(form.phone_number.value),
+            address: {
+                line1: $.trim(form.street_address1.value),
+                line2: $.trim(form.street_address2.value),
+                city: $.trim(form.town_or_city.value),
+                country: $.trim(form.country.value),
+                postal_code: $.trim(form.postcode.value),
+            }
+        },
     }).then(function (result) {
         // Display any card errors
         if (result.error) {
