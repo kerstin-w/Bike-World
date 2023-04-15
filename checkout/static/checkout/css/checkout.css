@@ -19,25 +19,17 @@
     border: 1.5px solid #717171;
 }
 
-.StripeElement,
-.stripe-style-input {
-    box-sizing: border-box;
-    height: 40px;
-    padding: 10px 12px;
-    border: 1px solid transparent;
-    box-shadow: 0 1px 3px 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
-    transition: box-shadow 150ms ease;
+select,
+select option {
+    color: #000;
 }
 
-.StripeElement--focus,
-.stripe-style-input:focus,
-.stripe-style-input:active {
-    box-shadow: 0 1px 3px 0 #cfd7df;
+select:invalid {
+    color: #6c757d;
 }
 
-.StripeElement--webkit-autofill {
-    background-color: #fefde5 !important;
+.form-select:focus {
+    border: 1px solid #717171;
 }
 
 .StripeElement,
@@ -45,7 +37,7 @@
     box-sizing: border-box;
     height: 40px;
     padding: 10px 12px;
-    border: 1px solid transparent;
+    border: 1px solid #717171;
     background-color: transparent;
     box-shadow: 0 1px 3px 0 #e6ebf1;
     -webkit-transition: box-shadow 150ms ease;
