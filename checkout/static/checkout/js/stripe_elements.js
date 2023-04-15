@@ -70,60 +70,79 @@ form.addEventListener('submit', function (ev) {
     $('#payment-form').fadeToggle(100);
     // Fade in loader overlay
     $('#loading-overlay').fadeToggle(100);
-    // Confirm card payment
-    stripe.confirmCardPayment(clientSecret, {
-        // Set payment method
-        payment_method: {
-            card: card,
-            // Set billing details
-            billing_details: {
+
+    // Get save_info checkbox value
+    let saveInfo = Boolean($('#id-save-info').attr('checked'));
+    // From using {% csrf_token %} in the form
+    let csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    // Set post data
+    let postData = {
+        'csrfmiddlewaretoken': csrfToken,
+        'client_secret': clientSecret,
+        'save_info': saveInfo,
+    };
+    // Set url
+    let url = '/checkout/cache_checkout_data/';
+
+    $.post(url, postData).done(function () {
+        // Confirm card payment
+        stripe.confirmCardPayment(clientSecret, {
+            // Set payment method
+            payment_method: {
+                card: card,
+                // Set billing details
+                billing_details: {
+                    name: $.trim(form.full_name.value),
+                    phone: $.trim(form.phone_number.value),
+                    email: $.trim(form.email.value),
+                    address: {
+                        line1: $.trim(form.street_address1.value),
+                        line2: $.trim(form.street_address2.value),
+                        city: $.trim(form.town_or_city.value),
+                        country: $.trim(form.country.value),
+                    }
+                }
+            },
+            // Set shipping details
+            shipping: {
                 name: $.trim(form.full_name.value),
                 phone: $.trim(form.phone_number.value),
-                email: $.trim(form.email.value),
                 address: {
                     line1: $.trim(form.street_address1.value),
                     line2: $.trim(form.street_address2.value),
                     city: $.trim(form.town_or_city.value),
                     country: $.trim(form.country.value),
+                    postal_code: $.trim(form.postcode.value),
                 }
-            }
-        },
-        // Set shipping details
-        shipping: {
-            name: $.trim(form.full_name.value),
-            phone: $.trim(form.phone_number.value),
-            address: {
-                line1: $.trim(form.street_address1.value),
-                line2: $.trim(form.street_address2.value),
-                city: $.trim(form.town_or_city.value),
-                country: $.trim(form.country.value),
-                postal_code: $.trim(form.postcode.value),
-            }
-        },
-    }).then(function (result) {
-        // Display any card errors
-        if (result.error) {
-            let errorDiv = document.getElementById('card-errors');
-            let html = `
+            },
+        }).then(function (result) {
+            // Display any card errors
+            if (result.error) {
+                let errorDiv = document.getElementById('card-errors');
+                let html = `
                 <span class="icon" role="alert">
                 <i class="fas fa-times"></i>
                 </span>
                 <span>${result.error.message}</span>`;
-            $(errorDiv).html(html);
-            // Fade in payment form
-            $('#payment-form').fadeToggle(100);
-            // Fade out loader overlay
-            $('#loading-overlay').fadeToggle(100);
-            card.update({
-                'disabled': false
-            });
-            // Enable submit button
-            $('#submit-button').attr('disabled', false);
-        } else {
-            // Submit form if payment intent is succesfull
-            if (result.paymentIntent.status === 'succeeded') {
-                form.submit();
+                $(errorDiv).html(html);
+                // Fade in payment form
+                $('#payment-form').fadeToggle(100);
+                // Fade out loader overlay
+                $('#loading-overlay').fadeToggle(100);
+                card.update({
+                    'disabled': false
+                });
+                // Enable submit button
+                $('#submit-button').attr('disabled', false);
+            } else {
+                // Submit form if payment intent is succesfull
+                if (result.paymentIntent.status === 'succeeded') {
+                    form.submit();
+                }
             }
-        }
-    });
+        });
+    }).fail(function () {
+        // just reload the page, the error will be in django messages
+        location.reload();
+    })
 });
