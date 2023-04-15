@@ -1,0 +1,29 @@
+{% load humanize %}
+<h2 class="upper">Summary</h2>
+<hr class="divder-bag">
+<table>
+    <tr>
+        <td>
+            <p>Subtotal:&nbsp;</p>
+        </td>
+        <td>
+            <p class="text-end">{{ total|intcomma }}&nbsp;€</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>Delivery:&nbsp;</p>
+        </td>
+        <td>
+            <p class="text-end">{{ delivery|intcomma }}&nbsp;€</p>
+        </td>
+    </tr>
+    <tr class="order-total">
+        <td>
+            <p class="pt-2"><strong>Order Total:&nbsp;</strong></p>
+        </td>
+        <td>
+            <p class="pt-2 text-end">{{ grand_total|intcomma }}&nbsp;€</p>
+        </td>
+    </tr>
+</table>

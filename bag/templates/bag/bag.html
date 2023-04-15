@@ -53,7 +53,19 @@
                 {% endfor %}
             </div>
             <!-- Order Summary -->
-            {% include 'bag/components/bag_order_summary.html' %}
+            <div class="order-summary p-lg-5 ms-md-2 ms-0 mb-4">
+                {% include 'components/order_summary.html' %}
+                <a href="{% url 'checkout' %}">
+                    <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg mb-2">
+                        Place Order
+                    </button>
+                </a>
+                {% if free_delivery_delta > 0 %}
+                <p class="mb-1 free-deliver-delta">
+                    Spending just <strong>{{ free_delivery_delta|intcomma }}&nbsp;€</strong> more and get free delivery!
+                </p>
+                {% endif %}
+            </div>
         </div>
     </div>
     {% else %}
