@@ -45,6 +45,10 @@ class Order(Model):
     grand_total = models.DecimalField(
         max_digits=10, decimal_places=2, null=False, default=0
     )
+    original_bag = models.TextField(null=False, blank=False, default="")
+    stripe_pid = models.CharField(
+        max_length=254, null=False, blank=False, default=""
+    )
 
     def _generate_order_number(self):
         """
@@ -57,9 +61,12 @@ class Order(Model):
         Update grand total each time a line item is added,
         accounting for delivery costs.
         """
-        self.order_total = self.lineitems.aggregate(Sum("lineitem_total"))[
-            "lineitem_total__sum"
-        ] or 0
+        self.order_total = (
+            self.lineitems.aggregate(Sum("lineitem_total"))[
+                "lineitem_total__sum"
+            ]
+            or 0
+        )
         if 0 < self.order_total < settings.FREE_DELIVERY_THRESHOLD:
             self.delivery_cost = settings.STANDARD_DELIVERY_COST
         else:
