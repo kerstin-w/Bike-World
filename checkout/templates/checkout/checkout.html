@@ -17,7 +17,7 @@
             <button class="btn pb-4 back-button">&larr; Back to Shopping Bag</button>
         </a>
         <div class="d-flex flex-column flex-sm-row justify-content-around mt-md-3">
-            <div class="d-flex flex-row checkout-details p-lg-5 p-4">
+            <div class="d-flex flex-row checkout-details p-lg-5 p-4 mb-4">
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
                     {% csrf_token %}
                     <p class="text-muted">Please enter your Details to complete your order.</p>
@@ -64,7 +64,7 @@
             </div>
             <!-- Order Summary -->
             <div class="order-summary p-lg-5 ms-md-2 ms-0 mb-4">
-                <h2>Summary</h2>
+                <h2 class="upper">Summary</h2>
                 <hr class="divder-bag">
                 <table>
                     <tr>
@@ -72,7 +72,7 @@
                             <p>Subtotal:&nbsp;</p>
                         </td>
                         <td>
-                            <p>{{ total|intcomma }}&nbsp;€</p>
+                            <p class="text-end">{{ total|intcomma }}&nbsp;€</p>
                         </td>
                     </tr>
                     <tr>
@@ -80,7 +80,7 @@
                             <p>Delivery:&nbsp;</p>
                         </td>
                         <td>
-                            <p>{{ delivery|intcomma }}&nbsp;€</p>
+                            <p class="text-end">{{ delivery|intcomma }}&nbsp;€</p>
                         </td>
                     </tr>
                     <tr class="order-total">
@@ -88,7 +88,7 @@
                             <p class="pt-2"><strong>Order Total:&nbsp;</strong></p>
                         </td>
                         <td>
-                            <p class="pt-2">{{ grand_total|intcomma }}&nbsp;€</p>
+                            <p class="pt-2 text-end">{{ grand_total|intcomma }}&nbsp;€</p>
                         </td>
                     </tr>
                 </table>
