@@ -16,7 +16,7 @@
         <a href="{% url 'view_bag' %}">
             <button class="btn pb-4 back-button">&larr; Back to Shopping Bag</button>
         </a>
-        <div class="d-flex flex-column flex-sm-row justify-content-around mt-md-3">
+        <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
             <div class="d-flex flex-row checkout-details p-lg-5 p-4 mb-4">
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
                     {% csrf_token %}

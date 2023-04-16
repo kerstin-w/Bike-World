@@ -21,7 +21,7 @@
                 {% for item in order.lineitems.all %}
                 <!-- Shopping Bag Item Details -->
                 <div
-                    class="d-flex flex-sm-row flex-column align-items-center justify-content-between product-container-bag mb-4 py-2 px-4">
+                    class="d-flex flex-md-row flex-column align-items-center justify-content-between product-container-bag mb-4 py-2 px-4">
                     <div class="d-flex flex-row align-items-center w-100">
                         <div class="product-image-container-bag">
                             <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
@@ -50,11 +50,11 @@
                 <h2 class="upper">Order Summary</h2>
                 <hr class="divder-bag">
                 <div class="row mb-4">
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <p class="mb-1"><strong>Order Number:</strong></p>
                         <p class="m-0">{{ order.order_number }}</p>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <p class="mb-1"><strong>Order Date:</strong></p>
                         <p class="m-0">{{ order.date }}</p>
                     </div>
@@ -76,15 +76,15 @@
                 </div>
                 <hr class="divder-bag">
                 <div class="row mb-4">
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <p class="mb-1"><strong>Order Total:</strong></p>
                         <p>{{ order.order_total }}&nbsp;€</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <p class="mb-1"><strong>Delivery:</strong></p>
                         <p>{{ order.delivery_cost }}&nbsp;€</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <p class="mb-1"><strong>Grand Total:</strong></p>
                         <p class="mb-0"><strong>{{ order.grand_total }}&nbsp;€</strong></p>
                     </div>
