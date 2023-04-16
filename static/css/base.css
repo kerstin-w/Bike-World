@@ -69,6 +69,10 @@ a {
     font-size: 0.5rem;
 }
 
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(0 0 0 / 69%);
+}
+
 .nav-item {
     height: 2.5rem;
 }
