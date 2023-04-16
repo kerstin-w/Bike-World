@@ -296,10 +296,11 @@ footer {
     background-color: #dfdfdf;
 }
 
-footer h4 {
+footer h3 {
     text-decoration: underline;
     text-decoration-color: #cd4c1d;
     text-underline-offset: 0.5rem;
+    font-size: 1.2rem;
 }
 
 footer ul {
