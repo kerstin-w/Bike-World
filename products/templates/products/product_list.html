@@ -18,37 +18,36 @@
             {% for product in products %}
             <div
                 class="col-lg-2 col-md-3 col-sm-3 col-12 d-flex flex-column align-items-center product-container mb-5 mx-2 py-3">
-                <a href="{% url 'product_detail' product.pk %}">
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
-                                    src="{{ product.image.url }}" alt="{{ product.title }}"></a>
-                        </div>
-                        {% for i in "x"|ljust:product.rating %}
-                        <i class="fa fa-star fa-xs text-dark"></i>
-                        {% endfor %}
-                        {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
-                        <i class="fa fa-star-o fa-xs text-dark"></i>
-                        {% endfor %}
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
+                                src="{{ product.image.url }}" alt="{{ product.title }}"></a>
                     </div>
-                    <div class="product-content d-flex flex-column align-items-start">
-                        <p class="product-title mb-2"><a
-                                href="{% url 'product_detail' product.pk %}">{{product.title}}</a></p>
-                        <div class="d-flex flex-column justify-content-end h-100">
-                            {% if product.sale %}
-                            <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
-                            <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
-                            {% else %}
-                            <p class="price">{{ product.retail_price|intcomma }}€</p>
-                            {% endif %}
-                            <div class="d-flex">
-                                {% include 'products/components/add_to_cart_qty_1.html' %}
-                                <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
-                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                </a>
-                            </div>
+                    {% for i in "x"|ljust:product.rating %}
+                    <i class="fa fa-star fa-xs text-dark"></i>
+                    {% endfor %}
+                    {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
+                    <i class="fa fa-star-o fa-xs text-dark"></i>
+                    {% endfor %}
+                </div>
+                <div class="product-content d-flex flex-column align-items-start">
+                    <p class="product-title mb-2"><a href="{% url 'product_detail' product.pk %}">{{product.title}}</a>
+                    </p>
+                    <div class="d-flex flex-column justify-content-end h-100">
+                        {% if product.sale %}
+                        <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
+                        <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
+                        {% else %}
+                        <p class="price">{{ product.retail_price|intcomma }}€</p>
+                        {% endif %}
+                        <div class="d-flex">
+                            {% include 'products/components/add_to_cart_qty_1.html' %}
+                            <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
+                                <i class="fa-regular fa-heart fa-sm"></i>
+                            </a>
                         </div>
                     </div>
+                </div>
             </div>
             {% endfor %}
             {% else %}
@@ -60,7 +59,7 @@
         </div>
 </section>
 <!-- Back to Top Button -->
-<button type="button" class="btn btn-floating" id="btn-back-to-top">
+<button type="button" class="btn btn-floating" id="btn-back-to-top" aria-label="Back to Top">
     <i class="fas fa-arrow-up"></i>
 </button>
 <!-- Pagination -->
