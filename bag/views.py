@@ -1,182 +1,136 @@
-from django.shortcuts import (
-    render,
-    redirect,
-    reverse,
-    get_object_or_404,
-    HttpResponse,
-)
-from django.views.decorators.http import require_POST
 from django.contrib import messages
-from django.conf import settings
-
-from .forms import OrderForm
-from .models import Order, OrderLineItem
+from django.views.generic import TemplateView
+from django.views import View
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from products.models import Product
-from bag.context_processors import bag_contents
-
-import stripe
-import json
 
 
-@require_POST
-def cache_checkout_data(request):
-    try:
-        # Get stripe pid
-        pid = request.POST.get("client_secret").split("_secret")[0]
-        # Get stripe secret key
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        # Set stripe payment intent
-        stripe.PaymentIntent.modify(
-            pid,
-            metadata={
-                "bag": json.dumps(request.session.get("bag", {})),
-                "save_info": request.POST.get("save_info"),
-                "username": request.user,
-            },
-        )
-        return HttpResponse(status=200)
-    except Exception as e:
-        messages.error(
-            request,
-            "Sorry, your payment cannot be \
-            processed right now. Please try again later.",
-        )
-        return HttpResponse(content=e, status=400)
-
-
-def checkout(request):
+class BagView(TemplateView):
     """
-    View for Order Checkout
+    Render the Shopping Bag
     """
-    # Set stripe keys
-    stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
 
-    if request.method == "POST":
-        # Get basket from session
+    template_name = "bag/bag.html"
+
+
+class AddToBagView(View):
+    """
+    View to add items to the shopping bag
+    """
+
+    def post(self, request, item_id):
+        """
+        Add quantity of the product to the shopping bag
+        """
+
+        product = get_object_or_404(Product, pk=item_id)
+        quantity = int(request.POST.get("quantity"))
+        redirect_url = request.POST.get("redirect_url")
         bag = request.session.get("bag", {})
-        # Get form data from session
-        form_data = {
-            "full_name": request.POST["full_name"],
-            "email": request.POST["email"],
-            "phone_number": request.POST["phone_number"],
-            "country": request.POST["country"],
-            "postcode": request.POST["postcode"],
-            "town_or_city": request.POST["town_or_city"],
-            "street_address1": request.POST["street_address1"],
-            "street_address2": request.POST["street_address2"],
-        }
-        # Create an instance of OrderForm from the form data
-        order_form = OrderForm(form_data)
-        if order_form.is_valid():
-            # Save the new Order to the database, but don't commit yet
-            order = order_form.save(commit=False)
-            # Get Stripe PaymentIntent ID from the POST data
-            pid = request.POST.get("client_secret").split("_secret")[0]
-            # Save Stripe PaymentIntent ID and bag as JSON to the Order model
-            order.stripe_pid = pid
-            order.original_bag = json.dumps(bag)
-            order.save()
-            # Iterate through items in bag to create OrderLineItem for each
-            for item_id, item_data in bag.items():
-                try:
-                    product = get_object_or_404(Product, pk=item_id)
-                    order_line_item = OrderLineItem(
-                        order=order,
-                        product=product,
-                        quantity=item_data,
-                    )
-                    order_line_item.save()
-                except Product.DoesNotExist:
-                    messages.error(
-                        request,
-                        (
-                            "One of the products in your basket wasn't found \
-                        in our database. Please call for assistance!"
-                        ),
-                    )
-                    # Delete the order if the product no longer exists
-                    order.delete()
-                    return redirect(reverse("view_bag"))
-            # Update the save_info flag in the session
-            request.session["save_info"] = "save-info" in request.POST
-            # Redirect to checkout success page with order number as arguments
-            return redirect(
-                reverse("checkout_success", args=[order.order_number])
-            )
+
+        if item_id in list(bag.keys()):
+            bag[item_id] += quantity
+            messages.success(request, f'You updated <strong>{product.title}</strong> quantity to <strong>{bag[item_id]}</strong>!')
         else:
-            # Alert user if there is an error with the order form
-            messages.error(
-                request,
-                "There was an error with your form. \
-                Please double check your information.",
+            bag[item_id] = quantity
+            messages.success(request, f'You added <strong>{product.title}</strong> to bag!')
+
+        request.session["bag"] = bag
+
+        """
+        Save filters, by getting a copy of the current query parameters,
+        generate a Url with ramaining query parameters
+        """
+        current_filters = request.GET.copy()
+        current_filters.pop("category_all", None)
+        current_filters.pop("brand_all", None)
+        query_string = current_filters.urlencode()
+        redirect_url_with_filters = (
+            f"{reverse('products')}?{query_string}"
+            if query_string
+            else reverse("products")
+        )
+        """
+        Construct a new URL for the View, including only the remaining filters.
+        If there are any filters left, they are appended to the base
+        URL for the view. if there are no filters left, only the base
+        URL is returned.
+        """
+        if redirect_url:
+            redirect_url_with_filters = (
+                f"{redirect_url}?{query_string}"
+                if query_string
+                else redirect_url
             )
-    else:
-        # Get basket from session
+            return redirect(redirect_url_with_filters)
+        else:
+            return redirect(redirect_url_with_filters)
+
+    def get(self, request, item_id):
+        """
+        Save the query parameters when adding item to cart from the CLP
+        """
+
+        product = get_object_or_404(Product, pk=item_id)
+        current_filters = request.GET.copy()
+        current_filters.pop("category_all", None)
+        current_filters.pop("brand_all", None)
+
+        # Generate Url with current filters
+        redirect_url_with_filters = (
+            request.reverse("add_to_bag", args=[item_id])
+            + "?"
+            + current_filters.urlencode()
+        )
+    
+        messages.success(request, f'You added <strong>{product.title}</strong> to bag!')
+
+        return redirect(redirect_url_with_filters)
+
+
+class AdjustBagView(View):
+    """
+    View to adjust items in the shopping bag
+    """
+
+    def post(self, request, item_id):
+        """
+        Add quantity of the product to the shopping bag
+        """
+
+        quantity = int(request.POST.get("quantity"))
         bag = request.session.get("bag", {})
-        if not bag:
-            messages.error(
-                request, "There's nothing in your bag at the moment"
-            )
-            return redirect(reverse("products"))
+        product = get_object_or_404(Product, pk=item_id)
 
-        # Set current basket
-        current_bag = bag_contents(request)
-        # Set grand total
-        total = current_bag["grand_total"]
-        # Set stripe total
-        stripe_total = round(total * 100)
-        # Set stripe api key
-        stripe.api_key = stripe_secret_key
-        # Create and set payment intent
-        intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-        )
+        if quantity > 0:
+            bag[item_id] = quantity
+            messages.success(request, f'You updated <strong>{product.title}</strong> quantity to <strong>{bag[item_id]}</strong>!')
+        else:
+            bag.pop(item_id)
+            messages.success(request, f'You removed <strong>{product.title}</strong>!')
 
-        order_form = OrderForm()
-
-    # Check if stripe public key is set
-    if not stripe_public_key:
-        messages.warning(
-            request,
-            "Stripe public key is missing. \
-            Did you forget to set it in your environment varibables?",
-        )
-
-    # Load the checkout template with required context
-    template = "checkout/checkout.html"
-    context = {
-        "order_form": order_form,
-        "stripe_public_key": stripe_public_key,
-        "client_secret": intent.client_secret,
-    }
-    return render(request, template, context)
+        request.session["bag"] = bag
+        return redirect(reverse("view_bag"))
 
 
-def checkout_success(request, order_number):
+class RemoveItemFromBagView(View):
     """
-    Handle successful checkouts
+    View to remove items in the shopping bag
     """
-    # Get save_info flag from the session
-    save_info = request.session.get("save_info")
-    # Get the order
-    order = get_object_or_404(Order, order_number=order_number)
-    # Display a success message to the user with the order number and email
-    messages.success(
-        request,
-        f"Order successfully processed! \
-        Your order number is {order_number}. A confirmation \
-        email will be sent to {order.email}.",
-    )
 
-    # Delete bag from the session
-    if "bag" in request.session:
-        del request.session["bag"]
+    def post(self, request, item_id):
+        """
+        Remove item from Shopping Bag
+        """
+        product = get_object_or_404(Product, pk=item_id)
 
-    # Render the checkout success template
-    template = "checkout/checkout_success.html"
-    context = {
-        "order": order,
-    }
-    return render(request, template, context)
+        try:
+            bag = request.session.get("bag", {})
+            bag.pop(item_id)
+
+            request.session["bag"] = bag
+            messages.success(request, f'You removed <strong>{product.title}</strong>!')
+            return HttpResponse(status=200)
+        except Exception as e:
+            messages.error(request, f'Error removing item: {e}')
+            return HttpResponse(status=500)
