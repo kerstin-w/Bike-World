@@ -21,18 +21,32 @@
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
                     {% csrf_token %}
                     <p class="text-muted">Please enter your Details to complete your order.</p>
-                    <fieldset class="rounded mb-4">
-                        <legend class="fieldset-label small px-2 auto text-black">Details</legend>
-                        {{ order_form.full_name | as_crispy_field }}
-                        {{ order_form.email | as_crispy_field }}
+                    <fieldset class="rounded mb-4 d-flex flex-column align-items-center">
+                        <legend class="fieldset-label small px-2 auto text-black mb-2">Details</legend>
+                        <div class="d-flex w-100">
+                            <div class="pe-2 flex-grow-1">
+                                {{ order_form.full_name | as_crispy_field }}
+                            </div>
+                            <div class="ps-2 flex-grow-1">
+                                {{ order_form.phone_number | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="w-100 text-start">
+                            {{ order_form.email | as_crispy_field }}
+                        </div>
                     </fieldset>
                     <fieldset class="rounded mb-4">
                         <legend class="fieldset-label small text-black px-2 w-auto">Delivery</legend>
-                        {{ order_form.phone_number | as_crispy_field }}
                         {{ order_form.street_address1 | as_crispy_field }}
                         {{ order_form.street_address2 | as_crispy_field }}
-                        {{ order_form.postcode | as_crispy_field }}
-                        {{ order_form.town_or_city | as_crispy_field }}
+                        <div class="d-flex w-100">
+                            <div class="pe-2 flex-grow-1">
+                                {{ order_form.postcode | as_crispy_field }}
+                            </div>
+                            <div class="ps-2 flex-grow-1">
+                                {{ order_form.town_or_city | as_crispy_field }}
+                            </div>
+                        </div>
                         {{ order_form.country | as_crispy_field }}
                         <div class="form-check form-check-inline float-right mr-0">
                             {% if user.is_authenticated %}
