@@ -66,10 +66,8 @@
                         {% endfor %}
                     </div>
                     <div class="product-content d-flex flex-column align-items-start">
-
                         <p class="product-title mb-2"><a
-                                href="{% url 'product_detail' product.pk %}">{{ product.title }}</p>
-                        </a>
+                                href="{% url 'product_detail' product.pk %}">{{ product.title }}</a></p>
                         <div class="d-flex flex-column justify-content-end h-100">
                             {% if product.sale %}
                             <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
