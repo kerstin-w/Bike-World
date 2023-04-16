@@ -39,7 +39,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <!-- STRIPE -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v3/" async></script>
     {% endblock %}
 
     {% block extra_js %}
@@ -76,7 +76,6 @@
     </div>
 
     {% include 'components/footer.html' %}
-    <!-- Fontawsome -->
     {% include 'components/scripts.html' %}
 
     {% block postloadjs %}
