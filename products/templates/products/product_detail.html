@@ -18,20 +18,27 @@
             </div>
             <div class="col-md-6 ps-4">
                 <h2>{{ product.title }}</h2>
-                {% for i in "x"|ljust:product.rating %}
-                <i class="fa fa-star fa-xs"></i>
-                {% endfor %}
-                {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
-                <i class="fa fa-star-o fa-xs"></i>
-                {% endfor %}
-                <p class="mb-2 mt-4">Size:</p>
-                <p class="product-size">{{ product.wheel_size }}</p>
-                {% if product.sale %}
-                <p class="product-sale-price price mb-0 mt-4">{{ product.sale_price|intcomma }}€</p>
-                <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
-                {% else %}
-                <p class="price mt-4">{{ product.retail_price|intcomma }}€</p>
-                {% endif %}
+                <div class="row">
+                    <div class="col-6">
+                        {% if product.sale %}
+                        <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
+                        <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
+                        {% else %}
+                        <p class="price mt-4">{{ product.retail_price|intcomma }}€</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-6">
+                        {% for i in "x"|ljust:product.rating %}
+                        <i class="fa fa-star fa-xs"></i>
+                        {% endfor %}
+                        {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
+                        <i class="fa fa-star-o fa-xs"></i>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="mb-3 mt-2">Size:</p>
+                <p class="product-size mb-4">{{ product.wheel_size }}</p>
+
                 <hr class="devider-pdp">
                 <!-- Add to Cart Section -->
                 {% include 'products/components/product_form_add_to_cart_pdp.html' %}
