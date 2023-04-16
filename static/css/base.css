@@ -174,7 +174,7 @@ a {
 
 /*=============== Hero Banner ===============*/
 .hero {
-    background: url("/media/homepage-images/hero.jpg") no-repeat;
+    background: url("/media/homepage-images/hero.webp") no-repeat;
     background-size: cover;
     height: 90vh;
     max-width: 100%;
@@ -443,7 +443,7 @@ footer ul {
 
 @media only screen and (max-width: 454px) {
     .hero {
-        background: url("/media/homepage-images/hero-mobile.jpg") no-repeat;
+        background: url("/media/homepage-images/hero-mobile.webp") no-repeat;
     }
 
     .reasons-why-banner p {
