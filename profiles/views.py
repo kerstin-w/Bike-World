@@ -46,3 +46,11 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
             self.request, "Your Profile has been updated successfully."
         )
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """
+        Get context wether we are on the profile page
+        """
+        context = super().get_context_data(**kwargs)
+        context['on_profile_page'] = True
+        return context

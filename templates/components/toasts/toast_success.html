@@ -8,9 +8,7 @@
         </button>
     </div>
     <div class="toast-body bg-white rounded-bottom">
-
-
-        {% if grand_total > 10  %}
+        {% if grand_total > 10  and not on_profile_page %}
         <p class="logo-font bg-white text-black mt-2 liner">Your Bag ({{ product_count }})&nbsp;</p>
         <div class="bag-notification-wrapper">
             {% for item in bag_items %}
