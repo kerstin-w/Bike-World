@@ -11,6 +11,8 @@ from django.conf import settings
 
 from .forms import OrderForm
 from .models import Order, OrderLineItem
+from profiles.models import UserProfile
+from profiles.forms import UserProfileForm
 from products.models import Product
 from bag.context_processors import bag_contents
 
@@ -162,6 +164,37 @@ def checkout_success(request, order_number):
     save_info = request.session.get("save_info")
     # Get the order
     order = get_object_or_404(Order, order_number=order_number)
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        # Get the user's profile based on id
+        profile = UserProfile.objects.get(user=request.user)
+
+        # Attach the user profile to the order
+        order.user_profile = profile
+        order.save()
+
+        # Save the user's info to their profile
+        if save_info:
+            # Save the data to a dictionary
+            profile_data = {
+                "default_phone_number": order.phone_number,
+                "default_country": order.country,
+                "default_postcode": order.postcode,
+                "default_town_or_city": order.town_or_city,
+                "default_street_address1": order.street_address1,
+                "default_street_address2": order.street_address2,
+                "default_county": order.county,
+            }
+
+            # Create a form instance with the updated profile data
+            # and the profile data model instance as arguments
+            user_profile_form = UserProfileForm(profile_data, instance=profile)
+            # Check if the user's updated profile information is valid
+            if user_profile_form.is_valid():
+                # Save the updated profile information to the database
+                user_profile_form.save()
+
     # Display a success message to the user with the order number and email
     messages.success(
         request,
