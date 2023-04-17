@@ -32,3 +32,11 @@ body.addEventListener("click", function (event) {
         });
     }
 });
+
+// Initialize bootstrap tabs
+$(function () {
+    $('#authTabs a').on('click', function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+});
