@@ -3,6 +3,10 @@
     box-shadow: 0 0.3rem 1.525rem -0.375rem rgb(0 0 0 / 10%);
 }
 
+.profile-details a {
+    color: #cd4c1d;
+}
+
 .border-black {
     border: #000 1px solid;
 }
@@ -12,8 +16,8 @@
     right: .5rem;
 }
 
-.form-control,
-.form-select {
+.profile-details .form-control,
+.profile-details .form-select {
     background-color: transparent;
 }
 

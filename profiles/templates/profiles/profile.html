@@ -38,7 +38,8 @@
                             </div>
                             {{ form.default_country | as_crispy_field }}
                         </fieldset>
-                        <button class="btn btn-lg btn-cta bg-orange mb-2 text-white upper">Update Information</button>
+                        <button class="btn btn-lg btn-cta bg-orange mb-2 text-white upper">Save Info</button>
+                        <a href="{% url 'account_reset_password' %}" class="ms-3">Reset password</a>
                     </form>
                 </div>
                 <!-- Order History -->
