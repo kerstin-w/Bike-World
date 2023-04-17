@@ -33,10 +33,15 @@ body.addEventListener("click", function (event) {
     }
 });
 
-// Initialize bootstrap tabs
-$(function () {
-    $('#authTabs a').on('click', function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
+// Activate the modal tab on click and store the tab ID in session
+$('.login-link, .register-link').click(function () {
+    var tabId = $(this).data('tab-target');
+    $('.nav-tabs a[href="' + tabId + '"]').tab('show');
+
+    sessionStorage.setItem('activeTabId', tabId);
+});
+
+// Clear the stored tab ID whenever the modal is closed
+$('#auth-modal').on('hide.bs.modal', function () {
+    sessionStorage.removeItem('activeTabId');
 });
