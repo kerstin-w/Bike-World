@@ -172,6 +172,10 @@ a {
     color: none !important;
 }
 
+.user-options {
+    right: 10px;
+}
+
 /*=============== Hero Banner ===============*/
 .hero {
     background: url("/media/homepage-images/hero.webp") no-repeat;
@@ -438,7 +442,6 @@ footer ul {
     overflow-y: auto;
 }
 
-
 /*=============== Media ===============*/
 
 @media only screen and (max-width: 454px) {
@@ -489,6 +492,14 @@ footer ul {
 
     .dropdown-menu.show {
         display: block;
+    }
+
+    .dropdown:hover .user-options {
+        display: block;
+    }
+
+    .dropdown .user-options {
+        position: absolute;
     }
 
     .nav-item {
