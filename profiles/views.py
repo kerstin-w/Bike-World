@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, TemplateView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from .models import UserProfile
+from checkout.models import Order
 from .forms import UserProfileForm
 
 
@@ -52,5 +53,35 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
         Get context wether we are on the profile page
         """
         context = super().get_context_data(**kwargs)
-        context['on_profile_page'] = True
+        context["on_profile_page"] = True
         return context
+
+
+class OrderHistoryView(TemplateView):
+    """
+    View to render Order History
+    """
+
+    template_name = "checkout/checkout_success.html"
+
+    def get(self, request, *args, **kwargs):
+        # Get the Order with the specified order_number
+        order = get_object_or_404(
+            Order, order_number=self.kwargs["order_number"]
+        )
+
+        messages.info(
+            request,
+            (
+                f"This is a past confirmation for order number "
+                f'{self.kwargs["order_number"]}. A confirmation '
+                f"email was sent to you on the order date."
+            ),
+        )
+
+        context = {
+            "order": order,
+            "from_profile": True,
+        }
+
+        return self.render_to_response(context)
