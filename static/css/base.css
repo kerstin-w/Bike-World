@@ -442,6 +442,20 @@ footer ul {
     overflow-y: auto;
 }
 
+/*=============== Modal ===============*/
+.nav-link-register.active,
+.nav-link-login.active {
+    color: #cd4c1d !important;
+}
+
+.nav-tabs .nav-link {
+    color: #000;
+}
+
+.modal-body a {
+    color: #40464f;
+}
+
 /*=============== Media ===============*/
 
 @media only screen and (max-width: 454px) {
