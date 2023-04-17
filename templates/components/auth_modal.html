@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="modal fade" id="auth-modal" tabindex="-1" role="dialog" aria-labelledby="auth-modal-label"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -18,15 +19,26 @@
                         <a class="nav-link" data-bs-toggle="tab" href="#register" role="tab">Register</a>
                     </li>
                 </ul>
-
                 <!-- Tabs -->
                 <div class="tab-content">
                     <div class="tab-pane active" id="login" role="tabpanel">
-                        <form>
+                        <form action="{% url 'account_login' %}?next={{request.path}}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                            {{ logintag }}
+                            <button type="submit">Login</button>
+                            <a href="{% url 'account_reset_password' %}">Forgot Password?</a>
                         </form>
                     </div>
                     <div class="tab-pane" id="register" role="tabpanel">
-                        <form>
+                        <form class="signup" id="signup_form" method="post"
+                            action="{% url 'account_signup' %}?next={{request.path}}">
+                            {% csrf_token %}
+                            {{ signuptag }}
+                            {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            <button type="submit">{% trans "Sign Up" %} &raquo;</button>
                         </form>
                     </div>
                 </div>
