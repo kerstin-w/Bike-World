@@ -456,6 +456,21 @@ footer ul {
     color: #40464f;
 }
 
+/*=============== Allauth ===============*/
+
+.allauth-form-inner-content button {
+    background-color: #cd4c1d;
+    border: none;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    color: white;
+}
+
+.allauth-form-inner-content a {
+    color: #cd4c1d;
+}
+
 /*=============== Media ===============*/
 
 @media only screen and (max-width: 454px) {

@@ -28,7 +28,7 @@
                         <form action="{% url 'account_login' %}?next={{request.path}}" method="post">
                             <input type="hidden" name="next" value="{{ request.GET.next }}" />
                             {% csrf_token %}
-                            {{ logintag|crispy  }}
+                            {{ logintag|crispy }}
                             <div class="d-flex align-items-center justify-content-between">
                                 <button type="submit" class="btn btn-cta text-white upper">Login</button>
                                 <a href="{% url 'account_reset_password' %}">Forgot Password?</a>
