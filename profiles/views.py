@@ -50,10 +50,13 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
 
     def get_context_data(self, **kwargs):
         """
-        Get context wether we are on the profile page
+        Get context wether we are on the profile page and add orders to it
         """
         context = super().get_context_data(**kwargs)
         context["on_profile_page"] = True
+        profile = get_object_or_404(UserProfile, user=self.request.user)
+        # Add orders related to the profile to the context
+        context["orders"] = profile.orders.all()
         return context
 
 
