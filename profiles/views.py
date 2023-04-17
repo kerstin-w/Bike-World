@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.views.generic import FormView, ListView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -41,4 +42,7 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
         Save the form data to the corresponding UserProfile model instance.
         """
         form.save()
+        messages.success(
+            self.request, "Your Profile has been updated successfully."
+        )
         return super().form_valid(form)
