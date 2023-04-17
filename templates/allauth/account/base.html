@@ -2,10 +2,12 @@
 
 {% block content %}
 <div class="container margin-top pb-4">
-    <div class="d-flex">
-        <div class="allauth-form-inner-content w-100">
-            {% block inner_content %}
-            {% endblock %}
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="allauth-form-inner-content p-5">
+                {% block inner_content %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 </div>

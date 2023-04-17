@@ -457,6 +457,10 @@ footer ul {
 }
 
 /*=============== Allauth ===============*/
+.allauth-form-inner-content {
+    background-color: #dfdfdf;
+    box-shadow: 0 0.3rem 1.525rem -0.375rem rgb(0 0 0 / 10%);
+}
 
 .allauth-form-inner-content button {
     background-color: #cd4c1d;
@@ -469,6 +473,18 @@ footer ul {
 
 .allauth-form-inner-content a {
     color: #cd4c1d;
+}
+
+.allauth-form-inner-content input {
+    border-color: #000;
+}
+
+.allauth-form-inner-content .form-control {
+    background-color: transparent;
+}
+
+.allauth-form-inner-content label:not([for='id_remember']) {
+    display: none;
 }
 
 /*=============== Media ===============*/
