@@ -2,6 +2,7 @@ from django.http import HttpResponse
 
 from .models import Order, OrderLineItem
 from products.models import Product
+from profiles.models import UserProfile
 
 import stripe
 import json
@@ -51,6 +52,30 @@ class StripeWH_Handler:
             if value == "":
                 shipping_details.address[field] = None
 
+        # Update profile information if save_info was checked
+        # Set profile to None initially
+        profile = None
+        # Get the username from the metadata of the intent
+        username = intent.metadata.username
+        if username != "AnonymousUser":
+            # Get the user profile using the username
+            profile = UserProfile.objects.get(user__username=username)
+            # If save_info was checked
+            if save_info:
+                # Update the default profile information with
+                # the information from the shipping details
+                profile.default_phone_number = shipping_details.phone
+                profile.default_country = shipping_details.address.country
+                profile.default_postcode = shipping_details.address.postal_code
+                profile.default_town_or_city = shipping_details.address.city
+                profile.default_street_address1 = (
+                    shipping_details.address.line1
+                )
+                profile.default_street_address2 = (
+                    shipping_details.address.line2
+                )
+                profile.save()
+
         # Check if the order already exists
         order_exists = False
         attempt = 1
@@ -80,7 +105,7 @@ class StripeWH_Handler:
             return HttpResponse(
                 content=(
                     f'Webhook received: {event["type"]} '
-                    '| SUCCESS: Verified order already in database'
+                    "| SUCCESS: Verified order already in database"
                 ),
                 status=200,
             )
@@ -90,6 +115,7 @@ class StripeWH_Handler:
                 # Create a new Order and OrderLineItems
                 order = Order.objects.create(
                     full_name=shipping_details.name,
+                    user_profile=profile,
                     email=billing_details.email,
                     phone_number=shipping_details.phone,
                     country=shipping_details.address.country,
@@ -121,7 +147,7 @@ class StripeWH_Handler:
         return HttpResponse(
             content=(
                 f'Webhook received: {event["type"]} '
-                '| SUCCESS: Created order in webhook'
+                "| SUCCESS: Created order in webhook"
             ),
             status=200,
         )
