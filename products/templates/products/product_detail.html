@@ -14,7 +14,11 @@
         <button class="btn pb-4 back-button" onclick="goBack()">&larr; Back</button>
         <div class="row">
             <div class="col-md-6 pb-4">
+                {% if product.image %}
                 <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
+                {% else %}
+                <img src="{{ MEDIA_URL }}products/default-no-image.webp" alt="{{ product.title }}" class="img-fluid">
+                {% endif %}
             </div>
             <div class="col-md-6 ps-4">
                 <h2>{{ product.title }}</h2>

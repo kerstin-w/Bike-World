@@ -20,8 +20,13 @@
                 class="col-lg-2 col-md-3 col-sm-3 col-12 d-flex flex-column align-items-center product-container mb-5 mx-2 py-3">
                 <div class="product-card">
                     <div class="product-image-container">
+                        {% if product.image %}
                         <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
                                 src="{{ product.image.url }}" alt="{{ product.title }}"></a>
+                        {% else %}
+                        <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
+                                src="{{ MEDIA_URL }}products/default-no-image.webp" alt="{{ product.title }}"></a>
+                        {% endif %}
                     </div>
                     {% for i in "x"|ljust:product.rating %}
                     <i class="fa fa-star fa-xs text-dark"></i>

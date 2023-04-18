@@ -26,8 +26,14 @@
                     class="d-flex flex-sm-row flex-column align-items-center justify-content-between product-container-bag mb-4 py-2 px-4">
                     <div class="d-flex flex-row align-items-center w-100">
                         <div class="product-image-container-bag">
+                            {% if item.product.image %}
                             <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
                                     src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
+                            {% else %}
+                            <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
+                                    src="{{ MEDIA_URL }}products/default-no-image.webp"
+                                    alt="{{ item.product.title }}"></a>
+                            {% endif %}
                         </div>
                         <div class="ms-1 w-100">
                             <p class="mt-2 mb-1"><strong>{{ item.product.title }}</strong></p>
