@@ -2,7 +2,10 @@ from django.contrib import messages
 from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 from .models import Product, Category
+from .forms import ProductForm
 
 
 class ProductListView(ListView):
@@ -134,11 +137,23 @@ class ProductDetailView(DetailView):
     """
     Displays the details of a product
     """
+
     model = Product
-    template_name = 'products/product_detail.html'
-    context_object_name = 'product'
+    template_name = "products/product_detail.html"
+    context_object_name = "product"
 
     def get_object(self):
         # Get the product object based on the pk
-        pk = self.kwargs.get('pk')
+        pk = self.kwargs.get("pk")
         return get_object_or_404(Product, pk=pk)
+
+
+class ProductCreateView(CreateView):
+    """
+    View to create Product
+    """
+
+    model = Product
+    form_class = ProductForm
+    template_name = "products/add_product.html"
+    success_url = reverse_lazy("product_list")
