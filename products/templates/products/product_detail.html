@@ -21,6 +21,20 @@
                 {% endif %}
             </div>
             <div class="col-md-6 ps-4">
+                {% if request.user.is_superuser %}
+                <div class="d-flex align-items-center">
+                    <small class="mb-3 me-2">
+                        <a href="{% url 'edit_product' product.id %}" class="text-dark"><i
+                                class="fa-regular fa-pen-to-square fa-sm"></i>&nbsp;Edit</a></small>
+                    <small class="mb-3">
+                        <form action="{% url 'delete_product' product.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn p-0 btn-sm border-0 text-danger" type="submit"><i
+                                    class="fa-regular fa-trash-can fa-sm"></i>&nbsp;Delete</button>
+                        </form>
+                    </small>
+                </div>
+                {% endif %}
                 <h2>{{ product.title }}</h2>
                 <div class="row">
                     <div class="col-6">
@@ -42,7 +56,6 @@
                 </div>
                 <p class="mb-3 mt-2">Size:</p>
                 <p class="product-size mb-4">{{ product.wheel_size }}</p>
-
                 <hr class="devider-pdp">
                 <!-- Add to Cart Section -->
                 {% include 'products/components/product_form_add_to_cart_pdp.html' %}
