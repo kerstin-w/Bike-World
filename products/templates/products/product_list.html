@@ -18,7 +18,22 @@
             {% for product in products %}
             <div
                 class="col-lg-2 col-md-3 col-sm-3 col-12 d-flex flex-column align-items-center product-container mb-5 mx-2 py-3">
+                {% if request.user.is_superuser %}
+                <div class="d-flex align-items-center">
+                    <small class="mb-3 me-2">
+                        <a href="{% url 'edit_product' product.id %}" class="text-dark"><i
+                                class="fa-regular fa-pen-to-square fa-sm"></i>&nbsp;Edit</a></small>
+                    <small class="mb-3">
+                        <form action="{% url 'delete_product' product.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn p-0 btn-sm border-0 text-danger" type="submit"><i
+                                    class="fa-regular fa-trash-can fa-sm"></i>&nbsp;Delete</button>
+                        </form>
+                    </small>
+                </div>
+                {% endif %}
                 <div class="product-card">
+
                     <div class="product-image-container">
                         {% if product.image %}
                         <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
@@ -45,6 +60,7 @@
                         {% else %}
                         <p class="price">{{ product.retail_price|intcomma }}€</p>
                         {% endif %}
+
                         <div class="d-flex">
                             {% include 'products/components/add_to_cart_qty_1.html' %}
                             <a class="add-wishlist" href="#" aria-label="Add to Wishlist">

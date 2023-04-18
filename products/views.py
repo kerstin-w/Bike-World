@@ -244,7 +244,6 @@ class ProductDeleteView(DeleteView):
     """
 
     model = Product
-    template_name = "products/product_detail.html"
     success_url = reverse_lazy("products")
 
     def get_object(self, queryset=None):
@@ -258,5 +257,6 @@ class ProductDeleteView(DeleteView):
         """
         Delete the product and redirect to success URL
         """
-        messages.success(request, "Product deleted!")
+        product = self.get_object()
+        messages.success(request, f"{product.title} deleted!")
         return super().delete(request, *args, **kwargs)
