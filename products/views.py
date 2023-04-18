@@ -4,7 +4,7 @@ from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import Product, Category
 from .forms import ProductForm
 
@@ -201,7 +201,6 @@ class ProductEditView(UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "products/edit_product.html"
-    success_url = reverse_lazy("products")
     context_object_name = "product"
 
     def get_object(self, queryset=None):
@@ -227,3 +226,10 @@ class ProductEditView(UpdateView):
             "Failed to update product. Please ensure the form is valid.",
         )
         return super().form_invalid(form)
+
+    def get_success_url(self):
+        """
+        Get the URL to redirect to product page
+        """
+        pk = self.kwargs.get("product_id")
+        return reverse("product_detail", kwargs={"pk": pk})
