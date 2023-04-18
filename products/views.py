@@ -4,7 +4,7 @@ from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from .models import Product, Category
 from .forms import ProductForm
 
@@ -167,7 +167,6 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "products/add_product.html"
-    success_url = reverse_lazy("products")
 
     def test_func(self):
         """
@@ -191,6 +190,13 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
             "Failed to add product. Please ensure the form is valid.",
         )
         return super().form_invalid(form)
+
+    def get_success_url(self):
+        """
+        Get the URL to redirect to product page
+        """
+        pk = self.object.pk
+        return reverse("product_detail", kwargs={"pk": pk})
 
 
 class ProductEditView(UpdateView):
