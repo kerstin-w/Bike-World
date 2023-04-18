@@ -49,6 +49,14 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
         )
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        # handle invalid form submission
+        messages.error(
+            self.request,
+            "Failed to update your profile. Please ensure the form is valid.",
+        )
+        return super().form_invalid(form)
+
     def get_context_data(self, **kwargs):
         """
         Get context wether we are on the profile page and add orders to it
