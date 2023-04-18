@@ -7,4 +7,9 @@ urlpatterns = [
         "<int:pk>/", views.ProductDetailView.as_view(), name="product_detail"
     ),
     path("add/", views.ProductCreateView.as_view(), name="add_product"),
+    path(
+        "edit/<int:product_id>/",
+        views.ProductEditView.as_view(),
+        name="edit_product",
+    ),
 ]

@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q, Case, When, F, DecimalField
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .models import Product, Category
@@ -21,21 +21,27 @@ class ProductListView(ListView):
     context_object_name = "products"
 
     def filter_by_category(self, queryset):
-        # Filter the queryset by the category name
+        """
+        Filter the queryset by the category name
+        """
         category_name = self.request.GET.get("category")
         if category_name:
             queryset = queryset.filter(category__name__iexact=category_name)
         return queryset
 
     def filter_by_brand(self, queryset):
-        # Filter the queryset by brand name
+        """
+        Filter the queryset by brand name
+        """
         brand_name = self.request.GET.get("brand")
         if brand_name:
             queryset = queryset.filter(brand__iexact=brand_name)
         return queryset
 
     def filter_by_gender(self, queryset):
-        # Filter the queryset by gender
+        """
+        Filter the queryset by gender
+        """
         gender = self.request.GET.get("gender", None)
         if gender == "Womens":
             queryset = queryset.filter(gender=1)
@@ -46,8 +52,10 @@ class ProductListView(ListView):
         return queryset
 
     def search_products(self, queryset):
-        # Filter by matching the search keyword
-        # against the title, brand and type
+        """
+        Filter by matching the search keyword
+        against the title, brand and type
+        """
         search_keyword = self.request.GET.get("q")
         if search_keyword:
             queryset = queryset.filter(
@@ -144,7 +152,9 @@ class ProductDetailView(DetailView):
     context_object_name = "product"
 
     def get_object(self):
-        # Get the product object based on the pk
+        """
+        Get the product object based on the pk
+        """
         pk = self.kwargs.get("pk")
         return get_object_or_404(Product, pk=pk)
 
@@ -160,18 +170,60 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy("products")
 
     def test_func(self):
-        # restrict access to only superusers
+        """
+        restrict access to only superusers
+        """
         return self.request.user.is_superuser
 
     def form_valid(self, form):
-        # handle successful form submission
+        """
+        handle successful form submission
+        """
         messages.success(self.request, "Successfully added product!")
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # handle invalid form submission
+        """
+        handle invalid form submission
+        """
         messages.error(
             self.request,
             "Failed to add product. Please ensure the form is valid.",
+        )
+        return super().form_invalid(form)
+
+
+class ProductEditView(UpdateView):
+    """
+    View to display edit a product
+    """
+
+    model = Product
+    form_class = ProductForm
+    template_name = "products/edit_product.html"
+    success_url = reverse_lazy("products")
+    context_object_name = "product"
+
+    def get_object(self, queryset=None):
+        """
+        Get the Product
+        """
+        pk = self.kwargs.get("product_id")
+        return get_object_or_404(Product, pk=pk)
+
+    def form_valid(self, form):
+        """
+        handle successful form submission
+        """
+        messages.success(self.request, "Successfully updated product!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        """
+        handle invalid form submission
+        """
+        messages.error(
+            self.request,
+            "Failed to update product. Please ensure the form is valid.",
         )
         return super().form_invalid(form)
