@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth import logout
 from django.contrib import messages
-from django.views.generic import FormView, ListView, TemplateView
+from django.views.generic import FormView, ListView, TemplateView, View
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import UserProfile
@@ -91,26 +91,24 @@ class OrderHistoryView(TemplateView):
         return self.render_to_response(context)
 
 
-class DeleteAccountView(LoginRequiredMixin, LogoutView):
+class DeleteAccountView(LoginRequiredMixin, View):
     """
     Delete user account view
     """
-    template_name = 'profiles/profile.html'
-    success_url = reverse_lazy('home')
 
-    def dispatch(self, request, *args, **kwargs):
-        """
-        Handles the GET request and deletes the user account on POST request.
-        """
-        if request.method == 'POST':
-            self.logout(request)
+    template_name = "profiles/profile.html"
+    success_url = reverse_lazy("index")
 
-            # deletes user account
-            user = request.user
-            user.delete()
-            messages.success(
-                self.request, "Your Account has been deleted successfully."
-                )
-            return redirect(self.success_url)
+    def post(self, request, *args, **kwargs):
+        # deletes user account
+        user = request.user
+        user.delete()
 
-        return super().dispatch(request, *args, **kwargs)
+        # logout the user
+        logout(request)
+
+        messages.success(
+            request, "Your Account has been deleted successfully."
+        )
+        self.request.session.flush()
+        return redirect(self.success_url)
