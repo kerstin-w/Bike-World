@@ -18,12 +18,17 @@
                     aria-controls="collapseInfo">
                     <i class="fa-solid fa-user-pen fa-lg"></i>&nbsp;Profile Info
                 </button>
-                <button id="collapseHistoryBtn" class="btn btn-lg btn-cta text-white px-4 py-4" type="button"
+                <button id="collapseHistoryBtn" class="btn btn-lg btn-cta text-white px-4 py-4 me-3" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapseHistory" aria-expanded="false"
                     aria-controls="collapseHistory">
                     <i class="fa-solid fa-cart-shopping fa-lg"></i>&nbsp;Order History
                 </button>
+                <button id="deleteBtn" class="btn btn-lg btn-cta text-white px-4 py-4" type="button"
+                    data-bs-toggle="modal" data-bs-target="#deleteModal" aria-expanded="false">
+                    <i class="fa-regular fa-trash-can fa-lg"></i>&nbsp;Delete Account
+                </button>
             </div>
+            <!-- Profile Info -->
             <div class="collapse" id="collapseInfo">
                 <div class="d-flex flex-row justify-content-center profile-details p-lg-5 p-4 mb-4">
                     <form class="mt-3 w-100" action="{% url 'profile' %}" method="POST" id="profile-update-form">
@@ -90,6 +95,25 @@
                         {% endfor %}
                     </div>
                     {% endfor %}
+                </div>
+            </div>
+            <!-- Delete Account -->
+            <div id="deleteModal" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete Account</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete your account?</p>
+                            <form id="delete-account-form" action="{% url 'delete_account' %}" method="post"
+                                class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-cta upper text-white">Delete Account</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
