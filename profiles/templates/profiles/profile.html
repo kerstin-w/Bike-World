@@ -13,12 +13,14 @@
             <h2 class="liner upper">My Profile </h2>
             <button class="btn pb-4 back-button" onclick="goBack()">&larr; Back</button>
             <div class="d-flex justify-content-center mb-4">
-                <button class="btn btn-lg btn-cta text-white px-4 py-4 me-3" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+                <button id="collapseInfoBtn" class="btn btn-lg btn-cta text-white px-4 py-4 me-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false"
+                    aria-controls="collapseInfo">
                     <i class="fa-solid fa-user-pen fa-lg"></i>&nbsp;Profile Info
                 </button>
-                <button class="btn btn-lg btn-cta text-white px-4 py-4" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseHistory" aria-expanded="false" aria-controls="collapseHistory">
+                <button id="collapseHistoryBtn" class="btn btn-lg btn-cta text-white px-4 py-4" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseHistory" aria-expanded="false"
+                    aria-controls="collapseHistory">
                     <i class="fa-solid fa-cart-shopping fa-lg"></i>&nbsp;Order History
                 </button>
             </div>
@@ -96,5 +98,6 @@
 
 {% block postloadjs %}
 {{ block.super }}
+<script type="text/javascript" src="{% static 'profiles/js/profile_btn_toggle.js' %}"></script>
 <script type="text/javascript" src="{% static 'profiles/js/countryfield.js' %}"></script>
 {% endblock %}
