@@ -11,10 +11,6 @@
     color: #cd4c1d;
 }
 
-.border-black {
-    border: #000 1px solid;
-}
-
 .fieldset-label {
     position: relative;
     right: .5rem;

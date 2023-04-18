@@ -44,6 +44,10 @@ a {
     color: #cd4c1e;
 }
 
+.border-black {
+    border: #000 1px solid;
+}
+
 /* from Bulma */
 .icon {
     align-items: center;
