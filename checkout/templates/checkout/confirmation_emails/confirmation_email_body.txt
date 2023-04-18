@@ -1,0 +1,23 @@
+Hello {{ order.full_name }}!
+
+Thank you for your recent purchase of a mountain bike from our online store! We are thrilled to be a part of your next adventure. 
+
+We would like to confirm that we have received your order and it is being processed. Your order details are as follows:
+
+Order Number: {{ order.order_number }}
+Order Date: {{ order.date }}
+
+Order Total: {{ order.order_total }} €
+Delivery: {{ order.delivery_cost }} €
+Grand Total: {{ order.grand_total }} €
+
+Your order will be shipped to {{ order.street_address1 }} in {{ order.town_or_city }}, {{ order.country }}.
+Please note that it may take up to 3-5 business days to process and ship your order.
+
+If you have any questions, feel free to contact us at {{ contact_email }}.
+
+Thank you for choosing BIKE WORLD for your mountain biking needs. We appreciate your business and look forward to seeing you on the trails!
+
+Sincerely,
+
+BIKE WORLD Team
