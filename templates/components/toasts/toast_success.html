@@ -2,13 +2,14 @@
 <div id="toast" class="toast fade mx-auto custom-toast rounded" data-bs-autohide="false" role="alert"
     aria-live="assertive" aria-atomic="true">
     <div class="arrow-up"></div>
-    <div class="toast-header bg-white text-dark rounded-top">
-        <p class="mb-0">{{ message|safe }}</p>
+    <div class="toast-header bg-white text-dark rounded-top d-flex justify-content-end">
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
         </button>
     </div>
     <div class="toast-body bg-white rounded-bottom">
+        <p class="mb-0">{{ message|safe }}</p>
         {% if grand_total > 10  and not on_profile_page %}
+        <br>
         <p class="logo-font bg-white text-black mt-2 liner">Your Bag ({{ product_count }})&nbsp;</p>
         <div class="bag-notification-wrapper">
             {% for item in bag_items %}
