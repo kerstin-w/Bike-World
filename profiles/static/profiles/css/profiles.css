@@ -1,3 +1,7 @@
+#profile-update-form {
+    max-width: 800px;
+}
+
 .profile-details {
     background-color: #dfdfdf;
     box-shadow: 0 0.3rem 1.525rem -0.375rem rgb(0 0 0 / 10%);
@@ -36,4 +40,8 @@ select:invalid {
 
 .form-select:focus {
     border: 1px solid #717171;
+}
+
+.order-row {
+    border-bottom: dashed 1px #000;
 }
