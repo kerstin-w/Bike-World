@@ -64,6 +64,7 @@ class StripeWH_Handler:
             if save_info:
                 # Update the default profile information with
                 # the information from the shipping details
+                profile.default_full_name = shipping_details.name
                 profile.default_phone_number = shipping_details.phone
                 profile.default_country = shipping_details.address.country
                 profile.default_postcode = shipping_details.address.postal_code
