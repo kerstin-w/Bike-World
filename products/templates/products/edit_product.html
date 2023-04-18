@@ -17,7 +17,13 @@
                     enctype="multipart/form-data">
                     <p class="upper liner">Update Product&nbsp;</p>
                     {% csrf_token %}
-                    {{ form | crispy }}
+                    {% for field in form %}
+                    {% if field.name != 'image' %}
+                    {{ field | as_crispy_field }}
+                    {% else %}
+                    {{ field }}
+                    {% endif %}
+                    {% endfor %}
                     <div class="text-right">
                         <a class="btn btn-secondary rounded-0 mt-3" href="{% url 'products' %}">Cancel</a>
                         <button class="btn btn-cta text-white" type="submit">Update Product</button>
