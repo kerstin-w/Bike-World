@@ -111,11 +111,8 @@ class ProductListView(ListView):
 
         # Check if there are any results or not
         if not queryset.exists():
-            # Add an error message
-            messages.error(self.request, "No search results found.")
-            # Redirect the user to the products page
             return queryset.none()
-        # Return the sorted queryset
+        # Return the sorted/filtered queryset
         return queryset
 
     def get_context_data(self, **kwargs):
