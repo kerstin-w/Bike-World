@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
@@ -148,7 +149,7 @@ class ProductDetailView(DetailView):
         return get_object_or_404(Product, pk=pk)
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(UserPassesTestMixin, CreateView):
     """
     View to create Product
     """
@@ -156,4 +157,21 @@ class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     template_name = "products/add_product.html"
-    success_url = reverse_lazy("product_list")
+    success_url = reverse_lazy("products")
+
+    def test_func(self):
+        # restrict access to only superusers
+        return self.request.user.is_superuser
+
+    def form_valid(self, form):
+        # handle successful form submission
+        messages.success(self.request, "Successfully added product!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        # handle invalid form submission
+        messages.error(
+            self.request,
+            "Failed to add product. Please ensure the form is valid.",
+        )
+        return super().form_invalid(form)
