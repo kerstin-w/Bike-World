@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<!-- Products CSS -->
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Add Product -->
+    <section class="margin-top mx-3">
+        <h1 class="liner upper">Product Management&nbsp;</h1>
+        <p>Add a Product</p>
+        <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
+            <div class="d-flex flex-row product-management p-lg-5 p-4 mb-4">
+                <form method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <div class="text-right">
+                        <a class="btn btn-outline-black rounded-0" href="{% url 'products' %}">Cancel</a>
+                        <button class="btn btn-black rounded-0" type="submit">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

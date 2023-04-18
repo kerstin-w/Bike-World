@@ -6,5 +6,5 @@ urlpatterns = [
     path(
         "<int:pk>/", views.ProductDetailView.as_view(), name="product_detail"
     ),
-    path("add/", views.ProductCreateView.as_view, name="add_product"),
+    path("add/", views.ProductCreateView.as_view(), name="add_product"),
 ]
