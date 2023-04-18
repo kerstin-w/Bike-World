@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.views.generic import FormView, ListView, TemplateView, View
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -69,7 +70,7 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
         return context
 
 
-class OrderHistoryView(TemplateView):
+class OrderHistoryView(LoginRequiredMixin, TemplateView):
     """
     View to render Order History
     """
@@ -82,6 +83,16 @@ class OrderHistoryView(TemplateView):
             Order, order_number=self.kwargs["order_number"]
         )
 
+        # Check if the user who is trying to access this page is the same
+        # user who placed the order
+        user_profile = UserProfile.objects.get(user=request.user)
+        if order.user_profile != user_profile:
+            messages.error(
+                self.request,
+                "You do nt have permssion to access this Order Summary.",
+            )
+            return HttpResponseRedirect("/")
+
         messages.info(
             request,
             (
@@ -90,7 +101,6 @@ class OrderHistoryView(TemplateView):
                 f"email was sent to you on the order date."
             ),
         )
-
         context = {
             "order": order,
             "from_profile": True,
