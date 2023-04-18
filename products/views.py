@@ -196,7 +196,7 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
         return reverse("product_detail", kwargs={"pk": pk})
 
 
-class ProductEditView(UpdateView):
+class ProductEditView(UserPassesTestMixin, UpdateView):
     """
     View to display edit a product
     """
@@ -205,6 +205,12 @@ class ProductEditView(UpdateView):
     form_class = ProductForm
     template_name = "products/edit_product.html"
     context_object_name = "product"
+
+    def test_func(self):
+        """
+        restrict access to only superusers
+        """
+        return self.request.user.is_superuser
 
     def get_object(self, queryset=None):
         """
@@ -238,13 +244,19 @@ class ProductEditView(UpdateView):
         return reverse("product_detail", kwargs={"pk": pk})
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(UserPassesTestMixin, DeleteView):
     """
     View to delete a product
     """
 
     model = Product
     success_url = reverse_lazy("products")
+
+    def test_func(self):
+        """
+        restrict access to only superusers
+        """
+        return self.request.user.is_superuser
 
     def get_object(self, queryset=None):
         """
