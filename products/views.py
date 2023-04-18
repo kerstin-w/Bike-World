@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from .models import Product, Category
 from .forms import ProductForm
 
@@ -239,3 +239,27 @@ class ProductEditView(UpdateView):
         """
         pk = self.kwargs.get("product_id")
         return reverse("product_detail", kwargs={"pk": pk})
+
+
+class ProductDeleteView(DeleteView):
+    """
+    View to delete a product
+    """
+
+    model = Product
+    template_name = "products/product_detail.html"
+    success_url = reverse_lazy("products")
+
+    def get_object(self, queryset=None):
+        """
+        Get the Product
+        """
+        pk = self.kwargs.get("product_id")
+        return get_object_or_404(Product, pk=pk)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Delete the product and redirect to success URL
+        """
+        messages.success(request, "Product deleted!")
+        return super().delete(request, *args, **kwargs)
