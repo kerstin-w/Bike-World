@@ -33,6 +33,7 @@
                             <legend class="fieldset-label small px-2 auto text-black mb-2">Details</legend>
                             <div class="d-flex w-100">
                                 <div class="pe-2 flex-grow-1">
+                                    {{ form.default_full_name | as_crispy_field }}
                                     {{ form.default_phone_number | as_crispy_field }}
                                 </div>
                             </div>
