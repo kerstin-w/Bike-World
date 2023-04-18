@@ -54,7 +54,7 @@ class Product(Model):
     gender = models.IntegerField(choices=GENDER, default=0)
     material = models.CharField(max_length=100, null=True, blank=True)
     derailleur = models.CharField(max_length=100, null=True, blank=True)
-    stock = models.IntegerField(default=0)
+    stock = models.IntegerField(default=99)
 
     def __str__(self):
         return self.title
