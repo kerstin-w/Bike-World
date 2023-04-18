@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q, Case, When, F, DecimalField
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
 from django.urls import reverse, reverse_lazy
@@ -171,6 +171,14 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
         """
         return self.request.user.is_superuser
 
+    def handle_no_permission(self):
+        """
+        handle denied access
+        """
+        messages.error(
+            self.request, "You do not have permission to create products.")
+        return redirect("products")
+
     def form_valid(self, form):
         """
         handle successful form submission
@@ -211,6 +219,14 @@ class ProductEditView(UserPassesTestMixin, UpdateView):
         restrict access to only superusers
         """
         return self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        """
+        handle denied access
+        """
+        messages.error(
+            self.request, "You do not have permission to edit products.")
+        return redirect("products")
 
     def get_object(self, queryset=None):
         """
@@ -257,6 +273,14 @@ class ProductDeleteView(UserPassesTestMixin, DeleteView):
         restrict access to only superusers
         """
         return self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        """
+        handle denied access
+        """
+        messages.error(
+            self.request, "You do not have permission to delete products.")
+        return redirect("products")
 
     def get_object(self, queryset=None):
         """
