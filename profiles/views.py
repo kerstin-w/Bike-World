@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import FormView, ListView, TemplateView, View
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from .models import UserProfile
+from .models import UserProfile, Wishlist
 from checkout.models import Order
 from .forms import UserProfileForm
 
@@ -130,3 +130,15 @@ class DeleteAccountView(LoginRequiredMixin, View):
         )
         self.request.session.flush()
         return redirect(self.success_url)
+
+
+class AddToWishlistView(View):
+    """
+    View to Add Products to the wishlist
+    """
+
+    def post(self, request):
+        product_id = request.POST['product_id']
+        Wishlist.objects.create(user=request.user, product_id=product_id)
+        messages.success(request, "done")
+        return redirect(request.META['HTTP_REFERER'])

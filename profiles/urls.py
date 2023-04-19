@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProfileView, OrderHistoryView, DeleteAccountView
+from .views import ProfileView, OrderHistoryView, DeleteAccountView, AddToWishlistView
 
 urlpatterns = [
     path("", ProfileView.as_view(), name="profile"),
@@ -8,5 +8,6 @@ urlpatterns = [
         OrderHistoryView.as_view(),
         name="order_history",
     ),
-    path("delete_account/", DeleteAccountView.as_view(), name="delete_account")
+    path("delete_account/", DeleteAccountView.as_view(), name="delete_account"),
+    path('add-to-wishlist/', AddToWishlistView.as_view(), name='add-to-wishlist'),
 ]
