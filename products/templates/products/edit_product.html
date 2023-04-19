@@ -81,3 +81,18 @@
     </section>
 </main>
 {% endblock content %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script>
+    $(function () {
+        const input = $('#new-image');
+        const message = $('#message');
+
+        input.on('change', () => {
+            const fileName = input.val().split('\\').pop();
+            message.text(`Image will be set to: ${fileName}`);
+        });
+    });
+</script>
+{% endblock %}
