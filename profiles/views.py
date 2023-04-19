@@ -182,6 +182,4 @@ class WishlistView(LoginRequiredMixin, ListView):
         """
         context = super().get_context_data(**kwargs)
         context['products'] = [item.product for item in self.object_list]
-        print("test")
-        print(context['products'])
         return context

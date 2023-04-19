@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load humanize %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
 {% endblock %}
@@ -12,7 +12,7 @@
         <div class="container">
             <h2 class="liner upper">My Profile </h2>
             <button class="btn pb-4 back-button" onclick="goBack()">&larr; Back</button>
-            <div class="d-flex justify-content-center mb-4">
+            <div class="d-flex flex-sm-row flex-column justify-content-center mb-4">
                 <button id="collapseInfoBtn" class="btn btn-lg btn-cta text-white px-4 py-4 me-3" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false"
                     aria-controls="collapseInfo">
@@ -22,6 +22,11 @@
                     data-bs-toggle="collapse" data-bs-target="#collapseHistory" aria-expanded="false"
                     aria-controls="collapseHistory">
                     <i class="fa-solid fa-cart-shopping fa-lg"></i>&nbsp;Order History
+                </button>
+                <button id="collapseWishlistBtn" class="btn btn-lg btn-cta text-white px-4 py-4 me-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseWishlist" aria-expanded="false"
+                    aria-controls="collapseWishlist">
+                    <i class="fa-solid fa-cart-shopping fa-lg"></i>&nbsp;Wishlist
                 </button>
                 <button id="deleteBtn" class="btn btn-lg btn-cta text-white px-4 py-4" type="button"
                     data-bs-toggle="modal" data-bs-target="#deleteModal" aria-expanded="false">
@@ -95,6 +100,63 @@
                         {% endfor %}
                     </div>
                     {% endfor %}
+                </div>
+            </div>
+            <!-- Wishlist -->
+            <div class="collapse" id="collapseWishlist">
+                <div class="p-lg-5 p-4 mb-4 profile-details">
+                    <h3 class="upper liner">Wishlist</h3>
+                    <div class="d-flex flex-column ">
+                        {% if wishlist %}
+                        {% for item in wishlist %}
+                        <div
+                            class="d-flex flex-sm-row flex-column align-items-center justify-content-between wishlist-container mb-4 py-2 px-4">
+                            <div class="d-flex flex-sm-row flex-column align-items-center w-100">
+                                <div class="wishlist-image-container">
+                                    {% if item.product.image %}
+                                    <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
+                                            src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
+                                    {% else %}
+                                    <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
+                                            src="{{ MEDIA_URL }}products/default-no-image.webp"
+                                            alt="{{ item.product.title }}"></a>
+                                    {% endif %}
+                                </div>
+                                <div class="ms-2 w-100">
+                                    <p class="mt-2 mb-1"><strong>{{ item.product.title }}</strong></p>
+                                    <p class="my-0 small text-muted">Size: {{ item.product.wheel_size }}</p>
+                                    {% if item.product.sale %}
+                                    <p class="price product-sale-price mb-0 mt-2 me-3">
+                                        {{ item.product.sale_price |intcomma}}€
+                                    </p>
+                                    {% else %}
+                                    <p class="price mb-0 mt-2 me-3">
+                                        {{ item.product.retail_price|intcomma  }}€
+                                    </p>
+                                    {% endif %}
+
+                                </div>
+                                <div>
+                                    <form class="form"
+                                        action="{% url 'add_to_bag' item.product.pk %}?{{ request.GET.urlencode }}"
+                                        method="POST">
+                                        {% csrf_token %}
+                                        <input class="form-control qty_input" type="number" name="quantity" value="1"
+                                            style="display:none;" aria-label="Add 1 to shopping bag" required>
+                                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                                        <button type="submit"
+                                            class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end m-3">
+                                            <i class="fa-solid fa-cart-shopping"></i> Add to Bag
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p>Your wishlist is empty.</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <!-- Delete Account -->

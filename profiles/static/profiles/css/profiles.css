@@ -41,3 +41,14 @@ select:invalid {
 .order-row {
     border-bottom: dashed 1px #000;
 }
+
+/*=============== Wishlist ===============*/
+.wishlist-container {
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 17%);
+    background-color: #fff;
+}
+
+.wishlist-image-container {
+    height: 100px;
+    width: 30%;
+}
