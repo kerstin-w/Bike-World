@@ -6,8 +6,10 @@ from django.views.generic import FormView, ListView, TemplateView, View
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import UserProfile, Wishlist
+from products.models import Product
 from checkout.models import Order
 from .forms import UserProfileForm
+from django.http import JsonResponse
 
 
 class ProfileView(LoginRequiredMixin, FormView, ListView):
@@ -137,8 +139,22 @@ class AddToWishlistView(View):
     View to Add Products to the wishlist
     """
 
-    def post(self, request):
-        product_id = request.POST['product_id']
-        Wishlist.objects.create(user=request.user, product_id=product_id)
-        messages.success(request, "done")
-        return redirect(request.META['HTTP_REFERER'])
+    def post(self, request, product_id):
+        # Get the product that the user wants to add to their wishlist
+        product = get_object_or_404(Product, id=product_id)
+
+        # Get the current user
+        user = request.user
+
+        # Check if the product is already in the user's wishlist
+        if Wishlist.objects.filter(user=user, product=product).exists():
+            messages.warning(
+                request, f'{product} is already in your wishlist!')
+        else:
+            # Add the product to the user's wishlist
+            wishlist_item = Wishlist(user=user, product=product)
+            wishlist_item.save()
+            messages.success(request, f'{product} added to your wishlist!')
+
+        # Redirect the user back to the same page
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
