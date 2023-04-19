@@ -39,7 +39,7 @@
                             <p class="mt-2 mb-1"><strong>{{ item.product.title }}</strong></p>
                             <p class="my-0 small text-muted">Size: {{ item.product.wheel_size }}</p>
                             {% if item.product.sale %}
-                            <p class="price price mb-0 mt-4 me-3 text-end">Total:
+                            <p class="price mb-0 mt-4 me-3 text-end">Total:
                                 {{ item.product.sale_price | multiply_price_by_quantity:item.quantity |intcomma}}€</p>
                             {% if item.quantity > 1%}
                             <p class="text-end me-3">{{ item.product.sale_price |intcomma}}€</p>
