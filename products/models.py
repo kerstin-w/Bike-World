@@ -48,7 +48,8 @@ class Product(Model):
         null=True,
         blank=True,
     )
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True,
+                              upload_to='products/')
     brand = models.CharField(max_length=100)
     bike_type = models.CharField(max_length=200)
     gender = models.IntegerField(choices=GENDER, default=0)
