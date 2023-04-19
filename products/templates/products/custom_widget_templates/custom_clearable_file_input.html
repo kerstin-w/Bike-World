@@ -1,9 +1,8 @@
 <!-- Custom Clearable File Input -->
 {% if widget.is_initial %}
 <p>{{ widget.initial_text }}:</p>
-
 <!-- Image Preview -->
-<div class="product-image-container">
+<div>
     <a href="{{ widget.value.url }}">
         <img class="product-img" src="{{ widget.value.url }}">
     </a>
@@ -12,19 +11,17 @@
 <!-- Remove checkbox -->
 <div class="custom-control custom-checkbox text-center mt-2">
     <input class="custom-control-input" type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}">
-    <label class="custom-control-label text-danger"
-        for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
+    <label class="custom-control-label" for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
 </div>
-{% endif %}<br>
+{% endif %}
 {{ widget.input_text }}
 {% endif %}
 <!-- Select Image Button -->
-<div class="py-2 mt-2">
-    <span class="btn btn-file">
-        Select Image <input id="new-image" type="{{ widget.type }}" name="{{ widget.name }}"
-            {% include "django/forms/widgets/attrs.html" %}>
-    </span>
-</div>
+<span class="btn btn-file btn-cta text-white">
+    Select Image <input id="new-image" type="{{ widget.type }}" name="{{ widget.name }}"
+        {% include "django/forms/widgets/attrs.html" %}>
+</span>
+
 <!-- Filename -->
 <div class="py-1">
     <strong><span class="text-small text-bold" id="filename_{{ widget.name }}"></span></strong>

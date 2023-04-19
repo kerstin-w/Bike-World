@@ -150,6 +150,30 @@ select:invalid {
     border: 1px solid #717171;
 }
 
+/*=============== Product Form ===============*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-control-label {
+    color: #cd4c1d;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    accent-color: #cd4c1d;
+}
+
 /*=============== Media ===============*/
 @media (max-width: 767px) {
     .product-management {
