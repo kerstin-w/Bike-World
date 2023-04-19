@@ -45,7 +45,8 @@ class Wishlist(models.Model):
     A Wishlist data Model
     Users can add a product to their wishlist
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='wishlist')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
