@@ -34,9 +34,20 @@
 
         <div class="d-flex justify-content-center">
             {% include 'products/components/add_to_cart_qty_1.html' %}
-            <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
-                <i class="fa-regular fa-heart fa-sm"></i>
+            {% if user.is_authenticated %}
+            {% if product.id in wishlist_products %}
+            <a class="add-wishlist disabled" href="#" aria-label="Item is already in your Wishlist">
+                <i class="fa-solid fa-heart fa-sm"></i>
             </a>
+            {% else %}
+            <form method="post" action="{% url 'add-to-wishlist' product.id %}">
+                {% csrf_token %}
+                <button class="add-wishlist" type="submit" aria-label="Add to Wishlist">
+                    <i class="fa-regular fa-heart fa-sm"></i>
+                </button>
+            </form>
+            {% endif %}
+            {% endif %}
         </div>
     </div>
 </div>

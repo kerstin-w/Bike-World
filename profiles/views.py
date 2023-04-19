@@ -9,7 +9,6 @@ from .models import UserProfile, Wishlist
 from products.models import Product
 from checkout.models import Order
 from .forms import UserProfileForm
-from django.http import JsonResponse
 
 
 class ProfileView(LoginRequiredMixin, FormView, ListView):
