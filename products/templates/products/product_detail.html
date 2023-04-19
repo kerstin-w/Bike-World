@@ -42,7 +42,7 @@
                         <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
                         <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
                         {% else %}
-                        <p class="price mt-4">{{ product.retail_price|intcomma }}€</p>
+                        <p class="price">{{ product.retail_price|intcomma }}€</p>
                         {% endif %}
                     </div>
                     <div class="col-6">

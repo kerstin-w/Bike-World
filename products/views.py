@@ -166,6 +166,20 @@ class ProductDetailView(DetailView):
         pk = self.kwargs.get("pk")
         return get_object_or_404(Product, pk=pk)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get the user's wishlist products
+        user = self.request.user
+        wishlist_products = []
+        if user.is_authenticated:
+            wishlist_products = Wishlist.objects.filter(user=user).values_list(
+                "product_id", flat=True
+            )
+        # Add the wishlist_products list to the context
+        context["wishlist_products"] = wishlist_products
+        return context
+
 
 class ProductCreateView(UserPassesTestMixin, CreateView):
     """

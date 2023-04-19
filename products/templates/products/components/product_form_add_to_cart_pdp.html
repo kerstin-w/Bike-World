@@ -31,11 +31,22 @@
                     <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end">
                         <i class="fa-solid fa-cart-shopping"></i> Add to Bag
                     </button>
-                    <a class="add-wishlist-pdp ms-3" href="#">
-                        <i class="fa-regular fa-heart fa-sm"></i>
-                    </a>
                 </div>
             </div>
         </div>
     </form>
+    {% if user.is_authenticated %}
+    {% if product.id in wishlist_products %}
+    <a class="add-wishlist-pdp disabled" href="#" aria-label="Item is already in your Wishlist">
+        <i class="fa-solid fa-heart fa-sm"></i>
+    </a>
+    {% else %}
+    <form method="post" action="{% url 'add-to-wishlist' product.id %}">
+        {% csrf_token %}
+        <button class="add-wishlist-pdp btn btn-icon" type="submit" aria-label="Add to Wishlist">
+            <i class="fa-regular fa-heart fa-sm"></i>
+        </button>
+    </form>
+    {% endif %}
+    {% endif %}
 </div>
