@@ -402,15 +402,30 @@ footer ul {
     z-index: 9;
     transition: all 0.3s linear;
     position: absolute;
-    top: 0;
+    top: -5px;
     right: 0;
+}
+
+.add-wishlist.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.add-wishlist.disabled:hover {
+    color: #cd4c1d;
+    font-size: auto;
+    transition: none;
 }
 
 .add-wishlist:hover,
 .add-wishlist:active {
     color: #cd4c1d;
-    font-size: calc(1vw + 1vh + 1vmin);
+    font-size: calc(.8vw + .8vh + .8vmin);
     transition: all 0.3s ease;
+}
+
+.btn-icon {
+    padding: 0;
 }
 
 .product-container {
