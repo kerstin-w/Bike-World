@@ -6,6 +6,8 @@ from django.dispatch import receiver
 
 from django_countries.fields import CountryField
 
+from products.models import Product
+
 
 class UserProfile(models.Model):
     """
@@ -36,6 +38,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Wishlist(models.Model):
+    """
+    A Wishlist data Model
+    Users can add a product to their wishlist
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
 @receiver(post_save, sender=User)
