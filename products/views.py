@@ -5,8 +5,10 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
 from django.urls import reverse, reverse_lazy
+
 from .models import Product, Category
 from .forms import ProductForm
+from profiles.models import Wishlist
 
 
 class ProductListView(ListView):
@@ -136,6 +138,15 @@ class ProductListView(ListView):
             "brand", flat=True
         ).distinct()
 
+        # Get the user's wishlist products
+        user = self.request.user
+        wishlist_products = []
+        if user.is_authenticated:
+            wishlist_products = Wishlist.objects.filter(user=user).values_list(
+                "product_id", flat=True
+            )
+        # Add the wishlist_products list to the context
+        context["wishlist_products"] = wishlist_products
         return context
 
 
@@ -176,7 +187,8 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
         handle denied access
         """
         messages.error(
-            self.request, "You do not have permission to create products.")
+            self.request, "You do not have permission to create products."
+        )
         return redirect("products")
 
     def form_valid(self, form):
@@ -225,7 +237,8 @@ class ProductEditView(UserPassesTestMixin, UpdateView):
         handle denied access
         """
         messages.error(
-            self.request, "You do not have permission to edit products.")
+            self.request, "You do not have permission to edit products."
+        )
         return redirect("products")
 
     def get_object(self, queryset=None):
@@ -279,7 +292,8 @@ class ProductDeleteView(UserPassesTestMixin, DeleteView):
         handle denied access
         """
         messages.error(
-            self.request, "You do not have permission to delete products.")
+            self.request, "You do not have permission to delete products."
+        )
         return redirect("products")
 
     def get_object(self, queryset=None):
