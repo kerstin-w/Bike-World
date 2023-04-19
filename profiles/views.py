@@ -68,6 +68,8 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
         profile = get_object_or_404(UserProfile, user=self.request.user)
         # Add orders related to the profile to the context
         context["orders"] = profile.orders.all()
+        # Add wishlist to the context
+        context["wishlist"] = Wishlist.objects.filter(user=self.request.user)
         return context
 
 
@@ -157,3 +159,29 @@ class AddToWishlistView(View):
 
         # Redirect the user back to the same page
         return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+class WishlistView(LoginRequiredMixin, ListView):
+    """
+    View to display the user's wishlist
+    """
+
+    model = Wishlist
+    template_name = "profiles/profile.html"
+    context_object_name = 'wishlist'
+
+    def get_queryset(self):
+        """
+        Return the queryset of products in the user's wishlist
+        """
+        return Wishlist.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        """
+        Add extra context to the template
+        """
+        context = super().get_context_data(**kwargs)
+        context['products'] = [item.product for item in self.object_list]
+        print("test")
+        print(context['products'])
+        return context
