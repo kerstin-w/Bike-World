@@ -45,9 +45,20 @@ class Wishlist(models.Model):
     A Wishlist data Model
     Users can add a product to their wishlist
     """
+
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='wishlist')
+        User, on_delete=models.CASCADE, related_name="wishlist"
+    )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def is_product_in_wishlist(self):
+        """
+        Return a boolean indicating whether the product
+        is in the user's wishlist
+        """
+        return Wishlist.objects.filter(
+            user=self.user, product=self.product
+        ).exists()
 
 
 @receiver(post_save, sender=User)
