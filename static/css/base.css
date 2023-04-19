@@ -329,6 +329,18 @@ footer ul {
 .product-card {
     width: 100%;
     text-align: center;
+    position: relative;
+}
+
+.sale-badge {
+    position: absolute;
+    top: -16px;
+    left: -12px;
+    background-color: #cd4c1e;
+    color: white;
+    padding: 7px;
+    font-size: 12px;
+    clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
 }
 
 .product-img {

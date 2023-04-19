@@ -33,7 +33,9 @@
                 </div>
                 {% endif %}
                 <div class="product-card">
-
+                    {% if product.sale %}
+                    <div class="sale-badge">SALE</div>
+                    {% endif %}
                     <div class="product-image-container">
                         {% if product.image %}
                         <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
