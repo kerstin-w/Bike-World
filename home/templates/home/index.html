@@ -54,39 +54,7 @@
                 {% for product in top_rated_products|slice:":4" %}
                 <div
                     class="col-lg-2 {% if forloop.counter == 3 %}d-none d-md-flex{% elif forloop.counter == 4 %}d-none d-lg-flex{% endif %} col-md-3 col-sm-4 col-12 d-flex flex-column align-items-center product-container mb-5 mx-3 py-3">
-                    <div class="product-card">
-                        {% if product.sale %}
-                        <div class="sale-badge">SALE</div>
-                        {% endif %}
-                        <div class="product-image-container">
-                            <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
-                                    src="{{ product.image.url }}" alt="{{ product.title }}"></a>
-                        </div>
-                        {% for i in "x"|ljust:product.rating %}
-                        <i class="fa fa-star fa-xs"></i>
-                        {% endfor %}
-                        {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
-                        <i class="fa fa-star-o fa-xs"></i>
-                        {% endfor %}
-                    </div>
-                    <div class="product-content d-flex flex-column align-items-start">
-                        <p class="product-title mb-2"><a
-                                href="{% url 'product_detail' product.pk %}">{{ product.title }}</a></p>
-                        <div class="d-flex flex-column justify-content-end h-100">
-                            {% if product.sale %}
-                            <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
-                            <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
-                            {% else %}
-                            <p class="price">{{ product.retail_price|intcomma }}€</p>
-                            {% endif %}
-                            <div class="d-flex">
-                                {% include 'products/components/add_to_cart_qty_1.html' %}
-                                <a class="add-wishlist" href="#">
-                                    <i class="fa-regular fa-heart fa-sm"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'products/components/product_card.html' %}
                 </div>
                 {% endfor %}
             </div>

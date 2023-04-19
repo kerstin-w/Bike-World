@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load humanize %}
 
 {% block extra_css %}
 <!-- Products CSS -->
@@ -32,45 +31,7 @@
                     </small>
                 </div>
                 {% endif %}
-                <div class="product-card">
-                    {% if product.sale %}
-                    <div class="sale-badge">SALE</div>
-                    {% endif %}
-                    <div class="product-image-container">
-                        {% if product.image %}
-                        <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
-                                src="{{ product.image.url }}" alt="{{ product.title }}"></a>
-                        {% else %}
-                        <a href="{% url 'product_detail' product.pk %}"><img class="product-img"
-                                src="{{ MEDIA_URL }}products/default-no-image.webp" alt="{{ product.title }}"></a>
-                        {% endif %}
-                    </div>
-                    {% for i in "x"|ljust:product.rating %}
-                    <i class="fa fa-star fa-xs text-dark"></i>
-                    {% endfor %}
-                    {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
-                    <i class="fa fa-star-o fa-xs text-dark"></i>
-                    {% endfor %}
-                </div>
-                <div class="product-content d-flex flex-column align-items-start">
-                    <p class="product-title mb-2"><a href="{% url 'product_detail' product.pk %}">{{product.title}}</a>
-                    </p>
-                    <div class="d-flex flex-column justify-content-end h-100">
-                        {% if product.sale %}
-                        <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
-                        <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
-                        {% else %}
-                        <p class="price">{{ product.retail_price|intcomma }}€</p>
-                        {% endif %}
-
-                        <div class="d-flex">
-                            {% include 'products/components/add_to_cart_qty_1.html' %}
-                            <a class="add-wishlist" href="#" aria-label="Add to Wishlist">
-                                <i class="fa-regular fa-heart fa-sm"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {% include 'products/components/product_card.html' %}
             </div>
             {% endfor %}
             {% else %}
