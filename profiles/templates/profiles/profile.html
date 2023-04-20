@@ -189,7 +189,13 @@
     </section>
 </main>
 {% endblock %}
-
+{% block extra_js %}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}
 {% block postloadjs %}
 {{ block.super }}
 <script type="text/javascript" src="{% static 'profiles/js/profile_btn_toggle.js' %}"></script>
