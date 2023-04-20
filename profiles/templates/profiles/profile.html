@@ -9,7 +9,7 @@
 <!-- User Profile -->
 <main>
     <section id="profile" class="margin-top mx-3">
-        <div class="container">
+        <div class="container g-0 g-md-1">
             <h2 class="liner upper">My Profile </h2>
             <button class="btn pb-4 back-button" onclick="goBack()">&larr; Back</button>
             <div class="d-flex flex-sm-row flex-column justify-content-center mb-4">
@@ -136,7 +136,7 @@
                                     {% endif %}
 
                                 </div>
-                                <div>
+                                <div class="d-flex flex-column flex-sm-row align-items-center">
                                     <form class="form"
                                         action="{% url 'add_to_bag' item.product.pk %}?{{ request.GET.urlencode }}"
                                         method="POST">
@@ -148,6 +148,11 @@
                                             class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end m-3">
                                             <i class="fa-solid fa-cart-shopping"></i> Add to Bag
                                         </button>
+                                    </form>
+                                    <form method="post" action="{% url 'wishlist-delete' item.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-secondary rounded-0 m-3 text-nowrap" type="submit"><i
+                                                class="fa-regular fa-trash-can"></i> Delete</button>
                                     </form>
                                 </div>
                             </div>
