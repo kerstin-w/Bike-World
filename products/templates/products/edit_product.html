@@ -35,11 +35,14 @@
 <!-- JS to display message after Image was selected -->
 <script>
     $(function () {
+        // Get the input element and the message element
         const input = $('#new-image');
         const message = $('#message');
 
+        // Set up a change event listener on the input element
         input.on('change', () => {
             const fileName = input.val().split('\\').pop();
+            // Update the message element with the file name
             message.text(`Image will be set to: ${fileName}`);
         });
     });
