@@ -57,6 +57,10 @@ a {
     width: 1.5rem;
 }
 
+.margin-end {
+    margin-right: 1rem;
+}
+
 /*=============== Navbar ===============*/
 .navbar {
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
@@ -519,7 +523,6 @@ footer ul {
 }
 
 /*=============== Media ===============*/
-
 @media only screen and (max-width: 454px) {
     .hero {
         background: url("/media/homepage-images/hero-mobile.webp") no-repeat;
@@ -540,6 +543,10 @@ footer ul {
 
     .margin-top {
         margin-top: 5rem;
+    }
+
+    .margin-end {
+        margin-right: 0;
     }
 }
 

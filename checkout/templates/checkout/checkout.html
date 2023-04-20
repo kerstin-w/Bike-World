@@ -17,17 +17,17 @@
             <button class="btn pb-4 back-button">&larr; Back to Shopping Bag</button>
         </a>
         <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
-            <div class="d-flex flex-row checkout-details p-lg-5 p-4 mb-4">
+            <div class="d-flex flex-row checkout-details p-lg-5 p-md-4 p-3 mb-4">
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
                     {% csrf_token %}
                     <p class="text-muted">Please enter your Details to complete your order.</p>
                     <fieldset class="rounded mb-4 d-flex flex-column align-items-center">
                         <legend class="fieldset-label small px-2 auto text-black mb-2">Details</legend>
-                        <div class="d-flex w-100">
-                            <div class="pe-2 flex-grow-1">
+                        <div class="d-flex w-100 flex-wrap">
+                            <div class="margin-end flex-grow-1">
                                 {{ order_form.full_name | as_crispy_field }}
                             </div>
-                            <div class="ps-2 flex-grow-1">
+                            <div class="flex-grow-1">
                                 {{ order_form.phone_number | as_crispy_field }}
                             </div>
                         </div>
@@ -39,11 +39,11 @@
                         <legend class="fieldset-label small text-black px-2 w-auto">Delivery</legend>
                         {{ order_form.street_address1 | as_crispy_field }}
                         {{ order_form.street_address2 | as_crispy_field }}
-                        <div class="d-flex w-100">
-                            <div class="pe-2 flex-grow-1">
+                        <div class="d-flex w-100 flex-wrap">
+                            <div class="margin-end flex-grow-1">
                                 {{ order_form.postcode | as_crispy_field }}
                             </div>
-                            <div class="ps-2 flex-grow-1">
+                            <div class="margin-end flex-grow-1">
                                 {{ order_form.town_or_city | as_crispy_field }}
                             </div>
                         </div>
