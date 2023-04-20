@@ -2,7 +2,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.views.generic import FormView, ListView, TemplateView, View
+from django.views.generic import (
+    FormView,
+    ListView,
+    TemplateView,
+    DeleteView,
+    View,
+)
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import UserProfile, Wishlist
@@ -150,15 +156,18 @@ class AddToWishlistView(View):
         # Check if the product is already in the user's wishlist
         if Wishlist.objects.filter(user=user, product=product).exists():
             messages.warning(
-                request, f'{product} is already in your wishlist!')
+                request, f"{product} is already in your wishlist!"
+            )
         else:
             # Add the product to the user's wishlist
             wishlist_item = Wishlist(user=user, product=product)
             wishlist_item.save()
-            messages.success(request, f'{product} added to your wishlist!')
+            messages.success(
+                request, f"<strong>{product}</strong> added to your wishlist!"
+            )
 
         # Redirect the user back to the same page
-        return redirect(request.META.get('HTTP_REFERER', 'home'))
+        return redirect(request.META.get("HTTP_REFERER", "home"))
 
 
 class WishlistView(LoginRequiredMixin, ListView):
@@ -168,7 +177,7 @@ class WishlistView(LoginRequiredMixin, ListView):
 
     model = Wishlist
     template_name = "profiles/profile.html"
-    context_object_name = 'wishlist'
+    context_object_name = "wishlist"
 
     def get_queryset(self):
         """
@@ -178,8 +187,36 @@ class WishlistView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         """
-        Add extra context to the template
+        Add product context to the template
         """
         context = super().get_context_data(**kwargs)
-        context['products'] = [item.product for item in self.object_list]
+        context["products"] = [item.product for item in self.object_list]
         return context
+
+
+class WishlistDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    View to handle deleting a product from the wishlist
+    """
+
+    model = Wishlist
+    success_url = reverse_lazy("profile")
+
+    def get_queryset(self):
+        """
+        Return the queryset of products in the user's wishlist
+        that belong to the current user
+        """
+        return Wishlist.objects.filter(user=self.request.user)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Handle delete request to delete a product from the wishlist
+        """
+        self.object = self.get_object()
+        product = self.object.product.title
+        messages.success(
+            request,
+            f"<strong>{product}</strong> has been removed from your wishlist!",
+        )
+        return super().delete(request, *args, **kwargs)
