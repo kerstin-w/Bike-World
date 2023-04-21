@@ -1,5 +1,4 @@
 from django.views import View
-from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.contrib import messages
@@ -14,8 +13,9 @@ class ContactView(View):
     """
 
     # handle the GET request for the contact page
-
     def get(self, request, *args, **kwargs):
+        # Get the current URL of the page
+        request.session["previous_page"] = request.META.get("HTTP_REFERER")
         form = ContactForm()
         # Render the contact page with an empty ContactForm
         return render(request, "support/contact.html", {"form": form})
@@ -42,7 +42,7 @@ class ContactView(View):
             messages.success(
                 request, "Thanks for contacting us! We will be in touch soon."
             )
-            # Redirect to the contact page
-            return redirect(reverse("contact"))
+            # Redirect to the previous page
+            return redirect(request.session.get("previous_page", "/"))
         # Render the contact page with the invalid form and error messages
         return render(request, "support/contact.html", {"form": form})
