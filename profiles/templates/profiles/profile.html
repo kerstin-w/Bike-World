@@ -43,7 +43,7 @@
                         {% csrf_token %}
                         <fieldset class="rounded mb-4 d-flex flex-column align-items-center">
                             <legend class="fieldset-label small px-2 auto text-black mb-2">Details</legend>
-                            <div class="d-flex w-100 flex-wrap">
+                            <div class="d-flex flex-column flex-sm-row w-100">
                                 <div class="margin-end flex-grow-1">
                                     {{ form.default_full_name | as_crispy_field }}
                                 </div>
@@ -56,7 +56,7 @@
                             <legend class="fieldset-label small text-black px-2 w-auto">Delivery/Billing</legend>
                             {{ form.default_street_address1 | as_crispy_field }}
                             {{ form.default_street_address2 | as_crispy_field }}
-                            <div class="d-flex w-100 flex-wrap">
+                            <div class="d-flex w-100 flex-column flex-sm-row">
                                 <div class="margin-end flex-grow-1">
                                     {{ form.default_postcode | as_crispy_field }}
                                 </div>

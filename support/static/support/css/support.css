@@ -14,9 +14,3 @@
         width: auto;
     }
 }
-
-@media (max-width: 609px) {
-    .margin-end {
-        margin-right: 0;
-    }
-}

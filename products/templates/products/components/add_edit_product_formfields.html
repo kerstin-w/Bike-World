@@ -3,7 +3,7 @@
     <div class="w-100 text-start">
         {{ form.title|as_crispy_field }}
     </div>
-    <div class="d-flex w-100 flex-wrap">
+    <div class="d-flex w-100 flex-column flex-sm-row">
         <div class="margin-end flex-grow-1">
             {{ form.sku|as_crispy_field }}
         </div>
@@ -37,7 +37,7 @@
 </fieldset>
 <fieldset class="rounded mb-3 d-flex flex-column align-items-center">
     <legend class="fieldset-label fs-6 fw-bold auto text-black mb-2">Additional Information</legend>
-    <div class="d-flex w-100 flex-wrap">
+    <div class="d-flex w-100 flex-column flex-sm-row">
         <div class="margin-end flex-grow-1">
             {{ form.brand|as_crispy_field }}
             {{ form.bike_type|as_crispy_field }}

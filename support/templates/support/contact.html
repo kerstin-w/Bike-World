@@ -17,10 +17,9 @@
         <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
             <div class="d-flex flex-row support-container p-lg-5 p-md-4 p-3 mb-4">
                 <form method="POST" class="w-100">
-
                     {% csrf_token %}
                     <fieldset class="rounded mb-4 d-flex flex-column align-items-center">
-                        <div class="d-flex w-100 flex-wrap">
+                        <div class="d-flex w-100 flex-column flex-sm-row">
                             <div class="margin-end flex-grow-1">
                                 {{ form.name|as_crispy_field }}
                                 {{ form.email|as_crispy_field }}
