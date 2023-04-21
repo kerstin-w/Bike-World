@@ -1,0 +1,22 @@
+.support-container {
+    background-color: #dfdfdf;
+    box-shadow: 0 0.3rem 1.525rem -0.375rem rgb(0 0 0 / 10%);
+    width: 85vw;
+}
+
+.support-container .form-control {
+    background-color: transparent;
+}
+
+/*=============== Media ===============*/
+@media (max-width: 767px) {
+    .support-container {
+        width: auto;
+    }
+}
+
+@media (max-width: 609px) {
+    .margin-end {
+        margin-right: 0;
+    }
+}
