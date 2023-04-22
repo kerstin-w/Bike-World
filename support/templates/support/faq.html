@@ -7,7 +7,7 @@
 
 {% block content %}
 <main>
-    <!-- Contact Form -->
+    <!-- FAQs -->
     <section class="margin-top mx-3">
         <h1 class="liner upper">FAQs&nbsp;</h1>
         <p class="px-4 py-3 ms-4">Welcome to Bike World! We're thrilled that you're interested in shopping with us for
@@ -18,7 +18,105 @@
             choosing Bike World, and happy shopping!</p>
         <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
             <div class="d-flex flex-row support-container p-lg-5 p-md-4 p-3 mb-4">
-
+                <!-- FAQs Accordion-->
+                <div class="accordion my-5" id="accordionDetail">
+                    <!-- FAQ Orders-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Orders:
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionDetail">
+                            <div class="accordion-body">
+                                <p><strong>How do I place an order on Bike World?</strong></p>
+                                <p>A: To place an order on Bike World, simply add the products you wish to purchase to
+                                    your shopping bag and proceed to checkout. You'll be prompted to enter your
+                                    shipping and payment information to complete your order.</p>
+                                <p><strong>Can I change or cancel my order after it has been placed?</strong></p>
+                                <p>A: Unfortunately, once an order has been placed, we are unable to make any changes or
+                                    cancellations to it. If you have any concerns or issues with your order, please
+                                    contact our customer service team for assistance.</p>
+                                <p><strong>How long does it take to receive my order?</strong></p>
+                                <p>A: Delivery times vary depending on your location. Shippin within the EU usually
+                                    takes between 3-8 business days.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Payment-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Payment:
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#accordionDetail">
+                            <div class="accordion-body">
+                                <p><strong>Is my payment information secure?</strong></p>
+                                <p>A: Yes, we use industry-standard encryption and security measures to protect your
+                                    payment information.</p>
+                                <p><strong>Will I receive an order confirmation after I make a payment?</strong></p>
+                                <p>A: Yes, you will receive an order confirmation email after you make a payment.</p>
+                                <p><strong>Are there any additional fees or taxes on my purchase?</strong></p>
+                                <p>A: The total cost of your purchase will include any applicable taxes and delivery
+                                    fees.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Returns-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Returns:
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                            data-bs-parent="#accordionDetail">
+                            <div class="accordion-body">
+                                <p><strong>What is your return policy?</strong></p>
+                                <p>A: We offer a 30-day return policy for our products. If you are not happy with your
+                                    mountainbike, please get in touch with our Customer Service and we will arrange a
+                                    pick up free of charge. Please note that we can only accept returns of unused bikes
+                                    in new condition.</p>
+                                <p><strong>How do I initiate a return?</strong></p>
+                                <p>A: To initiate a return, please contact our customer service team for assistance.
+                                    They will provide you with instructions on how to return the item.</p>
+                                <p><strong>Can I exchange a product instead of returning it?</strong></p>
+                                <p>A: Unfortunately, we do not offer exchanges at this time. If you would like a
+                                    different item, please initiate a return and place a new order.</p>
+                                <p><strong>Who pays for the return shipping?</strong></p>
+                                <p>Bike World will cover the return costs.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Products-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Products:
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                            data-bs-parent="#accordionDetail">
+                            <div class="accordion-body">
+                                <p><strong>What types of mountain bikes do you offer?</strong></p>
+                                <p>A: We offer a variety of mountain bikes, including hardtail and full suspension
+                                    mountain bikes.</p>
+                                <p><strong>Are your products new or used?</strong></p>
+                                <p>A: All of our products are brand new and come with a manufacturer's warranty.</p>
+                                <p><strong>Do you offer any warranties on your mountain bikes?</strong></p>
+                                <p>A: Yes, all of our products come with a manufacturer's warranty. Please refer to the
+                                    product page</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
