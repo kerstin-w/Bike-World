@@ -1,3 +1,4 @@
+from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -57,3 +58,10 @@ class ContactView(FormView):
         # Store the previous page URL in the session
         request.session["previous_page"] = request.META.get("HTTP_REFERER")
         return super().get(request, *args, **kwargs)
+
+
+class FaqView(TemplateView):
+    """
+    Render the FAQs Page
+    """
+    template_name = 'support/faq.html'
