@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'support/css/support.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Contact Form -->
+    <section class="margin-top mx-3">
+        <h1 class="liner upper">FAQs&nbsp;</h1>
+        <p class="px-4 py-3 ms-4">Welcome to Bike World! We're thrilled that you're interested in shopping with us for
+            all your mountain biking needs. To help make your shopping experience as smooth and enjoyable as possible,
+            we've put together a list of frequently asked questions. Whether you have questions about placing an order,
+            payment options, returns, or our products, we've got you covered. If you don't see the answer to your
+            question here, please don't hesitate to reach out to our customer service team for assistance. Thank you for
+            choosing Bike World, and happy shopping!</p>
+        <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
+            <div class="d-flex flex-row support-container p-lg-5 p-md-4 p-3 mb-4">
+
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
