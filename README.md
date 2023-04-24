@@ -86,3 +86,15 @@ Bike World customers require a comprehensive selection of high-quality mountain 
 ## <a name="site-map">Site Map</a>
 
 ## <a name="user-stories">User Stories</a>
+
+# <a name="design">Design</a>
+
+### <a name="colour-palette">Colour Palette</a>
+![Colour Palette](documentation/colours.png)
+
+To create a simple design that does not distract customers from the essential areas, only few colors are used. ![#FFFFFF](https://placehold.co/15x15/FFFFFF/FFFFFF.png) White is used as the main background color, which creates a clear and bright design. 
+The font is predominantly black, which creates a good contrast and is easily readable for customers. 
+Certain areas and segments have a ![#DFDFDF](https://placehold.co/15x15/DFDFDF/DFDFDF.png) light gray color to highlight and accentuate them. This provides a subtle contrast to the predominantly white background and draws attention to important elements of the design. 
+An ![#CD4C1D](https://placehold.co/15x15/CD4C1D/CD4C1D.png) orange color has been chosen for all call-to-action buttons and promotional/sale segments. This color stands out and grabs the user's attention, as Bike World wants to guide the customer to the checkout and purchase process as easily as possible. The orange color creates a sense of urgency and encourages the user to take action. By using this color, Bike World aims to optimize the user experience, drive sales and reduce the abondend cart rate.
+
+After testing the accessibility, the inital orange was changed to a darker orange to achieve a better contrast between the orange background and the white text from buttons.
