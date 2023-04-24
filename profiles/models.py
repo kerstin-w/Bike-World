@@ -19,6 +19,9 @@ class UserProfile(models.Model):
     default_full_name = models.CharField(
         max_length=settings.FULL_NAME_MAX_LENGTH, null=False, blank=False
     )
+    default_email = models.EmailField(
+        max_length=254, null=False, blank=False
+    )
     default_phone_number = models.CharField(
         max_length=20, null=True, blank=True
     )
