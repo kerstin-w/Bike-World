@@ -17,7 +17,7 @@ from checkout.models import Order
 from .forms import UserProfileForm
 
 
-class ProfileView(LoginRequiredMixin, FormView, ListView):
+class ProfileView(LoginRequiredMixin, FormView):
     """
     View to render the user profile
     """

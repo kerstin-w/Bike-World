@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models import UserProfile
 
 
@@ -37,3 +38,24 @@ class UserProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs["class"] = "border-black"
             # Remove auto-generated labels
             self.fields[field].label = False
+
+    def clean_default_email(self):
+        """
+        Ensure that the email is not already taken ba another user.
+        """
+        email = self.cleaned_data.get("default_email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Email already exists.")
+        return email
+
+    def save(self, commit=True):
+        """
+        Save the form data to UserProfile model instance.
+        If commit is True, save changes to the database.
+        """
+        profile = super().save(commit=False)
+        profile.user.email = self.cleaned_data["default_email"]
+        if commit:
+            profile.user.save()
+            profile.save()
+        return profile
