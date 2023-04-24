@@ -17,12 +17,15 @@ class UserProfileForm(forms.ModelForm):
         placeholders = {
             "default_full_name": "Your Full Name",
             "default_postcode": "Postal Code",
-            "default_email": "Email",
             "default_town_or_city": "Town or City",
             "default_street_address1": "Street Address 1",
             "default_street_address2": "Street Address 2",
             "default_phone_number": "Phone Number",
         }
+        if self.instance:
+            placeholders["default_email"] = self.instance.user.email
+        else:
+            placeholders["default_email"] = "Email"
 
         # Set autofocus on the first field
         self.fields["default_street_address1"].widget.attrs["autofocus"] = True
@@ -43,9 +46,16 @@ class UserProfileForm(forms.ModelForm):
         """
         Ensure that the email is not already taken ba another user.
         """
+        # Get the email address entered by the user from the form data
         email = self.cleaned_data.get("default_email")
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("Email already exists.")
+        # Check if the entered email address is already taken by another user
+        if (
+            email != self.instance.user.email
+            and User.objects.filter(email=email).exists()
+        ):
+            # If the email address is already taken, raise a validation error
+            raise forms.ValidationError("Email is already in use.")
+        # If the email address is not already taken, return it
         return email
 
     def save(self, commit=True):
@@ -53,9 +63,16 @@ class UserProfileForm(forms.ModelForm):
         Save the form data to UserProfile model instance.
         If commit is True, save changes to the database.
         """
+        # Create a new UserProfile model instance from the form data
         profile = super().save(commit=False)
-        profile.user.email = self.cleaned_data["default_email"]
+        # Get the User instance associated with the UserProfile instance
+        user = profile.user
+        # Update the email address of the User instance with
+        # the entered email address from the form data
+        user.email = self.cleaned_data["default_email"]
+        # If commit is True, save the changes to the database
         if commit:
-            profile.user.save()
+            user.save()
             profile.save()
+        # Return the UserProfile instance
         return profile

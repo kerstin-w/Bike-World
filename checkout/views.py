@@ -201,6 +201,7 @@ def checkout_success(request, order_number):
             # Save the data to a dictionary
             profile_data = {
                 "default_full_name": order.full_name,
+                "default_email": request.user.email,
                 "default_phone_number": order.phone_number,
                 "default_country": order.country,
                 "default_postcode": order.postcode,
