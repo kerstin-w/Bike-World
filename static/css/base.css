@@ -324,6 +324,16 @@ footer ul {
     padding-left: 0.5rem;
 }
 
+#mc_embed_signup {
+    clear: left;
+    font: 14px 'Roboto', sans-serif;
+    width: 600px;
+}
+
+#mc_embed_signup .helper_text {
+    background-color: transparent !important;
+}
+
 /*=============== Product List ===============*/
 .product-content {
     height: 100%;
