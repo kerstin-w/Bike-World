@@ -77,5 +77,12 @@ The primary user objectives are to provide a wide range of high-quality mountain
 
 # <a name="user-experience-ux">User Experience (UX)</a>
 
-# <a name="user-demographics">User Demographics</a>
+## <a name="user-demographics">User Demographics</a>
 The user demographics for Bike World are diverse, as mountain biking is a sport enjoyed by people of all ages and backgrounds. However, the primary target audience consists of males and females between the ages of 18 and 45 who are passionate about mountain biking. Bike World also caters to beginners who are just starting out in the sport, as well as experienced riders who are looking for the latest and greatest equipment.
+
+## <a name="user-requirements">User Requirements</a>
+Bike World customers require a comprehensive selection of high-quality mountain bikes, ranging from entry-level to premium models, with detailed product information and competitive pricing. We also recognize the importance of customer service and support, providing responsive and knowledgeable assistance to answer any questions or concerns. Additionally, customers require a secure and easy-to-use online platform, with a streamlined checkout process. To enhance the user experience, Bike World understands the importance of providing a wishlist feature to save products for later purchase and an intuitive platform that is easy to navigate.
+
+## <a name="site-map">Site Map</a>
+
+## <a name="user-stories">User Stories</a>
