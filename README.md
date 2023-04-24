@@ -1,11 +1,14 @@
 # BIKE WORLD
-Welcome to Bike World! 
+Welcome to **Bike World**! 
 
 The ecommerce store offers a wide selection of top-quality mountain bikes, suitable for both beginners and seasoned riders.
 
 At Bike World, we understand that mountain biking is not just a hobby, it's a passion. That's why we are committed to providing our customers with the best possible products and services. We carefully curate our selection of mountain bikes from trusted brands to ensure that our customers have access to the latest and greatest equipment.
 
 Our user-friendly website allows you to browse our extensive collection of mountain bikes.
+
+Please note that at this stage, **Bike World** is a fictitious store which has been created for the purposes of satisfying the requirements for the **Code Institute** Full Stack Development Course Project 5.
+
 
 ![Mockup]()
 
@@ -60,3 +63,8 @@ Our user-friendly website allows you to browse our extensive collection of mount
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [References & Credit](#references-credit)
+
+---
+
+## <a name="target-audience">Target Audience</a>
+The target audience for **Bike World** are mountain biking enthusiasts of all ages and experience levels. **Bike World** appeals to a wide range of customers, from beginners who are just starting out in the sport, to experienced riders who demand the latest and greatest equipment. **Bike World** understands that mountain biking is more than just a hobby, it's a lifestyle, and **Bike World** aims to provide a platform where like-minded individuals can come together and find the best equipment to support their passion.
