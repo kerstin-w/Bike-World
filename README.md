@@ -74,3 +74,8 @@ The primary business objective is to provide customers with a comprehensive onli
 
 # <a name="user-objectives">User Objectives</a>
 The primary user objectives are to provide a wide range of high-quality mountain bikes at competitive prices, with a user-friendly online shopping experience. **Bike World** strives to offer customers the convenience of online shopping with the added benefit of expert product knowledge and exceptional customer service. Additionally, **Bike World** provides customers with access to detailed product information and reviews to help them make informed decisions about their purchase.
+
+# <a name="user-experience-ux">User Experience (UX)</a>
+
+# <a name="user-demographics">User Demographics</a>
+The user demographics for Bike World are diverse, as mountain biking is a sport enjoyed by people of all ages and backgrounds. However, the primary target audience consists of males and females between the ages of 18 and 45 who are passionate about mountain biking. Bike World also caters to beginners who are just starting out in the sport, as well as experienced riders who are looking for the latest and greatest equipment.
