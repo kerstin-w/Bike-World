@@ -89,7 +89,7 @@ Bike World customers require a comprehensive selection of high-quality mountain 
 
 # <a name="design">Design</a>
 
-### <a name="colour-palette">Colour Palette</a>
+## <a name="colour-palette">Colour Palette</a>
 ![Colour Palette](documentation/colours.png)
 
 To create a simple design that does not distract customers from the essential areas, only few colors are used. ![#FFFFFF](https://placehold.co/15x15/FFFFFF/FFFFFF.png) White is used as the main background color, which creates a clear and bright design. 
@@ -98,3 +98,10 @@ Certain areas and segments have a ![#DFDFDF](https://placehold.co/15x15/DFDFDF/D
 An ![#CD4C1D](https://placehold.co/15x15/CD4C1D/CD4C1D.png) orange color has been chosen for all call-to-action buttons and promotional/sale segments. This color stands out and grabs the user's attention, as Bike World wants to guide the customer to the checkout and purchase process as easily as possible. The orange color creates a sense of urgency and encourages the user to take action. By using this color, Bike World aims to optimize the user experience, drive sales and reduce the abondend cart rate.
 
 After testing the accessibility, the inital orange was changed to a darker orange to achieve a better contrast between the orange background and the white text from buttons.
+
+## <a name="fonts">Fonts</a>
+[_Sourced via Google Fonts._](https://fonts.google.com/)
+
+Using a consistent font throughout a website is important for creating a cohesive and easy-to-use experience for the user. This is why **Roboto** was choosen as font for Bike world.
+Roboto is a versatile sans-serif font that was designed by Google in 2011 specifically for use on the Android operating system. Roboto has a clean and modern appearance, legibility, and versatility. Roboto is designed to be easily legible at various sizes, making it a great choice for both body text and headings. Its clean lines and open letterforms make it easy to read on both small screens and large displays.
+Overall, using a consistent font helps to create a polished and professional look for Bike World, while also improving the user experience by providing clear and easy-to-read text.
