@@ -44,6 +44,7 @@ class ProfileView(LoginRequiredMixin, FormView, ListView):
         kwargs["instance"] = get_object_or_404(
             UserProfile, user=self.request.user
         )
+        kwargs["initial"] = {"default_email": self.request.user.email}
         return kwargs
 
     def form_valid(self, form):
