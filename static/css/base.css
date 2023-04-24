@@ -327,11 +327,28 @@ footer ul {
 #mc_embed_signup {
     clear: left;
     font: 14px 'Roboto', sans-serif;
-    width: 600px;
 }
 
 #mc_embed_signup .helper_text {
     background-color: transparent !important;
+}
+
+#mc_embed_signup .mc-field-group {
+    padding-bottom: 0% !important;
+}
+
+#mce-EMAIL {
+    border: 1px solid #717171 !important;
+}
+
+#mc_embed_signup div.response,
+#mc_embed_signup div#mce-responses {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.optionalParent {
+    width: 10rem;
 }
 
 /*=============== Product List ===============*/
