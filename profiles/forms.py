@@ -84,8 +84,14 @@ class ProductReviewForm(forms.ModelForm):
     """
 
     rating = forms.ChoiceField(
-        choices=[(i, i) for i in range(1, 6)], widget=forms.RadioSelect)
+        choices=[(i, i) for i in range(1, 6)],
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+    )
 
     class Meta:
         model = ProductReview
         fields = ('review', 'rating',)
+
+        widgets = {
+            'review': forms.Textarea(attrs={'class': 'form-control, border-black'}),
+        }
