@@ -60,6 +60,7 @@ select:invalid {
 .product-container-review {
     box-shadow: 0 2px 8px 0 rgb(0 0 0 / 17%);
     background-color: #fff;
+    height: fit-content;
 }
 
 .product-image-container-review {
