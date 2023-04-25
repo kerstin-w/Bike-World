@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db.models import Avg
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -20,9 +21,7 @@ class UserProfile(models.Model):
     default_full_name = models.CharField(
         max_length=settings.FULL_NAME_MAX_LENGTH, null=False, blank=False
     )
-    default_email = models.EmailField(
-        max_length=254, null=False, blank=False
-    )
+    default_email = models.EmailField(max_length=254, null=False, blank=False)
     default_phone_number = models.CharField(
         max_length=20, null=True, blank=True
     )
@@ -69,8 +68,10 @@ class ProductReview(models.Model):
     """
     Data Model for Product Reviews
     """
+
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name='reviews')
+        Product, on_delete=models.CASCADE, related_name="reviews"
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     review = models.TextField()
     rating = models.PositiveIntegerField(
@@ -82,7 +83,22 @@ class ProductReview(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.user.username} - {self.product.title}'
+        return f"{self.user.username} - {self.product.title}"
+
+    def save(self, *args, **kwargs):
+        """
+        Call the superclass's save() method to save the new review.
+        """
+        super(ProductReview, self).save(*args, **kwargs)
+
+        # Update the rating field of the Product instance
+        # with the average rating.
+        self.product.rating = self.product.reviews.aggregate(Avg("rating"))[
+            "rating__avg"
+        ]
+
+        # Save the Product instance with the new rating.
+        self.product.save()
 
     @classmethod
     def get_reviews_for_product(cls, product):
