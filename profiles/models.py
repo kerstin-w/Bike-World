@@ -84,6 +84,13 @@ class ProductReview(models.Model):
     def __str__(self):
         return f'{self.user.username} - {self.product.title}'
 
+    @classmethod
+    def get_reviews_for_product(cls, product):
+        """
+        Method to get review of a specific product
+        """
+        return cls.objects.filter(product=product)
+
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
