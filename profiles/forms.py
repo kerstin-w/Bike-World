@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, ProductReview
 
 
 class UserProfileForm(forms.ModelForm):
@@ -76,3 +76,16 @@ class UserProfileForm(forms.ModelForm):
             profile.save()
         # Return the UserProfile instance
         return profile
+
+
+class ProductReviewForm(forms.ModelForm):
+    """
+    Form to write a Product Review
+    """
+
+    rating = forms.ChoiceField(
+        choices=[(i, i) for i in range(1, 6)], widget=forms.RadioSelect)
+
+    class Meta:
+        model = ProductReview
+        fields = ('review', 'rating',)
