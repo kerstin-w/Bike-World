@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 
 from .models import Product, Category
 from .forms import ProductForm
-from profiles.models import Wishlist
+from profiles.models import Wishlist, ProductReview
 
 
 class ProductListView(ListView):
@@ -181,6 +181,9 @@ class ProductDetailView(DetailView):
             )
         # Add the wishlist_products list to the context
         context["wishlist_products"] = wishlist_products
+        # Get the reviews for the current product
+        reviews = ProductReview.get_reviews_for_product(self.object)
+        context['reviews'] = reviews
         return context
 
 
