@@ -179,11 +179,13 @@ class ProductDetailView(DetailView):
             wishlist_products = Wishlist.objects.filter(user=user).values_list(
                 "product_id", flat=True
             )
-        # Add the wishlist_products list to the context
-        context["wishlist_products"] = wishlist_products
         # Get the reviews for the current product
         reviews = ProductReview.get_reviews_for_product(self.object)
-        context['reviews'] = reviews
+
+        # Add the wishlist_products list to the context
+        context["wishlist_products"] = wishlist_products
+        # Add reviews to context
+        context["reviews"] = reviews
         return context
 
 
