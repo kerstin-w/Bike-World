@@ -116,6 +116,7 @@ a {
 
 .search-box {
     list-style: none;
+    width: 100%;
 }
 
 .activity {
@@ -621,7 +622,17 @@ footer ul {
     .brand-logo {
         position: absolute;
         top: 4px;
-        left: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .navbar-toggler {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-toggler i {
+        margin-right: 0.3rem;
     }
 
     .user-nav {
