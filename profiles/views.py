@@ -92,8 +92,7 @@ class ProfileView(LoginRequiredMixin, FormView):
         for item in order_line_items:
             order_item_ids.append({
                 'order_number': item.order.order_number,
-                'product_id': item.product.id,
-                'product_title': item.product.title,
+                'product': item.product,
                 'review_form': ProductReviewForm(),
             })
         context['order_item_ids'] = order_item_ids
