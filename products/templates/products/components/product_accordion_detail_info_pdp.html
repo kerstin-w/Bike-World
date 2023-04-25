@@ -78,7 +78,9 @@
                 {% endfor %}
                 <p>{{ review.review }}</p>
                 <p class="text-muted">Written by: {{ review.user }}</p>
-                <hr class="devider-full-width ">
+                {% if not forloop.last %}
+                <hr class="devider-full-width">
+                {% endif %}
                 {% empty %}
                 <p>No reviews yet.</p>
                 {% endfor %}
