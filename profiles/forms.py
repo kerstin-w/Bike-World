@@ -84,16 +84,23 @@ class ProductReviewForm(forms.ModelForm):
     Form to write a Product Review
     """
 
-    rating = forms.IntegerField(widget=forms.HiddenInput(), validators=[
-                                MinValueValidator(1), MaxValueValidator(5)])
+    # This field is hidden because its value is set with star rating.
+    rating = forms.IntegerField(
+        widget=forms.HiddenInput(),
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
 
     class Meta:
+        # Use the ProductReview model to create the form
         model = ProductReview
+
+        # The fields that will be displayed on the form
         fields = (
             "review",
             "rating",
         )
 
+        # Customize the way the review field is displayed in the form
         widgets = {
             "review": forms.Textarea(
                 attrs={"class": "form-control, border-black"}
