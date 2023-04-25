@@ -34,6 +34,12 @@ Your Profile
                     aria-controls="collapseWishlist">
                     <i class="fa-solid fa-cart-shopping fa-lg"></i>&nbsp;Wishlist
                 </button>
+                <button id="collapseReviewBtn"
+                    class="btn btn-lg btn-cta text-white px-sm-4 px-2 py-sm-4 py-3 me-3 w-100" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseReview" aria-expanded="false"
+                    aria-controls="collapseReview">
+                    <i class="fa-solid fa-cart-shopping fa-lg"></i>&nbsp;Review
+                </button>
                 <button id="deleteBtn" class="btn btn-lg btn-cta text-white px-sm-4 px-2 py-sm-4 py-3 w-100"
                     type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" aria-expanded="false">
                     <i class="fa-regular fa-trash-can fa-lg"></i>&nbsp;Delete Account
@@ -171,6 +177,34 @@ Your Profile
                         <p>Your wishlist is empty.</p>
                         {% endif %}
                     </div>
+                </div>
+            </div>
+            <!-- Product Review -->
+            <div class="collapse" id="collapseReview">
+                <div class="p-lg-5 p-4 mb-4 profile-details">
+                    <h3 class="upper liner">Write a Product Review</h3>
+                    {% if order_item_ids %}
+                    <div class="row">
+                        {% for item in order_item_ids %}
+                        {{ item.product.title }}
+                        <div class="col-md-6 pb-4">
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}" class="img-fluid">
+                            {% else %}
+                            <img src="{{ MEDIA_URL }}products/default-no-image.webp" alt="{{ item.product.title }}"
+                                class="img-fluid">
+                            {% endif %}
+                        </div>
+                        <form method="POST" action="{% url 'product_review' item.order_number item.product.id %}">
+                            {% csrf_token %}
+                            {{ item.review_form|crispy}}
+                            <input type="hidden" name="order_number" value="{{ item.order_number }}" />
+                            <input type="hidden" name="product_id" value="{{ item.product.id }}" />
+                            <button type="submit">Submit Review</button>
+                        </form>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <!-- Delete Account -->
