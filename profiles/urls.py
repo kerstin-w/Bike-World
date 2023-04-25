@@ -5,6 +5,7 @@ from .views import (
     DeleteAccountView,
     AddToWishlistView,
     WishlistDeleteView,
+    ProductReviewView,
 )
 
 urlpatterns = [
@@ -24,4 +25,9 @@ urlpatterns = [
     ),
     path('wishlist/<int:pk>/delete/',
          WishlistDeleteView.as_view(), name='wishlist-delete'),
+    path(
+        "product_review/<str:order_number>/<int:product_id>/",
+        ProductReviewView.as_view(),
+        name="product_review",
+    ),
 ]

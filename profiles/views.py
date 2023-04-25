@@ -9,12 +9,13 @@ from django.views.generic import (
     DeleteView,
     View,
 )
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from .models import UserProfile, Wishlist
+from .models import UserProfile, Wishlist, ProductReview
+from checkout.models import Order, OrderLineItem
 from products.models import Product
 from checkout.models import Order
-from .forms import UserProfileForm
+from .forms import UserProfileForm, ProductReviewForm
 
 
 class ProfileView(LoginRequiredMixin, FormView):
@@ -77,6 +78,26 @@ class ProfileView(LoginRequiredMixin, FormView):
         context["orders"] = profile.orders.all()
         # Add wishlist to the context
         context["wishlist"] = Wishlist.objects.filter(user=self.request.user)
+        # Get a queryset of all product reviews for this user's UserProfile
+        user_reviews = ProductReview.objects.filter(user=self.request.user)
+        # Filter out any line items that have a corresponding review
+        order_line_items = OrderLineItem.objects.filter(
+            order__user_profile=profile
+        ).exclude(
+            product__reviews__in=user_reviews
+        ).distinct()
+
+        # Create a list of order item IDs and product titles
+        order_item_ids = []
+        for item in order_line_items:
+            order_item_ids.append({
+                'order_number': item.order.order_number,
+                'product_id': item.product.id,
+                'product_title': item.product.title,
+                'review_form': ProductReviewForm(),
+            })
+        context['order_item_ids'] = order_item_ids
+
         return context
 
 
@@ -221,3 +242,71 @@ class WishlistDeleteView(LoginRequiredMixin, DeleteView):
             f"<strong>{product}</strong> has been removed from your wishlist!",
         )
         return super().delete(request, *args, **kwargs)
+
+
+class ProductReviewView(View):
+    """
+    View for Users to write a review about purchased products
+    """
+    template_name = "profiles/profile.html"
+    form_class = ProductReviewForm
+
+    def get(self, request, *args, **kwargs):
+        """
+        retrieve order number and product ID from URL parameters
+        """
+        order_number = kwargs["order_number"]
+        product_id = kwargs["product_id"]
+
+        # ensure that the order belongs to the current user
+        order = get_object_or_404(
+            Order, order_number=order_number, user_profile__user=request.user)
+
+        # ensure that the order line item corresponds to the product ID
+        order_item = get_object_or_404(
+            OrderLineItem, order=order, product__id=product_id)
+
+        # create a form instance and render the template with the form and order item
+        form = ProductReviewForm()
+        context = {
+            "form": form,
+            "order_item": order_item,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        """
+        retrieve order number and product ID from URL parameters
+        """
+        order_number = kwargs["order_number"]
+        product_id = kwargs["product_id"]
+
+        # ensure that the order belongs to the current user
+        order = get_object_or_404(
+            Order, order_number=order_number, user_profile__user=request.user)
+
+        # ensure that the order line item corresponds to the specified product ID
+        order_item = get_object_or_404(
+            OrderLineItem, order=order, product__id=product_id)
+
+        # create a form instance and validate the submitted data
+        form = ProductReviewForm(request.POST)
+        if form.is_valid():
+            # create a ProductReview instance and save it to the database
+            review = form.save(commit=False)
+            review.user = request.user
+            review.product = order_item.product
+            review.order_item = order_item
+            review.save()
+
+            # update the OrderLineItem to indicate that it has been reviewed
+            order_item.reviewed = True
+            order_item.save()
+
+            # display a success message and redirect to the profile page
+            messages.success(request, 'Your review has been submitted!')
+            return redirect("profile")
+        else:
+            # display an error message and redirect to the profile page
+            messages.error(request, 'Something went wrong!')
+            return redirect("profile")
