@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from .models import UserProfile, ProductReview
 
 
@@ -83,10 +84,8 @@ class ProductReviewForm(forms.ModelForm):
     Form to write a Product Review
     """
 
-    rating = forms.ChoiceField(
-        choices=[(i, i) for i in range(1, 6)],
-        widget=forms.RadioSelect(attrs={"class": "form-check-input"}),
-    )
+    rating = forms.IntegerField(widget=forms.HiddenInput(), validators=[
+                                MinValueValidator(1), MaxValueValidator(5)])
 
     class Meta:
         model = ProductReview

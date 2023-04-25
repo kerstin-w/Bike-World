@@ -66,3 +66,17 @@ select:invalid {
     height: 100px;
     width: 30%;
 }
+
+.rating {
+    display: flex;
+}
+
+.rating i {
+    cursor: pointer;
+    user-select: none;
+    transition: color .25s;
+}
+
+.rating i.checked {
+    color: #cd4c1d;
+}

@@ -86,7 +86,7 @@ Your Profile
             <div class="collapse" id="collapseHistory">
                 <div class="p-lg-5 p-4 mb-4 profile-details">
                     <h3 class="upper liner">Order History&nbsp;</h3>
-                    {% if order %}
+                    {% if orders %}
                     {% for order in orders %}
                     <div class="row my-3">
                         <div class="col-sm-4 col-6">
@@ -188,7 +188,6 @@ Your Profile
                 <div class="p-lg-5 p-4 mb-4 profile-details">
                     <h3 class="upper liner">Write a Product Review&nbsp;</h3>
                     {% if order_item_ids %}
-
                     {% for item in order_item_ids %}
                     <div
                         class="d-flex flex-md-column flex-row align-items-center justify-content-between product-container-review my-4 py-2 px-4">
@@ -210,7 +209,15 @@ Your Profile
                     </div>
                     <form method="POST" action="{% url 'product_review' item.order_number item.product.id %}">
                         {% csrf_token %}
-                        {{ item.review_form|crispy}}
+                        <div class="rating mb-4">
+                            <i class="fa fa-star fa-lg star-1" data-rating="1" data-form-id="{{ item.product.id }}"></i>
+                            <i class="fa fa-star fa-lg star-2" data-rating="2" data-form-id="{{ item.product.id }}"></i>
+                            <i class="fa fa-star fa-lg star-3" data-rating="3" data-form-id="{{ item.product.id }}"></i>
+                            <i class="fa fa-star fa-lg star-4" data-rating="4" data-form-id="{{ item.product.id }}"></i>
+                            <i class="fa fa-star fa-lg star-5" data-rating="5" data-form-id="{{ item.product.id }}"></i>
+                        </div>
+                        {{ item.review_form|crispy }}
+                        <input type="hidden" id="rating-{{ item.product.id }}" name="rating" value="1">
                         <input type="hidden" name="order_number" value="{{ item.order_number }}">
                         <input type="hidden" name="product_id" value="{{ item.product.id }}">
                         <button class="btn btn-cta text-white" type="submit">Submit Review</button>
