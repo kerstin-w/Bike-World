@@ -169,6 +169,9 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        # Get product title for template title
+        context["title"] = self.object.title
+
         # Get the user's wishlist products
         user = self.request.user
         wishlist_products = []
