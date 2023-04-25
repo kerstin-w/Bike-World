@@ -14,10 +14,10 @@
         {% endif %}
     </div>
     {% for i in "12345" %}
-    {% if i|add:0 < product.rating %}
-    <i class="fa fa-star fa-xs text-dark"></i>
+    {% if i|add:'0' <= product.rating %}
+    <i class="fa fa-star fa-xs"></i>
     {% else %}
-    <i class="fa fa-star-o fa-xs text-dark"></i>
+    <i class="fa fa-star-o fa-xs"></i>
     {% endif %}
     {% endfor %}
 </div>

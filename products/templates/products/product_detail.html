@@ -48,11 +48,12 @@
                         {% endif %}
                     </div>
                     <div class="col-6">
-                        {% for i in "x"|ljust:product.rating %}
+                        {% for i in "12345" %}
+                        {% if i|add:'0' <= product.rating %}
                         <i class="fa fa-star fa-xs"></i>
-                        {% endfor %}
-                        {% for i in product.rating|add:"-5"|floatformat:"0"|default:"1" %}
+                        {% else %}
                         <i class="fa fa-star-o fa-xs"></i>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
