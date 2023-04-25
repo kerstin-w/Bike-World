@@ -3,6 +3,7 @@ $(document).ready(function () {
     let collapseInfoBtn = $('#collapseInfoBtn');
     let collapseHistoryBtn = $('#collapseHistoryBtn');
     let collapseWishlistBtn = $('#collapseWishlistBtn');
+    let collapseReviewBtn = $('#collapseReviewBtn');
 
     // Select all the collapse containers
     let collapseContainers = $('.collapse');
@@ -23,5 +24,11 @@ $(document).ready(function () {
     collapseWishlistBtn.on('click', function () {
         // Hide all the collapse containers except the one that was clicked on
         collapseContainers.not('#collapseWishlist').removeClass('show');
+    });
+
+    // Add a click event listener to the collapse review button
+    collapseReviewBtn.on('click', function () {
+        // Hide all the collapse containers except the one that was clicked on
+        collapseContainers.not('#collapseReview').removeClass('show');
     });
 });
