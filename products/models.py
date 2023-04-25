@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Model
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.html import mark_safe
 
 
@@ -42,20 +41,14 @@ class Product(Model):
         max_digits=6, decimal_places=2, null=True, blank=True
     )
     sale = models.BooleanField(default=False, null=True, blank=True)
-    rating = models.PositiveIntegerField(
-        default=1,
-        validators=[MinValueValidator(1), MaxValueValidator(5)],
-        null=True,
-        blank=True,
-    )
-    image = models.ImageField(null=True, blank=True,
-                              upload_to='products/')
+    image = models.ImageField(null=True, blank=True, upload_to="products/")
     brand = models.CharField(max_length=100)
     bike_type = models.CharField(max_length=200)
     gender = models.IntegerField(choices=GENDER, default=0)
     material = models.CharField(max_length=100, null=True, blank=True)
     derailleur = models.CharField(max_length=100, null=True, blank=True)
     stock = models.IntegerField(default=99)
+    rating = models.FloatField(default=1.0)
 
     def __str__(self):
         return self.title
