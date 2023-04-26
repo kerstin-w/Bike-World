@@ -31,4 +31,19 @@ $(document).ready(function () {
         // Hide all the collapse containers except the one that was clicked on
         collapseContainers.not('#collapseReview').removeClass('show');
     });
+
+    // Scroll Into View for collapseables 
+    const buttons = $('button[data-bs-toggle="collapse"]');
+
+    // Add a click event listener to each button
+    buttons.on('click', function () {
+        // Get the ID of the container to scroll to from the data-bs-target of the button
+        const targetId = $(this).data('bs-target');
+        const container = $(targetId).get(0);
+
+        // Scroll to the container using the scrollIntoView method
+        container.scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
 });
