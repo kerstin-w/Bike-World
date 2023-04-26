@@ -91,22 +91,23 @@
     background-color: #fff;
 }
 
-.add-wishlist-pdp {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    font-size: 24px;
-    color: #cd4c1d;
-    z-index: 9;
-    transition: all 0.3s linear;
+.btn-wishlist {
+    border: 1.5px solid #cd4c1e;
+    border-radius: 0;
 }
 
-.add-wishlist-pdp:hover,
-.add-wishlist-pdp:active {
-    color: #cd4c1d;
-    font-size: calc(1.2vw + 1.2vh + 1vmin);
-    transition: all 0.3s ease;
+.btn-wishlist .fa-heart {
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+}
+
+.btn-wishlist:hover .fa-heart {
+    font-size: 1.2em;
+    transform: scale(1.2);
+}
+
+.btn-wishlist i {
+    color: #cd4c1e;
 }
 
 .back-button:hover {
