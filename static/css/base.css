@@ -182,7 +182,8 @@ a {
 }
 
 .user-options {
-    right: 10px;
+    right: 5px;
+    text-align: right;
 }
 
 /*=============== Hero Banner ===============*/
