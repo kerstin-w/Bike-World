@@ -33,3 +33,29 @@ class ContactFormTestCase(TestCase):
         }
         form = ContactForm(data=form_data)
         self.assertFalse(form.is_valid())
+
+    def test_contact_from_name_field_required(self):
+        """
+        Test that the name field is required
+        """
+        form_data = {
+            "email": "john@test.com",
+            "subject": "Test",
+            "message": "How are you doing?",
+        }
+        form = ContactForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors["name"], ["This field is required."])
+
+    def test_contact_from_subject_field_required(self):
+        """
+        Test that the subject field is required
+        """
+        form_data = {
+            "name": "John Doe",
+            "email": "john@test.com",
+            "message": "How are you doing?",
+        }
+        form = ContactForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors["subject"], ["This field is required."])
