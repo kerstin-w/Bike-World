@@ -38,7 +38,8 @@ class ContactForm(forms.Form):
         label="Your email",
         required=True,
         widget=forms.EmailInput(
-            attrs={"placeholder": "Enter your email", **text_input_attrs}
+            attrs={"id": "email-input",
+                   "placeholder": "Enter your email", **text_input_attrs}
         ),
     )
 
