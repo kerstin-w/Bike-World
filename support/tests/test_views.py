@@ -1,8 +1,8 @@
-from django.test import TestCase, RequestFactory
-from django.urls import reverse
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
-from django.conf import settings
+from django.test import RequestFactory, TestCase
+from django.urls import reverse
 
 from profiles.models import UserProfile
 from support.forms import ContactForm
@@ -134,6 +134,23 @@ class ContactViewTest(TestCase):
         response = self.client.get(self.url)
         if "HTTP_REFERER" in response.request:
             self.assertEqual(
-                self.client.session.get(
-                    "previous_page"), response.request["HTTP_REFERER"]
+                self.client.session.get("previous_page"),
+                response.request["HTTP_REFERER"],
             )
+
+
+class FaqViewTest(TestCase):
+    """
+    Test Case for Support FAQs View
+    """
+
+    def test_faq_view(self):
+        """
+        Test FAQ View template
+        """
+        url = reverse("faq")
+        response = self.client.get(url)
+        # Expect that the request was successful
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used to render the page
+        self.assertTemplateUsed(response, "support/faq.html")
