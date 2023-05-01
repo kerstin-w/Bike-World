@@ -1,6 +1,8 @@
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core import mail
+from django.conf import settings
 
 from profiles.models import UserProfile
 from support.forms import ContactForm
@@ -80,6 +82,7 @@ class ContactViewTest(TestCase):
         """
         self.form_data["subject"] = ""
         response = self.client.post(self.url, data=self.form_data)
+        self.assertContains(response, "This field is required.")
         self.assertEqual(response.status_code, 200)
 
     def test_contact_view_get_form_kwargs(self):
@@ -106,3 +109,20 @@ class ContactViewTest(TestCase):
         view = ContactView()
         view.request = request
         self.assertEqual(view.get_success_url(), "/previous_page/")
+
+    def test_contact_view_email_sent(self):
+        """
+        Test Contact View sends email
+        """
+        response = self.client.post(self.url, data=self.form_data)
+        # Test that one message has been sent
+        self.assertEqual(len(mail.outbox), 1)
+        # Test that the email content is correct
+        sent_email = mail.outbox[0]
+        self.assertEqual(sent_email.subject, "Test message")
+        # Check that sender is the user submitting the form
+        self.assertEqual(sent_email.from_email, "johndoe@test.com")
+        # Check that email has been sent to the correct recipient
+        self.assertEqual(sent_email.to, [settings.DEFAULT_FROM_EMAIL])
+        expected_body = "John Doe" + " wrote, \n\n" + "This is a test."
+        self.assertIn(expected_body, sent_email.body)
