@@ -124,3 +124,13 @@ class ProductReviewAdminTest(TestCase):
             review_admin.list_display,
             ("product", "user", "rating", "created_at"),
         )
+
+    def test_product_review_admin_search_fields(self):
+        """
+        Test that the correct search fields are displayed in the list view.
+        """
+        review_admin = ProductReviewAdmin(ProductReview, self.site)
+        self.assertEqual(
+            review_admin.search_fields,
+            ("product__title", "user__username", "review"),
+        )
