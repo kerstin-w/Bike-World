@@ -11,7 +11,23 @@ from .forms import ProductForm
 from profiles.models import Wishlist, ProductReview
 
 
-class ProductListView(ListView):
+class WishlistProductsMixin:
+    """
+    A mixin for retrieving the wishlist products of the user.
+    """
+
+    def get_wishlist_products(self):
+        """
+        Returns the list of wishlist products for the logged-in user.
+        """
+        if self.request.user.is_authenticated:
+            return Wishlist.objects.filter(
+                user=self.request.user
+            ).values_list("product_id", flat=True)
+        return []
+
+
+class ProductListView(WishlistProductsMixin, ListView):
     """
     Displays a list of all products with sorting, filter
     and search
@@ -138,15 +154,8 @@ class ProductListView(ListView):
             "brand", flat=True
         ).distinct()
 
-        # Get the user's wishlist products
-        user = self.request.user
-        wishlist_products = []
-        if user.is_authenticated:
-            wishlist_products = Wishlist.objects.filter(user=user).values_list(
-                "product_id", flat=True
-            )
         # Add the wishlist_products list to the context
-        context["wishlist_products"] = wishlist_products
+        context["wishlist_products"] = self.get_wishlist_products()
         return context
 
 
