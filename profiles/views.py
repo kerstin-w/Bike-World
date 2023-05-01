@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.views.generic import (
     FormView,
@@ -89,12 +90,17 @@ class ProfileView(LoginRequiredMixin, FormView):
 
         # Create a list of order item IDs and product titles
         order_item_ids = []
+        reviewed_products = []
         for item in order_line_items:
-            order_item_ids.append({
-                'order_number': item.order.order_number,
-                'product': item.product,
-                'review_form': ProductReviewForm(),
-            })
+            # Only add the product to the context if it hasn't been reviewed
+            # and hasn't been listed before
+            if item.product not in reviewed_products:
+                reviewed_products.append(item.product)
+                order_item_ids.append({
+                    'order_number': item.order.order_number,
+                    'product': item.product,
+                    'review_form': ProductReviewForm(),
+                })
         context['order_item_ids'] = order_item_ids
 
         return context
