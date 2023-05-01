@@ -114,7 +114,7 @@ class ContactViewTest(TestCase):
         """
         Test Contact View sends email
         """
-        response = self.client.post(self.url, data=self.form_data)
+        self.client.post(self.url, data=self.form_data)
         # Test that one message has been sent
         self.assertEqual(len(mail.outbox), 1)
         # Test that the email content is correct
@@ -126,3 +126,14 @@ class ContactViewTest(TestCase):
         self.assertEqual(sent_email.to, [settings.DEFAULT_FROM_EMAIL])
         expected_body = "John Doe" + " wrote, \n\n" + "This is a test."
         self.assertIn(expected_body, sent_email.body)
+
+    def test_contact_view_get(self):
+        """
+        Test Contact View sets previous_page in session
+        """
+        response = self.client.get(self.url)
+        if "HTTP_REFERER" in response.request:
+            self.assertEqual(
+                self.client.session.get(
+                    "previous_page"), response.request["HTTP_REFERER"]
+            )
