@@ -4,10 +4,6 @@
     width: 85vw;
 }
 
-.support-container .form-control {
-    background-color: transparent;
-}
-
 /*=============== Accordion ===============*/
 .accordion-button {
     background-color: #dfdfdf;

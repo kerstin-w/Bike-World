@@ -7,14 +7,17 @@
     right: .5rem;
 }
 
-.form-control:focus {
-    background-color: #ffffff63;
-}
-
 #payment-form .form-control,
 #card-element {
     color: #000;
     border: 1.5px solid #717171;
+    background-color: #fff;
+}
+
+#card-element:focus,
+#card-element:active {
+    border-color: #717171;
+    box-shadow: 0 0 0 0.25rem rgb(205 76 30 / 46%);
 }
 
 select,
@@ -36,16 +39,9 @@ select:invalid {
     height: 40px;
     padding: 10px 12px;
     border: 1px solid #717171;
-    background-color: transparent;
     box-shadow: 0 1px 3px 0 #e6ebf1;
     -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;
-}
-
-.StripeElement--focus,
-.stripe-style-input:focus,
-.stripe-style-input:active {
-    box-shadow: 0 1px 3px 0 #cfd7df;
 }
 
 .StripeElement--webkit-autofill {
@@ -79,6 +75,7 @@ select:invalid {
     height: 100%;
 }
 
+/*=============== Media ===============*/
 @media only screen and (max-width: 767px) {
     .checked-out-order-summary {
         width: 100%;

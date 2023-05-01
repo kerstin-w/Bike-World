@@ -20,15 +20,6 @@
     right: .5rem;
 }
 
-.profile-details .form-control,
-.profile-details .form-select {
-    background-color: transparent;
-}
-
-.form-control:focus {
-    background-color: #ffffff63;
-}
-
 select,
 select option {
     color: #000;

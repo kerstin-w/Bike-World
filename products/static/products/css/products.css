@@ -138,11 +138,6 @@
     width: 60vw;
 }
 
-.product-management .form-control,
-.product-management .form-select {
-    background-color: transparent;
-}
-
 select,
 select option {
     color: #000;
