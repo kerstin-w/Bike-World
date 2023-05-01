@@ -190,7 +190,7 @@ Your Profile
                     {% if order_item_ids %}
                     {% for item in order_item_ids %}
                     <div class="d-flex flex-md-row flex-column justify-content-center mb-4">
-                        <div class="product-container-review my-4 py-2 px-4">
+                        <div class="product-container-review my-4 py-2 px-4 w-100">
                             <div class="d-flex flex-sm-row flex-column align-items-center">
                                 <div class="product-image-container-review">
                                     {% if item.product.image %}
@@ -208,7 +208,7 @@ Your Profile
                             </div>
                         </div>
                         <form method="POST" action="{% url 'product_review' item.order_number item.product.id %}"
-                            class="px-4 pt-2 my-4">
+                            class="px-4 pt-2 my-4 w-100">
                             {% csrf_token %}
                             <div class="rating mb-4">
                                 <i class="fa fa-star fa-lg star-1" data-rating="1"
