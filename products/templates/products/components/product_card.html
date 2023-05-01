@@ -40,7 +40,7 @@
                 <i class="fa-solid fa-heart fa-sm"></i>
             </a>
             {% else %}
-            <form method="post" action="{% url 'add-to-wishlist' product.id %}">
+            <form method="post" action="{% url 'add_to_wishlist' product.id %}">
                 {% csrf_token %}
                 <button class="add-wishlist btn btn-icon" type="submit" aria-label="Add to Wishlist">
                     <i class="fa-regular fa-heart fa-sm"></i>

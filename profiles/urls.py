@@ -21,7 +21,7 @@ urlpatterns = [
     path(
         "add-to-wishlist/<int:product_id>/",
         AddToWishlistView.as_view(),
-        name="add-to-wishlist",
+        name="add_to_wishlist",
     ),
     path('wishlist/<int:pk>/delete/',
          WishlistDeleteView.as_view(), name='wishlist-delete'),
