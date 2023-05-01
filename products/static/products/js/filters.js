@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
     // Get the "All" category and brand checkboxes
-    const categoryAllCheckbox = $('input[name="category_all"]');
-    const brandAllCheckbox = $('input[name="brand_all"]');
+    const categoryAllRadio = $('input[name="category_all"]');
+    const brandAllRadio = $('input[name="brand_all"]');
 
     // Get the filter forms and selected filters container elements
     const filterForms = $('form[method="get"]');
@@ -10,23 +10,23 @@ $(document).ready(function () {
     const selectedBrandFiltersContainer = $('#selected-brand-filter');
 
     // When the user selects an option in the brand/category dropdown menus
-    $('.dropdown-menu input[type="checkbox"]').change(function () {
-        const currentCheckbox = $(this);
-        const currentName = currentCheckbox.attr('name');
+    $('.dropdown-menu input[type="radio"]').change(function () {
+        const currentRadio = $(this);
+        const currentName = currentRadio.attr('name');
 
         // If a checkbox is being checked, uncheck all other checkboxes with the same name
-        if (currentCheckbox.prop('checked')) {
-            $(`.dropdown-menu input[type="checkbox"][name="${currentName}"]:checked`)
-                .not(currentCheckbox)
+        if (currentRadio.prop('checked')) {
+            $(`.dropdown-menu input[type="radio"][name="${currentName}"]:checked`)
+                .not(currentRadio)
                 .prop('checked', false);
         }
 
         // Construct new URL with selected sort/filter parameters and redirect the user
         const selectedSort = $('#sort-by').val();
-        const selectedCategories = $('input[name="category"]:checked').not(categoryAllCheckbox).map(function () {
+        const selectedCategories = $('input[name="category"]:checked').not(categoryAllRadio).map(function () {
             return $(this).val();
         }).get().join(',');
-        const selectedBrands = $('input[name="brand"]:checked').not(brandAllCheckbox).map(function () {
+        const selectedBrands = $('input[name="brand"]:checked').not(brandAllRadio).map(function () {
             return $(this).val();
         }).get().join(',');
 
@@ -41,9 +41,9 @@ $(document).ready(function () {
     });
 
     // When the user clicks the "All" category checkbox
-    categoryAllCheckbox.change(function () {
+    categoryAllRadio.change(function () {
         const isChecked = $(this).prop('checked');
-        $('input[name="category"]:checked').not(categoryAllCheckbox).prop('checked', false);
+        $('input[name="category"]:checked').not(categoryAllRadio).prop('checked', false);
 
         // Ensure that the "All" checkbox always remains selected
         if (!isChecked) {
@@ -52,10 +52,10 @@ $(document).ready(function () {
 
         // Construct new URL with selected sort/filter parameters and redirect the user
         const selectedSort = $('#sort-by').val();
-        const selectedCategories = $('input[name="category"]:checked').not(categoryAllCheckbox).map(function () {
+        const selectedCategories = $('input[name="category"]:checked').not(categoryAllRadio).map(function () {
             return $(this).val();
         }).get().join(',');
-        const selectedBrands = $('input[name="brand"]:checked').not(brandAllCheckbox).map(function () {
+        const selectedBrands = $('input[name="brand"]:checked').not(brandAllRadio).map(function () {
             return $(this).val();
         }).get().join(',');
 
@@ -70,9 +70,9 @@ $(document).ready(function () {
     });
 
     // When the user clicks the "All" brand checkbox
-    brandAllCheckbox.change(function () {
+    brandAllRadio.change(function () {
         const isChecked = $(this).prop('checked');
-        $('input[name="brand"]:checked').not(brandAllCheckbox).prop('checked', false);
+        $('input[name="brand"]:checked').not(brandAllRadio).prop('checked', false);
 
         // Ensure that the "All" checkbox always remains selected
         if (!isChecked) {
@@ -81,10 +81,10 @@ $(document).ready(function () {
 
         // Construct new URL with selected sort/filter parameters and redirect the user
         const selectedSort = $('#sort-by').val();
-        const selectedCategories = $('input[name="category"]:checked').not(categoryAllCheckbox).map(function () {
+        const selectedCategories = $('input[name="category"]:checked').not(categoryAllRadio).map(function () {
             return $(this).val();
         }).get().join(',');
-        const selectedBrands = $('input[name="brand"]:checked').not(brandAllCheckbox).map(function () {
+        const selectedBrands = $('input[name="brand"]:checked').not(brandAllRadio).map(function () {
             return $(this).val();
         }).get().join(',');
 
@@ -130,7 +130,7 @@ $(document).ready(function () {
     // Update the selected filters containers
     const updateSelectedFilters = function () {
         const queryParams = getCurrentQueryParams();
-        const selectedCategories = $('input[name="category"][type="checkbox"]:checked')
+        const selectedCategories = $('input[name="category"][type="radio"]:checked')
             .map(function () {
                 if ($(this).val() !== 'all') {
                     return $(this).next().text().trim();
@@ -138,7 +138,7 @@ $(document).ready(function () {
             })
             .get();
 
-        const selectedBrands = $('input[name="brand"][type="checkbox"]:checked')
+        const selectedBrands = $('input[name="brand"][type="radio"]:checked')
             .map(function () {
                 return $(this).next().text().trim();
             })
@@ -176,7 +176,7 @@ $(document).ready(function () {
 
     // Reset all filters and selected sorting option
     const resetFilters = function () {
-        $('input[type="checkbox"]').prop('checked', false);
+        $('input[type="radio"]').prop('checked', false);
         $('#sort-by').prop('selectedIndex', 0);
 
         window.location.href = '/products/';
