@@ -12,7 +12,7 @@ from profiles.models import UserProfile
 class ContactView(FormView):
     template_name = "support/contact.html"
     form_class = ContactForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("index")
 
     def form_valid(self, form):
         # Get the form data
