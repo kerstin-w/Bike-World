@@ -73,8 +73,15 @@
             data-bs-parent="#accordionDetail">
             <div class="accordion-body">
                 {% for review in reviews %}
+                {% if user.is_superuser %}
+                <form action="{% url 'review_delete' review.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn p-0 btn-sm border-0 text-danger" type="submit"><i
+                            class="fa-regular fa-trash-can fa-sm"></i>&nbsp;Delete</button>
+                </form>
+                {% endif %}
                 {% for i in "12345" %}
-                {% if i|add:'0' <= product.rating %}
+                {% if i|add:'0' <= review.rating %}
                 <i class="fa fa-star fa-xs text-orange"></i>
                 {% else %}
                 <i class="fa fa-star-o fa-xs"></i>
