@@ -1,0 +1,8 @@
+Dear {{ user_name }},
+
+We regret to inform you that your review of {{ product_name }} has been deleted due to a violation of our terms and conditions.
+
+We apologize for any inconvenience this may have caused.
+
+Sincerely,
+BIKE WORLD Team

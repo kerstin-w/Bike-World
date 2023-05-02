@@ -1,11 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
 from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
 from django.db.models import Avg
 from django.urls import reverse, reverse_lazy
+from django.conf import settings
+
 
 from .models import Product, Category
 from .forms import ProductForm
@@ -238,12 +242,27 @@ class ReviewDeleteView(UserPassesTestMixin, DeleteView):
         review = self.get_object()
         # Get the product instance
         product = review.product
+        # Get the user who wrote the review
+        user = review.user
         # Delete the review
         response = super().delete(request, *args, **kwargs)
         # Update the rating field of the Product instance
         rating = product.reviews.aggregate(Avg("rating"))["rating__avg"]
         product.rating = rating if rating else 1
         product.save()
+        # Render the email template with the context data
+        message = render_to_string(
+            "products/emails/review_deleted_mail.txt",
+            {"user_name": user.username, "product_name": product.title},
+        )
+        # Send an email to the user who wrote the review
+        send_mail(
+            "Your review has been deleted",
+            message,
+            [settings.DEFAULT_FROM_EMAIL],
+            [user.email],
+            fail_silently=True,
+        )
         # Show a success message
         messages.success(
             self.request,
