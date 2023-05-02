@@ -9,6 +9,7 @@ from django.views.generic import (
     TemplateView,
     DeleteView,
     View,
+    UpdateView,
 )
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -19,15 +20,13 @@ from checkout.models import Order
 from .forms import UserProfileForm, ProductReviewForm
 
 
-class ProfileView(LoginRequiredMixin, FormView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     """
     View to render the user profile
     """
 
     template_name = "profiles/profile.html"
-    form_class = UserProfileForm
     login_url = "/accounts/login/"
-    success_url = reverse_lazy("profile")
 
     def get_queryset(self):
         """
@@ -36,6 +35,57 @@ class ProfileView(LoginRequiredMixin, FormView):
         """
         profile = get_object_or_404(UserProfile, user=self.request.user)
         return profile.orders.all()
+
+    def get_context_data(self, **kwargs):
+        """
+        Get context wether we are on the profile page and add orders to it
+        """
+        context = super().get_context_data(**kwargs)
+        context["on_profile_page"] = True
+        profile = get_object_or_404(UserProfile, user=self.request.user)
+        # Create an instance of the UserProfileForm with the current user's profile info
+        user_profile_form = UserProfileForm(instance=profile)
+        context["user_profile_form"] = user_profile_form
+        # Add orders related to the profile to the context
+        context["orders"] = profile.orders.all()
+        # Add wishlist to the context
+        context["wishlist"] = Wishlist.objects.filter(user=self.request.user)
+        # Get a queryset of all product reviews for this user's UserProfile
+        user_reviews = ProductReview.objects.filter(user=self.request.user)
+        # Filter out any line items that have a corresponding review
+        order_line_items = (
+            OrderLineItem.objects.filter(order__user_profile=profile)
+            .exclude(product__reviews__in=user_reviews)
+            .distinct()
+        )
+
+        # Create a list of order item IDs and product titles
+        order_item_ids = []
+        reviewed_products = []
+        for item in order_line_items:
+            # Only add the product to the context if it hasn't been reviewed
+            # and hasn't been listed before
+            if item.product not in reviewed_products:
+                reviewed_products.append(item.product)
+                order_item_ids.append(
+                    {
+                        "order_number": item.order.order_number,
+                        "product": item.product,
+                        "review_form": ProductReviewForm(),
+                    }
+                )
+        context["order_item_ids"] = order_item_ids
+
+        return context
+
+
+class ProfileUpdateView(FormView):
+    """
+    View to handle updating of user profile
+    """
+
+    form_class = UserProfileForm
+    success_url = reverse_lazy("profile")
 
     def get_form_kwargs(self):
         """
@@ -56,54 +106,19 @@ class ProfileView(LoginRequiredMixin, FormView):
         """
         form.save()
         messages.success(
-            self.request, "Your Profile has been updated successfully."
+            self.request, "Your profile has been updated successfully."
         )
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # handle invalid form submission
+        """
+        Handle invalid form submissions and render the form again.
+        """
         messages.error(
             self.request,
             "Failed to update your profile. Please ensure the form is valid.",
         )
         return super().form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        """
-        Get context wether we are on the profile page and add orders to it
-        """
-        context = super().get_context_data(**kwargs)
-        context["on_profile_page"] = True
-        profile = get_object_or_404(UserProfile, user=self.request.user)
-        # Add orders related to the profile to the context
-        context["orders"] = profile.orders.all()
-        # Add wishlist to the context
-        context["wishlist"] = Wishlist.objects.filter(user=self.request.user)
-        # Get a queryset of all product reviews for this user's UserProfile
-        user_reviews = ProductReview.objects.filter(user=self.request.user)
-        # Filter out any line items that have a corresponding review
-        order_line_items = OrderLineItem.objects.filter(
-            order__user_profile=profile
-        ).exclude(
-            product__reviews__in=user_reviews
-        ).distinct()
-
-        # Create a list of order item IDs and product titles
-        order_item_ids = []
-        reviewed_products = []
-        for item in order_line_items:
-            # Only add the product to the context if it hasn't been reviewed
-            # and hasn't been listed before
-            if item.product not in reviewed_products:
-                reviewed_products.append(item.product)
-                order_item_ids.append({
-                    'order_number': item.order.order_number,
-                    'product': item.product,
-                    'review_form': ProductReviewForm(),
-                })
-        context['order_item_ids'] = order_item_ids
-
-        return context
 
 
 class OrderHistoryView(LoginRequiredMixin, TemplateView):
@@ -253,6 +268,7 @@ class ProductReviewView(View):
     """
     View for Users to write a review about purchased products
     """
+
     template_name = "profiles/profile.html"
     form_class = ProductReviewForm
 
@@ -265,13 +281,16 @@ class ProductReviewView(View):
 
         # ensure that the order belongs to the current user
         order = get_object_or_404(
-            Order, order_number=order_number, user_profile__user=request.user)
+            Order, order_number=order_number, user_profile__user=request.user
+        )
 
         # ensure that the order line item corresponds to the product ID
         order_item = get_object_or_404(
-            OrderLineItem, order=order, product__id=product_id)
+            OrderLineItem, order=order, product__id=product_id
+        )
 
-        # create a form instance and render the template with the form and order item
+        # create a form instance and render the template
+        # with the form and order item
         form = ProductReviewForm()
         context = {
             "form": form,
@@ -288,11 +307,13 @@ class ProductReviewView(View):
 
         # ensure that the order belongs to the current user
         order = get_object_or_404(
-            Order, order_number=order_number, user_profile__user=request.user)
+            Order, order_number=order_number, user_profile__user=request.user
+        )
 
         # ensure that the order line item corresponds to the specified product ID
         order_item = get_object_or_404(
-            OrderLineItem, order=order, product__id=product_id)
+            OrderLineItem, order=order, product__id=product_id
+        )
 
         # create a form instance and validate the submitted data
         form = ProductReviewForm(request.POST)
@@ -309,9 +330,9 @@ class ProductReviewView(View):
             order_item.save()
 
             # display a success message and redirect to the profile page
-            messages.success(request, 'Your review has been submitted!')
+            messages.success(request, "Your review has been submitted!")
             return redirect("profile")
         else:
             # display an error message and redirect to the profile page
-            messages.error(request, 'Something went wrong!')
+            messages.error(request, "Something went wrong!")
             return redirect("profile")

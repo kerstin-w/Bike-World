@@ -48,34 +48,34 @@ Your Profile
             <!-- Profile Info -->
             <div class="collapse" id="collapseInfo">
                 <div class="d-flex flex-row justify-content-center profile-details p-lg-5 p-4 mb-4">
-                    <form class="mt-3 w-100" action="{% url 'profile' %}" method="POST" id="profile-update-form">
+                    <form class="mt-3 w-100" action="{% url 'profile_update' %}" method="POST" id="profile-update-form">
                         <h3 class="upper liner mb-3">Profile Info&nbsp;</h3>
                         {% csrf_token %}
                         <fieldset class="rounded mb-4 d-flex flex-column align-items-center">
                             <legend class="fieldset-label small px-2 auto text-black mb-2">Details</legend>
                             <div class="d-flex flex-column flex-sm-row w-100">
                                 <div class="margin-end flex-grow-1">
-                                    {{ form.default_full_name | as_crispy_field }}
+                                    {{ user_profile_form.default_full_name | as_crispy_field }}
                                 </div>
                                 <div class="flex-grow-1">
-                                    {{ form.default_phone_number | as_crispy_field }}
+                                    {{ user_profile_form.default_phone_number | as_crispy_field }}
                                 </div>
                             </div>
-                            {{ form.default_email | as_crispy_field }}
+                            {{ user_profile_form.default_email | as_crispy_field }}
                         </fieldset>
                         <fieldset class="rounded mb-4">
                             <legend class="fieldset-label small text-black px-2 w-auto">Delivery/Billing</legend>
-                            {{ form.default_street_address1 | as_crispy_field }}
-                            {{ form.default_street_address2 | as_crispy_field }}
+                            {{ user_profile_form.default_street_address1 | as_crispy_field }}
+                            {{ user_profile_form.default_street_address2 | as_crispy_field }}
                             <div class="d-flex w-100 flex-column flex-sm-row">
                                 <div class="margin-end flex-grow-1">
-                                    {{ form.default_postcode | as_crispy_field }}
+                                    {{ user_profile_form.default_postcode | as_crispy_field }}
                                 </div>
                                 <div class="flex-grow-1">
-                                    {{ form.default_town_or_city | as_crispy_field }}
+                                    {{ user_profile_form.default_town_or_city | as_crispy_field }}
                                 </div>
                             </div>
-                            {{ form.default_country | as_crispy_field }}
+                            {{ user_profile_form.default_country | as_crispy_field }}
                         </fieldset>
                         <button class="btn btn-lg btn-cta bg-orange mb-2 text-white upper">Save Info</button>
                         <a href="{% url 'account_reset_password' %}" class="ms-3">Reset password</a>

@@ -6,10 +6,12 @@ from .views import (
     AddToWishlistView,
     WishlistDeleteView,
     ProductReviewView,
+    ProfileUpdateView,
 )
 
 urlpatterns = [
     path("", ProfileView.as_view(), name="profile"),
+    path("profile_update", ProfileUpdateView.as_view(), name="profile_update"),
     path(
         "order_history/<order_number>/",
         OrderHistoryView.as_view(),
@@ -23,8 +25,11 @@ urlpatterns = [
         AddToWishlistView.as_view(),
         name="add_to_wishlist",
     ),
-    path('wishlist/<int:pk>/delete/',
-         WishlistDeleteView.as_view(), name='wishlist-delete'),
+    path(
+        "wishlist/<int:pk>/delete/",
+        WishlistDeleteView.as_view(),
+        name="wishlist-delete",
+    ),
     path(
         "product_review/<str:order_number>/<int:product_id>/",
         ProductReviewView.as_view(),
