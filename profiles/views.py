@@ -1,23 +1,22 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import logout
 from django.contrib import messages
-from django.db.models import Q
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.views.generic import (
+    DeleteView,
     FormView,
     ListView,
     TemplateView,
-    DeleteView,
-    View,
-    UpdateView,
+    View
 )
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
-from .models import UserProfile, Wishlist, ProductReview
+
 from checkout.models import Order, OrderLineItem
 from products.models import Product
-from checkout.models import Order
-from .forms import UserProfileForm, ProductReviewForm
+
+from .forms import ProductReviewForm, UserProfileForm
+from .models import ProductReview, UserProfile, Wishlist
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -43,7 +42,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["on_profile_page"] = True
         profile = get_object_or_404(UserProfile, user=self.request.user)
-        # Create an instance of the UserProfileForm with the current user's profile info
+        # Create an instance of the UserProfileForm with the current
+        # user's profile info
         user_profile_form = UserProfileForm(instance=profile)
         context["user_profile_form"] = user_profile_form
         # Add orders related to the profile to the context
@@ -85,7 +85,17 @@ class ProfileUpdateView(FormView):
     """
 
     form_class = UserProfileForm
+    template_name = "profiles/profile.html"
     success_url = reverse_lazy("profile")
+
+    def get_context_data(self, **kwargs):
+        """
+        Get the user_profile_form instance by calling
+        and add it to the context data dictionary
+        """
+        context = super().get_context_data(**kwargs)
+        context["user_profile_form"] = self.get_form()
+        return context
 
     def get_form_kwargs(self):
         """
@@ -310,7 +320,7 @@ class ProductReviewView(View):
             Order, order_number=order_number, user_profile__user=request.user
         )
 
-        # ensure that the order line item corresponds to the specified product ID
+        # ensure that the order line item corresponds to the product ID
         order_item = get_object_or_404(
             OrderLineItem, order=order, product__id=product_id
         )
