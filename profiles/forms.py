@@ -16,6 +16,7 @@ class UserProfileForm(forms.ModelForm):
         """
         super().__init__(*args, **kwargs)
         placeholders = {
+            "default_email": "Email",
             "default_full_name": "Your Full Name",
             "default_postcode": "Postal Code",
             "default_town_or_city": "Town or City",
@@ -23,10 +24,9 @@ class UserProfileForm(forms.ModelForm):
             "default_street_address2": "Street Address 2",
             "default_phone_number": "Phone Number",
         }
-        if self.instance:
-            placeholders["default_email"] = self.instance.user.email
-        else:
-            placeholders["default_email"] = "Email"
+        # Set the initial value of default_email field to the user's email
+        if self.instance and self.instance.user.email:
+            self.initial["default_email"] = self.instance.user.email
 
         # Set autofocus on the first field
         self.fields["default_street_address1"].widget.attrs["autofocus"] = True
@@ -51,8 +51,9 @@ class UserProfileForm(forms.ModelForm):
         email = self.cleaned_data.get("default_email")
         # Check if the entered email address is already taken by another user
         if (
-            email != self.instance.user.email
-            and User.objects.filter(email=email).exists()
+            email
+            and email.lower() != self.instance.user.email.lower()
+            and User.objects.filter(email__iexact=email).exists()
         ):
             # If the email address is already taken, raise a validation error
             raise forms.ValidationError("Email is already in use.")
