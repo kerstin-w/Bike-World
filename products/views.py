@@ -4,6 +4,7 @@ from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
+from django.db.models import Avg
 from django.urls import reverse, reverse_lazy
 
 from .models import Product, Category
@@ -21,9 +22,9 @@ class WishlistProductsMixin:
         Returns the list of wishlist products for the logged-in user.
         """
         if self.request.user.is_authenticated:
-            return Wishlist.objects.filter(
-                user=self.request.user
-            ).values_list("product_id", flat=True)
+            return Wishlist.objects.filter(user=self.request.user).values_list(
+                "product_id", flat=True
+            )
         return []
 
 
@@ -196,6 +197,68 @@ class ProductDetailView(DetailView):
         # Add reviews to context
         context["reviews"] = reviews
         return context
+
+
+class ReviewDeleteView(UserPassesTestMixin, DeleteView):
+    """
+    View to delete a product review
+    """
+
+    model = ProductReview
+
+    def test_func(self):
+        """
+        Test if user is superuser.
+        Only superusers can delete reviews.
+        """
+        return self.request.user.is_superuser
+
+    def get_object(self):
+        """
+        Get the review based on the pk
+        """
+        review_pk = self.kwargs.get("pk")
+        return get_object_or_404(ProductReview, pk=review_pk)
+
+    def handle_no_permission(self):
+        """
+        Redirect the user to the index page with an error
+        message if they don't have permission
+        """
+        messages.error(
+            self.request, "You do not have permission to delete reviews."
+        )
+        return redirect("index")
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Delete the review and associated rating
+        """
+        # Get the review instance
+        review = self.get_object()
+        # Get the product instance
+        product = review.product
+        # Delete the review
+        response = super().delete(request, *args, **kwargs)
+        # Update the rating field of the Product instance
+        rating = product.reviews.aggregate(Avg("rating"))["rating__avg"]
+        product.rating = rating if rating else 1
+        product.save()
+        # Show a success message
+        messages.success(
+            self.request,
+            "The review and associated rating have been deleted successfully.",
+        )
+
+        return response
+
+    def get_success_url(self):
+        """
+        Returns the URL to redirect to after a successful delete.
+        """
+        return reverse_lazy(
+            "product_detail", kwargs={"pk": self.object.product.pk}
+        )
 
 
 class ProductCreateView(UserPassesTestMixin, CreateView):
