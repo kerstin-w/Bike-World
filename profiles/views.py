@@ -3,13 +3,13 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     DeleteView,
     FormView,
     ListView,
     TemplateView,
-    View
+    View,
 )
 
 from checkout.models import Order, OrderLineItem
@@ -274,7 +274,7 @@ class WishlistDeleteView(LoginRequiredMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class ProductReviewView(View):
+class ProductReviewView(FormView):
     """
     View for Users to write a review about purchased products
     """
@@ -282,67 +282,60 @@ class ProductReviewView(View):
     template_name = "profiles/profile.html"
     form_class = ProductReviewForm
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self, **kwargs):
         """
-        retrieve order number and product ID from URL parameters
+        Retrieve order number and product ID from URL parameters and
+        add the order item to the context
         """
-        order_number = kwargs["order_number"]
-        product_id = kwargs["product_id"]
-
-        # ensure that the order belongs to the current user
-        order = get_object_or_404(
-            Order, order_number=order_number, user_profile__user=request.user
-        )
-
-        # ensure that the order line item corresponds to the product ID
+        context = super().get_context_data(**kwargs)
+        # Get the order number and product ID from the URL parameters
+        order_number = self.kwargs["order_number"]
+        product_id = self.kwargs["product_id"]
+        # Get the order item, ensuring it belongs to the current user
         order_item = get_object_or_404(
-            OrderLineItem, order=order, product__id=product_id
+            OrderLineItem,
+            order__order_number=order_number,
+            product__id=product_id,
+            order__user_profile__user=self.request.user,
         )
+        # Add the order item to the context
+        context["order_item"] = order_item
+        return context
 
-        # create a form instance and render the template
-        # with the form and order item
-        form = ProductReviewForm()
-        context = {
-            "form": form,
-            "order_item": order_item,
-        }
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         """
-        retrieve order number and product ID from URL parameters
+        Process valid form data
         """
-        order_number = kwargs["order_number"]
-        product_id = kwargs["product_id"]
-
-        # ensure that the order belongs to the current user
-        order = get_object_or_404(
-            Order, order_number=order_number, user_profile__user=request.user
-        )
-
-        # ensure that the order line item corresponds to the product ID
+        # Get the order number and product ID from the URL parameters
+        order_number = self.kwargs["order_number"]
+        product_id = self.kwargs["product_id"]
+        # Get the order item, ensuring it belongs to the current user
         order_item = get_object_or_404(
-            OrderLineItem, order=order, product__id=product_id
+            OrderLineItem,
+            order__order_number=order_number,
+            product__id=product_id,
+            order__user_profile__user=self.request.user,
         )
+        review = form.save(commit=False)
+        review.user = self.request.user
+        review.product = order_item.product
+        review.order_item = order_item
+        review.save()
+        order_item.save()
+        # Display a success message and redirect to the profile page
+        messages.success(
+            self.request,
+            f"Your review for <strong>{review.product}</strong> "
+            "has been submitted!"
+        )
+        return redirect(reverse("profile"))
 
-        # create a form instance and validate the submitted data
-        form = ProductReviewForm(request.POST)
-        if form.is_valid():
-            # create a ProductReview instance and save it to the database
-            review = form.save(commit=False)
-            review.user = request.user
-            review.product = order_item.product
-            review.order_item = order_item
-            review.save()
-
-            # update the OrderLineItem to indicate that it has been reviewed
-            order_item.reviewed = True
-            order_item.save()
-
-            # display a success message and redirect to the profile page
-            messages.success(request, "Your review has been submitted!")
-            return redirect("profile")
-        else:
-            # display an error message and redirect to the profile page
-            messages.error(request, "Something went wrong!")
-            return redirect("profile")
+    def form_invalid(self, form):
+        """
+        Handle invalid form submissions
+        """
+        messages.error(
+            self.request,
+            "Failed to submit your Review. Please ensure the form is valid.",
+        )
+        return redirect(reverse("profile"))
