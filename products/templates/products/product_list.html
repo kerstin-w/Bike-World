@@ -27,16 +27,17 @@ Our Mountainbikes
                         <a href="{% url 'edit_product' product.id %}" class="text-dark"><i
                                 class="fa-regular fa-pen-to-square fa-sm"></i>&nbsp;Edit</a></small>
                     <small class="mb-3">
-                        <form action="{% url 'delete_product' product.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="btn p-0 btn-sm border-0 text-danger" type="submit"><i
-                                    class="fa-regular fa-trash-can fa-sm"></i>&nbsp;Delete</button>
-                        </form>
+                        <button class="btn p-0 btn-sm border-0 text-danger" type="button" data-bs-toggle="modal"
+                            data-bs-target="#deleteProductModal" aria-expanded="false"><i
+                                class="fa-regular fa-trash-can fa-sm"></i>&nbsp;Delete</button>
                     </small>
                 </div>
                 {% endif %}
                 {% include 'products/components/product_card.html' %}
             </div>
+            <!-- Delete Product -->
+            {% include 'products/components/product_delete_modal.html' %}
+
             {% endfor %}
             {% else %}
             <div class="d-flex flex-column align-items-center no-search-result p-5">
@@ -54,10 +55,12 @@ Our Mountainbikes
 <button type="button" class="btn btn-floating" id="btn-back-to-top" aria-label="Back to Top">
     <i class="fas fa-arrow-up"></i>
 </button>
+
 <!-- Pagination -->
 {% if is_paginated %}
 {% include 'products/components/product_pagination_clp.html' %}
 {% endif %}
+
 {% endblock %}
 
 {% block postloadjs %}

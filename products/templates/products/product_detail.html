@@ -29,11 +29,9 @@
                         <a href="{% url 'edit_product' product.id %}" class="text-dark"><i
                                 class="fa-regular fa-pen-to-square fa-sm"></i>&nbsp;Edit</a></small>
                     <small class="mb-3">
-                        <form action="{% url 'delete_product' product.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="btn p-0 btn-sm border-0 text-danger" type="submit"><i
-                                    class="fa-regular fa-trash-can fa-sm"></i>&nbsp;Delete</button>
-                        </form>
+                        <button id="deleteProductPdpBtn" class="btn p-0 btn-sm border-0 text-danger" type="button"
+                            data-bs-toggle="modal" data-bs-target="#deleteProductModal" aria-expanded="false"><i
+                                class="fa-regular fa-trash-can fa-sm"></i>&nbsp;Delete</button>
                     </small>
                 </div>
                 {% endif %}
@@ -68,6 +66,9 @@
         </div>
     </div>
 </section>
+<!-- Delete Product -->
+{% include 'products/components/product_delete_modal.html' %}
+
 {% endblock %}
 {% block extra_js %}
 <script>
