@@ -105,7 +105,7 @@ class ProductReview(models.Model):
         """
         Method to get review of a specific product
         """
-        return cls.objects.filter(product=product)
+        return cls.objects.filter(product=product).order_by('-created_at')
 
 
 @receiver(post_save, sender=User)
