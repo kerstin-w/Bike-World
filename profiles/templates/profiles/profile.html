@@ -13,7 +13,7 @@ Your Profile
 <!-- User Profile -->
 <main>
     <section id="profile" class="margin-top mx-3">
-        <div class="container g-0 g-md-1">
+        <div class="container-fluid container-lg g-0 g-md-1">
             <h2 class="liner upper">My Profile </h2>
             <button class="btn pb-4 back-button" onclick="goBack()">&larr; Back</button>
             <div class="d-flex flex-sm-row flex-column justify-content-center mb-4">
@@ -131,7 +131,7 @@ Your Profile
                         <div
                             class="d-flex flex-sm-row flex-column align-items-center justify-content-between wishlist-container mb-4 py-2 px-4">
                             <div class="d-flex flex-sm-row flex-column align-items-center w-100">
-                                <div class="wishlist-image-container">
+                                <div class="wishlist-image-container w-100">
                                     {% if item.product.image %}
                                     <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
                                             src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
