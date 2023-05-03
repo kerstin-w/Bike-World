@@ -120,6 +120,8 @@ class UserProfileAdmin(admin.ModelAdmin):
         if the userProfile has a related Order
         """
         inline_instances = []
-        if user_profile:
+
+        if user_profile and user_profile.orders.exists():
             inline_instances.append(OrderInline(self.model, self.admin_site))
+
         return inline_instances
