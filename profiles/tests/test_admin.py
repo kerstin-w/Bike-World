@@ -1,9 +1,14 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 from django.contrib.admin.sites import AdminSite
 
-from profiles.models import Wishlist, ProductReview
-from profiles.admin import WishlistAdmin, ProductReviewAdmin
+from profiles.models import Wishlist, ProductReview, UserProfile
+from profiles.admin import (
+    WishlistAdmin,
+    ProductReviewAdmin,
+    UserProfileAdmin,
+    OrderInline,
+)
 from products.models import Category, Product
 
 
@@ -134,3 +139,43 @@ class ProductReviewAdminTest(TestCase):
             review_admin.search_fields,
             ("product__title", "user__username", "review"),
         )
+
+
+class UserProfileAdminTest(TestCase):
+    """
+    Test Case for User Profile Admin
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.site = AdminSite()
+        self.user_profile_admin = UserProfileAdmin(UserProfile, self.site)
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+
+    def test_user_profile_admin_list_display(self):
+        """
+        Test User Profile list_display
+        """
+        expected_admin_list_display = [
+            "user",
+            "default_full_name",
+            "default_email",
+            "orders_count",
+        ]
+
+        self.assertListEqual(
+            list(self.user_profile_admin.list_display),
+            expected_admin_list_display,
+        )
+
+    def test_user_profile_admin_inlines(self):
+        """
+        Test the related OrderInline is inside UserProfileAdmin.inlines
+        """
+        expected_inlines = [OrderInline]
+        self.assertListEqual(self.user_profile_admin.inlines, expected_inlines)
