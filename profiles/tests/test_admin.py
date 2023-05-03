@@ -268,6 +268,8 @@ class UserProfileAdminTest(TestCase):
         """
         Test the orders method returns all the orders of a user profile
         """
+
+        # Create two orders associated with the user_profile
         order_1 = Order.objects.create(
             user_profile=self.user_profile,
             full_name="customer 1",
@@ -280,8 +282,55 @@ class UserProfileAdminTest(TestCase):
         )
 
         expected_result = [order_2, order_1]
+        # Use assertQuerysetEqual to compare the expected and actual queryset
+        # The transform parameter is used to convert the objects in queryset
+        # to strings
         self.assertQuerysetEqual(
             self.user_profile_admin.orders(self.user_profile),
             expected_result,
             transform=lambda x: x,
+        )
+
+    def test_get_inline_instances_with_orders(self):
+        """
+        Ensure that get_inline_instances returns inline instances when
+        user_profile object has related orders
+        """
+
+        # Create an order associated with the user_profile
+        Order.objects.create(
+            user_profile=self.user_profile,
+            full_name="customer 1",
+            email="customer1@test.com",
+        )
+        # Create a request and set the user attribute to self.user
+        request = self.factory.get("/admin")
+        request.user = self.user
+        # Call get_inline_instances method with created request & user_profile
+        inline_instances = self.user_profile_admin.get_inline_instances(
+            request, user_profile=self.user_profile
+        )
+        self.assertEqual(len(inline_instances), 1)
+        self.assertIsInstance(inline_instances[0], OrderInline)
+
+    def test_get_inline_instances_without_orders(self):
+        """
+        Ensure that get_inline_instances returns empty list when
+        user_profile object has no related orders
+        """
+
+        # Call the get_inline_instances method with None request & user_profile
+        inline_instances = self.user_profile_admin.get_inline_instances(
+            request=None, user_profile=self.user_profile
+        )
+
+        # Assert that the OrderInline is not displayed
+        self.assertListEqual(inline_instances, [])
+
+    def test_orders_short_description(self):
+        """
+        Test the short description is set as expected for orders function
+        """
+        self.assertEqual(
+            self.user_profile_admin.orders.short_description, "Orders"
         )
