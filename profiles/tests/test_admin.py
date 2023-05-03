@@ -179,3 +179,45 @@ class UserProfileAdminTest(TestCase):
         """
         expected_inlines = [OrderInline]
         self.assertListEqual(self.user_profile_admin.inlines, expected_inlines)
+
+    def test_user_profile_admin_search_fields(self):
+        """
+        Test the search fields in the user profile admin
+        """
+        expected_search_fields = [
+            "user__username",
+            "default_email",
+            "default_phone_number",
+            "default_full_name",
+        ]
+
+        self.assertListEqual(
+            list(self.user_profile_admin.search_fields),
+            expected_search_fields,
+        )
+
+    def test_user_profile_admin_fieldsets(self):
+        """
+        Test the fieldsets in the user profile admin
+        """
+        expected_fieldsets = [
+            (None, {"fields": ("user", "default_full_name", "default_email")}),
+            (
+                "Delivery Information",
+                {
+                    "fields": (
+                        "default_phone_number",
+                        "default_country",
+                        "default_postcode",
+                        "default_town_or_city",
+                        "default_street_address1",
+                        "default_street_address2",
+                    )
+                },
+            ),
+        ]
+
+        self.assertListEqual(
+            list(self.user_profile_admin.fieldsets),
+            expected_fieldsets,
+        )
