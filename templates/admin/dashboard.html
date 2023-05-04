@@ -1,0 +1,61 @@
+{% extends 'admin/base.html' %}
+
+{% block extrahead %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Dashboard</h1>
+    <div class="kpi-wrapper">
+        <div class="kpi">
+            <h2>TODAY:</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>KPI</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Revenue today</td>
+                        <td>{{ revenue_today|floatformat:2 }} €</td>
+                    </tr>
+                    <tr>
+                        <td>Orders Today</td>
+                        <td>{{ order_count_today }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="kpi">
+            <h2>THIS MONTH:</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>KPI</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Revenue month</td>
+                        <td>{{ revenue_month|floatformat:2 }} €</td>
+                    </tr>
+                    <tr>
+                        <td>Orders This Month</td>
+                        <td>{{ order_count_month }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average Shopping Bag</td>
+                        <td>{{ average_order_total|floatformat:2 }} €</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
