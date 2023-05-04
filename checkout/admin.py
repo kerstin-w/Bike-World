@@ -93,6 +93,18 @@ class DashboardView(View):
         average_order_total = Order.objects.all().aggregate(
             Avg("grand_total"))["grand_total__avg"] or 0
 
+        # Get a list of orders for the current month
+        current_month_orders = Order.objects.filter(
+            date__month=today.month)
+        daily_revenue = []
+        # Loop through the days of the current month
+        for i in range(1, today.day + 1):
+            daily_orders = current_month_orders.filter(date__day=i)
+            # Sum up the grand_total for these orders and
+            # append it to the daily_revenue list
+            daily_revenue.append(daily_orders.aggregate(
+                Sum('grand_total'))['grand_total__sum'] or 0)
+
         # Add all the data to a context dictionary
         context = {
             "revenue_today": revenue_today,
@@ -100,6 +112,7 @@ class DashboardView(View):
             "order_count_today": order_count_today,
             "order_count_month": order_count_month,
             "average_order_total": average_order_total,
+            "daily_revenue": daily_revenue,
         }
 
         # Render template with the context data and return response
