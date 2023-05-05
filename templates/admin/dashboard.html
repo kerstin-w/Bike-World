@@ -66,12 +66,15 @@
     <div class="daily-revenue-chart-wrapper">
         <canvas id="daily-revenue-chart" data-daily-revenue="{{ daily_revenue }}"></canvas>
     </div>
+    <div class="revenue-by-country-chart-wrapper">
+        <canvas id="revenue-by-country-chart" data-country-revenue="{{ country_revenue }}"></canvas>
+    </div>
+
 </div>
 {% block extrajs %}
 <script>
     // Parse the daily revenue data from a string to an array of floats
     const dailyRevenueData = JSON.parse("[{{ daily_revenue|join:', ' }}]").map(parseFloat);
-
     // Create a new Chart.js line chart with the daily revenue data
     const dailyRevenueChart = new Chart(document.getElementById('daily-revenue-chart'), {
         type: 'line',
@@ -99,12 +102,18 @@
                     callbacks: {
                         label: function (context) {
                             // Add a Euro symbol to the y-axis value and format it as a currency
-                            return '€' + context.parsed.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                            const euroSymbol = '\u20AC';
+                            return euroSymbol + context.parsed.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g,
+                                '$&,');
                         }
                     }
                 }
             },
-            // Customize the chart axes
+            // Customize the chart title and axes
+            title: {
+                display: true,
+                text: 'Daily Revenue for the Month'
+            },
             scales: {
                 xAxes: [{
                     ticks: {
@@ -120,10 +129,43 @@
                         stepSize: 5000,
                         callback: function (value, index, values) {
                             // Add a Euro symbol to the y-axis ticks and format them as currency
-                            return '€' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                            const euroSymbol = '\u20AC';
+                            return euroSymbol + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g,
+                                '$&,');
                         }
                     }
                 }]
+            }
+        }
+    });
+
+    // Get the country revenue data from the data attribute of the revenue-by-country-chart canvas element
+    const countryRevenueData = JSON.parse(document.getElementById('revenue-by-country-chart').getAttribute(
+        'data-country-revenue'));
+    // Create a new Chart.js pie chart with the country revenue data
+    const countryRevenueChart = new Chart(document.getElementById('revenue-by-country-chart'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(countryRevenueData),
+            datasets: [{
+                data: Object.values(countryRevenueData),
+                backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56',
+                    '#8C4646',
+                    '#A6D785',
+                    '#DE9E36',
+                    '#7499B1',
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            // Customize the chart title
+            title: {
+                display: true,
+                text: 'Revenue by Country'
             }
         }
     });
