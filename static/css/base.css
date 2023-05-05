@@ -608,6 +608,7 @@ footer ul {
 }
 
 /*=============== Media ===============*/
+/* For mobile */
 @media only screen and (max-width: 454px) {
     .hero {
         background: url("/media/homepage-images/hero-mobile.webp") no-repeat;
@@ -643,24 +644,6 @@ footer ul {
     }
 }
 
-/* For desktop */
-@media (min-width: 768px) {
-    .dropdown .dropdown-menu {
-        display: none;
-    }
-
-    .dropdown:hover .dropdown-menu {
-        display: block;
-    }
-}
-
-@media (max-width: 945px) {
-    .category-callout1 {
-        background-position: center;
-    }
-}
-
-/* For mobile */
 @media (max-width: 767px) {
     .dropdown .dropdown-menu {
         display: none;
@@ -728,5 +711,22 @@ footer ul {
 
     .arrow-up {
         right: 32px;
+    }
+}
+
+/* For desktop */
+@media (min-width: 768px) {
+    .dropdown .dropdown-menu {
+        display: none;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}
+
+@media (max-width: 945px) {
+    .category-callout1 {
+        background-position: center;
     }
 }
