@@ -5,6 +5,7 @@ from django.views import View
 from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
+import json
 
 from .models import Order, OrderLineItem
 
@@ -72,6 +73,18 @@ class DashboardView(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def get_country_revenue(self, orders):
+        """
+        Returns a dictionary mapping country names to revenue totals.
+        """
+        country_revenue = {}
+        for order in orders:
+            country = order.country.name
+            grand_total = float(order.grand_total)
+            country_revenue[country] = country_revenue.get(
+                country, 0) + grand_total
+        return country_revenue
+
     def get(self, request):
         # Get the current date in the user's timezone
         today = timezone.localtime().date()
@@ -105,6 +118,8 @@ class DashboardView(View):
             daily_revenue.append(daily_orders.aggregate(
                 Sum('grand_total'))['grand_total__sum'] or 0)
 
+        country_revenue = json.dumps(self.get_country_revenue(orders_month))
+
         # Add all the data to a context dictionary
         context = {
             "revenue_today": revenue_today,
@@ -113,6 +128,7 @@ class DashboardView(View):
             "order_count_month": order_count_month,
             "average_order_total": average_order_total,
             "daily_revenue": daily_revenue,
+            "country_revenue": country_revenue,
         }
 
         # Render template with the context data and return response
