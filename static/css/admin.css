@@ -8,3 +8,8 @@
     border: 1px solid #ccc;
     padding: .5rem;
 }
+
+.daily-revenue-chart-wrapper {
+    height: 30vh !important;
+    width: 60vw !important;
+}

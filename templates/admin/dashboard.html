@@ -1,10 +1,17 @@
 {% extends 'admin/base.html' %}
-
-{% block extrahead %}
 {% load static %}
+
+{% block extrastyle %}
+{# Load your custom stylesheets #}
+<!-- CUSTOM CSS FOR ADMIN -->
 <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
 {% endblock %}
 
+{% block extrahead %}
+{# Load the Chart.js library #}
+<!-- JS FOR CHART.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+{% endblock %}
 {% block content %}
 <div class="container">
     <h1>Dashboard</h1>
@@ -56,6 +63,70 @@
             </table>
         </div>
     </div>
+    <div class="daily-revenue-chart-wrapper">
+        <canvas id="daily-revenue-chart" data-daily-revenue="{{ daily_revenue }}"></canvas>
+    </div>
 </div>
+{% block extrajs %}
+<script>
+    // Parse the daily revenue data from a string to an array of floats
+    const dailyRevenueData = JSON.parse("[{{ daily_revenue|join:', ' }}]").map(parseFloat);
 
+    // Create a new Chart.js line chart with the daily revenue data
+    const dailyRevenueChart = new Chart(document.getElementById('daily-revenue-chart'), {
+        type: 'line',
+        data: {
+            // Use the array of daily revenue data as the chart data
+            labels: [...Array(dailyRevenueData.length).keys()].map(i => i + 1),
+            datasets: [{
+                label: 'Daily Revenue',
+                data: dailyRevenueData,
+                fill: false,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                pointRadius: 3,
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                pointBorderColor: '#fff',
+                pointHoverRadius: 10,
+                pointHoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+                pointHoverBorderColor: '#fff'
+            }]
+        },
+        options: {
+            // Customize the chart tooltip
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            // Add a Euro symbol to the y-axis value and format it as a currency
+                            return '€' + context.parsed.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        }
+                    }
+                }
+            },
+            // Customize the chart axes
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'white',
+                        fontSize: 14
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        fontColor: 'white',
+                        fontSize: 14,
+                        beginAtZero: true,
+                        stepSize: 5000,
+                        callback: function (value, index, values) {
+                            // Add a Euro symbol to the y-axis ticks and format them as currency
+                            return '€' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>
+{% endblock %}
 {% endblock %}
