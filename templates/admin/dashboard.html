@@ -101,7 +101,6 @@
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            // Add a Euro symbol to the y-axis value and format it as a currency
                             const euroSymbol = '\u20AC';
                             return euroSymbol + context.parsed.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g,
                                 '$&,');
@@ -183,6 +182,21 @@
             title: {
                 display: true,
                 text: 'Revenue by Country'
+            },
+            // Customize the tooltip
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        let dataset = data.datasets[tooltipItem.datasetIndex];
+                        let value = dataset.data[tooltipItem.index];
+                        if (typeof value === 'number') {
+                            value = value.toFixed(2);
+                        }
+                        // Add the Euro symbol to the tooltip
+                        const euroSymbol = '\u20AC';
+                        return `${dataset.label}: ${value} ${euroSymbol}`;
+                    }
+                }
             }
         }
     });
