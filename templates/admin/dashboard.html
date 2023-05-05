@@ -192,12 +192,13 @@
                     label: function (tooltipItem, data) {
                         let dataset = data.datasets[tooltipItem.datasetIndex];
                         let value = dataset.data[tooltipItem.index];
+                        let label = data.labels[tooltipItem.index];
                         if (typeof value === 'number') {
                             value = value.toFixed(2);
                         }
-                        // Add the Euro symbol to the tooltip
+                        // Add the Euro symbol and country name to the tooltip
                         const euroSymbol = '\u20AC';
-                        return `${dataset.label}: ${value} ${euroSymbol}`;
+                        return `${label}: ${value} ${euroSymbol}`;
                     }
                 }
             }
