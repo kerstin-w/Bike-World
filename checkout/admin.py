@@ -21,6 +21,9 @@ class OrderLineItemAdminInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    """
+    Order Admin
+    """
     inlines = (OrderLineItemAdminInline,)
 
     readonly_fields = (
@@ -75,53 +78,87 @@ class DashboardView(View):
 
     def get_country_revenue(self, orders):
         """
-        Returns a dictionary mapping country names to revenue totals.
+        Returns a dictionary mapping country names to revenue totals
         """
         country_revenue = {}
         for order in orders:
             country = order.country.name
             grand_total = float(order.grand_total)
-            country_revenue[country] = country_revenue.get(
-                country, 0) + grand_total
+            country_revenue[country] = (
+                country_revenue.get(country, 0) + grand_total
+            )
         return country_revenue
 
-    def get(self, request):
-        # Get the current date in the user's timezone
-        today = timezone.localtime().date()
+    def get_today(self):
+        """
+        Returns the current date in the user's timezone
+        """
+        return timezone.localtime().date()
 
-        # Query the database for the revenue for today and the current month
-        orders_today = Order.objects.filter(date__date=today)
-        orders_month = Order.objects.filter(date__month=today.month)
+    def get_orders_today(self, today):
+        """
+        Returns a queryset of orders for the given day
+        """
+        return Order.objects.filter(date__date=today)
 
-        revenue_today = orders_today.aggregate(Sum("grand_total"))[
-            "grand_total__sum"] or 0
-        revenue_month = orders_month.aggregate(Sum("grand_total"))[
-            "grand_total__sum"] or 0
+    def get_orders_month(self, today):
+        """
+        Returns a queryset of orders for the current month
+        """
+        return Order.objects.filter(date__month=today.month)
 
-        # Query the database for number of orders for today and current month
-        order_count_today = orders_today.count()
-        order_count_month = orders_month.count()
+    def get_revenue(self, orders):
+        """
+        Returns the total revenue for the given queryset of orders
+        """
+        return orders.aggregate(Sum("grand_total"))["grand_total__sum"] or 0
 
-        # Query the database for the average order total for all orders
-        average_order_total = Order.objects.all().aggregate(
-            Avg("grand_total"))["grand_total__avg"] or 0
+    def get_order_count(self, orders):
+        """
+        Returns the number of orders in the given queryset
+        """
+        return orders.count()
 
-        # Get a list of orders for the current month
-        current_month_orders = Order.objects.filter(
-            date__month=today.month)
+    def get_average_order_total(self):
+        """
+        Returns the average order total for all orders
+        """
+        return (
+            Order.objects.all().aggregate(Avg("grand_total"))[
+                "grand_total__avg"
+            ]
+            or 0
+        )
+
+    def get_daily_revenue(self, today):
+        """
+        Returns a list of revenue totals for each day of the current month
+        """
+        current_month_orders = Order.objects.filter(date__month=today.month)
         daily_revenue = []
-        # Loop through the days of the current month
         for i in range(1, today.day + 1):
             daily_orders = current_month_orders.filter(date__day=i)
-            # Sum up the grand_total for these orders and
-            # append it to the daily_revenue list
-            daily_revenue.append(daily_orders.aggregate(
-                Sum('grand_total'))['grand_total__sum'] or 0)
+            daily_revenue.append(
+                daily_orders.aggregate(Sum("grand_total"))["grand_total__sum"]
+                or 0
+            )
+        return daily_revenue
 
+    def get_context_data(self, request):
+        """
+        Returns a dictionary of context data for the template
+        """
+        today = self.get_today()
+        orders_today = self.get_orders_today(today)
+        orders_month = self.get_orders_month(today)
+        revenue_today = self.get_revenue(orders_today)
+        revenue_month = self.get_revenue(orders_month)
+        order_count_today = self.get_order_count(orders_today)
+        order_count_month = self.get_order_count(orders_month)
+        average_order_total = self.get_average_order_total()
+        daily_revenue = self.get_daily_revenue(today)
         country_revenue = json.dumps(self.get_country_revenue(orders_month))
-
-        # Add all the data to a context dictionary
-        context = {
+        return {
             "revenue_today": revenue_today,
             "revenue_month": revenue_month,
             "order_count_today": order_count_today,
@@ -131,5 +168,9 @@ class DashboardView(View):
             "country_revenue": country_revenue,
         }
 
-        # Render template with the context data and return response
+    def get(self, request):
+        """
+        Renders the dashboard template with the context data.
+        """
+        context = self.get_context_data(request)
         return render(request, "admin/dashboard.html", context)
