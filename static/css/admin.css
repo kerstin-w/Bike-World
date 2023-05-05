@@ -10,6 +10,17 @@
 }
 
 .daily-revenue-chart-wrapper {
-    height: 30vh !important;
     width: 60vw !important;
+}
+
+.chart-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.chart-container {
+    flex-basis: 48%;
+    padding-top: 1rem;
 }

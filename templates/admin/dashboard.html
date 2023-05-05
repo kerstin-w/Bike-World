@@ -63,13 +63,14 @@
             </table>
         </div>
     </div>
-    <div class="daily-revenue-chart-wrapper">
-        <canvas id="daily-revenue-chart" data-daily-revenue="{{ daily_revenue }}"></canvas>
+    <div class="chart-wrapper">
+        <div class="daily-revenue-chart-wrapper chart-container">
+            <canvas id="daily-revenue-chart" data-daily-revenue="{{ daily_revenue }}"></canvas>
+        </div>
+        <div class="revenue-by-country-chart-wrapper chart-container">
+            <canvas id="revenue-by-country-chart" data-country-revenue="{{ country_revenue }}"></canvas>
+        </div>
     </div>
-    <div class="revenue-by-country-chart-wrapper">
-        <canvas id="revenue-by-country-chart" data-country-revenue="{{ country_revenue }}"></canvas>
-    </div>
-
 </div>
 {% block extrajs %}
 <script>
@@ -111,7 +112,8 @@
             // Customize the chart title and axes
             title: {
                 display: true,
-                text: 'Daily Revenue for the Month'
+                text: 'Daily Revenue for the Month',
+                fontColor: 'white'
             },
             scales: {
                 xAxes: [{
@@ -181,7 +183,8 @@
             // Customize the chart title
             title: {
                 display: true,
-                text: 'Revenue by Country'
+                text: 'Revenue by Country',
+                fontColor: 'white'
             },
             // Customize the tooltip
             tooltips: {
