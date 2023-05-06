@@ -176,6 +176,8 @@ class ProductReviewFormTest(TestCase):
         """
         Test Data
         """
+        self.user = User.objects.create_user(
+            username='testuser', password='testpass')
         self.product = Product.objects.create(
             title='Test Product',
             description='Test Description',
@@ -207,3 +209,20 @@ class ProductReviewFormTest(TestCase):
             'review': ['This field is required.'],
             'rating': ['This field is required.'],
         })
+
+    def test_product_review_form_save_review(self):
+        """
+        Test that the form saves review and rating
+        """
+        form_data = {
+            'review': 'This is a test review',
+            'rating': 4,
+        }
+        form = ProductReviewForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        review = form.save(commit=False)
+        review.product = self.product
+        review.user = self.user
+        review.save()
+        product = Product.objects.get(pk=self.product.pk)
+        self.assertEqual(product.rating, 4.0)
