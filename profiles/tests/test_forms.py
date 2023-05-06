@@ -141,3 +141,26 @@ class UserProfileFormTest(TestCase):
         self.assertEqual(
             form.errors["default_email"][0], "Email is already in use."
         )
+
+    def test_user_profile_form_save_user_changes(self):
+        """
+        Test that save() method correctly saves changes to
+        User instance
+        """
+        form_data = {
+            "default_full_name": "John Doe",
+            "default_email": "newemail@test.com",
+            "default_phone_number": "123456789",
+            "default_country": "AT",
+            "default_postcode": "1234",
+            "default_town_or_city": "Vienna",
+            "default_street_address1": "Test Street",
+            "default_street_address2": "Apt 2B",
+        }
+        form = UserProfileForm(data=form_data, instance=self.user_profile)
+        self.assertTrue(form.is_valid())
+        user = self.user_profile.user
+        self.assertEqual(user.email, "testuser@test.com")
+        form.save()
+        updated_user = User.objects.get(pk=self.user.pk)
+        self.assertEqual(updated_user.email, "newemail@test.com")
