@@ -3,7 +3,6 @@ from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 
 
 # Define a receiver function to handle the user_signed_up signal
