@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from profiles.models import UserProfile, ProductReview
+from profiles.models import UserProfile
 from profiles.forms import UserProfileForm, ProductReviewForm
 from products.models import Product
 
@@ -177,13 +177,14 @@ class ProductReviewFormTest(TestCase):
         Test Data
         """
         self.user = User.objects.create_user(
-            username='testuser', password='testpass')
+            username="testuser", password="testpass"
+        )
         self.product = Product.objects.create(
-            title='Test Product',
-            description='Test Description',
+            title="Test Product",
+            description="Test Description",
             retail_price=1000.0,
-            brand='Test Brand',
-            bike_type='Test Type',
+            brand="Test Brand",
+            bike_type="Test Type",
             gender=0,
             stock=99,
         )
@@ -193,8 +194,8 @@ class ProductReviewFormTest(TestCase):
         Test that the form is valid
         """
         form_data = {
-            'review': 'This is a test review',
-            'rating': 4,
+            "review": "This is a test review",
+            "rating": 4,
         }
         form = ProductReviewForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -205,18 +206,21 @@ class ProductReviewFormTest(TestCase):
         """
         form = ProductReviewForm(data={})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors, {
-            'review': ['This field is required.'],
-            'rating': ['This field is required.'],
-        })
+        self.assertEqual(
+            form.errors,
+            {
+                "review": ["This field is required."],
+                "rating": ["This field is required."],
+            },
+        )
 
     def test_product_review_form_save_review(self):
         """
         Test that the form saves review and rating
         """
         form_data = {
-            'review': 'This is a test review',
-            'rating': 4,
+            "review": "This is a test review",
+            "rating": 4,
         }
         form = ProductReviewForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -226,3 +230,20 @@ class ProductReviewFormTest(TestCase):
         review.save()
         product = Product.objects.get(pk=self.product.pk)
         self.assertEqual(product.rating, 4.0)
+
+    def test_product_review_form_invalid_rating(self):
+        """
+        Test that the form returns an error when the rating is invalid
+        """
+        data = {
+            "rating": 6,
+            "review": "Test Review",
+        }
+        form = ProductReviewForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("rating", form.errors)
+        self.assertEqual(len(form.errors["rating"]), 1)
+        self.assertEqual(
+            form.errors["rating"][0],
+            "Ensure this value is less than or equal to 5.",
+        )
