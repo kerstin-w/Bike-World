@@ -108,3 +108,29 @@ class ProfileViewTest(TestCase):
         self.assertIsInstance(context["user_profile_form"], UserProfileForm)
         self.assertIsInstance(context["orders"], QuerySet)
         self.assertEqual(str(context["orders"][0]), "testorder")
+
+    def test_profile_view_get_context_data(self):
+        """
+        Test the context data
+        """
+        url = reverse("profile")
+        request = self.factory.get(url)
+        request.user = self.user
+        response = ProfileView.as_view()(request)
+        # test expected context content
+        context = response.context_data
+        self.assertIn("on_profile_page", context)
+        self.assertIn("user_profile_form", context)
+        self.assertIn("orders", context)
+        self.assertIn("wishlist", context)
+        self.assertIn("order_item_ids", context)
+        # test order_item_ids context content
+        order_item_ids = context["order_item_ids"]
+        self.assertEqual(len(order_item_ids), 1)
+        self.assertEqual(order_item_ids[0]
+                         ["product"].title, self.product.title)
+        self.assertEqual(
+            order_item_ids[0]["order_number"], self.order.order_number
+        )
+        self.assertIsInstance(
+            order_item_ids[0]["review_form"], ProductReviewForm)
