@@ -196,3 +196,14 @@ class ProductReviewFormTest(TestCase):
         }
         form = ProductReviewForm(data=form_data)
         self.assertTrue(form.is_valid())
+
+    def test_product_review_form_blank_data(self):
+        """
+        Test that the form returns error when form is blank
+        """
+        form = ProductReviewForm(data={})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {
+            'review': ['This field is required.'],
+            'rating': ['This field is required.'],
+        })
