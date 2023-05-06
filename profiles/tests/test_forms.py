@@ -64,3 +64,16 @@ class UserProfileFormTest(TestCase):
             updated_profile.default_street_address1, "Test Avenue"
         )
         self.assertEqual(updated_profile.default_street_address2, "Unit 2")
+
+    def test_user_profile_form_blank_form(self):
+        """
+        Test that a form returns error when form is blank
+        """
+        form = UserProfileForm(data={}, instance=self.user_profile)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 2)
+        self.assertIn("default_full_name", form.errors)
+        self.assertIn("This field is required.",
+                      form.errors["default_full_name"])
+        self.assertIn("default_email", form.errors)
+        self.assertIn("This field is required.", form.errors["default_email"])
