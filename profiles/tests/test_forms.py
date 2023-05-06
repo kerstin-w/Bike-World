@@ -44,6 +44,35 @@ class UserProfileFormTest(TestCase):
             default_street_address2="Apt 2B",
         )
 
+    def test_user_profile_form_fields(self):
+        """
+        Test the Form fields
+        """
+        form = UserProfileForm(instance=self.user_profile)
+        expected_fields = [
+            "default_full_name",
+            "default_email",
+            "default_phone_number",
+            "default_country",
+            "default_postcode",
+            "default_town_or_city",
+            "default_street_address1",
+            "default_street_address2",
+        ]
+        for field in expected_fields:
+            self.assertIn(field, form.fields)
+
+    def test_user_profile_form_initial_data(self):
+        """
+        Test the initial data for the form fields
+        """
+        form = UserProfileForm(instance=self.user_profile)
+        self.assertEqual(form.initial["default_email"], self.user.email)
+        self.assertEqual(
+            form.initial["default_full_name"],
+            self.user_profile.default_full_name,
+        )
+
     def test_user_profile_form_valid_form(self):
         """
         Test that a form is valid when valid data is entered
