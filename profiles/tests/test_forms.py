@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from profiles.models import UserProfile
-from profiles.forms import UserProfileForm
+from profiles.models import UserProfile, ProductReview
+from profiles.forms import UserProfileForm, ProductReviewForm
+from products.models import Product
 
 
 class UserProfileFormTest(TestCase):
@@ -164,3 +165,34 @@ class UserProfileFormTest(TestCase):
         form.save()
         updated_user = User.objects.get(pk=self.user.pk)
         self.assertEqual(updated_user.email, "newemail@test.com")
+
+
+class ProductReviewFormTest(TestCase):
+    """
+    Test Case for Product Review Form
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.product = Product.objects.create(
+            title='Test Product',
+            description='Test Description',
+            retail_price=1000.0,
+            brand='Test Brand',
+            bike_type='Test Type',
+            gender=0,
+            stock=99,
+        )
+
+    def test_product_review_form_valid_form(self):
+        """
+        Test that the form is valid
+        """
+        form_data = {
+            'review': 'This is a test review',
+            'rating': 4,
+        }
+        form = ProductReviewForm(data=form_data)
+        self.assertTrue(form.is_valid())
