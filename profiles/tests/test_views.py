@@ -1,7 +1,7 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory, Client
+from django.http import HttpRequest
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django_countries import countries
 from decimal import Decimal
 from django.contrib.messages import get_messages
 from django.db.models import QuerySet
@@ -10,7 +10,7 @@ from profiles.models import UserProfile
 from checkout.models import Order, OrderLineItem
 from products.models import Product, Category
 from profiles.forms import UserProfileForm, ProductReviewForm
-from profiles.views import ProfileView
+from profiles.views import ProfileView, ProfileUpdateView
 
 
 class ProfileViewTest(TestCase):
@@ -172,3 +172,43 @@ class ProfileViewTest(TestCase):
         url = reverse("profile")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+
+class ProfileUpdateViewTest(TestCase):
+    """
+    Test Case for Profile Update View
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.url = reverse("profile_update")
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass", email="testuser@test.com"
+        )
+        # delete existing user_profile instance for testuser
+        try:
+            self.user_profile = UserProfile.objects.get(user=self.user)
+            self.user_profile.delete()
+        except UserProfile.DoesNotExist:
+            pass
+        self.user_profile = UserProfile.objects.create(
+            user=self.user,
+            default_full_name=self.user.get_full_name(),
+            default_email=self.user.email,
+        )
+        self.client.login(username="testuser", password="testpass")
+
+    def test_profile_update_view_get_form_kwargs(self):
+        """
+        Test form kwargs
+        """
+        view = ProfileUpdateView()
+        view.request = HttpRequest()
+        view.request.user = self.user
+        view.kwargs = {}
+        kwargs = view.get_form_kwargs()
+        self.assertEqual(kwargs["instance"], self.user_profile)
+        self.assertEqual(kwargs["initial"], {"default_email": self.user.email})
