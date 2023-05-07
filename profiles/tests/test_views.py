@@ -718,9 +718,26 @@ class WishlistDeleteViewTest(TestCase):
     def test_wishlist_delete_view_delete_wishlist_item(self):
         """
         Test that a wishlist item can be successfully
-        deleted by an authenticated user 
+        deleted by an authenticated user
         """
-        self.client.login(username='testuser', password='testpass')
+        self.client.login(username="testuser", password="testpass")
         response = self.client.post(self.delete_url)
-        self.assertRedirects(response, '/profile/')
+        self.assertRedirects(response, "/profile/")
         self.assertFalse(Wishlist.objects.filter(pk=self.wishlist.pk).exists())
+
+    def test_wishlist_delete_view_only_delete_own_wishlist_items(self):
+        """
+        Test that an authenticated user can only delete their own
+        wishlist items, and not those of other users
+        """
+        another_user = User.objects.create_user(
+            username="anotheruser", password="anotherpass"
+        )
+        another_wishlist = Wishlist.objects.create(
+            user=another_user, product=self.product
+        )
+        self.client.login(username="testuser", password="testpass")
+        response = self.client.post(
+            reverse("wishlist-delete", args=[another_wishlist.pk])
+        )
+        self.assertEqual(response.status_code, 404)
