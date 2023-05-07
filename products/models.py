@@ -48,7 +48,7 @@ class Product(Model):
     material = models.CharField(max_length=100, null=True, blank=True)
     derailleur = models.CharField(max_length=100, null=True, blank=True)
     stock = models.IntegerField(default=99)
-    rating = models.FloatField()
+    rating = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return self.title
