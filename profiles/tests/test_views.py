@@ -372,7 +372,6 @@ class OrderHistoryViewTest(TestCase):
         """
         Test that the view returns a success response with a valid order number
         """
-        self.client.login(username="testuser", password="testpass")
         response = self.client.get(reverse("order_history", args=["12345678"]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "checkout/checkout_success.html")
@@ -381,6 +380,17 @@ class OrderHistoryViewTest(TestCase):
         """
         Test that the view returns a 404 response with an invalid order number
         """
-        self.client.login(username="testuser", password="testpass")
         response = self.client.get(reverse("order_history", args=["invalid"]))
         self.assertEqual(response.status_code, 404)
+
+    def test_order_history_view_with_unauthenticated_user(self):
+        """
+        Test that the view redirects to the
+        login page with an unauthenticated user
+        """
+        self.client.logout()
+        response = self.client.get(reverse("order_history", args=["12345678"]))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response, "/accounts/login/?next=/profile/order_history/12345678/"
+        )
