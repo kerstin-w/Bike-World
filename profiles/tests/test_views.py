@@ -842,3 +842,14 @@ class ProductReviewViewTest(TestCase):
         self.assertEqual(product_review.user, self.user)
         self.assertEqual(product_review.review, "This is a great product!")
         self.assertEqual(product_review.rating, 5)
+
+    def test_product_review_view_form_submission_invalid(self):
+        """
+        Test submitting an invalid review form
+        """
+        self.client.force_login(self.user)
+        form_data = {"rating": 6, "review": ""}
+        response = self.client.post(self.url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("profile"))
+        self.assertFalse(ProductReview.objects.exists())
