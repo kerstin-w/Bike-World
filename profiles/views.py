@@ -192,7 +192,7 @@ class DeleteAccountView(LoginRequiredMixin, View):
         return redirect(self.success_url)
 
 
-class AddToWishlistView(View):
+class AddToWishlistView(LoginRequiredMixin, View):
     """
     View to Add Products to the wishlist
     """
