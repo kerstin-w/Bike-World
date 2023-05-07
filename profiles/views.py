@@ -273,7 +273,7 @@ class WishlistDeleteView(LoginRequiredMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class ProductReviewView(FormView):
+class ProductReviewView(LoginRequiredMixin, FormView):
     """
     View for Users to write a review about purchased products
     """
@@ -287,45 +287,36 @@ class ProductReviewView(FormView):
         add the order item to the context
         """
         context = super().get_context_data(**kwargs)
-        # Get the order number and product ID from the URL parameters
+        context["order_item"] = self.get_order_item()
+        return context
+
+    def get_order_item(self):
+        """
+        Retrieve the order item, ensuring it belongs to the current user
+        """
         order_number = self.kwargs["order_number"]
         product_id = self.kwargs["product_id"]
-        # Get the order item, ensuring it belongs to the current user
-        order_item = get_object_or_404(
+        return get_object_or_404(
             OrderLineItem,
             order__order_number=order_number,
             product__id=product_id,
             order__user_profile__user=self.request.user,
         )
-        # Add the order item to the context
-        context["order_item"] = order_item
-        return context
 
     def form_valid(self, form):
         """
         Process valid form data
         """
-        # Get the order number and product ID from the URL parameters
-        order_number = self.kwargs["order_number"]
-        product_id = self.kwargs["product_id"]
-        # Get the order item, ensuring it belongs to the current user
-        order_item = get_object_or_404(
-            OrderLineItem,
-            order__order_number=order_number,
-            product__id=product_id,
-            order__user_profile__user=self.request.user,
-        )
         review = form.save(commit=False)
         review.user = self.request.user
-        review.product = order_item.product
-        review.order_item = order_item
+        review.product = self.get_order_item().product
+        review.order_item = self.get_order_item()
         review.save()
-        order_item.save()
         # Display a success message and redirect to the profile page
         messages.success(
             self.request,
             f"Your review for <strong>{review.product}</strong> "
-            "has been submitted!"
+            "has been submitted!",
         )
         return redirect(reverse("profile"))
 
