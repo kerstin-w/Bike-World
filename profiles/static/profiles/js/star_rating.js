@@ -1,32 +1,39 @@
 // Get all rating containers
 const ratingContainers = document.querySelectorAll('.rating');
 
-// Add a click event listener to each star icon to capture the rating value
-if (ratingContainers.length > 0) {
-    ratingContainers.forEach(container => {
-        const formId = container.querySelector('.fa-star').getAttribute('data-form-id');
-        const ratingInput = document.getElementById(`rating-${formId}`);
-        const starElems = container.querySelectorAll('.fa-star');
-        starElems.forEach(star => {
-            star.addEventListener('click', event => {
-                // Get the rating value from the clicked star's data-rating attribute
-                const ratingValue = event.target.getAttribute('data-rating');
-                // Update the value of the hidden input field with the new rating value
-                ratingInput.value = ratingValue;
-                // Update the "checked" status for each star element based on the new rating value
-                for (let i = 1; i <= 5; i++) {
-                    const starElem = container.querySelector(`.fa-star.star-${i}`);
-                    if (i <= ratingValue) {
-                        starElem.classList.add('checked');
-                    } else {
-                        starElem.classList.remove('checked');
-                    }
-                }
-            });
-        });
+// Get the form element
+const form = document.querySelector('#product-review-form');
 
-        // Update the "checked" status for the first star when the page loads
-        const firstStarElem = container.querySelector('.fa-star.star-1');
-        firstStarElem.classList.add('checked');
+// Get the submit button element
+const submitButton = form.querySelector('button[type="submit"]');
+
+// Disable the submit button by default
+submitButton.disabled = true;
+
+// Add event listeners to rating containers
+ratingContainers.forEach(container => {
+    // Get the rating input field and star elements
+    const formId = container.querySelector('.fa-star').getAttribute('data-form-id');
+    const ratingInput = document.getElementById(`rating-${formId}`);
+    const starElems = container.querySelectorAll('.fa-star');
+
+    // Add an event listener to rating input field to enable/disable submit button
+    ratingInput.addEventListener('input', () => {
+        submitButton.disabled = !ratingInput.value;
     });
-}
+
+    // Add event listeners to star elements to capture rating value
+    starElems.forEach(star => {
+        star.addEventListener('click', () => {
+            // Update rating input value and checked status for star elements
+            const ratingValue = star.getAttribute('data-rating');
+            ratingInput.value = ratingValue;
+            starElems.forEach((starElem, index) => {
+                starElem.classList.toggle('checked', index < ratingValue);
+            });
+
+            // Enable the submit button
+            submitButton.disabled = false;
+        })
+    });
+});
