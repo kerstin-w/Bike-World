@@ -218,7 +218,7 @@ class AddToWishlistView(View):
             )
 
         # Redirect the user back to the same page
-        return redirect(request.META.get("HTTP_REFERER", "home"))
+        return redirect(request.META.get("HTTP_REFERER", "index"))
 
 
 class WishlistView(LoginRequiredMixin, ListView):

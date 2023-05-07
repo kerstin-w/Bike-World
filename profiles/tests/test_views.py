@@ -7,7 +7,7 @@ from decimal import Decimal
 from django.contrib.messages import get_messages
 from django.db.models import QuerySet
 
-from profiles.models import UserProfile
+from profiles.models import UserProfile, Wishlist
 from checkout.models import Order, OrderLineItem
 from products.models import Product, Category
 from profiles.forms import UserProfileForm, ProductReviewForm
@@ -508,3 +508,51 @@ class DeleteAccountViewTest(TestCase):
         self.client.session.flush()
         self.client.session.load()
         self.assertEqual(len(self.client.session.keys()), 0)
+
+
+class AddToWishlistViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+        self.category = Category.objects.create(
+            name="TestCategory", friendly_name="Test Category"
+        )
+        self.product = Product.objects.create(
+            title="Test Product",
+            sku="TESTSKU1234",
+            category=self.category,
+            description="Test description",
+            retail_price=Decimal("499.99"),
+            stock=10,
+            rating=4.5,
+        )
+        self.url = reverse("add_to_wishlist", args=[self.product.id])
+
+    def test_add_to_wishlist_view_logged_in_user_can_add_to_wishlist(self):
+        """
+        Test that a user who is logged in can add a product to their wishlist
+        """
+        self.client.force_login(self.user)
+        product_detail_url = reverse("product_detail", args=[self.product.id])
+        response = self.client.post(
+            self.url, HTTP_REFERER=product_detail_url, follow=True
+        )
+        messages = get_messages(response.wsgi_request)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "products/product_detail.html")
+        self.assertIn(
+            "<strong>Test Product</strong> added to your wishlist!",
+            [str(m) for m in messages],
+        )
+
+        # Check if the product was added to the user's wishlist
+        wishlist_item = Wishlist.objects.get(
+            user=self.user, product=self.product
+        )
+        self.assertEqual(wishlist_item.user, self.user)
+        self.assertEqual(wishlist_item.product, self.product)
+        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, product_detail_url)
