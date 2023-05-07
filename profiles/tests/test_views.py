@@ -1,6 +1,6 @@
 from django.test import TestCase, RequestFactory, Client
 from django.http import HttpRequest
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from decimal import Decimal
 from django.contrib.messages import get_messages
@@ -219,3 +219,39 @@ class ProfileUpdateViewTest(TestCase):
         """
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
+
+    def test_profile_update_view_post_valid_form(self):
+        """
+        Test a valid form
+        """
+        data = {
+            "default_full_name": "Test User",
+            "default_email": "newemail@test.com",
+            "default_phone_number": "1234567890",
+            "default_country": "AT",
+            "default_postcode": "12345",
+            "default_town_or_city": "Test City",
+            "default_street_address1": "123 Test St",
+            "default_street_address2": "",
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response,
+            reverse_lazy("profile"),
+            status_code=302,
+            target_status_code=200,
+        )
+
+        user_profile = UserProfile.objects.get(user=self.user)
+        self.assertEqual(user_profile.default_full_name, "Test User")
+        self.assertEqual(user_profile.default_email, "newemail@test.com")
+        self.assertEqual(user_profile.default_phone_number, "1234567890")
+        self.assertEqual(user_profile.default_country, "AT")
+        self.assertEqual(user_profile.default_postcode, "12345")
+        self.assertEqual(user_profile.default_town_or_city, "Test City")
+        self.assertEqual(user_profile.default_street_address1, "123 Test St")
+        self.assertEqual(user_profile.default_street_address2, None)
+
+        user = User.objects.get(username=self.user.username)
+        self.assertEqual(user.email, "newemail@test.com")
