@@ -212,3 +212,10 @@ class ProfileUpdateViewTest(TestCase):
         kwargs = view.get_form_kwargs()
         self.assertEqual(kwargs["instance"], self.user_profile)
         self.assertEqual(kwargs["initial"], {"default_email": self.user.email})
+
+    def test_profile_update_view_get(self):
+        """
+        Test get method
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
