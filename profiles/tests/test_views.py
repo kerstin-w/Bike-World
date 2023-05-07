@@ -683,7 +683,6 @@ class WishlistDeleteViewTest(TestCase):
         """
         Test Data
         """
-        self.client = Client()
         self.user = User.objects.create_user(
             username="testuser", password="testpass"
         )
@@ -741,3 +740,15 @@ class WishlistDeleteViewTest(TestCase):
             reverse("wishlist-delete", args=[another_wishlist.pk])
         )
         self.assertEqual(response.status_code, 404)
+
+    def test_message_after_deleting_wishlist_item(self):
+        """
+        Test that a success message is displayed after deleting a wishlist item
+        """
+        self.client.login(username="testuser", password="testpass")
+        response = self.client.post(self.delete_url)
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]),
+                         "<strong>Test Product</strong> has been "
+                         "removed from your wishlist!")
