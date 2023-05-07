@@ -90,7 +90,8 @@ class ProfileViewTest(TestCase):
 
     def test_profile_view_get(self):
         """
-        Test the get method
+        Test that a GET request to the profile view returns a status code
+        of 200, and that the response contains the expected context data
         """
         url = reverse("profile")
         request = self.factory.get(url)
@@ -137,7 +138,7 @@ class ProfileViewTest(TestCase):
     def test_profile_view_get_queryset(self):
         """
         Test that the get_queryset method returns the
-        orders for the current user's UserProfile.
+        orders for the current user's UserProfile
         """
         url = reverse("profile")
         request = self.factory.get(url)
@@ -152,7 +153,8 @@ class ProfileViewTest(TestCase):
 
     def test_profile_view_not_logged_in(self):
         """
-        Test that a user cannot access the page if they are not logged in
+        Test that a user who is not logged in is redirected to the login page
+        if they attempt to access the profile page
         """
         self.client.logout()
         url = reverse("profile")
@@ -167,7 +169,7 @@ class ProfileViewTest(TestCase):
 
     def test_profile_view_logged_in(self):
         """
-        Test that a user can access the page when they are logged in
+        Test that a user who is logged in can access the profile page
         """
         url = reverse("profile")
         response = self.client.get(url)
