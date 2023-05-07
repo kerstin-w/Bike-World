@@ -567,3 +567,20 @@ class AddToWishlistViewTest(TestCase):
 
         self.assertRedirects(response, "/accounts/login/?next=" + self.url)
         self.assertNotIn(self.product, self.user.wishlist.all())
+
+    def test_add_to_wishlist_view_adds_new_wishlist_item_to_database(self):
+        """
+        Test that a new Wishlist object is added to the database
+        when a product is added to the user's wishlist
+        """
+        self.client.force_login(self.user)
+        response = self.client.post(self.url)
+
+        self.assertEqual(response.status_code, 302)
+
+        # Check if a new Wishlist object is added to the database
+        self.assertTrue(
+            Wishlist.objects.filter(
+                user=self.user, product=self.product
+            ).exists()
+        )
