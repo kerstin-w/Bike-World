@@ -203,7 +203,9 @@ class ProfileUpdateViewTest(TestCase):
 
     def test_profile_update_view_get_form_kwargs(self):
         """
-        Test form kwargs
+        Test that the get_form_kwargs method of the ProfileUpdateView
+        returns a dictionary containing the user profile instance
+        as the instance key, and the user email as the initial key
         """
         view = ProfileUpdateView()
         view.request = HttpRequest()
@@ -215,14 +217,17 @@ class ProfileUpdateViewTest(TestCase):
 
     def test_profile_update_view_get(self):
         """
-        Test get method
+        Test that a GET request to the profile update view returns
+        a status code of 200
         """
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_profile_update_view_post_valid_form(self):
         """
-        Test a valid form
+        Test that a POST request to the profile update view with
+        valid form data updates the user profile and user account,
+        and redirects the user to the profile page
         """
         data = {
             "default_full_name": "Test User",
@@ -258,7 +263,9 @@ class ProfileUpdateViewTest(TestCase):
 
     def test_profile_update_view_form_invalid(self):
         """
-        Test a invalid form
+        Test that a POST request to the profile update view with
+        invalid form data returns a message indicating that
+        the profile update failed.
         """
         data = {
             "default_full_name": "Test User",
@@ -273,3 +280,21 @@ class ProfileUpdateViewTest(TestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Failed to update your profile.")
+
+    def test_profile_update_view_get_context_data(self):
+        """
+        Test that the get_context_data method of the ProfileUpdateView
+        returns a dictionary containing a user profile form instance
+        as the "user_profile_form" key, and that the instance of the
+        form is the same as the user profile instance for the current user
+        """
+        request = HttpRequest()
+        request.user = self.user
+        view = ProfileUpdateView()
+        view.request = request
+        context = view.get_context_data()
+        self.assertIn("user_profile_form", context)
+        self.assertIsInstance(context["user_profile_form"], UserProfileForm)
+        self.assertEqual(
+            context["user_profile_form"].instance, self.user_profile
+        )
