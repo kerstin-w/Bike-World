@@ -20,6 +20,11 @@
     transform: rotate(-180deg);
 }
 
+.accordion-button.collapsed:hover {
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
+
 .accordion-body {
     background-color: #dfdfdf;
 }
