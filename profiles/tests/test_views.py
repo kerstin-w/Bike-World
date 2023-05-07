@@ -415,3 +415,10 @@ class OrderHistoryViewTest(TestCase):
             "You do not have permission to access this Order Summary.",
         )
         self.assertRedirects(response, "/")
+
+    def test_order_history_view_template(self):
+        """
+        Test that the view uses the correct template
+        """
+        response = self.client.get(reverse("order_history", args=["12345678"]))
+        self.assertTemplateUsed(response, "checkout/checkout_success.html")
