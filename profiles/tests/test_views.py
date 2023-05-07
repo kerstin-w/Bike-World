@@ -7,7 +7,7 @@ from decimal import Decimal
 from django.contrib.messages import get_messages
 from django.db.models import QuerySet
 
-from profiles.models import UserProfile, Wishlist
+from profiles.models import UserProfile, Wishlist, ProductReview
 from checkout.models import Order, OrderLineItem
 from products.models import Product, Category
 from profiles.forms import UserProfileForm, ProductReviewForm
@@ -749,6 +749,96 @@ class WishlistDeleteViewTest(TestCase):
         response = self.client.post(self.delete_url)
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]),
-                         "<strong>Test Product</strong> has been "
-                         "removed from your wishlist!")
+        self.assertEqual(
+            str(messages[0]),
+            "<strong>Test Product</strong> has been "
+            "removed from your wishlist!",
+        )
+
+
+class ProductReviewViewTest(TestCase):
+    """
+    Test Case for Product Review View
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.user = User.objects.create_user(
+            username="testuser", email="testuser@test.com", password="testpass"
+        )
+        # delete existing user_profile instance for testuser
+        try:
+            self.user_profile = UserProfile.objects.get(user=self.user)
+            self.user_profile.delete()
+        except UserProfile.DoesNotExist:
+            pass
+        self.user_profile = UserProfile.objects.create(
+            user=self.user,
+            default_full_name=self.user.get_full_name(),
+            default_email=self.user.email,
+        )
+        # create data for testing
+        self.category = Category.objects.create(
+            name="TestCategory", friendly_name="Test Category"
+        )
+        self.country_name = "Austria"
+        self.country_code = "AT"
+        self.product = Product.objects.create(
+            title="Test Product",
+            sku="TESTSKU1234",
+            category=self.category,
+            description="Test description",
+            retail_price=Decimal("499.99"),
+            stock=10,
+            rating=4.5,
+        )
+
+        self.order = Order.objects.create(
+            order_number="12345678",
+            user_profile=self.user_profile,
+            full_name=self.user.get_full_name(),
+            email=self.user.email,
+            phone_number="1234567890",
+            country=self.country_code,
+            postcode="12345",
+            town_or_city="Test Town",
+            street_address1="Test Street 12",
+            street_address2="Test Apt 123",
+            delivery_cost=Decimal("10.00"),
+            order_total=Decimal("499.99"),
+            grand_total=Decimal("509.99"),
+            original_bag="{}",
+            stripe_pid="TestStripePID",
+        )
+
+        self.order_line_item = OrderLineItem.objects.create(
+            order=self.order,
+            product=self.product,
+            quantity=1,
+            lineitem_total=Decimal("499.99"),
+        )
+        self.url = reverse(
+            "product_review",
+            kwargs={
+                "order_number": self.order.order_number,
+                "product_id": self.product.id,
+            },
+        )
+
+    def test_product_review_view_form_submission(self):
+        """
+        Test submitting a valid review form
+        """
+        self.client.force_login(self.user)
+        form_data = {"rating": 5, "review": "This is a great product!"}
+        response = self.client.post(self.url, data=form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("profile"))
+        self.assertTrue(ProductReview.objects.exists())
+        product_review = ProductReview.objects.first()
+        self.assertEqual(product_review.product, self.product)
+        self.assertEqual(product_review.user, self.user)
+        self.assertEqual(product_review.review, "This is a great product!")
+        self.assertEqual(product_review.rating, 5)
