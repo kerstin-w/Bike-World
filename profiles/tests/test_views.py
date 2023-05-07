@@ -164,3 +164,11 @@ class ProfileViewTest(TestCase):
             status_code=302,
             target_status_code=200,
         )
+
+    def test_profile_view_logged_in(self):
+        """
+        Test that a user can access the page when they are logged in
+        """
+        url = reverse("profile")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
