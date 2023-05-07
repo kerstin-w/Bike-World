@@ -511,7 +511,14 @@ class DeleteAccountViewTest(TestCase):
 
 
 class AddToWishlistViewTest(TestCase):
+    """
+    Test Case for AddToWishlist View
+    """
+
     def setUp(self):
+        """
+        Test Data
+        """
         self.client = Client()
         self.user = User.objects.create_user(
             username="testuser", password="testpass"
@@ -587,7 +594,14 @@ class AddToWishlistViewTest(TestCase):
 
 
 class WishlistViewTest(TestCase):
+    """
+    Test Case for Wishlist View
+    """
+
     def setUp(self):
+        """
+        Test Data
+        """
         self.client = Client()
         self.user = User.objects.create_user(
             username="testuser", password="testpass"
@@ -658,3 +672,45 @@ class WishlistViewTest(TestCase):
         self.assertContains(response, "Product 1")
         self.assertContains(response, "Product 2")
         self.assertContains(response, "Product 3")
+
+
+class WishlistDeleteViewTest(TestCase):
+    """
+    Test Case for WishlistDelete View
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+        self.category = Category.objects.create(
+            name="TestCategory", friendly_name="Test Category"
+        )
+        self.product = Product.objects.create(
+            title="Test Product",
+            sku="TESTSKU1234",
+            category=self.category,
+            description="Test description",
+            retail_price=Decimal("499.99"),
+            stock=10,
+            rating=4.5,
+        )
+        self.wishlist = Wishlist.objects.create(
+            user=self.user, product=self.product
+        )
+        self.delete_url = reverse("wishlist-delete", args=[self.wishlist.pk])
+
+    def test_wishlist_delete_view_redirect_if_not_logged_in(self):
+        """
+        Test that a non-authenticated user is redirected to
+        login page when trying to delete a wishlist item
+        """
+        self.client.logout()
+        response = self.client.post(self.delete_url)
+        self.assertRedirects(
+            response, "/accounts/login/?next=" + self.delete_url
+        )
