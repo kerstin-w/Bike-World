@@ -444,3 +444,30 @@ class OrderHistoryViewTest(TestCase):
             float(response.context["order"].grand_total.quantize(
                 Decimal("0.01"))),
         )
+
+
+class DeleteAccountViewTest(TestCase):
+    """
+    Test Case for Delete Account View
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.client.login(username='testuser', password='testpass')
+        self.url = reverse('delete_account')
+
+    def test_delete_account_view_delete_account(self):
+        """
+        Test that user account is deleted
+        """
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('index'))
+        self.assertFalse(User.objects.filter(username='testuser').exists())
