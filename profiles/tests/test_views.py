@@ -649,3 +649,12 @@ class WishlistViewTest(TestCase):
                 product.pk,
                 Wishlist.objects.values_list("product__pk", flat=True),
             )
+
+    def test_wishlist_view_template(self):
+        """
+        Test that product names are in template
+        """
+        response = self.client.get(reverse("profile"))
+        self.assertContains(response, "Product 1")
+        self.assertContains(response, "Product 2")
+        self.assertContains(response, "Product 3")
