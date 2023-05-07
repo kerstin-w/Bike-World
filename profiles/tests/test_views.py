@@ -556,3 +556,14 @@ class AddToWishlistViewTest(TestCase):
         self.assertEqual(wishlist_item.product, self.product)
         self.assertEqual(response.status_code, 200)
         self.assertRedirects(response, product_detail_url)
+
+    def test_add_to_wishlist_view_logged_out_user_cannot_add_to_wishlist(self):
+        """
+        Test that a user who is not logged in cannot add a
+        product to their wishlist
+        """
+        self.client.logout()
+        response = self.client.post(self.url, follow=True)
+
+        self.assertRedirects(response, "/accounts/login/?next=" + self.url)
+        self.assertNotIn(self.product, self.user.wishlist.all())
