@@ -41,6 +41,7 @@ class AddToBagView(View):
         # to the existing quantity
         if item_id in list(bag.keys()):
             bag[item_id] += quantity
+            item_added = True
             messages.success(
                 request,
                 f"You updated <strong>{product.title}</strong> quantity to "
@@ -49,11 +50,14 @@ class AddToBagView(View):
         # If the item is not yet in the bag, add it with the new quantity
         else:
             bag[item_id] = quantity
+            item_added = True
             messages.success(
                 request, f"You added <strong>{product.title}</strong> to bag!"
             )
 
         request.session["bag"] = bag
+        # Indicate that an item was added to the bag in this request
+        request.session["item_added"] = item_added
 
         """
         Save filters, by getting a copy of the current query parameters,
