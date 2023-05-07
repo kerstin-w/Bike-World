@@ -376,6 +376,8 @@ class OrderHistoryViewTest(TestCase):
         response = self.client.get(reverse("order_history", args=["12345678"]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "checkout/checkout_success.html")
+        self.assertEqual(response.context["order"], self.order)
+        self.assertTrue(response.context["from_profile"])
 
     def test_order_history_view_with_invalid_order_number(self):
         """
@@ -414,6 +416,7 @@ class OrderHistoryViewTest(TestCase):
             str(messages[0]),
             "You do not have permission to access this Order Summary.",
         )
+        self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/")
 
     def test_order_history_view_template(self):
@@ -422,3 +425,22 @@ class OrderHistoryViewTest(TestCase):
         """
         response = self.client.get(reverse("order_history", args=["12345678"]))
         self.assertTemplateUsed(response, "checkout/checkout_success.html")
+
+    def test_order_history_template_contains_order_details(self):
+        """
+        Test that the template contains the specific order details
+        """
+        response = self.client.get(reverse("order_history", args=["12345678"]))
+        self.assertContains(response, self.product.title)
+        self.assertContains(response, self.product.retail_price)
+        """
+        self.order.grand_total and response.context["order"].grand_total
+        are being converted to floats with 2 decimal places precision by
+        using the quantize method with argument "0.01", before
+        comparing them
+        """
+        self.assertEqual(
+            float(self.order.grand_total.quantize(Decimal("0.01"))),
+            float(response.context["order"].grand_total.quantize(
+                Decimal("0.01"))),
+        )
