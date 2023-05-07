@@ -40,7 +40,6 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         Get context wether we are on the profile page and add orders to it
         """
         context = super().get_context_data(**kwargs)
-        context["on_profile_page"] = True
         profile = get_object_or_404(UserProfile, user=self.request.user)
         # Create an instance of the UserProfileForm with the current
         # user's profile info
