@@ -714,3 +714,13 @@ class WishlistDeleteViewTest(TestCase):
         self.assertRedirects(
             response, "/accounts/login/?next=" + self.delete_url
         )
+
+    def test_wishlist_delete_view_delete_wishlist_item(self):
+        """
+        Test that a wishlist item can be successfully
+        deleted by an authenticated user 
+        """
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(self.delete_url)
+        self.assertRedirects(response, '/profile/')
+        self.assertFalse(Wishlist.objects.filter(pk=self.wishlist.pk).exists())
