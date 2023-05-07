@@ -499,3 +499,12 @@ class DeleteAccountViewTest(TestCase):
         self.assertEqual(
             str(messages[0]), "Your Account has been deleted successfully."
         )
+
+    def test_delete_account_view_session_flush(self):
+        """
+        Test that the client's session is emptied after sending a POST request
+        """
+        self.client.post(self.url)
+        self.client.session.flush()
+        self.client.session.load()
+        self.assertEqual(len(self.client.session.keys()), 0)
