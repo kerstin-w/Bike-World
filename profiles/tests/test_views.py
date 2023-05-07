@@ -101,10 +101,8 @@ class ProfileViewTest(TestCase):
 
         context = response.context_data
 
-        self.assertIn("on_profile_page", context)
         self.assertIn("user_profile_form", context)
         self.assertIn("orders", context)
-        self.assertEqual(context["on_profile_page"], True)
         self.assertIsInstance(context["user_profile_form"], UserProfileForm)
         self.assertIsInstance(context["orders"], QuerySet)
         self.assertEqual(str(context["orders"][0]), "testorder")
@@ -119,7 +117,6 @@ class ProfileViewTest(TestCase):
         response = ProfileView.as_view()(request)
         # test expected context content
         context = response.context_data
-        self.assertIn("on_profile_page", context)
         self.assertIn("user_profile_form", context)
         self.assertIn("orders", context)
         self.assertIn("wishlist", context)
@@ -134,3 +131,18 @@ class ProfileViewTest(TestCase):
         )
         self.assertIsInstance(
             order_item_ids[0]["review_form"], ProductReviewForm)
+
+    def test_profile_view_get_queryset(self):
+        """
+        Test the queryset
+        """
+        url = reverse("profile")
+        request = self.factory.get(url)
+        request.user = self.user
+        view = ProfileView()
+        view.request = request
+        queryset = view.get_queryset()
+        self.assertEqual(
+            list(queryset),
+            list(Order.objects.filter(user_profile=self.user_profile)),
+        )
