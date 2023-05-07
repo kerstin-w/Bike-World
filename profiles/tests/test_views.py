@@ -255,3 +255,21 @@ class ProfileUpdateViewTest(TestCase):
 
         user = User.objects.get(username=self.user.username)
         self.assertEqual(user.email, "newemail@test.com")
+
+    def test_profile_update_view_form_invalid(self):
+        """
+        Test a invalid form
+        """
+        data = {
+            "default_full_name": "Test User",
+            "default_email": "invalidmail",
+            "default_phone_number": "1234567890",
+            "default_country": "AT",
+            "default_postcode": "12345",
+            "default_town_or_city": "Test City",
+            "default_street_address1": "123 Test St",
+            "default_street_address2": "Apt. 4",
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Failed to update your profile.")
