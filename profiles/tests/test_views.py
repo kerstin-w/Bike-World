@@ -584,3 +584,68 @@ class AddToWishlistViewTest(TestCase):
                 user=self.user, product=self.product
             ).exists()
         )
+
+
+class WishlistViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+        self.client.force_login(self.user)
+        self.category = Category.objects.create(
+            name="TestCategory", friendly_name="Test Category"
+        )
+        self.wishlist1 = Wishlist.objects.create(
+            user=self.user,
+            product=Product.objects.create(
+                title="Product 1",
+                category=self.category,
+                retail_price=Decimal("499.99"),
+            ),
+        )
+        self.wishlist2 = Wishlist.objects.create(
+            user=self.user,
+            product=Product.objects.create(
+                title="Product 2",
+                category=self.category,
+                retail_price=Decimal("499.99"),
+            ),
+        )
+        self.wishlist3 = Wishlist.objects.create(
+            user=self.user,
+            product=Product.objects.create(
+                title="Product 3",
+                category=self.category,
+                retail_price=Decimal("499.99"),
+            ),
+        )
+
+    def test_wishlist_view_context(self):
+        """
+        Test context of wishlist view
+        """
+        response = self.client.get(reverse("profile"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profiles/profile.html")
+
+        wishlist = response.context["wishlist"]
+        wishlist_products = [item.product for item in wishlist]
+
+        # Check that the expected number of wishlist
+        # items and products are in the context
+        self.assertEqual(
+            len(wishlist), Wishlist.objects.filter(user=self.user).count()
+        )
+        self.assertEqual(
+            len(wishlist_products),
+            Wishlist.objects.filter(user=self.user).count(),
+        )
+
+        # Check that the products in the context match
+        # the ones in the wishlist queryset
+        for product in wishlist_products:
+            self.assertIn(
+                product.pk,
+                Wishlist.objects.values_list("product__pk", flat=True),
+            )
