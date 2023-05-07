@@ -486,3 +486,16 @@ class DeleteAccountViewTest(TestCase):
         # Check if user is logged out after sending post request
         self.assertFalse("_auth_user_id" in self.client.session)
         self.assertEqual(response.status_code, 302)
+
+    def test_delete_account_view_success_message(self):
+        """
+        Test that a success message is displayed on the next
+        page after account deletion
+        """
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]), "Your Account has been deleted successfully."
+        )
