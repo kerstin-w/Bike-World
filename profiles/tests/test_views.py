@@ -1,4 +1,5 @@
 from django.test import TestCase, RequestFactory, Client
+from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http import HttpRequest
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
@@ -394,3 +395,23 @@ class OrderHistoryViewTest(TestCase):
         self.assertRedirects(
             response, "/accounts/login/?next=/profile/order_history/12345678/"
         )
+
+    def test_order_history_view_with_different_user(self):
+        """
+        Test that the view returns forbidden with
+        a different authenticated user
+        """
+        another_user = User.objects.create_user(
+            username="anotheruser",
+            password="anotherpass",
+            email="anotheruser@test.com",
+        )
+        self.client.force_login(another_user)
+        response = self.client.get(reverse("order_history", args=["12345678"]))
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            "You do not have permission to access this Order Summary.",
+        )
+        self.assertRedirects(response, "/")

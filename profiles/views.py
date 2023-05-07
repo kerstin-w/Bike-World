@@ -149,7 +149,7 @@ class OrderHistoryView(LoginRequiredMixin, TemplateView):
         if order.user_profile != user_profile:
             messages.error(
                 self.request,
-                "You do nt have permssion to access this Order Summary.",
+                "You do not have permission to access this Order Summary.",
             )
             return HttpResponseRedirect("/")
 
