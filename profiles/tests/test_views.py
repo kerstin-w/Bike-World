@@ -441,8 +441,9 @@ class OrderHistoryViewTest(TestCase):
         """
         self.assertEqual(
             float(self.order.grand_total.quantize(Decimal("0.01"))),
-            float(response.context["order"].grand_total.quantize(
-                Decimal("0.01"))),
+            float(
+                response.context["order"].grand_total.quantize(Decimal("0.01"))
+            ),
         )
 
 
@@ -457,11 +458,10 @@ class DeleteAccountViewTest(TestCase):
         """
         self.client = Client()
         self.user = User.objects.create_user(
-            username='testuser',
-            password='testpass'
+            username="testuser", password="testpass"
         )
-        self.client.login(username='testuser', password='testpass')
-        self.url = reverse('delete_account')
+        self.client.login(username="testuser", password="testpass")
+        self.url = reverse("delete_account")
 
     def test_delete_account_view_delete_account(self):
         """
@@ -469,5 +469,20 @@ class DeleteAccountViewTest(TestCase):
         """
         response = self.client.post(self.url)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('index'))
-        self.assertFalse(User.objects.filter(username='testuser').exists())
+        self.assertRedirects(response, reverse("index"))
+        self.assertFalse(User.objects.filter(username="testuser").exists())
+
+    def test_delete_account_view_logout_user(self):
+        """
+        Test that the user is successfully logged out
+        after sending a POST request
+        """
+        # Check if user is logged in before sending post request
+        self.assertTrue(
+            self.client.login(username="testuser", password="testpass")
+        )
+        response = self.client.post(self.url)
+
+        # Check if user is logged out after sending post request
+        self.assertFalse("_auth_user_id" in self.client.session)
+        self.assertEqual(response.status_code, 302)
