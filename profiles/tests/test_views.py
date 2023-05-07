@@ -124,17 +124,20 @@ class ProfileViewTest(TestCase):
         # test order_item_ids context content
         order_item_ids = context["order_item_ids"]
         self.assertEqual(len(order_item_ids), 1)
-        self.assertEqual(order_item_ids[0]
-                         ["product"].title, self.product.title)
+        self.assertEqual(
+            order_item_ids[0]["product"].title, self.product.title
+        )
         self.assertEqual(
             order_item_ids[0]["order_number"], self.order.order_number
         )
         self.assertIsInstance(
-            order_item_ids[0]["review_form"], ProductReviewForm)
+            order_item_ids[0]["review_form"], ProductReviewForm
+        )
 
     def test_profile_view_get_queryset(self):
         """
-        Test the queryset
+        Test that the get_queryset method returns the
+        orders for the current user's UserProfile.
         """
         url = reverse("profile")
         request = self.factory.get(url)
@@ -145,4 +148,19 @@ class ProfileViewTest(TestCase):
         self.assertEqual(
             list(queryset),
             list(Order.objects.filter(user_profile=self.user_profile)),
+        )
+
+    def test_profile_view_not_logged_in(self):
+        """
+        Test that a user cannot access the page if they are not logged in
+        """
+        self.client.logout()
+        url = reverse("profile")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response,
+            f"/accounts/login/?next={url}",
+            status_code=302,
+            target_status_code=200,
         )
