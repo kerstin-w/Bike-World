@@ -126,7 +126,6 @@ class WishlistTest(TestCase):
         """
         Test the is_product_in_wishlist method
         """
-
         wishlist_item = Wishlist.objects.create(
             user=self.user, product=self.product1
         )
@@ -194,3 +193,16 @@ class ProductReviewTest(TestCase):
         )
         self.product.refresh_from_db()
         self.assertEqual(self.product.rating, 4.5)
+
+    def test_product_review_str(self):
+        """
+        Test the string representation
+        """
+        review = ProductReview.objects.create(
+            product=self.product,
+            user=self.user,
+            review="This bike is awesome!",
+            rating=5,
+        )
+        expected_str = f"{self.user.username} - {self.product.title}"
+        self.assertEqual(str(review), expected_str)
