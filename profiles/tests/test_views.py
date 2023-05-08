@@ -993,3 +993,15 @@ class ProductReviewViewTest(TestCase):
             response,
             "Your review for <strong>Test Product</strong> has been submitted!",
         )
+
+    def test_product_review_view_get_context_data(self):
+        """
+        Test that the order_item is in the context
+        and belongs to the current user
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("order_item", response.context)
+        order_item = response.context["order_item"]
+        self.assertEqual(order_item, self.order_line_item)
