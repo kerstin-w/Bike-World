@@ -11,7 +11,7 @@ from .views import (
 
 urlpatterns = [
     path("", ProfileView.as_view(), name="profile"),
-    path("profile_update", ProfileUpdateView.as_view(), name="profile_update"),
+    path("profile_update/", ProfileUpdateView.as_view(), name="profile_update"),
     path(
         "order_history/<order_number>/",
         OrderHistoryView.as_view(),
