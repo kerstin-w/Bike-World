@@ -8,6 +8,7 @@ class UserProfileTest(TestCase):
     """
     Test View for UserProfile
     """
+
     def setUp(self):
         """
         Test Data
@@ -63,3 +64,10 @@ class UserProfileTest(TestCase):
             updated_profile.default_street_address1, "Updated Test Street"
         )
         self.assertEqual(updated_profile.default_street_address2, "Unit 1")
+
+    def test_user_profile_string_representation(self):
+        """
+        Test the string representation of UserProfile object
+        """
+        profile = UserProfile.objects.get(user=self.user)
+        self.assertEqual(str(profile), self.user.username)
