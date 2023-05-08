@@ -203,7 +203,7 @@ class ProductDetailView(DetailView):
         return context
 
 
-class ReviewDeleteView(UserPassesTestMixin, DeleteView):
+class ProductReviewDeleteView(UserPassesTestMixin, DeleteView):
     """
     View to delete a product review
     """
