@@ -1,7 +1,10 @@
+from decimal import Decimal
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from profiles.models import UserProfile
+from profiles.models import UserProfile, Wishlist
+from products.models import Product, Category
 
 
 class UserProfileTest(TestCase):
@@ -71,3 +74,75 @@ class UserProfileTest(TestCase):
         """
         profile = UserProfile.objects.get(user=self.user)
         self.assertEqual(str(profile), self.user.username)
+
+
+class WishlistTest(TestCase):
+    """
+    Test Case for Wishlist
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+        # create data for testing
+        self.category = Category.objects.create(
+            name="TestCategory", friendly_name="Test Category"
+        )
+        self.country_name = "Austria"
+        self.country_code = "AT"
+        self.product1 = Product.objects.create(
+            title="Test Product 1",
+            sku="TESTSKU1234",
+            category=self.category,
+            description="Test description 1",
+            retail_price=Decimal("499.99"),
+            stock=10,
+            rating=4.5,
+        )
+        self.product2 = Product.objects.create(
+            title="Test Product 2",
+            sku="TESTSKU1235",
+            category=self.category,
+            description="Test description 2",
+            retail_price=Decimal("499.99"),
+            stock=10,
+            rating=5,
+        )
+
+    def test_add_product_to_wishlist(self):
+        """
+        Test adding a product to the wishlist
+        """
+        wishlist_item = Wishlist(user=self.user, product=self.product1)
+        wishlist_item.save()
+        wishlist_items_count = self.user.wishlist.count()
+        self.assertEqual(wishlist_items_count, 1)
+
+    def test_is_product_in_wishlist(self):
+        """
+        Test the is_product_in_wishlist method
+        """
+
+        wishlist_item = Wishlist.objects.create(
+            user=self.user, product=self.product1
+        )
+        # Create a new product that is not in the user's wishlist
+        new_product = Product.objects.create(
+            title="New Product",
+            description="A new product",
+            retail_price=Decimal("500.00"),
+            stock=10,
+            category=self.category,
+        )
+        # Check that the user's wishlist contains the original product
+        self.assertTrue(wishlist_item.is_product_in_wishlist())
+        # Check that the user's wishlist does not contain the new product
+        self.assertFalse(
+            Wishlist.objects.filter(
+                user=self.user, product=new_product
+            ).exists()
+        )
