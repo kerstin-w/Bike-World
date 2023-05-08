@@ -78,7 +78,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class ProfileUpdateView(FormView):
+class ProfileUpdateView(ProfileView, FormView):
     """
     View to handle updating of user profile
     """
@@ -273,7 +273,7 @@ class WishlistDeleteView(LoginRequiredMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class ProductReviewView(LoginRequiredMixin, FormView):
+class ProductReviewView(ProfileView, LoginRequiredMixin, FormView):
     """
     View for Users to write a review about purchased products
     """
