@@ -10,7 +10,7 @@ from django.urls import reverse, reverse_lazy
 from checkout.models import Order, OrderLineItem
 from profiles.forms import UserProfileForm, ProductReviewForm
 from profiles.models import UserProfile, Wishlist, ProductReview
-from profiles.views import ProfileView, ProfileUpdateView
+from profiles.views import ProfileView, ProfileUpdateView, WishlistView
 from products.models import Product, Category
 
 
@@ -762,6 +762,23 @@ class WishlistViewTest(TestCase):
         queryset = response.context["wishlist"]
         expected_queryset = Wishlist.objects.filter(user=self.user)
         self.assertQuerysetEqual(queryset, expected_queryset, ordered=False)
+
+    def test__wishlist_view_get_queryset(self):
+        """
+        Test the get_queryset
+        """
+        # create a fake request object with the user set
+        request = HttpRequest()
+        request.user = self.user
+
+        # create the view and call the get_queryset method
+        view = WishlistView()
+        view.request = request
+        queryset = view.get_queryset()
+
+        # assert that the queryset contains the expected item
+        self.assertQuerysetEqual(
+            queryset, Wishlist.objects.filter(user=self.user), ordered=False)
 
 
 class WishlistDeleteViewTest(TestCase):
