@@ -597,6 +597,34 @@ class AddToWishlistViewTest(TestCase):
             ).exists()
         )
 
+    def test_add_to_wishlist_view_warns_if_product_already_in_wishlist(self):
+        """
+        Test that a warning message is shown if the user tries to add a product
+        to their wishlist that is already in their wishlist
+        """
+        self.client.force_login(self.user)
+
+        # Add the product to the user's wishlist
+        wishlist_item = Wishlist(user=self.user, product=self.product)
+        wishlist_item.save()
+
+        # Try to add the same product again
+        response = self.client.post(self.url)
+
+        # Check that the warning message is displayed
+        messages = get_messages(response.wsgi_request)
+        messages = list(messages)
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            "Test Product is already in your wishlist!",
+        )
+        self.assertEqual(messages[0].tags, "warning")
+
+        # Check that no new wishlist items were created
+        wishlist_items = Wishlist.objects.filter(user=self.user)
+        self.assertEqual(len(wishlist_items), 1)
+
 
 class WishlistViewTest(TestCase):
     """
