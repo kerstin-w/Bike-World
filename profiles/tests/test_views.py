@@ -900,3 +900,15 @@ class ProductReviewViewTest(TestCase):
         self.assertFalse(
             ProductReview.objects.filter(product=new_product).exists()
         )
+
+    def test_product_review_view_success_message(self):
+        """
+        Test that a success message is displayed after submitting a review
+        """
+        self.client.force_login(self.user)
+        form_data = {"rating": 5, "review": "This is a great product!"}
+        response = self.client.post(self.url, data=form_data, follow=True)
+        self.assertContains(
+            response,
+            "Your review for <strong>Test Product</strong> has been submitted!",
+        )
