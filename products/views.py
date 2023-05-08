@@ -248,7 +248,7 @@ class ReviewDeleteView(UserPassesTestMixin, DeleteView):
         response = super().delete(request, *args, **kwargs)
         # Update the rating field of the Product instance
         rating = product.reviews.aggregate(Avg("rating"))["rating__avg"]
-        product.rating = rating if rating else 1
+        product.rating = rating if rating else 0
         product.save()
         # Render the email template with the context data
         message = render_to_string(
