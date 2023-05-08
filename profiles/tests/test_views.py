@@ -1,22 +1,17 @@
-from django.test import TestCase, RequestFactory, Client
-from django.contrib.messages.storage.fallback import FallbackStorage
-from django.http import HttpRequest
-from django.urls import reverse, reverse_lazy
-from django.contrib.auth.models import User
 from decimal import Decimal
+
+from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.db.models import QuerySet
+from django.http import HttpRequest
+from django.test import TestCase, RequestFactory, Client
+from django.urls import reverse, reverse_lazy
 
-from profiles.models import UserProfile, Wishlist, ProductReview
 from checkout.models import Order, OrderLineItem
-from products.models import Product, Category
 from profiles.forms import UserProfileForm, ProductReviewForm
-from profiles.views import (
-    ProfileView,
-    ProfileUpdateView,
-    OrderHistoryView,
-    ProductReviewView,
-)
+from profiles.models import UserProfile, Wishlist, ProductReview
+from profiles.views import ProfileView, ProfileUpdateView
+from products.models import Product, Category
 
 
 class ProfileViewTest(TestCase):
@@ -759,6 +754,15 @@ class WishlistViewTest(TestCase):
                 wishlist_products,
             )
 
+    def test_wishlist_view_queryset_filter(self):
+        """
+        Test that the queryset filtering is correct
+        """
+        response = self.client.get(reverse("profile"))
+        queryset = response.context["wishlist"]
+        expected_queryset = Wishlist.objects.filter(user=self.user)
+        self.assertQuerysetEqual(queryset, expected_queryset, ordered=False)
+
 
 class WishlistDeleteViewTest(TestCase):
     """
@@ -991,7 +995,8 @@ class ProductReviewViewTest(TestCase):
         response = self.client.post(self.url, data=form_data, follow=True)
         self.assertContains(
             response,
-            "Your review for <strong>Test Product</strong> has been submitted!",
+            "Your review for <strong>Test Product</strong> "
+            "has been submitted!",
         )
 
     def test_product_review_view_get_context_data(self):
