@@ -236,14 +236,6 @@ class WishlistView(LoginRequiredMixin, ListView):
         """
         return Wishlist.objects.filter(user=self.request.user)
 
-    def get_context_data(self, **kwargs):
-        """
-        Add product context to the template
-        """
-        context = super().get_context_data(**kwargs)
-        context["products"] = [item.product for item in self.object_list]
-        return context
-
 
 class WishlistDeleteView(LoginRequiredMixin, DeleteView):
     """
