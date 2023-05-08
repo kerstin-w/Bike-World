@@ -870,3 +870,33 @@ class ProductReviewViewTest(TestCase):
         self.assertRedirects(
             response, f"{reverse('account_login')}?next={self.url}"
         )
+
+    def test_product_review_view_user_can_only_review_purchased_products(self):
+        """
+        Test that users can only review products they have purchased
+        """
+        # create a new product that the user has not purchased
+        new_product = Product.objects.create(
+            title="New Product",
+            sku="NEWSKU1234",
+            category=self.category,
+            description="Test description",
+            retail_price=Decimal("499.99"),
+            stock=10,
+            rating=4.5,
+        )
+        new_url = reverse(
+            "product_review",
+            kwargs={
+                "order_number": self.order.order_number,
+                "product_id": new_product.id,
+            },
+        )
+        # submit a review for the new product
+        self.client.force_login(self.user)
+        form_data = {"rating": 5, "review": "This is a great product!"}
+        response = self.client.post(new_url, data=form_data)
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(
+            ProductReview.objects.filter(product=new_product).exists()
+        )
