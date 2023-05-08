@@ -94,16 +94,23 @@
 .btn-wishlist {
     border: 1.5px solid #cd4c1e;
     border-radius: 0;
+    display: inline-block;
+    position: relative;
+    padding: 1.3rem;
 }
 
 .btn-wishlist .fa-heart {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .btn-wishlist:hover .fa-heart {
     font-size: 1.2em;
-    transform: scale(1.2);
+    transform: translate(-50%, -50%) scale(1.2);
 }
 
 .btn-wishlist i {
