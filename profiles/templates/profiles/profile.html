@@ -207,7 +207,7 @@ Your Profile
                                 </div>
                             </div>
                         </div>
-                        <form id="product-review-form" method="POST"
+                        <form id="product-review-form-{{ item.product.id }}" method="POST"
                             action="{% url 'product_review' item.order_number item.product.id %}"
                             class="px-sm-4 px-0 pt-2 my-4 w-100">
                             {% csrf_token %}
@@ -223,7 +223,14 @@ Your Profile
                                 <i class="fa fa-star fa-lg star-5" data-rating="5"
                                     data-form-id="{{ item.product.id }}"></i>
                             </div>
-                            {{ item.review_form|crispy }}
+                            <div id="div-id-review-{{ forloop.counter }}" class="mb-3">
+                                <label for="id-review-{{ forloop.counter }}" class="form-label requiredField">
+                                    Review<span class="asteriskField">*</span>
+                                </label>
+                                <textarea name="review" cols="40" rows="10"
+                                    class="form-control border-black textarea form-control" required
+                                    id="id-review-{{ forloop.counter }}"></textarea>
+                            </div>
                             <input type="hidden" id="rating-{{ item.product.id }}" name="rating" value="1">
                             <input type="hidden" name="order_number" value="{{ item.order_number }}">
                             <input type="hidden" name="product_id" value="{{ item.product.id }}">

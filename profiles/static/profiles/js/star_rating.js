@@ -1,21 +1,21 @@
 // Get all rating containers
 const ratingContainers = document.querySelectorAll('.rating');
 
-// Get the form element
-const form = document.querySelector('#product-review-form');
-
-// Get the submit button element
-const submitButton = form.querySelector('button[type="submit"]');
-
-// Disable the submit button by default
-submitButton.disabled = true;
-
 // Add event listeners to rating containers
 ratingContainers.forEach(container => {
     // Get the rating input field and star elements
     const formId = container.querySelector('.fa-star').getAttribute('data-form-id');
     const ratingInput = document.getElementById(`rating-${formId}`);
     const starElems = container.querySelectorAll('.fa-star');
+
+    // Get the parent form element
+    const form = ratingInput.closest('form');
+
+    // Get the submit button element
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Disable the submit button by default
+    submitButton.disabled = true;
 
     // Add an event listener to rating input field to enable/disable submit button
     ratingInput.addEventListener('input', () => {
