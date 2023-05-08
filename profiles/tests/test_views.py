@@ -715,12 +715,49 @@ class WishlistViewTest(TestCase):
 
         # Check that the queryset contains the correct number of wishlist items
         queryset = response.context["wishlist"]
-        self.assertEqual(queryset.count(),
-                         Wishlist.objects.filter(user=self.user).count())
+        self.assertEqual(
+            queryset.count(), Wishlist.objects.filter(user=self.user).count()
+        )
 
         # Check that each wishlist item belongs to the logged-in user
         for item in queryset:
             self.assertEqual(item.user, self.user)
+
+    def test_wishlist_view_product_context(self):
+        """
+        Test that WishlistView returns the correct product context
+        """
+        response = self.client.get(reverse("profile"))
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the context contains the correct number of products
+        wishlist = response.context["wishlist"]
+        products = [item.product for item in wishlist]
+        self.assertEqual(
+            len(products), Wishlist.objects.filter(user=self.user).count()
+        )
+
+        # Check that each product belongs to the logged-in user's wishlist
+        wishlist_products = self.user.wishlist.values(
+            "product_id",
+            "product__title",
+            "product__description",
+            "product__image",
+            "product__stock",
+            "product__retail_price",
+        )
+        for product in products:
+            self.assertIn(
+                {
+                    "product_id": product.id,
+                    "product__title": product.title,
+                    "product__description": product.description,
+                    "product__image": product.image,
+                    "product__stock": product.stock,
+                    "product__retail_price": product.retail_price,
+                },
+                wishlist_products,
+            )
 
 
 class WishlistDeleteViewTest(TestCase):
