@@ -11,7 +11,12 @@ from profiles.models import UserProfile, Wishlist, ProductReview
 from checkout.models import Order, OrderLineItem
 from products.models import Product, Category
 from profiles.forms import UserProfileForm, ProductReviewForm
-from profiles.views import ProfileView, ProfileUpdateView, OrderHistoryView
+from profiles.views import (
+    ProfileView,
+    ProfileUpdateView,
+    OrderHistoryView,
+    ProductReviewView,
+)
 
 
 class ProfileViewTest(TestCase):
@@ -853,3 +858,15 @@ class ProductReviewViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("profile"))
         self.assertFalse(ProductReview.objects.exists())
+
+    def test_product_review_view_unauthenticated_user_is_redirected_to_login(
+        self,
+    ):
+        """
+        Test that an unauthenticated user is redirected to the login page
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response, f"{reverse('account_login')}?next={self.url}"
+        )
