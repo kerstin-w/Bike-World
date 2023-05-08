@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from profiles.models import UserProfile, Wishlist
+from profiles.models import UserProfile, Wishlist, ProductReview
 from products.models import Product, Category
 
 
@@ -146,3 +146,51 @@ class WishlistTest(TestCase):
                 user=self.user, product=new_product
             ).exists()
         )
+
+
+class ProductReviewTest(TestCase):
+    """
+    Test Case for Product Review
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+        # create data for testing
+        self.category = Category.objects.create(
+            name="TestCategory", friendly_name="Test Category"
+        )
+        self.country_name = "Austria"
+        self.country_code = "AT"
+        self.product = Product.objects.create(
+            title="Test Product 1",
+            sku="TESTSKU1234",
+            category=self.category,
+            description="Test description 1",
+            retail_price=Decimal("499.99"),
+            stock=10,
+            rating=4.5,
+        )
+
+    def test_product_rating_is_updated(self):
+        """
+        Test that the product rating is updated after creating these reviews
+        """
+        ProductReview.objects.create(
+            product=self.product,
+            user=self.user,
+            review="This bike is great!",
+            rating=4,
+        )
+        ProductReview.objects.create(
+            product=self.product,
+            user=self.user,
+            review="This bike is awesome!",
+            rating=5,
+        )
+        self.product.refresh_from_db()
+        self.assertEqual(self.product.rating, 4.5)
