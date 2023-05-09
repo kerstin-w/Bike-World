@@ -340,28 +340,13 @@ class ProductEditView(PermissionRequiredMixin, UpdateView):
         return reverse("product_detail", kwargs={"pk": pk})
 
 
-class ProductDeleteView(UserPassesTestMixin, DeleteView):
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     """
     View to delete a product
     """
 
     model = Product
     success_url = reverse_lazy("products")
-
-    def test_func(self):
-        """
-        restrict access to only superusers
-        """
-        return self.request.user.is_superuser
-
-    def handle_no_permission(self):
-        """
-        handle denied access
-        """
-        messages.error(
-            self.request, "You do not have permission to delete products."
-        )
-        return redirect("products")
 
     def get_object(self, queryset=None):
         """
