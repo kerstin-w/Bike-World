@@ -1,21 +1,20 @@
+from decimal import Decimal
+from unittest.mock import Mock, patch
+
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.db.models import Avg
 from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse, resolve
-from django.contrib.messages import get_messages
-from unittest.mock import Mock, patch
-from django.test.client import RequestFactory
-from decimal import Decimal
 
-from products.models import Category, Product
 from products.forms import ProductForm
-from profiles.models import Wishlist, ProductReview
+from products.models import Category, Product
 from products.views import (
     WishlistProductsMixin,
     ProductReviewDeleteView,
     PermissionRequiredMixin,
-    ProductEditView,
 )
+from profiles.models import Wishlist, ProductReview
 
 
 class WishlistProductsMixinTest(TestCase):
@@ -849,14 +848,28 @@ class ProductDeleteViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_product_delete_view_delete_product_success(self):
+        """
+        Test that a superuser can successfully delete a product
+        """
         self.client.force_login(self.user)
         response = self.client.post(
             self.url,
         )
+        # Test that success message is displayed
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), f"{self.product.title} deleted!")
+        # Test that user is redirected to correct URL
         self.assertRedirects(response, "/products/",
                              fetch_redirect_response=False)
         self.assertEqual(response.status_code, 302)
+        # Test that product is deleted from database
         self.assertFalse(Product.objects.filter(pk=self.product.pk).exists())
+
+    def test_product_delete_view_get_object(self):
+        """
+        Test that the correct product is returned by get_object method
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.context_data["object"], self.product)
