@@ -847,3 +847,16 @@ class ProductDeleteViewTest(TestCase):
         response = self.client.get(self.url)
         self.assertRedirects(response, "/", fetch_redirect_response=False)
         self.assertEqual(response.status_code, 302)
+
+    def test_product_delete_view_delete_product_success(self):
+        self.client.force_login(self.user)
+        response = self.client.post(
+            self.url,
+        )
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), f"{self.product.title} deleted!")
+        self.assertRedirects(response, "/products/",
+                             fetch_redirect_response=False)
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(Product.objects.filter(pk=self.product.pk).exists())
