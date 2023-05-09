@@ -164,7 +164,7 @@ class ProductListView(WishlistProductsMixin, ListView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(WishlistProductsMixin, DetailView):
     """
     Displays the details of a product
     """
@@ -173,13 +173,6 @@ class ProductDetailView(DetailView):
     template_name = "products/product_detail.html"
     context_object_name = "product"
 
-    def get_object(self):
-        """
-        Get the product object based on the pk
-        """
-        pk = self.kwargs.get("pk")
-        return get_object_or_404(Product, pk=pk)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -187,12 +180,8 @@ class ProductDetailView(DetailView):
         context["title"] = self.object.title
 
         # Get the user's wishlist products
-        user = self.request.user
-        wishlist_products = []
-        if user.is_authenticated:
-            wishlist_products = Wishlist.objects.filter(user=user).values_list(
-                "product_id", flat=True
-            )
+        wishlist_products = self.get_wishlist_products()
+
         # Get the reviews for the current product
         reviews = ProductReview.get_reviews_for_product(self.object)
 
