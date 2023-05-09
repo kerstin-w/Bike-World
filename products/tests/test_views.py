@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db.models import Avg
 from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse, resolve
 from django.contrib.messages import get_messages
@@ -443,6 +444,9 @@ class ProductReviewDeleteViewTest(TestCase):
         self.user = User.objects.create_user(
             username="testuser", password="12345"
         )
+        self.admin = User.objects.create_superuser(
+            username="admin", password="admin"
+        )
         self.other_user = User.objects.create_user(
             username="Other User", email="other@test.com", password="password"
         )
@@ -519,3 +523,22 @@ class ProductReviewDeleteViewTest(TestCase):
         view.kwargs = {"pk": self.review.pk}
         obj = view.get_object()
         self.assertEqual(obj, self.review)
+
+    def test_product_review_delete_view_delete(self):
+        """
+        Test that a review and its rating is deleted successfully
+        """
+        self.client.force_login(self.admin)
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, 302)
+        # Recalculate the product's rating after deleting the review
+        product = Product.objects.get(id=self.product.id)
+        rating = product.reviews.aggregate(Avg("rating"))["rating__avg"]
+        product.rating = rating if rating else 0
+        self.assertEqual(ProductReview.objects.count(), 0)
+        self.assertAlmostEqual(product.rating, 0, places=4)
+        storage = get_messages(response.wsgi_request)
+        self.assertIn(
+            "The review and associated rating have been deleted successfully.",
+            [msg.message for msg in storage],
+        )
