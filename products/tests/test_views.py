@@ -214,6 +214,15 @@ class ProductListViewTest(TestCase):
         self.assertIn(self.product1, response.context["products"])
         self.assertNotIn(self.product2, response.context["products"])
 
+    def test_product_list_view_filter_by_brand(self):
+        """
+        Test that products are filtered by brand
+        """
+        response = self.client.get("/products/?brand=Test%20Brand2")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Test Product2")
+        self.assertNotContains(response, "Test Product1")
+
     def test_product_list_view_filter_by_category(self):
         """
         Test that products are filtered by category
