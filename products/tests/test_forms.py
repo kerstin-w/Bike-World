@@ -63,3 +63,25 @@ class ProductFormTest(TestCase):
         """
         form = ProductForm(data=self.form_data, files={"image": self.image})
         self.assertTrue(form.is_valid())
+
+    def test_product_form_category_choices(self):
+        """
+        Test that the category field has the expected choices
+        """
+        form = ProductForm()
+        self.assertIn(
+            (self.category.id, self.category.friendly_name),
+            form.fields["category"].choices,
+        )
+
+    def test_product_form_field_widgets(self):
+        """
+        Test that all fields have proper widget
+        """
+        form = ProductForm()
+        for field_name, field in form.fields.items():
+            self.assertEqual(
+                field.widget.attrs["class"],
+                "border-black",
+                f"{field_name} widget is wrong.",
+            )
