@@ -6,7 +6,7 @@ from decimal import Decimal
 
 from products.models import Category, Product
 from profiles.models import Wishlist
-from products.views import WishlistProductsMixin, ProductListView
+from products.views import WishlistProductsMixin
 
 
 class WishlistProductsMixinTest(TestCase):
@@ -207,10 +207,9 @@ class ProductListViewTest(TestCase):
         """
         Test that all filters work as expected
         """
-        url = (
-            reverse("products")
-            + "?category=TestCategory1&brand=Test%20Brand1&gender=0&sort_by=rating_desc"
-        )
+        url = (reverse("products") +
+               "?category=TestCategory1&brand=Test%20Brand1&gender=0&" +
+               "sort_by=rating_desc")
         response = self.client.get(url)
         self.assertIn(self.product1, response.context["products"])
         self.assertNotIn(self.product2, response.context["products"])
@@ -259,10 +258,11 @@ class ProductListViewTest(TestCase):
         Test to check 0 products scenario
         """
         Product.objects.all().delete()
-        url = (
-            reverse("products")
-            + "?category=TestCategory1&brand=Test%20Brand1&gender=0&sort_by=rating_desc"
-        )
+        url = reverse("products") \
+            + "?category=TestCategory1" \
+            + "&brand=Test%20Brand1" \
+            + "&gender=0" \
+            + "&sort_by=rating_desc"
         response = self.client.get(url)
         self.assertEqual(len(response.context["products"]), 0)
 
@@ -306,3 +306,14 @@ class ProductListViewTest(TestCase):
         self.assertTrue(response.context["is_paginated"])
 
         self.assertTrue(len(response.context["products"]), 2)
+
+    @patch("products.views.WishlistProductsMixin.get_wishlist_products")
+    def test_wishlist_products_mixin(self, mock_wishlist):
+        """
+        Test to check the WishlistProductMixin
+        """
+        response = self.client.get(reverse("products"))
+        self.assertTrue(mock_wishlist.called)
+        self.assertEqual(
+            response.context["wishlist_products"], mock_wishlist()
+        )
