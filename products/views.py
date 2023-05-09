@@ -298,7 +298,7 @@ class ProductCreateView(
         return reverse("product_detail", kwargs={"pk": pk})
 
 
-class ProductEditView(UserPassesTestMixin, UpdateView):
+class ProductEditView(PermissionRequiredMixin, UpdateView):
     """
     View to display edit a product
     """
@@ -307,21 +307,6 @@ class ProductEditView(UserPassesTestMixin, UpdateView):
     form_class = ProductForm
     template_name = "products/edit_product.html"
     context_object_name = "product"
-
-    def test_func(self):
-        """
-        restrict access to only superusers
-        """
-        return self.request.user.is_superuser
-
-    def handle_no_permission(self):
-        """
-        handle denied access
-        """
-        messages.error(
-            self.request, "You do not have permission to edit products."
-        )
-        return redirect("products")
 
     def get_object(self, queryset=None):
         """
