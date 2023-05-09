@@ -253,3 +253,15 @@ class ProductListViewTest(TestCase):
         response = self.client.get(url)
         default_sorted_products = response.context["products"]
         self.assertEqual(default_sorted_products[0], self.product1)
+
+    def test_product_list_view_no_products_found(self):
+        """
+        Test to check 0 products scenario
+        """
+        Product.objects.all().delete()
+        url = (
+            reverse("products")
+            + "?category=TestCategory1&brand=Test%20Brand1&gender=0&sort_by=rating_desc"
+        )
+        response = self.client.get(url)
+        self.assertEqual(len(response.context["products"]), 0)
