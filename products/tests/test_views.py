@@ -797,3 +797,53 @@ class ProductEditViewTest(TestCase):
             "Failed to update product. Please ensure the form is valid.",
         )
         self.assertContains(response, "This field is required.")
+
+
+class ProductDeleteViewTest(TestCase):
+    """
+    Test Case for ProductDeleteView
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.category = Category.objects.create(name="test category")
+        self.product = Product.objects.create(
+            title="test product",
+            sku="SK123",
+            category=self.category,
+            description="test description",
+            wheel_size='18"',
+            retail_price=500.00,
+            brand="Trek",
+            bike_type="Mountain Bike",
+            gender=0,
+        )
+        self.url = reverse(
+            "delete_product", kwargs={"product_id": self.product.id}
+        )
+        self.user = User.objects.create_superuser(
+            username="admin", email="admin@test.com", password="adminpassword"
+        )
+
+    def test_product_delete_view_redirect_unauthendicated_user(self):
+        """
+        Test that an unauthenticated user gets redirected
+        """
+        response = self.client.get(self.url)
+        self.assertRedirects(response, "/", fetch_redirect_response=False)
+
+    def test_product_delete_view_redirect_if_logged_in_but_not_superuser(self):
+        """
+        Test that a user which is not superuser gets redirected
+        """
+        self.client.force_login(
+            User.objects.create_user(
+                username="user", email="user@test.com", password="testpassword"
+            )
+        )
+        response = self.client.get(self.url)
+        self.assertRedirects(response, "/", fetch_redirect_response=False)
+        self.assertEqual(response.status_code, 302)
