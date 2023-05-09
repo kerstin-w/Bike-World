@@ -3,6 +3,7 @@ from django.db.models import Avg
 from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse, resolve
 from django.contrib.messages import get_messages
+from django.core.files.uploadedfile import SimpleUploadedFile
 from unittest.mock import Mock, patch
 from decimal import Decimal
 
@@ -572,6 +573,15 @@ class ProductCreateViewTest(TestCase):
         self.user = User.objects.create_user(
             username="testuser", password="testpass"
         )
+        self.admin = User.objects.create_superuser(
+            username="admin", password="admin")
+        # create test category
+        self.category = Category.objects.create(
+            name="TestCategory", friendly_name="Test Category"
+        )
+        self.image = SimpleUploadedFile(
+            "test_image.jpg", content=b"", content_type="image/jpg"
+        )
 
     def test_product_create_view_permission_required(self):
         """
@@ -587,3 +597,36 @@ class ProductCreateViewTest(TestCase):
         self.user.save()
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
+
+    def test_product_create_view_invalid_form(self):
+        """
+        Test that an invalid form doesn't create a product
+        """
+        self.client.login(username="admin", password="admin")
+
+        # Test that an empty form is invalid
+        data = {}
+        response = self.client.post(self.url, data, follow=True)
+        self.assertContains(response, "This field is required.", html=True)
+
+        # Test that a form with invalid data is invalid
+        data = {
+            "title": "",  # This field is required
+            "sku": "TEST-123",
+            "category": self.category.id,
+            "description": "Test Description",
+            "wheel_size": "26 inch",
+            "retail_price": "100.00",
+            "sale_price": "0",
+            "sale": True,
+            "brand": "Test Brand",
+            "bike_type": "Test Bike Type",
+            "gender": 1,
+            "material": "Test Material",
+            "derailleur": "Test Derailleur",
+            "stock": 10,
+            "image": self.image,
+        }
+        response = self.client.post(self.url, data, follow=True)
+        self.assertContains(response, "This field is required.", html=True)
+        self.assertFalse(Product.objects.exists())
