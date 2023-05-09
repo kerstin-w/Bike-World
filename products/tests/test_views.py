@@ -183,8 +183,8 @@ class ProductListViewTest(TestCase):
             category=self.category2,
             description="Test Description",
             wheel_size="Test Wheel Size",
-            retail_price=50.00,
-            sale_price=45.00,
+            retail_price=150.00,
+            sale_price=145.00,
             sale=True,
             brand="Test Brand2",
             bike_type="Test Bike Type",
@@ -228,3 +228,28 @@ class ProductListViewTest(TestCase):
         response = self.client.get(url)
         self.assertIn(self.product1, response.context["products"])
         self.assertIn(self.product2, response.context["products"])
+
+    def test_product_list_view_sorting(self):
+        """
+        Test to check sorting feature works as expected
+        """
+        # Sorted by Price Descending
+        url = reverse("products") + "?sort_by=price_desc"
+        response = self.client.get(url)
+        sorted_products = response.context["products"]
+        self.assertEqual(sorted_products[0], self.product2)
+        # Sorted by Price Ascending
+        url = reverse("products") + "?sort_by=price_asc"
+        response = self.client.get(url)
+        sorted_products = response.context["products"]
+        self.assertEqual(sorted_products[0], self.product1)
+        # Sorted by Rating Descending
+        url = reverse("products") + "?sort_by=rating_desc"
+        response = self.client.get(url)
+        sorted_products = response.context["products"]
+        self.assertEqual(sorted_products[0], self.product2)
+        # Default Sorting is by stock
+        url = reverse("products")
+        response = self.client.get(url)
+        default_sorted_products = response.context["products"]
+        self.assertEqual(default_sorted_products[0], self.product1)
