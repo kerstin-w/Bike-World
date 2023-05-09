@@ -214,3 +214,17 @@ class ProductListViewTest(TestCase):
         response = self.client.get(url)
         self.assertIn(self.product1, response.context["products"])
         self.assertNotIn(self.product2, response.context["products"])
+
+    def test_product_list_view_search(self):
+        """
+        Test that search keyword filter work as expected
+        """
+        url = reverse("products") + "?q=Test%20Product2"
+        response = self.client.get(url)
+        self.assertIn(self.product2, response.context["products"])
+        self.assertNotIn(self.product1, response.context["products"])
+
+        url = reverse("products") + "?q=Test"
+        response = self.client.get(url)
+        self.assertIn(self.product1, response.context["products"])
+        self.assertIn(self.product2, response.context["products"])
