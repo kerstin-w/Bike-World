@@ -263,7 +263,7 @@ class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
 
 
 class ProductCreateView(
-    PermissionRequiredMixin, UserPassesTestMixin, CreateView
+    PermissionRequiredMixin, CreateView
 ):
     """
     View to create Product
