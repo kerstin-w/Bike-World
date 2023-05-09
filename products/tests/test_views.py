@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch
 from decimal import Decimal
 
 from products.models import Category, Product
-from profiles.models import Wishlist
+from profiles.models import Wishlist, ProductReview
 from products.views import WishlistProductsMixin
 
 
@@ -348,3 +348,77 @@ class ProductListViewTest(TestCase):
         self.assertEqual(
             response.context["wishlist_products"], mock_wishlist()
         )
+
+
+class ProductDetailViewTest(TestCase):
+    """
+    Test Case for ProductDetailView
+    """
+    @classmethod
+    def setUpTestData(cls):
+        # create test user
+        cls.user = User.objects.create_user(
+            username="testuser", password="password"
+        )
+        # Create a product for testing
+        cls.category1 = Category.objects.create(
+            name="TestCategory1", friendly_name="Test Category1"
+        )
+        cls.product = Product.objects.create(
+            title="Test Product1",
+            sku="12345",
+            category=cls.category1,
+            description="Test Description",
+            wheel_size="Test Wheel Size",
+            retail_price=50.00,
+            sale_price=45.00,
+            sale=True,
+            brand="Test Brand1",
+            bike_type="Test Bike Type",
+            gender=0,
+            material="Test Material",
+            derailleur="Test Derailleur",
+            stock=100,
+            rating=3.5,
+        )
+        # Create a product review for testing
+        cls.review = ProductReview.objects.create(
+            product=cls.product,
+            rating=5,
+            review="Test review text",
+            user=cls.user,
+        )
+
+    def test_product_detail_view_get_context_data(self):
+        """
+        Test the context data
+        """
+        # Create a mock request and response
+        response = self.client.get(
+            reverse("product_detail", kwargs={"pk": self.product.pk})
+        )
+
+        # Assert that the response is successful
+        self.assertEqual(response.status_code, 200)
+
+        # Assert that the product and review are in the context
+        self.assertIn("product", response.context)
+        self.assertEqual(response.context["product"], self.product)
+        self.assertIn("reviews", response.context)
+        self.assertEqual(response.context["reviews"][0], self.review)
+
+        # Assert that the title is set correctly
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], self.product.title)
+
+        # Assert that the wishlist_products are set correctly
+        with patch(
+            "products.views.ProductDetailView.get_wishlist_products"
+        ) as mock_wishlist_products:
+            mock_wishlist_products.return_value = []
+            response = self.client.get(
+                reverse("product_detail", kwargs={"pk": self.product.pk})
+            )
+            self.assertIn("wishlist_products", response.context)
+            self.assertEqual(response.context["wishlist_products"], [])
+            mock_wishlist_products.assert_called_once()
