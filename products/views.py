@@ -6,6 +6,10 @@ from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import AccessMixin
+from django.contrib import messages
+from django.core.exceptions import PermissionDenied
+
 from django.db.models import Avg
 from django.urls import reverse, reverse_lazy
 from django.conf import settings
@@ -30,6 +34,36 @@ class WishlistProductsMixin:
                 "product_id", flat=True
             )
         return []
+
+
+class PermissionRequiredMixin(AccessMixin):
+    """
+    A Mixin to check whether a user has the required permission
+    """
+
+    permission_required = None
+    error_message = "You do not have permission to access this page."
+    template_name = "products/product_list.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.has_permission():
+            messages.error(request, self.error_message)
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
+    def has_permission(self):
+        """
+        Returns True if the user has the required permission
+        """
+        return self.request.user.has_perm(self.permission_required)
+
+    def handle_no_permission(self):
+        """
+        Returns a response if the user does not have the required permission.
+        """
+        if self.raise_exception:
+            raise PermissionDenied(self.get_permission_denied_message())
+        return redirect("/")
 
 
 class ProductListView(WishlistProductsMixin, ListView):
@@ -192,19 +226,12 @@ class ProductDetailView(WishlistProductsMixin, DetailView):
         return context
 
 
-class ProductReviewDeleteView(UserPassesTestMixin, DeleteView):
+class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
     """
     View to delete a product review
     """
 
     model = ProductReview
-
-    def test_func(self):
-        """
-        Test if user is superuser.
-        Only superusers can delete reviews.
-        """
-        return self.request.user.is_superuser
 
     def get_object(self):
         """
