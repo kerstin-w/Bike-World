@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User
 from django.test import RequestFactory, TestCase
-from unittest.mock import Mock
+from django.urls import reverse
+from unittest.mock import Mock, patch
+from decimal import Decimal
 
 from products.models import Category, Product
 from profiles.models import Wishlist
-from products.views import WishlistProductsMixin
+from products.views import WishlistProductsMixin, ProductListView
 
 
 class WishlistProductsMixinTest(TestCase):
@@ -136,3 +138,67 @@ class WishlistProductsMixinTest(TestCase):
         # Assert that the is_product_in_wishlist method for
         # the new wishlist object returns False
         self.assertFalse(wishlist.is_product_in_wishlist())
+
+
+class ProductListViewTest(TestCase):
+    """
+    Tests for product list view
+    """
+
+    def setUp(self):
+        """
+        Test Data Setup
+        """
+        # create test category
+        self.category1 = Category.objects.create(
+            name="TestCategory1", friendly_name="Test Category1"
+        )
+
+        # create test product
+        self.product1 = Product.objects.create(
+            title="Test Product1",
+            sku="12345",
+            category=self.category1,
+            description="Test Description",
+            wheel_size="Test Wheel Size",
+            retail_price=50.00,
+            sale_price=45.00,
+            sale=True,
+            brand="Test Brand1",
+            bike_type="Test Bike Type",
+            gender=0,
+            material="Test Material",
+            derailleur="Test Derailleur",
+            stock=100,
+            rating=3.5,
+        )
+
+        self.category2 = Category.objects.create(
+            name="TestCategory2", friendly_name="Test Category2"
+        )
+
+        self.product2 = Product.objects.create(
+            title="Test Product2",
+            sku="12345",
+            category=self.category2,
+            description="Test Description",
+            wheel_size="Test Wheel Size",
+            retail_price=50.00,
+            sale_price=45.00,
+            sale=True,
+            brand="Test Brand2",
+            bike_type="Test Bike Type",
+            gender=1,
+            material="Test Material",
+            derailleur="Test Derailleur",
+            stock=90,
+            rating=4.2,
+        )
+
+    def test_product_list_view_template(self):
+        """
+        Test to check the existence of template and its content
+        """
+        response = self.client.get(reverse("products"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "products/product_list.html")
