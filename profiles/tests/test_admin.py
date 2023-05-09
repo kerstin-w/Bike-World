@@ -1,6 +1,10 @@
+from decimal import Decimal
+
 from django.test import TestCase, Client, RequestFactory
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.admin.sites import AdminSite
+from django.utils.html import format_html
 
 from profiles.models import Wishlist, ProductReview, UserProfile
 from profiles.admin import (
@@ -334,3 +338,66 @@ class UserProfileAdminTest(TestCase):
         self.assertEqual(
             self.user_profile_admin.orders.short_description, "Orders"
         )
+
+
+class OrderInlineTest(TestCase):
+    """
+    Test Case for Order Inline Admin
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+        # delete existing user_profile instance for testuser
+        try:
+            self.user_profile = UserProfile.objects.get(user=self.user)
+            self.user_profile.delete()
+        except UserProfile.DoesNotExist:
+            pass
+
+        # create new user_profile instance for testuser
+        self.user_profile = UserProfile.objects.create(
+            user=self.user,
+            default_full_name="John Doe",
+            default_email="johndoe@test.com",
+            default_phone_number="123456789",
+            default_country="AT",
+            default_postcode="1234",
+            default_town_or_city="Vienna",
+            default_street_address1="Test Street",
+            default_street_address2="Apt 2B",
+        )
+        self.order = Order.objects.create(
+            order_number="12345678",
+            user_profile=self.user_profile,
+            full_name=self.user.get_full_name(),
+            email=self.user.email,
+            phone_number="1234567890",
+            country="AT",
+            postcode="12345",
+            town_or_city="Test Town",
+            street_address1="Test Street 12",
+            street_address2="Test Apt 123",
+            delivery_cost=Decimal("10.00"),
+            order_total=Decimal("499.99"),
+            grand_total=Decimal("509.99"),
+            original_bag="{}",
+            stripe_pid="TestStripePID",
+        )
+        self.inline = OrderInline(UserProfile, AdminSite())
+
+    def test_order_inline_view_order(self):
+        """
+        Test that the returned value of the view_order method matches
+        the HTML link that points to the change page for the Order
+        """
+        result = self.inline.view_order(self.order)
+        url = reverse("admin:checkout_order_change", args=[self.order.id])
+        expected_output = format_html(
+            '<a href="{}">{}</a>', url, self.order.order_number
+        )
+        self.assertEqual(result, expected_output)
