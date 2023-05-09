@@ -201,7 +201,7 @@ class ProductListViewTest(TestCase):
             sale=True,
             brand="Test Brand1",
             bike_type="Test Bike Type",
-            gender=0,
+            gender=1,
             material="Test Material",
             derailleur="Test Derailleur",
             stock=100,
@@ -223,7 +223,7 @@ class ProductListViewTest(TestCase):
             sale=True,
             brand="Test Brand2",
             bike_type="Test Bike Type",
-            gender=1,
+            gender=2,
             material="Test Material",
             derailleur="Test Derailleur",
             stock=90,
@@ -265,6 +265,15 @@ class ProductListViewTest(TestCase):
         Test that products are filtered by gender
         """
         response = self.client.get("/products/?gender=Womens")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Test Product1")
+        self.assertNotContains(response, "Test Product2")
+
+    def test_product_list_view_filter_by_gender_mens(self):
+        """
+        Test that products are filtered by gender when set to "Mens"
+        """
+        response = self.client.get("/products/?gender=Mens")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test Product2")
         self.assertNotContains(response, "Test Product1")
