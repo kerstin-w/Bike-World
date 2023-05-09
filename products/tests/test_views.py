@@ -3,18 +3,15 @@ from django.db.models import Avg
 from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse, resolve
 from django.contrib.messages import get_messages
-from django.core.files.uploadedfile import SimpleUploadedFile
 from unittest.mock import Mock, patch
 from decimal import Decimal
 
 from products.models import Category, Product
 from profiles.models import Wishlist, ProductReview
-from products.forms import ProductForm
 from products.views import (
     WishlistProductsMixin,
     ProductReviewDeleteView,
     PermissionRequiredMixin,
-    ProductCreateView,
 )
 
 
@@ -574,13 +571,11 @@ class ProductCreateViewTest(TestCase):
             username="testuser", password="testpass"
         )
         self.admin = User.objects.create_superuser(
-            username="admin", password="admin")
+            username="admin", password="admin"
+        )
         # create test category
         self.category = Category.objects.create(
             name="TestCategory", friendly_name="Test Category"
-        )
-        self.image = SimpleUploadedFile(
-            "test_image.jpg", content=b"", content_type="image/jpg"
         )
 
     def test_product_create_view_permission_required(self):
@@ -625,8 +620,54 @@ class ProductCreateViewTest(TestCase):
             "material": "Test Material",
             "derailleur": "Test Derailleur",
             "stock": 10,
-            "image": self.image,
         }
         response = self.client.post(self.url, data, follow=True)
         self.assertContains(response, "This field is required.", html=True)
         self.assertFalse(Product.objects.exists())
+
+    def test_product_create_view_success(self):
+        """
+        Test that a product can be created successfully
+        """
+        self.client.login(username="admin", password="admin")
+
+        data = {
+            "title": "Test Product",
+            "sku": "TEST-123",
+            "category": self.category.id,
+            "description": "Test Description",
+            "wheel_size": "26 inch",
+            "retail_price": "100.00",
+            "sale_price": "90.00",
+            "sale": True,
+            "brand": "Test Brand",
+            "bike_type": "Test Bike Type",
+            "gender": 1,
+            "material": "Test Material",
+            "derailleur": "Test Derailleur",
+            "stock": 10,
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 302)
+
+        # check that the URL redirected to success_url
+        pk = Product.objects.get(title="Test Product").pk
+        expected_url = reverse("product_detail", kwargs={"pk": pk})
+        self.assertEqual(response.url, expected_url)
+
+        # Assert that the product was created
+        product = Product.objects.get(title="Test Product")
+        self.assertEqual(product.title, "Test Product")
+        self.assertEqual(product.sku, "TEST-123")
+        self.assertEqual(product.category, self.category)
+        self.assertEqual(product.description, "Test Description")
+        self.assertEqual(product.wheel_size, "26 inch")
+        self.assertEqual(product.retail_price, 100.00)
+        self.assertEqual(product.sale_price, 90.00)
+        self.assertEqual(product.sale, True)
+        self.assertEqual(product.brand, "Test Brand")
+        self.assertEqual(product.bike_type, "Test Bike Type")
+        self.assertEqual(product.gender, 1)
+        self.assertEqual(product.material, "Test Material")
+        self.assertEqual(product.derailleur, "Test Derailleur")
+        self.assertEqual(product.stock, 10)
