@@ -8,10 +8,12 @@ from decimal import Decimal
 
 from products.models import Category, Product
 from profiles.models import Wishlist, ProductReview
+from products.forms import ProductForm
 from products.views import (
     WishlistProductsMixin,
     ProductReviewDeleteView,
     PermissionRequiredMixin,
+    ProductCreateView,
 )
 
 
@@ -554,3 +556,34 @@ class ProductReviewDeleteViewTest(TestCase):
             url,
             reverse("product_detail", kwargs={"pk": self.review.product.pk}),
         )
+
+
+class ProductCreateViewTest(TestCase):
+    """
+    Test Case for ProductCreateView
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.url = reverse("add_product")
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+
+    def test_product_create_view_permission_required(self):
+        """
+        Test that the view requires the user to be a superuser
+        """
+        # Test that an unauthorized user can't access the view
+        self.client.login(username="testuser", password="testpass")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+
+        # Test that a superuser can access the view
+        self.user.is_superuser = True
+        self.user.save()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
