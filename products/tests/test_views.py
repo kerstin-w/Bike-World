@@ -202,3 +202,15 @@ class ProductListViewTest(TestCase):
         response = self.client.get(reverse("products"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "products/product_list.html")
+
+    def test_product_list_view_with_filters(self):
+        """
+        Test that all filters work as expected
+        """
+        url = (
+            reverse("products")
+            + "?category=TestCategory1&brand=Test%20Brand1&gender=0&sort_by=rating_desc"
+        )
+        response = self.client.get(url)
+        self.assertIn(self.product1, response.context["products"])
+        self.assertNotIn(self.product2, response.context["products"])
