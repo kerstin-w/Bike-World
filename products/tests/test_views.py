@@ -4,9 +4,6 @@ from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse, resolve
 from django.contrib.messages import get_messages
 from unittest.mock import Mock, patch
-from django.contrib.messages.storage.fallback import FallbackStorage
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.files.storage import default_storage
 from django.test.client import RequestFactory
 from decimal import Decimal
 
@@ -716,6 +713,10 @@ class ProductEditViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_edit_product_view_handles_post_request(self):
+        """
+        Test that the edit product view handles
+        POST requests and updates the product
+        """
         self.client.force_login(self.user)
         form_data = {
             "title": "Update Product",
@@ -763,3 +764,36 @@ class ProductEditViewTest(TestCase):
         )
         self.assertEqual(self.product.gender, form.cleaned_data["gender"])
         self.assertTrue(self.product.sale)
+
+    def test_edit_product_view_invalid_form(self):
+        """
+        Test that the edit product view handles invalid POST
+        requests with appropriate error message
+        """
+        self.client.force_login(self.user)
+        form_data = {
+            "title": "",
+            "sku": "",
+            "category": "",
+            "description": "",
+            "wheel_size": "",
+            "retail_price": "",
+            "brand": "",
+            "bike_type": "",
+            "gender": "",
+            "sale": "",
+        }
+        # Create form instance with data and files
+        response = self.client.post(
+            reverse("edit_product", kwargs={"product_id": self.product.pk}),
+            data=form_data,
+        )
+        self.assertEqual(response.status_code, 200)
+        # Asserting that the messages generated
+        messages = list(response.context["messages"])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            "Failed to update product. Please ensure the form is valid.",
+        )
+        self.assertContains(response, "This field is required.")
