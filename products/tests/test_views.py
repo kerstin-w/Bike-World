@@ -432,7 +432,7 @@ class ProductDetailViewTest(TestCase):
 
 class ProductReviewDeleteViewTest(TestCase):
     """
-    Test Case for ProductDeleteView
+    Test Case for ProductReviewDeleteView
     """
 
     def setUp(self):
@@ -509,3 +509,13 @@ class ProductReviewDeleteViewTest(TestCase):
             "You do not have permission to access this page.",
             [msg.message for msg in storage],
         )
+
+    def test_product_review_delete_view_get_object(self):
+        """
+        Test that get_object returns the expected object
+        instance based on the kwargs
+        """
+        view = ProductReviewDeleteView()
+        view.kwargs = {"pk": self.review.pk}
+        obj = view.get_object()
+        self.assertEqual(obj, self.review)
