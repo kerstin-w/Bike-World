@@ -265,3 +265,44 @@ class ProductListViewTest(TestCase):
         )
         response = self.client.get(url)
         self.assertEqual(len(response.context["products"]), 0)
+
+    def test__product_list_view_pagination(self):
+        """
+        Test the pagination feature
+        """
+        response = self.client.get(reverse("products"))
+        self.assertTrue("is_paginated" in response.context)
+        self.assertFalse(response.context["is_paginated"])
+
+        # Create 25 more products
+        for i in range(25):
+            Product.objects.create(
+                title=f"Test Product {i+3}",
+                sku="12345",
+                category=self.category2,
+                description="Test Description",
+                wheel_size="Test Wheel Size",
+                retail_price=Decimal(50 + i),
+                sale_price=Decimal(45 + i),
+                sale=False,
+                brand="Test Brand",
+                bike_type="Test Bike Type",
+                gender=1,
+                material="Test Material",
+                derailleur="Test Derailleur",
+                stock=100,
+                rating=Decimal(3.5 + i / 10),
+            )
+
+        response = self.client.get(reverse("products"))
+        self.assertTrue("is_paginated" in response.context)
+        self.assertTrue(response.context["is_paginated"])
+
+        self.assertTrue(len(response.context["products"]), 25)
+
+        response = self.client.get(reverse("products") + "?page=2")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("is_paginated" in response.context)
+        self.assertTrue(response.context["is_paginated"])
+
+        self.assertTrue(len(response.context["products"]), 2)
