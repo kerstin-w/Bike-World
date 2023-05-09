@@ -207,9 +207,11 @@ class ProductListViewTest(TestCase):
         """
         Test that all filters work as expected
         """
-        url = (reverse("products") +
-               "?category=TestCategory1&brand=Test%20Brand1&gender=0&" +
-               "sort_by=rating_desc")
+        url = (
+            reverse("products")
+            + "?category=TestCategory1&brand=Test%20Brand1&gender=0&"
+            + "sort_by=rating_desc"
+        )
         response = self.client.get(url)
         self.assertIn(self.product1, response.context["products"])
         self.assertNotIn(self.product2, response.context["products"])
@@ -219,6 +221,15 @@ class ProductListViewTest(TestCase):
         Test that products are filtered by brand
         """
         response = self.client.get("/products/?brand=Test%20Brand2")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Test Product2")
+        self.assertNotContains(response, "Test Product1")
+
+    def test_product_list_view_filter_by_gender(self):
+        """
+        Test that products are filtered by gender
+        """
+        response = self.client.get("/products/?gender=Womens")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test Product2")
         self.assertNotContains(response, "Test Product1")
@@ -276,11 +287,13 @@ class ProductListViewTest(TestCase):
         Test to check 0 products scenario
         """
         Product.objects.all().delete()
-        url = reverse("products") \
-            + "?category=TestCategory1" \
-            + "&brand=Test%20Brand1" \
-            + "&gender=0" \
+        url = (
+            reverse("products")
+            + "?category=TestCategory1"
+            + "&brand=Test%20Brand1"
+            + "&gender=0"
             + "&sort_by=rating_desc"
+        )
         response = self.client.get(url)
         self.assertEqual(len(response.context["products"]), 0)
 
