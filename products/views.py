@@ -227,16 +227,8 @@ class ProductReviewDeleteView(UserPassesTestMixin, DeleteView):
         """
         Delete the review and associated rating
         """
-        # Get the review instance
-        review = self.get_object()
-        # Get the product instance
-        product = review.product
         # Delete the review
         response = super().delete(request, *args, **kwargs)
-        # Update the rating field of the Product instance
-        rating = product.reviews.aggregate(Avg("rating"))["rating__avg"]
-        product.rating = rating if rating else 0
-        product.save()
         # Show a success message
         messages.success(
             self.request,
