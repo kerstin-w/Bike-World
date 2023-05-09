@@ -55,7 +55,7 @@ class PermissionRequiredMixin(AccessMixin):
         """
         Returns True if the user has the required permission
         """
-        return self.request.user.has_perm(self.permission_required)
+        return self.request.user.is_superuser
 
     def handle_no_permission(self):
         """
