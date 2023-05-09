@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
+from django.core.exceptions import PermissionDenied
 from django.db.models import Avg
 from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse, resolve
@@ -146,6 +147,32 @@ class WishlistProductsMixinTest(TestCase):
         # Assert that the is_product_in_wishlist method for
         # the new wishlist object returns False
         self.assertFalse(wishlist.is_product_in_wishlist())
+
+
+class PermissionRequiredMixinTest(TestCase):
+    """
+    Test Case for PermissionRequiredMixin
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="test_user",
+            email="test_email@test.com",
+            password="password",
+        )
+
+    def test_handle_no_permission_raises_permission_denied(self):
+        """
+        Test whether handle_no_permission method raises PermissionDenied
+        """
+        mixin = PermissionRequiredMixin()
+        mixin.request, mixin.kwargs = {}, {}
+        mixin.raise_exception = True
+        self.assertRaises(PermissionDenied, mixin.handle_no_permission)
 
 
 class ProductListViewTest(TestCase):
@@ -860,8 +887,9 @@ class ProductDeleteViewTest(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), f"{self.product.title} deleted!")
         # Test that user is redirected to correct URL
-        self.assertRedirects(response, "/products/",
-                             fetch_redirect_response=False)
+        self.assertRedirects(
+            response, "/products/", fetch_redirect_response=False
+        )
         self.assertEqual(response.status_code, 302)
         # Test that product is deleted from database
         self.assertFalse(Product.objects.filter(pk=self.product.pk).exists())
