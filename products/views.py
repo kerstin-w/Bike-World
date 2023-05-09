@@ -240,16 +240,6 @@ class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
         review_pk = self.kwargs.get("pk")
         return get_object_or_404(ProductReview, pk=review_pk)
 
-    def handle_no_permission(self):
-        """
-        Redirect the user to the index page with an error
-        message if they don't have permission
-        """
-        messages.error(
-            self.request, "You do not have permission to delete reviews."
-        )
-        return redirect("index")
-
     def delete(self, request, *args, **kwargs):
         """
         Delete the review and associated rating
@@ -272,7 +262,9 @@ class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
         )
 
 
-class ProductCreateView(UserPassesTestMixin, CreateView):
+class ProductCreateView(
+    PermissionRequiredMixin, UserPassesTestMixin, CreateView
+):
     """
     View to create Product
     """
@@ -280,21 +272,6 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "products/add_product.html"
-
-    def test_func(self):
-        """
-        restrict access to only superusers
-        """
-        return self.request.user.is_superuser
-
-    def handle_no_permission(self):
-        """
-        handle denied access
-        """
-        messages.error(
-            self.request, "You do not have permission to create products."
-        )
-        return redirect("products")
 
     def form_valid(self, form):
         """
