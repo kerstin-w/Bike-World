@@ -5,7 +5,6 @@ from django.db.models import Avg
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.template.loader import render_to_string
-from django.utils.safestring import mark_safe
 
 from profiles.models import ProductReview
 
@@ -52,5 +51,4 @@ def send_review_deleted_email_from_list(sender, instance, **kwargs):
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
         fail_silently=True,
-        html_message=mark_safe(message),
     )
