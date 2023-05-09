@@ -1,12 +1,17 @@
 from django.contrib.auth.models import User
-from django.test import RequestFactory, TestCase
-from django.urls import reverse
+from django.test import RequestFactory, TestCase, Client
+from django.urls import reverse, resolve
+from django.contrib.messages import get_messages
 from unittest.mock import Mock, patch
 from decimal import Decimal
 
 from products.models import Category, Product
 from profiles.models import Wishlist, ProductReview
-from products.views import WishlistProductsMixin
+from products.views import (
+    WishlistProductsMixin,
+    ProductReviewDeleteView,
+    PermissionRequiredMixin,
+)
 
 
 class WishlistProductsMixinTest(TestCase):
@@ -354,6 +359,7 @@ class ProductDetailViewTest(TestCase):
     """
     Test Case for ProductDetailView
     """
+
     @classmethod
     def setUpTestData(cls):
         # create test user
@@ -422,3 +428,84 @@ class ProductDetailViewTest(TestCase):
             self.assertIn("wishlist_products", response.context)
             self.assertEqual(response.context["wishlist_products"], [])
             mock_wishlist_products.assert_called_once()
+
+
+class ProductReviewDeleteViewTest(TestCase):
+    """
+    Test Case for ProductDeleteView
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="testuser", password="12345"
+        )
+        self.other_user = User.objects.create_user(
+            username="Other User", email="other@test.com", password="password"
+        )
+        # create test category
+        self.category1 = Category.objects.create(
+            name="TestCategory1", friendly_name="Test Category1"
+        )
+        # create test product
+        self.product = Product.objects.create(
+            title="Test Product1",
+            sku="12345",
+            category=self.category1,
+            description="Test Description",
+            wheel_size="Test Wheel Size",
+            retail_price=50.00,
+            sale_price=45.00,
+            sale=True,
+            brand="Test Brand1",
+            bike_type="Test Bike Type",
+            gender=0,
+            material="Test Material",
+            derailleur="Test Derailleur",
+            stock=100,
+            rating=3.5,
+        )
+        self.review = ProductReview.objects.create(
+            user=self.user,
+            product=self.product,
+            rating=5,
+            review="This is a test review.",
+        )
+        self.url = reverse("review_delete", kwargs={"pk": self.review.pk})
+
+    def test_product_review_delete_view_permissions(self):
+        """
+        Test that the view extends from PermissionRequiredMixin
+        """
+        resolved_view = resolve(self.url)
+        self.assertEqual(
+            resolved_view.func.__name__,
+            ProductReviewDeleteView.as_view().__name__,
+        )
+        self.assertEqual(
+            resolved_view.func.view_class, ProductReviewDeleteView
+        )
+        self.assertEqual(
+            resolved_view.func.__module__, ProductReviewDeleteView.__module__
+        )
+        self.assertTrue(
+            issubclass(ProductReviewDeleteView, PermissionRequiredMixin)
+        )
+
+    def test_product_review_delete_view_handle_no_permission(self):
+        """
+        Test that checks if the handle_no_permission returns
+        the expected error message and redirects to the homepage
+        """
+        self.client.force_login(self.other_user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/")
+        storage = get_messages(response.wsgi_request)
+        self.assertIn(
+            "You do not have permission to access this page.",
+            [msg.message for msg in storage],
+        )
