@@ -214,6 +214,15 @@ class ProductListViewTest(TestCase):
         self.assertIn(self.product1, response.context["products"])
         self.assertNotIn(self.product2, response.context["products"])
 
+    def test_product_list_view_filter_by_category(self):
+        """
+        Test that products are filtered by category
+        """
+        response = self.client.get("/products/?category=TestCategory1")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Test Product1")
+        self.assertNotContains(response, "Test Product2")
+
     def test_product_list_view_search(self):
         """
         Test that search keyword filter work as expected
