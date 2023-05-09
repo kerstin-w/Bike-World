@@ -542,3 +542,15 @@ class ProductReviewDeleteViewTest(TestCase):
             "The review and associated rating have been deleted successfully.",
             [msg.message for msg in storage],
         )
+
+    def test_product_review_delete_view_get_success_url(self):
+        """
+        Test that the get_success_url returns the correct URL
+        """
+        view = ProductReviewDeleteView()
+        view.object = self.review
+        url = view.get_success_url()
+        self.assertEqual(
+            url,
+            reverse("product_detail", kwargs={"pk": self.review.product.pk}),
+        )
