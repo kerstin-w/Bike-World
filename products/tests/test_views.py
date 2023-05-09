@@ -4,14 +4,20 @@ from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse, resolve
 from django.contrib.messages import get_messages
 from unittest.mock import Mock, patch
+from django.contrib.messages.storage.fallback import FallbackStorage
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files.storage import default_storage
+from django.test.client import RequestFactory
 from decimal import Decimal
 
 from products.models import Category, Product
+from products.forms import ProductForm
 from profiles.models import Wishlist, ProductReview
 from products.views import (
     WishlistProductsMixin,
     ProductReviewDeleteView,
     PermissionRequiredMixin,
+    ProductEditView,
 )
 
 
@@ -671,3 +677,89 @@ class ProductCreateViewTest(TestCase):
         self.assertEqual(product.material, "Test Material")
         self.assertEqual(product.derailleur, "Test Derailleur")
         self.assertEqual(product.stock, 10)
+
+
+class ProductEditViewTest(TestCase):
+    """
+    Test Case for ProductEditView
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.category = Category.objects.create(name="test category")
+        self.product = Product.objects.create(
+            title="test product",
+            sku="SK123",
+            category=self.category,
+            description="test description",
+            wheel_size='18"',
+            retail_price=500.00,
+            brand="Trek",
+            bike_type="Mountain Bike",
+            gender=0,
+        )
+        self.user = User.objects.create_superuser(
+            username="admin", email="admin@test.com", password="adminpassword"
+        )
+
+    def test_product_edit_view_returns_200(self):
+        """
+        Test that view returns 200
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("edit_product", kwargs={"product_id": self.product.pk})
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_product_view_handles_post_request(self):
+        self.client.force_login(self.user)
+        form_data = {
+            "title": "Update Product",
+            "sku": "TEST-123",
+            "category": self.category,
+            "description": "Test Description",
+            "wheel_size": "26 inch",
+            "retail_price": "100.00",
+            "sale_price": "90.00",
+            "sale": True,
+            "brand": "Test Brand",
+            "bike_type": "Test Bike Type",
+            "gender": 1,
+            "material": "Test Material",
+            "derailleur": "Test Derailleur",
+            "stock": 10,
+        }
+        form = ProductForm(form_data)
+        self.assertTrue(form.is_valid())
+        response = self.client.post(
+            reverse("edit_product", kwargs={"product_id": self.product.pk}),
+            data=form_data,
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url,
+            reverse("product_detail", kwargs={"pk": self.product.pk}),
+        )
+        # Confirm that the product has been updated
+        self.product.refresh_from_db()
+        self.assertEqual(self.product.title, form.cleaned_data["title"])
+        self.assertEqual(self.product.sku, form.cleaned_data["sku"])
+        self.assertEqual(
+            self.product.description, form.cleaned_data["description"]
+        )
+        self.assertEqual(
+            self.product.wheel_size, form.cleaned_data["wheel_size"]
+        )
+        self.assertEqual(
+            self.product.retail_price, form.cleaned_data["retail_price"]
+        )
+        self.assertEqual(self.product.brand, form.cleaned_data["brand"])
+        self.assertEqual(
+            self.product.bike_type, form.cleaned_data["bike_type"]
+        )
+        self.assertEqual(self.product.gender, form.cleaned_data["gender"])
+        self.assertTrue(self.product.sale)
