@@ -44,7 +44,7 @@ class OrderModelTest(TestCase):
             rating=4.5,
         )
 
-    def test__order_model_generate_order_number(self):
+    def test_order_model_generate_order_number(self):
         """
         Test that the order number generated is 10 characters long and unique
         """
@@ -78,3 +78,33 @@ class OrderModelTest(TestCase):
             ).order_number,
             order.order_number,
         )
+
+    def test_order_model_update_total(self):
+        """
+        Test that the order total and grand total are updated correctly
+        when a line item is added
+        """
+        order = Order.objects.create(
+            user_profile=self.user_profile,
+            full_name="Test User",
+            email="test@test.com",
+            phone_number="123456789",
+            country="SE",
+            town_or_city="Test City",
+            street_address1="Test St",
+            order_total=Decimal("0.00"),
+            grand_total=Decimal("0.00"),
+            original_bag="",
+            stripe_pid="",
+        )
+        line_item = OrderLineItem.objects.create(
+            order=order,
+            product=self.product,
+            quantity=2,
+            lineitem_total=Decimal("999.98"),
+        )
+        order.update_total()
+        order.refresh_from_db()
+        self.assertEqual(order.order_total, line_item.lineitem_total)
+        self.assertEqual(order.delivery_cost, Decimal("10.00"))
+        self.assertEqual(order.grand_total, Decimal("1009.98"))
