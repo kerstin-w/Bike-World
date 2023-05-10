@@ -102,3 +102,20 @@ class OrderAdminTest(TestCase):
                 "stripe_pid",
             ),
         )
+
+    def test_order_admin_list_display(self):
+        """
+        Test that  the list_display attribute contains all the
+        expected fields to be displayed in the list view
+        """
+        self.assertCountEqual(
+            OrderAdmin.list_display,
+            (
+                "order_number",
+                "date",
+                "full_name",
+                "order_total",
+                "delivery_cost",
+                "grand_total",
+            ),
+        )
