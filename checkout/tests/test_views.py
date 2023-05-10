@@ -119,3 +119,18 @@ class CheckoutViewsTest(TestCase):
             bag_dict = json.loads(order.original_bag)
             self.assertEqual(bag_dict, self.session["bag"])
             self.assertEqual(order.stripe_pid, "test_client")
+
+    def test_checkout_view_populate_order_form_with_user_profile(self):
+        """
+        Test if authenticated users have their profile information
+        pre-populated in the order form
+        """
+        self.client.force_login(self.user)
+        # Make a GET request to the checkout page and assert that the
+        # correct data is pre-filled in the form
+        response = self.client.get(self.checkout_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "checkout/checkout.html")
+        order_form = response.context["order_form"]
+        self.assertEqual(order_form["full_name"].value(), "Test User")
+        self.assertEqual(order_form["email"].value(), "testuser@test.com")
