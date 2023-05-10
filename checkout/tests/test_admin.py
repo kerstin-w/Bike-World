@@ -58,3 +58,47 @@ class OrderAdminTest(TestCase):
         OrderLineItemAdminInline inline.
         """
         self.assertCountEqual(OrderAdmin.inlines, [OrderLineItemAdminInline])
+
+    def test_order_admin_readonly_fields(self):
+        """
+        Test that the readonly_fields attribute contains all the
+        expected fields that should be read-only.
+        """
+        self.assertCountEqual(
+            OrderAdmin.readonly_fields,
+            (
+                "order_number",
+                "date",
+                "delivery_cost",
+                "order_total",
+                "grand_total",
+                "original_bag",
+                "stripe_pid",
+            ),
+        )
+
+    def test_order_admin_fields(self):
+        """
+        Test that the fields attribute contains all the expected fields
+        """
+        self.assertCountEqual(
+            OrderAdmin.fields,
+            (
+                "order_number",
+                "user_profile",
+                "date",
+                "full_name",
+                "email",
+                "phone_number",
+                "country",
+                "postcode",
+                "town_or_city",
+                "street_address1",
+                "street_address2",
+                "delivery_cost",
+                "order_total",
+                "grand_total",
+                "original_bag",
+                "stripe_pid",
+            ),
+        )
