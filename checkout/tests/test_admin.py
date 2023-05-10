@@ -1,12 +1,12 @@
 from decimal import Decimal
-from django.test import TestCase, RequestFactory, Client
+
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
+from django.test import TestCase, RequestFactory
 from django.urls import reverse
-from unittest.mock import patch, MagicMock
-import json
 from django.utils import timezone
-from checkout.admin import OrderAdmin, OrderLineItemAdminInline, DashboardView
+
+from checkout.admin import OrderAdmin, OrderLineItemAdminInline
 from checkout.models import Order, OrderLineItem
 
 
@@ -224,7 +224,10 @@ class DashboardViewTestCase(TestCase):
             "order_count_month": 2,
             "average_order_total": Decimal("82.5"),
             "daily_revenue": [0, 0, 0, 0, 0, 0, 0, 0, 0, Decimal("165")],
-            "country_revenue": '{"Canada": 55.0, "United States of America": 110.0}',
+            "country_revenue": (
+                '{"Canada": 55.0, '
+                '"United States of America": 110.0}'
+            ),
         }
         context = response.context[-1]
         self.assertEqual(
