@@ -40,8 +40,8 @@ def cache_checkout_data(request):
     except Exception as e:
         messages.error(
             request,
-            "Sorry, your payment cannot be \
-            processed right now. Please try again later.",
+            "Sorry, your payment cannot be "
+            "processed right now. Please try again later.",
         )
         return HttpResponse(content=e, status=400)
 
@@ -93,8 +93,8 @@ def checkout(request):
                     messages.error(
                         request,
                         (
-                            "One of the products in your basket wasn't found \
-                        in our database. Please call for assistance!"
+                            "One of the products in your basket wasn't found "
+                            "in our database. Please call for assistance!"
                         ),
                     )
                     # Delete the order if the product no longer exists
@@ -110,8 +110,8 @@ def checkout(request):
             # Alert user if there is an error with the order form
             messages.error(
                 request,
-                "There was an error with your form. \
-                Please double check your information.",
+                "There was an error with your form. "
+                "Please double check your information.",
             )
     else:
         # Get basket from session
@@ -164,8 +164,8 @@ def checkout(request):
     if not stripe_public_key:
         messages.warning(
             request,
-            "Stripe public key is missing. \
-            Did you forget to set it in your environment varibables?",
+            "Stripe public key is missing. "
+            "Did you forget to set it in your environment variables?",
         )
 
     # Load the checkout template with required context
