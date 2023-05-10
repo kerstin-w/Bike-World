@@ -171,3 +171,24 @@ class OrderFormTest(TestCase):
             form.errors["street_address2"],
             ["Ensure this value has at most 80 characters (it has 81)."],
         )
+
+    def test_order_form_invalid_country(self):
+        """
+        Test that an invalid value for country raises a validation error
+        """
+        form_data = {
+            "full_name": "Test User",
+            "email": "test@test.com",
+            "phone_number": "123456789",
+            "street_address1": "Test St.",
+            "street_address2": "",
+            "town_or_city": "Test City",
+            "postcode": "1234",
+            "country": "XX",  # Invalid country name or ISO code entered
+        }
+        form = OrderForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors["country"],
+            ["Select a valid choice. XX is not one of the available choices."],
+        )
