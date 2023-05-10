@@ -134,3 +134,20 @@ class CheckoutViewsTest(TestCase):
         order_form = response.context["order_form"]
         self.assertEqual(order_form["full_name"].value(), "Test User")
         self.assertEqual(order_form["email"].value(), "testuser@test.com")
+
+    def test_checkout_view_missing_stripe_public_key(self):
+        """
+        Test if a warning message is displayed if the Stripe public
+        key is not set in the environment variables
+        """
+        # Delete the Stripe public key from environment variables
+        with self.settings(STRIPE_PUBLIC_KEY=""):
+            response = self.client.get(self.checkout_url)
+            self.assertEqual(response.status_code, 200)
+            messages = list(response.context["messages"])
+            self.assertEqual(len(messages), 1)
+            self.assertEqual(
+                str(messages[0]),
+                "Stripe public key is missing. "
+                "Did you forget to set it in your environment variables?",
+            )
