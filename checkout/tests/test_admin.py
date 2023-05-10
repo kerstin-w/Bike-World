@@ -126,3 +126,12 @@ class OrderAdminTest(TestCase):
         should be ordered by descending order of date
         """
         self.assertCountEqual(OrderAdmin.ordering, ("-date",))
+
+    def test_order_admin_get_queryset(self):
+        """
+        Test that the get_queryset method correctly filters the orders
+        """
+        qs = OrderAdmin(Order, self.site).get_queryset(
+            request=self.factory.get("/", {"q": "TEST"})
+        )
+        self.assertEqual(qs.count(), 1)
