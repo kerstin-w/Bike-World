@@ -108,3 +108,47 @@ class OrderModelTest(TestCase):
         self.assertEqual(order.order_total, line_item.lineitem_total)
         self.assertEqual(order.delivery_cost, Decimal("10.00"))
         self.assertEqual(order.grand_total, Decimal("1009.98"))
+
+    def test_order_model_save(self):
+        """
+        Test that the order number is set automatically if it hasn't been
+        set already
+        """
+        order = Order(
+            user_profile=self.user_profile,
+            full_name="Test User",
+            email="test@test.com",
+            phone_number="123456789",
+            country="SE",
+            town_or_city="Test City",
+            street_address1="Test St",
+            order_total=Decimal("10.00"),
+            grand_total=Decimal("10.00"),
+            original_bag="",
+            stripe_pid="",
+        )
+        order.save()
+        self.assertIsNotNone(order.order_number)
+        self.assertEqual(len(order.order_number), 10)
+
+    def test_order_model_str_method(self):
+        """
+        Test the string method
+        """
+        order = Order(
+            user_profile=self.user_profile,
+            full_name="Test User",
+            email="test@test.com",
+            phone_number="123456789",
+            country="AT",
+            town_or_city="Test City",
+            street_address1="Test St",
+            order_total=Decimal("10.00"),
+            grand_total=Decimal("10.00"),
+            original_bag="",
+            stripe_pid="",
+        )
+        order.save()
+        expected_str = order.order_number
+        actual_str = str(order)
+        self.assertEqual(actual_str, expected_str)
