@@ -253,7 +253,7 @@ class DashboardViewTestCase(TestCase):
             context["country_revenue"], expected_context["country_revenue"]
         )
 
-    def test__dashboard_view_country_revenue_is_correct(self):
+    def test_dashboard_view_country_revenue_is_correct(self):
         """
         Test that the get_country_revenue method returns
         the expected country revenue dictionary
@@ -263,3 +263,13 @@ class DashboardViewTestCase(TestCase):
                                     "United States of America": 110.0}
         country_revenue = DashboardView().get_country_revenue(orders_month)
         self.assertDictEqual(country_revenue, expected_country_revenue)
+
+    def test_dashboard_view_daily_revenue_is_correct(self):
+        """
+        Test that the get_daily_revenue method returns
+        the expected list of daily revenue totals
+        """
+        today = timezone.localtime().date()
+        expected_daily_revenue = [0, 0, 0, 0, 0, 0, 0, 0, 0, Decimal("165")]
+        daily_revenue = DashboardView().get_daily_revenue(today)
+        self.assertListEqual(daily_revenue, expected_daily_revenue)
