@@ -22,4 +22,39 @@ class OrderLineItemAdminInlineTest(TestCase):
         """
         inline_admin = OrderLineItemAdminInline(Order, AdminSite())
         self.assertCountEqual(
-            inline_admin.readonly_fields, ("lineitem_total",))
+            inline_admin.readonly_fields, ("lineitem_total",)
+        )
+
+
+class OrderAdminTest(TestCase):
+    """
+    Test Case for OrderAdmin
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        """
+        Test Data
+        """
+        # Create a new Order object for tests which need an existing object
+        cls.order = Order.objects.create(
+            order_number="TEST12345",
+            full_name="John Doe",
+            email="test@test.com",
+            phone_number="1231231234",
+            country="AT",
+            town_or_city="Innsbruck",
+            street_address1="Main St.",
+        )
+
+        cls.factory = RequestFactory()
+
+    def setUp(self):
+        self.site = AdminSite()
+
+    def test_order_admin_inlines(self):
+        """
+        Test that the inlines attribute contains only the
+        OrderLineItemAdminInline inline.
+        """
+        self.assertCountEqual(OrderAdmin.inlines, [OrderLineItemAdminInline])
