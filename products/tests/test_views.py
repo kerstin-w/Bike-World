@@ -433,6 +433,42 @@ class ProductDetailViewTest(TestCase):
             review="Test review text",
             user=cls.user,
         )
+        # Create related products for testing
+        cls.related_product_1 = Product.objects.create(
+            title="Related Product 1",
+            sku="SKU002",
+            category=cls.category1,
+            description="Test description B",
+            wheel_size="24 inches",
+            retail_price=10.99,
+            sale_price=5.99,
+            sale=True,
+            rating=3,
+            brand="Trek",
+            bike_type="Road Bike",
+            gender=1,
+            material="Test Material B",
+            derailleur="Test Derailleur B",
+            stock=3,
+        )
+
+        cls.related_product_2 = Product.objects.create(
+            title="Related Product 2",
+            sku="SKU003",
+            category=cls.category1,
+            description="Test description C",
+            wheel_size="27 inches",
+            retail_price=20.99,
+            sale_price=15.99,
+            sale=True,
+            rating=5,
+            brand="Giant",
+            bike_type="Hybrid Bike",
+            gender=2,
+            material="Test Material C",
+            derailleur="Test Derailleur C",
+            stock=7,
+        )
 
     def test_product_detail_view_get_context_data(self):
         """
@@ -467,6 +503,12 @@ class ProductDetailViewTest(TestCase):
             self.assertIn("wishlist_products", response.context)
             self.assertEqual(response.context["wishlist_products"], [])
             mock_wishlist_products.assert_called_once()
+
+        # Assert that the related products are set correctly
+        related_products = response.context["related_products"]
+        self.assertEqual(related_products.count(), 2)
+        self.assertIn(self.related_product_1, related_products)
+        self.assertIn(self.related_product_2, related_products)
 
 
 class ProductReviewDeleteViewTest(TestCase):
