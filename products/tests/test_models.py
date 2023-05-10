@@ -163,3 +163,114 @@ class ProductModelTest(TestCase):
         Test the genders are displayed
         """
         self.assertEquals(self.product.get_gender_display(), "Unisex")
+
+    def test_get_related_products(self):
+        """
+        Test that related products are retrieved successfully.
+        """
+        # Create a different category for related_product_1
+        category2 = Category.objects.create(
+            name="test_category_2", friendly_name="Test friendly name 2"
+        )
+
+        related_product_1 = Product.objects.create(
+            title="Related Product 1",
+            sku="SKU002",
+            category=category2,
+            description="Test description B",
+            wheel_size="24 inches",
+            retail_price=10.99,
+            sale_price=5.99,
+            sale=True,
+            rating=3,
+            brand="Trek",
+            bike_type="Road Bike",
+            gender=1,
+            material="Test Material B",
+            derailleur="Test Derailleur B",
+            stock=3,
+        )
+
+        related_product_2 = Product.objects.create(
+            title="Related Product 2",
+            sku="SKU003",
+            category=self.category,
+            description="Test description C",
+            wheel_size="27 inches",
+            retail_price=20.99,
+            sale_price=15.99,
+            sale=True,
+            rating=5,
+            brand="Giant",
+            bike_type="Hybrid Bike",
+            gender=2,
+            material="Test Material C",
+            derailleur="Test Derailleur C",
+            stock=7,
+        )
+
+        related_product_3 = Product.objects.create(
+            title="Related Product 3",
+            sku="SKU004",
+            category=category2,
+            description="Test description C",
+            wheel_size="27 inches",
+            retail_price=20.99,
+            sale_price=15.99,
+            sale=True,
+            rating=5,
+            brand="Giant",
+            bike_type="Hybrid Bike",
+            gender=2,
+            material="Test Material C",
+            derailleur="Test Derailleur C",
+            stock=7,
+        )
+
+        # Test that related products are retrieved for the given product
+        related_products = self.product.get_related_products()
+        self.assertEqual(related_products.count(), 1)
+        self.assertIn(related_product_2, related_products)
+
+        # Test that the method excludes the current product from the results
+        related_products = related_product_1.get_related_products()
+        self.assertEqual(related_products.count(), 1)
+        self.assertIn(related_product_3, related_products)
+        self.assertNotIn(related_product_1, related_products)
+
+    def test_get_related_products_returns_only_4_products(self):
+        """
+        Test that only the first 4 related products are returned
+        """
+        # Create additional products in the same category
+        for i in range(5):
+            Product.objects.create(
+                title=f"Product B{i}",
+                sku=f"SKU00{i}",
+                category=self.category,
+                description=f"Test description B{i}",
+                wheel_size="26 inches",
+                retail_price=15.99,
+                sale_price=10.99,
+                sale=True,
+                rating=4,
+                brand="Scott",
+                bike_type="Mountain Bike",
+                gender=0,
+                material="Test Material B",
+                derailleur="Test Derailleur B",
+                stock=5,
+            )
+
+        # Call get_related_products method for the test product
+        related_products = self.product.get_related_products()
+
+        # Check that only 4 products are returned
+        self.assertEqual(len(related_products), 4)
+
+        # Check that the related products belong to the same category
+        for product in related_products:
+            self.assertEqual(product.category, self.category)
+
+        # Check that the test product is not in the related products list
+        self.assertNotIn(self.product, related_products)
