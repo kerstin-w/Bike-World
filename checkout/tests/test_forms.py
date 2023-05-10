@@ -83,3 +83,38 @@ class OrderFormTest(TestCase):
             form.errors["town_or_city"], ["This field is required."]
         )
         self.assertEqual(form.errors["country"], ["This field is required."])
+
+    def test_order_form_classes(self):
+        """
+        Test that the classes for the form fields are correctly set
+        """
+        form = OrderForm()
+        self.assertTrue(
+            form.fields["full_name"].widget.attrs["class"],
+            "stripe-style-input",
+        )
+        self.assertTrue(
+            form.fields["email"].widget.attrs["class"], "stripe-style-input"
+        )
+        self.assertTrue(
+            form.fields["phone_number"].widget.attrs["class"],
+            "stripe-style-input",
+        )
+        self.assertTrue(
+            form.fields["postcode"].widget.attrs["class"], "stripe-style-input"
+        )
+        self.assertTrue(
+            form.fields["town_or_city"].widget.attrs["class"],
+            "stripe-style-input",
+        )
+        self.assertTrue(
+            form.fields["street_address1"].widget.attrs["class"],
+            "stripe-style-input",
+        )
+        self.assertTrue(
+            form.fields["street_address2"].widget.attrs["class"],
+            "stripe-style-input",
+        )
+        self.assertTrue(
+            form.fields["country"].widget.attrs["class"], "stripe-style-input"
+        )
