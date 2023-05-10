@@ -64,3 +64,13 @@ class Product(Model):
             )
         else:
             return "No Image Found"
+
+    def get_related_products(self):
+        """
+        Retrieve all the products that belong to the same category as the
+        current product but exclude the current product itself.
+        Return only the first 4 related products.
+        """
+        return Product.objects.filter(category=self.category).exclude(
+            id=self.id
+        )[:4]
