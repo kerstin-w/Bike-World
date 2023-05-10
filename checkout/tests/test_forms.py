@@ -149,3 +149,25 @@ class OrderFormTest(TestCase):
         self.assertEqual(
             form.fields["postcode"].widget.attrs["placeholder"], "Postal Code"
         )
+
+    def test_order_form_max_length_street_address2(self):
+        """
+        Test that the maximum character length for street_address2 field
+        is correctly validated
+        """
+        form_data = {
+            "full_name": "Test User",
+            "email": "test@test.com",
+            "phone_number": "123456789",
+            "street_address1": "Test St.",
+            "street_address2": "x" * 81,  # Maximum length exceeded
+            "town_or_city": "Test City",
+            "postcode": "1234",
+            "country": "AT",
+        }
+        form = OrderForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors["street_address2"],
+            ["Ensure this value has at most 80 characters (it has 81)."],
+        )
