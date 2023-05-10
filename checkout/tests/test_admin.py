@@ -1,6 +1,12 @@
-from django.test import TestCase, RequestFactory
+from decimal import Decimal
+from django.test import TestCase, RequestFactory, Client
 from django.contrib.admin.sites import AdminSite
-from checkout.admin import OrderAdmin, OrderLineItemAdminInline
+from django.contrib.auth.models import User
+from django.urls import reverse
+from unittest.mock import patch, MagicMock
+import json
+from django.utils import timezone
+from checkout.admin import OrderAdmin, OrderLineItemAdminInline, DashboardView
 from checkout.models import Order, OrderLineItem
 
 
@@ -135,3 +141,111 @@ class OrderAdminTest(TestCase):
             request=self.factory.get("/", {"q": "TEST"})
         )
         self.assertEqual(qs.count(), 1)
+
+
+class DashboardViewTestCase(TestCase):
+    """
+    Test Case for Admin Dashboard View
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        # Create a user with staff permissions
+        self.admin = User.objects.create_superuser(
+            username="admin",
+            password="password",
+        )
+
+        # Create a request factory
+        self.factory = RequestFactory()
+
+        # Create some test data
+        self.order1 = Order.objects.create(
+            full_name="John Doe",
+            email="johndoe@example.com",
+            phone_number="1234567890",
+            country="US",
+            postcode="12345",
+            town_or_city="New York",
+            street_address1="123 Main St",
+            date=timezone.now(),
+            delivery_cost=Decimal("10.00"),
+            order_total=Decimal("100.00"),
+            grand_total=Decimal("110.00"),
+            original_bag="",
+            stripe_pid="",
+        )
+        self.order2 = Order.objects.create(
+            full_name="Jane Doe",
+            email="janedoe@example.com",
+            phone_number="0987654321",
+            country="CA",
+            postcode="A1A 1A1",
+            town_or_city="Toronto",
+            street_address1="456 King St",
+            date=timezone.now(),
+            delivery_cost=Decimal("5.00"),
+            order_total=Decimal("50.00"),
+            grand_total=Decimal("55.00"),
+            original_bag="",
+            stripe_pid="",
+        )
+        self.url = reverse("dashboard")
+
+    def test_dashboard_view_unauthenticated_users(self):
+        """
+        Test that unauthenticated users can't access the dashboard
+        """
+        response = self.client.get(self.url)
+        login_url = "/admin/login/?next=" + self.url
+        self.assertRedirects(response, login_url)
+
+        # Ensure authenticated non-staff users can't access the dashboard
+        self.client.login(username="nonstaff", password="password")
+        response = self.client.get(self.url)
+        login_url = "/admin/login/?next=" + self.url
+        self.assertRedirects(response, login_url)
+
+    def test_dashboard_view_authenticated_users(self):
+        """
+        Test that authenticated staff users can access the dashboard
+        """
+        self.client.login(username="admin", password="password")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the expected values are present in the context
+        expected_context = {
+            "revenue_today": Decimal("165"),
+            "revenue_month": Decimal("165"),
+            "order_count_today": 2,
+            "order_count_month": 2,
+            "average_order_total": Decimal("82.5"),
+            "daily_revenue": [0, 0, 0, 0, 0, 0, 0, 0, 0, Decimal("165")],
+            "country_revenue": '{"Canada": 55.0, "United States of America": 110.0}',
+        }
+        context = response.context[-1]
+        self.assertEqual(
+            context["revenue_today"], expected_context["revenue_today"]
+        )
+        self.assertEqual(
+            context["revenue_month"], expected_context["revenue_month"]
+        )
+        self.assertEqual(
+            context["order_count_today"], expected_context["order_count_today"]
+        )
+        self.assertEqual(
+            context["order_count_month"], expected_context["order_count_month"]
+        )
+        self.assertEqual(
+            context["average_order_total"],
+            expected_context["average_order_total"],
+        )
+        self.assertEqual(
+            context["daily_revenue"], expected_context["daily_revenue"]
+        )
+        self.assertEqual(
+            context["country_revenue"], expected_context["country_revenue"]
+        )
