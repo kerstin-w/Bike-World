@@ -6,7 +6,7 @@ from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from django.utils import timezone
 
-from checkout.admin import OrderAdmin, OrderLineItemAdminInline
+from checkout.admin import OrderAdmin, OrderLineItemAdminInline, DashboardView
 from checkout.models import Order, OrderLineItem
 
 
@@ -252,3 +252,14 @@ class DashboardViewTestCase(TestCase):
         self.assertEqual(
             context["country_revenue"], expected_context["country_revenue"]
         )
+
+    def test__dashboard_view_country_revenue_is_correct(self):
+        """
+        Test that the get_country_revenue method returns
+        the expected country revenue dictionary
+        """
+        orders_month = Order.objects.filter(date__month=timezone.now().month)
+        expected_country_revenue = {"Canada": 55.0,
+                                    "United States of America": 110.0}
+        country_revenue = DashboardView().get_country_revenue(orders_month)
+        self.assertDictEqual(country_revenue, expected_country_revenue)
