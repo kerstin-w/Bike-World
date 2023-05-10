@@ -230,3 +230,18 @@ class OrderLineItemTest(TestCase):
         # Check that the order_total for the order has been updated
         self.order.refresh_from_db()
         self.assertEqual(self.order.order_total, line_item.lineitem_total)
+
+    def test_order_line_item_str_method(self):
+        """
+        Test string method
+        """
+        # Create an order line item for the test product, with a quantity of 2
+        line_item = OrderLineItem.objects.create(
+            order=self.order,
+            product=self.product,
+            quantity=2,
+        )
+        # Check that the __str__ method returns the expected string
+        expected_str = f"SKU TESTSKU1234 on order {self.order.order_number}"
+        actual_str = str(line_item)
+        self.assertEqual(actual_str, expected_str)
