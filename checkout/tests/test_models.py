@@ -245,3 +245,43 @@ class OrderLineItemTest(TestCase):
         expected_str = f"SKU TESTSKU1234 on order {self.order.order_number}"
         actual_str = str(line_item)
         self.assertEqual(actual_str, expected_str)
+
+    def test_order_line_item_save_updates_lineitem_total_with_sale(self):
+        """
+        Test that the lineitem_total field is correctly calculated and saved
+        when an OrderLineItem is saved for a product that is on sale
+        """
+        # Create a product with a retail price of 500 and a sale price of 400
+        product = Product.objects.create(
+            title="Test Product",
+            sku="TESTSKU1234",
+            category=self.category,
+            description="Test description",
+            retail_price=Decimal("500.00"),
+            sale_price=Decimal("400.00"),
+            sale=True,
+            stock=10,
+            rating=4.5,
+        )
+        # Create an order with a line item for the test product
+        # with a quantity of 2
+        order = Order.objects.create(
+            user_profile=self.user_profile,
+            full_name="Test User",
+            email="test@test.com",
+            phone_number="1234567890",
+            country="AT",
+            town_or_city="Test City",
+            street_address1="Test St",
+            order_total=Decimal("0.00"),
+            grand_total=Decimal("0.00"),
+            original_bag="",
+            stripe_pid="",
+        )
+        line_item = OrderLineItem.objects.create(
+            order=order,
+            product=product,
+            quantity=2,
+        )
+        # Check that the lineitem_total has been set correctly
+        self.assertEqual(line_item.lineitem_total, Decimal("800.00"))
