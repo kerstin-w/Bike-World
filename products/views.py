@@ -215,14 +215,17 @@ class ProductDetailView(WishlistProductsMixin, DetailView):
 
         # Get the user's wishlist products
         wishlist_products = self.get_wishlist_products()
+        context["wishlist_products"] = wishlist_products
 
         # Get the reviews for the current product
         reviews = ProductReview.get_reviews_for_product(self.object)
-
-        # Add the wishlist_products list to the context
-        context["wishlist_products"] = wishlist_products
-        # Add reviews to context
         context["reviews"] = reviews
+
+        # Get related products
+        product = self.object
+        related_products = product.get_related_products()
+        context["related_products"] = related_products
+
         return context
 
 
