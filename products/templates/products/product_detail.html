@@ -66,6 +66,22 @@
         </div>
     </div>
 </section>
+<!-- Related Products-->
+{% if related_products %}
+<section>
+    <div class="container-fluid px-4 pb-4">
+        <h2 class="liner upper mb-4">You May Also Like:&nbsp;</h2>
+        <div class="row top-products justify-content-center">
+            {% for product in related_products %}
+            <div
+                class="col-lg-2 {% if forloop.counter == 3 %}d-none d-md-flex{% elif forloop.counter == 4 %}d-none d-lg-flex{% endif %} col-md-3 col-sm-4 col-12 d-flex flex-column align-items-center product-container mb-5 mx-3 py-3">
+                {% include 'products/components/product_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 <!-- Delete Product -->
 {% include 'products/components/product_delete_modal.html' %}
 
