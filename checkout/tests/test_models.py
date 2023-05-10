@@ -215,3 +215,18 @@ class OrderLineItemTest(TestCase):
         )
         # Check that the lineitem_total has been set correctly
         self.assertEqual(line_item.lineitem_total, Decimal("999.98"))
+
+    def test_order_line_item_save_updates_order_total(self):
+        """
+        Test that the order_total field of the associated Order model is
+        correctly updated when an OrderLineItem is saved.
+        """
+        # Create an order line item for the test product, with a quantity of 2
+        line_item = OrderLineItem.objects.create(
+            order=self.order,
+            product=self.product,
+            quantity=2,
+        )
+        # Check that the order_total for the order has been updated
+        self.order.refresh_from_db()
+        self.assertEqual(self.order.order_total, line_item.lineitem_total)
