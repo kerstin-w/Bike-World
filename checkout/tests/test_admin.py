@@ -119,3 +119,10 @@ class OrderAdminTest(TestCase):
                 "grand_total",
             ),
         )
+
+    def test_order_admin_ordering(self):
+        """
+        Test that the ordering attribute specifies that orders
+        should be ordered by descending order of date
+        """
+        self.assertCountEqual(OrderAdmin.ordering, ("-date",))
