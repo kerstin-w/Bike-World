@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.conf import settings
 from decimal import Decimal
 from unittest.mock import patch
@@ -134,6 +135,29 @@ class CheckoutViewsTest(TestCase):
         order_form = response.context["order_form"]
         self.assertEqual(order_form["full_name"].value(), "Test User")
         self.assertEqual(order_form["email"].value(), "testuser@test.com")
+
+    @patch("checkout.views.UserProfile.objects.get")
+    def test_checkout_view_authenticated_user_with_no_profile(
+        self, mock_get_user_profile
+    ):
+        """
+        Test that checks if order form is empty for users without profile
+        """
+        # Set up a user and log in
+        user2 = User.objects.create_user(
+            username="testuser2", password="testpass"
+        )
+        self.client.login(username=user2.username, password=user2.password)
+        # Mock the UserProfile.objects.get() method to
+        # raise the UserProfile.DoesNotExist exception
+        mock_get_user_profile.side_effect = UserProfile.DoesNotExist()
+        # Make a GET request to the checkout view
+        response = self.client.get(reverse("checkout"))
+        # Assert that the response status code is 200
+        self.assertEqual(response.status_code, 200)
+        # Assert that the order_form context variable
+        # is an instance of OrderForm
+        self.assertIsInstance(response.context["order_form"], OrderForm)
 
     def test_checkout_view_missing_stripe_public_key(self):
         """
