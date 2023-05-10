@@ -118,3 +118,34 @@ class OrderFormTest(TestCase):
         self.assertTrue(
             form.fields["country"].widget.attrs["class"], "stripe-style-input"
         )
+
+    def test_order_form_field_placeholders(self):
+        """
+        Test that the placeholders for the form fields are correctly set
+        """
+        form = OrderForm()
+        self.assertEqual(
+            form.fields["full_name"].widget.attrs["placeholder"], "Full Name *"
+        )
+        self.assertEqual(
+            form.fields["email"].widget.attrs["placeholder"], "Email Address *"
+        )
+        self.assertEqual(
+            form.fields["phone_number"].widget.attrs["placeholder"],
+            "Phone Number *",
+        )
+        self.assertEqual(
+            form.fields["street_address1"].widget.attrs["placeholder"],
+            "Street Address 1 *",
+        )
+        self.assertEqual(
+            form.fields["street_address2"].widget.attrs["placeholder"],
+            "Street Address 2",
+        )
+        self.assertEqual(
+            form.fields["town_or_city"].widget.attrs["placeholder"],
+            "Town or City *",
+        )
+        self.assertEqual(
+            form.fields["postcode"].widget.attrs["placeholder"], "Postal Code"
+        )
