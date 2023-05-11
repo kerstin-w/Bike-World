@@ -107,15 +107,13 @@ class CacheCheckoutDataViewTest(TestCase):
         # Assert that the view returns an HTTP 400 response code
         self.assertEqual(response.status_code, 400)
 
-    def test_cache_checkout_data_returns_400_with_missing_client_secret_key(
-        self,
-    ):
+    def test_cache_checkout_data_with_invalid_client_secret_returns_400(self):
         """
         Test that the view returns an HTTP 400 response code when
-        the client_secret key is missing from the POST data
+        an invalid client_secret key is passed in the POST data
         """
-        # Construct POST data with missing client_secret key
-        post_data = {"save_info": True}
+        # Construct POST data with invalid client_secret key
+        post_data = {"client_secret": "invalid_secret_key", "save_info": True}
 
         # Make a POST request to the view
         response = self.client.post(self.url, post_data)
