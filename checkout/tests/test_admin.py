@@ -223,10 +223,9 @@ class DashboardViewTestCase(TestCase):
             "order_count_today": 2,
             "order_count_month": 2,
             "average_order_total": Decimal("82.5"),
-            "daily_revenue": [0, 0, 0, 0, 0, 0, 0, 0, 0, Decimal("165")],
+            "daily_revenue": [0] * (timezone.now().day - 1) + [Decimal("165")],
             "country_revenue": (
-                '{"Canada": 55.0, '
-                '"United States of America": 110.0}'
+                '{"Canada": 55.0, ' '"United States of America": 110.0}'
             ),
         }
         context = response.context[-1]
@@ -259,8 +258,10 @@ class DashboardViewTestCase(TestCase):
         the expected country revenue dictionary
         """
         orders_month = Order.objects.filter(date__month=timezone.now().month)
-        expected_country_revenue = {"Canada": 55.0,
-                                    "United States of America": 110.0}
+        expected_country_revenue = {
+            "Canada": 55.0,
+            "United States of America": 110.0,
+        }
         country_revenue = DashboardView().get_country_revenue(orders_month)
         self.assertDictEqual(country_revenue, expected_country_revenue)
 
@@ -269,7 +270,13 @@ class DashboardViewTestCase(TestCase):
         Test that the get_daily_revenue method returns
         the expected list of daily revenue totals
         """
-        today = timezone.localtime().date()
-        expected_daily_revenue = [0, 0, 0, 0, 0, 0, 0, 0, 0, Decimal("165")]
-        daily_revenue = DashboardView().get_daily_revenue(today)
+        self.client.login(username="admin", password="password")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the daily revenue values are correct
+        daily_revenue = response.context["daily_revenue"]
+        expected_daily_revenue = [0] * (timezone.now().day - 1) + [
+            Decimal("165")
+        ]
         self.assertListEqual(daily_revenue, expected_daily_revenue)
