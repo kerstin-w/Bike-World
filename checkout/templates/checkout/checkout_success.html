@@ -30,7 +30,7 @@ Thank You For Your Order.
                         <div class="product-image-container-bag">
                             {% if item.product.image %}
                             <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
-                                    src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
+                                    src="{{ MEDIA_URL }}{{ item.product.image }}" alt="{{ item.product.title }}"></a>
                             {% else %}
                             <a href="{% url 'product_detail' item.product.pk %}"><img class="product-img"
                                     src="{{ MEDIA_URL }}products/default-no-image.webp"
