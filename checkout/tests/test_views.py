@@ -71,6 +71,20 @@ class CacheCheckoutDataViewTest(TestCase):
         # Assert that the response has status code 200
         self.assertEqual(response.status_code, 200)
 
+    def test_cache_checkout_data_with_invalid_data_returns_400(self):
+        """
+        Test that the view returns an HTTP 400 response code when
+        invalid data is passed to it
+        """
+        # Construct POST data with missing client_secret key
+        post_data = {"save_info": True}
+
+        # Make a POST request to the view
+        response = self.client.post(self.url, post_data)
+
+        # Assert that the response has status code 400
+        self.assertEqual(response.status_code, 400)
+
     def tearDown(self):
         """
         Reset mock PaymentIntent.modify method
