@@ -368,3 +368,16 @@ class CheckoutSuccessViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.order.refresh_from_db()
         self.assertEqual(self.order.user_profile, user_profile)
+
+    def test_checkout_success_message_displayed(self):
+        """
+        Test that a success message is displayed on the success page
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            f"Order successfully processed! \
+        Your order number is {self.order.order_number}. A confirmation \
+        email will be sent to {self.order.email}.",
+        )
