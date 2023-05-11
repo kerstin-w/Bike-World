@@ -1,17 +1,81 @@
+from decimal import Decimal
+
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
 from django.conf import settings
-from decimal import Decimal
 from unittest.mock import patch
+
 import json
+import stripe
 
 from checkout.models import Order
 from checkout.forms import OrderForm
-from bag.context_processors import bag_contents
 from products.models import Product, Category
 from profiles.models import UserProfile
+
+
+class CacheCheckoutDataViewTest(TestCase):
+    """
+    Test case for cache_checkout_data view
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.url = reverse("cache_checkout_data")
+        self.stripe_secret_key = settings.STRIPE_SECRET_KEY
+        self.original_modify = stripe.PaymentIntent.modify
+
+    def test_cache_checkout_data_with_valid_data_returns_200(self):
+        """
+        Test that the view returns an HTTP 200 response code when
+        valid data is passed
+        """
+        # Set up test data
+        bag = {"test_product": {"quantity": 1}}
+        save_info = True
+        user = {"username": "testuser"}
+
+        # Construct POST data
+        post_data = {
+            "client_secret": "pi_1A2BCDEFGHIJKLMNOPQRS_secret_abcdefghij",
+            "save_info": save_info,
+        }
+        session = self.client.session
+        session["bag"] = bag
+        session.save()
+
+        # Mock PaymentIntent.modify() method
+        stripe.PaymentIntent.modify = lambda *args, **kwargs: None
+
+        # Make a POST request to the view
+        response = self.client.post(
+            self.url,
+            {
+                **post_data,
+                **{
+                    "metadata": json.dumps(
+                        {
+                            "bag": json.dumps(bag),
+                            "save_info": save_info,
+                            "username": user,
+                        }
+                    )
+                },
+            },
+        )
+
+        # Assert that the response has status code 200
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        """
+        Reset mock PaymentIntent.modify method
+        """
+        stripe.PaymentIntent.modify = self.original_modify
 
 
 class CheckoutViewsTest(TestCase):
