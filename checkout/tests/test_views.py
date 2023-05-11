@@ -1,8 +1,10 @@
 from decimal import Decimal
 
-from django.test import TestCase, Client
+from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.http import HttpResponse
 from django.conf import settings
 from unittest.mock import patch
 
@@ -11,8 +13,10 @@ import stripe
 
 from checkout.models import Order
 from checkout.forms import OrderForm
+from checkout.views import checkout_success
 from products.models import Product, Category
 from profiles.models import UserProfile
+from profiles.forms import UserProfileForm
 
 
 class CacheCheckoutDataViewTest(TestCase):
@@ -289,3 +293,78 @@ class CheckoutViewsTest(TestCase):
                 "Stripe public key is missing. "
                 "Did you forget to set it in your environment variables?",
             )
+
+
+class CheckoutSuccessViewTest(TestCase):
+    """
+    Test Case for checkout_success View
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+            username="johndoe", email="johndoe@test.com", password="topsecret"
+        )
+        self.order = Order.objects.create(
+            order_number="1234567890",
+            user_profile=None,
+            full_name="John Doe",
+            email="johndoe@etest.com",
+            phone_number="1234567890",
+            country="US",
+            postcode="12345",
+            town_or_city="New York",
+            street_address1="Main St",
+            street_address2="",
+            delivery_cost=0,
+            order_total=Decimal("50"),
+            grand_total=Decimal("50"),
+            original_bag='{"item1": {"quantity": 1}}',
+        )
+        self.url = reverse("checkout_success", args=[self.order.order_number])
+
+        # Create and initialize the test request
+        self.request = self.factory.get(self.url)
+        self.request.user = self.user
+
+        session_middleware = SessionMiddleware()
+        session_middleware.process_request(self.request)
+        self.request.session.save()
+
+        # Set up client cookies using the session middleware
+        response = HttpResponse()
+        session_middleware.process_response(self.request, response)
+        self.client = Client()
+        self.client.cookies = response.cookies
+
+    def test_checkout_success_authenticated_user_profile_attached_to_order(
+        self,
+    ):
+        """
+        Test that a user profile is correctly attached to an order
+        """
+        # Add user profile to the order
+        try:
+            user_profile = UserProfile.objects.get(user=self.user)
+            user_profile.delete()
+        except UserProfile.DoesNotExist:
+            pass
+        user_profile = UserProfile.objects.create(
+            user=self.user,
+            default_full_name=self.user.get_full_name(),
+            default_email=self.user.email,
+        )
+        self.order.user_profile = user_profile
+        self.order.save()
+
+        # Simulate user checking out and saving their info
+        self.request.session["save_info"] = True
+
+        # check that user profile is attached to order
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.order.refresh_from_db()
+        self.assertEqual(self.order.user_profile, user_profile)
