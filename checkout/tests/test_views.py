@@ -85,6 +85,28 @@ class CacheCheckoutDataViewTest(TestCase):
         # Assert that the response has status code 400
         self.assertEqual(response.status_code, 400)
 
+    def test_cache_checkout_data_handles_stripe_exceptions(self):
+        """
+        Test that the view handles Stripe API exceptions correctly
+        """
+        # Construct POST data with a client_secret key and save_info
+        post_data = {
+            "client_secret": "pi_1A2BCDEFGHIJKLMNOPQRS_secret_abcdefghij",
+            "save_info": True,
+        }
+        # Set stripe payment intent to raise an exception
+
+        def raise_exception(*args, **kwargs):
+            raise stripe.StripeError("An error occurred.")
+
+        stripe.PaymentIntent.modify = raise_exception
+
+        # Make a POST request to the view
+        response = self.client.post(self.url, post_data)
+
+        # Assert that the view returns an HTTP 400 response code
+        self.assertEqual(response.status_code, 400)
+
     def tearDown(self):
         """
         Reset mock PaymentIntent.modify method
