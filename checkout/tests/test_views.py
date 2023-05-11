@@ -381,3 +381,12 @@ class CheckoutSuccessViewTest(TestCase):
         Your order number is {self.order.order_number}. A confirmation \
         email will be sent to {self.order.email}.",
         )
+
+    def test_checkout_success_order_displayed_on_success_page(self):
+        """
+        Test that the order is displayed correctly on the success page
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("order", response.context)
+        self.assertEqual(response.context["order"], self.order)
