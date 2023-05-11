@@ -390,3 +390,17 @@ class CheckoutSuccessViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("order", response.context)
         self.assertEqual(response.context["order"], self.order)
+
+    def test_checkout_success_order_totals_displayed_on_success_page(self):
+        """
+        Test that the order totals are displayed correctly on the success page
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("order", response.context)
+        self.assertEqual(
+            response.context["order"].order_total, Decimal("50.00")
+        )
+        self.assertEqual(
+            response.context["order"].grand_total, Decimal("50.00")
+        )
