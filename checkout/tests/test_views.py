@@ -404,3 +404,11 @@ class CheckoutSuccessViewTest(TestCase):
         self.assertEqual(
             response.context["order"].grand_total, Decimal("50.00")
         )
+
+    def test_checkout_success_order_number_does_not_exist(self):
+        """
+        Test that a 404 error is shown when the order number does not exist
+        """
+        url = reverse("checkout_success", args=["nonexistent_order"])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
