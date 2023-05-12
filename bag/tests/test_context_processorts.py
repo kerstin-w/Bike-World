@@ -97,7 +97,7 @@ class BagContentsTest(TestCase):
         self.assertEqual(response["total"], expected_total)
         self.assertEqual(response["delivery"], expected_delivery_cost)
 
-    def test_free_delivery_threshold(self):
+    def test_bag_contents_free_delivery_threshold(self):
         """
         Test that the free delivery threshold is correctly calculated.
         """
@@ -109,3 +109,16 @@ class BagContentsTest(TestCase):
             response["free_delivery_delta"],
             settings.FREE_DELIVERY_THRESHOLD - int(self.product.sale_price),
         )
+
+    def test_bag_contents_grand_total(self):
+        """
+        Test that the grand total is correctly calculated.
+        """
+        request = self.factory.get(self.url)
+        request.session = {"bag": {"1": 2}}
+        response = bag_contents(request)
+
+        expected_grand_total = (
+            int(self.product.sale_price) * 2
+        ) + settings.STANDARD_DELIVERY_COST
+        self.assertEqual((response["grand_total"]), (expected_grand_total))
