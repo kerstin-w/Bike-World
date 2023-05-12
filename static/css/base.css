@@ -608,6 +608,37 @@ footer ul {
     display: none;
 }
 
+#customButton {
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    background-color: #4285F4;
+    color: white;
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+#customButton img {
+    float: left;
+    margin-right: 10px;
+    width: 32px;
+    height: 32px;
+}
+
+#customButton span {
+    float: left;
+    line-height: 20px;
+}
+
+#customButton:hover {
+    background-color: #3367D6;
+}
+
+
 /*=============== Media ===============*/
 /* For mobile */
 @media only screen and (max-width: 454px) {
