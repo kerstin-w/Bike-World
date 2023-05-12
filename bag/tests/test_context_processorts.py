@@ -122,3 +122,17 @@ class BagContentsTest(TestCase):
             int(self.product.sale_price) * 2
         ) + settings.STANDARD_DELIVERY_COST
         self.assertEqual((response["grand_total"]), (expected_grand_total))
+
+    def test_bag_contents_with_product_not_on_sale(self):
+        """
+        Test that price is calculated correctly with retail price.
+        """
+        session = self.client.session
+        session["bag"] = {str(self.product_not_on_sale.id): 1}
+        session.save()
+
+        request = self.factory.get(self.url)
+        request.session = session
+        response = bag_contents(request)
+
+        self.assertEqual(response["total"], 80)
