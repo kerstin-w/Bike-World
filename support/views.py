@@ -79,3 +79,10 @@ class ReturnPolicyView(TemplateView):
     Render the Return Policy Page
     """
     template_name = 'support/return_policy.html'
+
+
+class TermsAndConditionsView(TemplateView):
+    """
+    Render the Terms and Conditions Page
+    """
+    template_name = 'support/tcs.html'
