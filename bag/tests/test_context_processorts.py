@@ -82,3 +82,17 @@ class BagContentsTest(TestCase):
 
         self.assertEqual(response["bag_items"][0]["product"], self.product)
         self.assertEqual(response["bag_items"][0]["quantity"], 2)
+
+    def test_bag_contents_prices_are_calculated(self):
+        """
+        Test that the processor calculates the total and delivery charges.
+        """
+        request = self.factory.get(self.url)
+        request.session = {"bag": {"1": 2}}
+        response = bag_contents(request)
+
+        expected_total = Decimal(self.product.sale_price) * 2
+        expected_delivery_cost = settings.STANDARD_DELIVERY_COST
+
+        self.assertEqual(response["total"], expected_total)
+        self.assertEqual(response["delivery"], expected_delivery_cost)
