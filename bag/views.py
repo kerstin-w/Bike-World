@@ -89,9 +89,7 @@ class AddToBagView(View):
                 if query_string
                 else redirect_url
             )
-            return redirect(redirect_url_with_filters)
-        else:
-            return redirect(redirect_url_with_filters)
+        return redirect(redirect_url_with_filters)
 
     def get(self, request, item_id):
         """
