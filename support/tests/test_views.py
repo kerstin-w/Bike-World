@@ -154,3 +154,54 @@ class FaqViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         # Check that the correct template was used to render the page
         self.assertTemplateUsed(response, "support/faq.html")
+
+
+class PrivacyPolicyTest(TestCase):
+    """
+    Test Case for Support Privacy Policy View
+    """
+
+    def test_privacy_policy_view(self):
+        """
+        Test Privacy Policy View template
+        """
+        url = reverse("privacy_policy")
+        response = self.client.get(url)
+        # Expect that the request was successful
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used to render the page
+        self.assertTemplateUsed(response, "support/privacy_policy.html")
+
+
+class ReturnPolicyTest(TestCase):
+    """
+    Test Case for Support Return Policy View
+    """
+
+    def test_return_policy_view(self):
+        """
+        Test Return Policy View template
+        """
+        url = reverse("return_policy")
+        response = self.client.get(url)
+        # Expect that the request was successful
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used to render the page
+        self.assertTemplateUsed(response, "support/return_policy.html")
+
+
+class TermsAndConditionsTest(TestCase):
+    """
+    Test Case for Support Terms and Conditions View
+    """
+
+    def test_terms_and_conditions_view(self):
+        """
+        Test Terms and Conditions View template
+        """
+        url = reverse("terms_and_conditions")
+        response = self.client.get(url)
+        # Expect that the request was successful
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used to render the page
+        self.assertTemplateUsed(response, "support/tcs.html")
