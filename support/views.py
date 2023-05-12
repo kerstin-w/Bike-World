@@ -72,3 +72,10 @@ class PrivacyPolicyView(TemplateView):
     Render the Privacy Policy Page
     """
     template_name = 'support/privacy_policy.html'
+
+
+class ReturnPolicyView(TemplateView):
+    """
+    Render the Return Policy Page
+    """
+    template_name = 'support/return_policy.html'

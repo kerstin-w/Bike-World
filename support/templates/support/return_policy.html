@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'support/css/support.css' %}">
+{% endblock %}
+
+{% block title %}
+FAQs
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Return Policy -->
+    <section class="margin-top mx-3">
+        <h1 class="liner upper">Return Policy&nbsp;</h1>
+        <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
+            <div class="support-container p-lg-5 p-md-4 p-3 mb-4">
+                <h2>Return Policy for Bike World</h2>
+                <p>At Bike World, we want you to be completely satisfied with your purchase. If you are not satisfied
+                    with your bike for any reason, you may return it within 30 days from the date of purchase for a full
+                    refund. We will cover the cost of return shipping for all qualifying returns.</p>
+                <p>To initiate a return, please follow these steps:</p>
+                <ul>
+                    <li><a href="{% url 'contact' %}" class="text-orange">Contact</a> our customer service team at to
+                        obtain a Return Authorization (RA) number.</li>
+                    <li>Pack the bike securely in its original packaging, including all accessories and documentation
+                        that came with it.</li>
+                    <li>Affix the pre-paid shipping label that we will provide you, to the outside of the package.</li>
+                    <li>Drop off the package at the designated shipping carrier or arrange for a pickup.</li>
+                </ul>
+                <p>Please note that we cannot accept returns that are damaged due to misuse or neglect. Once we receive
+                    your return, we will inspect the bike and issue your refund within 7-10 business days.</p>
+                <p>If you have any questions or concerns about our return policy, please <a href="{% url 'contact' %}"
+                        class="text-orange">contact us</a> and we will be happy to assist you.</p>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
