@@ -65,3 +65,10 @@ class FaqView(TemplateView):
     Render the FAQs Page
     """
     template_name = 'support/faq.html'
+
+
+class PrivacyPolicyView(TemplateView):
+    """
+    Render the Privacy Policy Page
+    """
+    template_name = 'support/privacy_policy.html'
