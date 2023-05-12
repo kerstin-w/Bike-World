@@ -4,6 +4,11 @@
     width: 85vw;
 }
 
+.support-container a:hover {
+    color: #cd4c1e;
+    font-weight: bold;
+}
+
 /*=============== Accordion ===============*/
 .accordion-button {
     background-color: #dfdfdf;
