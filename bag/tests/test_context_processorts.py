@@ -70,3 +70,15 @@ class BagContentsTest(TestCase):
 
         self.assertEqual(response["bag_items"], [])
         self.assertEqual(response["total"], Decimal(0))
+
+    def test_bag_contents_basket_has_items(self):
+        """
+        Test that if the user has items in their bag, that they the response
+        contains the items and their respective quantity.
+        """
+        request = self.factory.get(self.url)
+        request.session = {"bag": {"1": 2}}
+        response = bag_contents(request)
+
+        self.assertEqual(response["bag_items"][0]["product"], self.product)
+        self.assertEqual(response["bag_items"][0]["quantity"], 2)
