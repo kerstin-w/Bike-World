@@ -99,6 +99,19 @@ class ContactViewTest(TestCase):
         }
         self.assertEqual(form.initial, expected_initial)
 
+    def test_contact_view_get_form_kwargs_user_profile_does_not_exist(self):
+        """
+        Test Contact View returns empty initial values when
+        UserProfile does not exist
+        """
+        self.client.login(username="testuser", password="testpass")
+        # Delete the user's UserProfile object
+        self.user_profile.delete()
+        response = self.client.get(self.url)
+        form = response.context_data["form"]
+        expected_initial = {}
+        self.assertEqual(form.initial, expected_initial)
+
     def test_contact_view_get_success_url(self):
         """
         Test Contact View get the success url
