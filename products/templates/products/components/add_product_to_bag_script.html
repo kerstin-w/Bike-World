@@ -4,7 +4,7 @@
         addToBag: async function (quantity, productId, addButton) {
             const formData = this.createFormData(productId, quantity);
             const response = await this.addToBagRequest(formData);
-
+            console.log(formData)
             // If the request is successful
             if (response.ok) {
                 const responseData = await response.json();
@@ -27,7 +27,8 @@
 
         // Function to send a request to add an item to bag
         addToBagRequest: function (formData) {
-            return fetch('{% url "add_to_bag" product.id %}', {
+            const productId = formData.get('item_id');
+            return fetch('{% url "add_to_bag" 0 %}'.replace('0', productId), {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -71,6 +72,7 @@
                     event.preventDefault();
                     const productId = form.dataset.productId;
                     const quantity = form.dataset.quantity;
+                    console.log(productId)
                     const addButton = document.querySelector(
                         `#add-to-bag-btn-qty-${productId}`);
                     await this.addToBag(quantity, productId, addButton);
