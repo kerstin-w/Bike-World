@@ -55,7 +55,6 @@
         initialize: function () {
             const addToBagButton = document.querySelector('#add-to-bag-btn');
             // Event listener for the Add to Bag button on the PDP
-            // Event listener for the Add to Bag button on the PDP
             if (addToBagButton) {
                 addToBagButton.addEventListener('click', async event => {
                     event.preventDefault();
@@ -75,7 +74,6 @@
                     event.preventDefault();
                     const productId = form.dataset.productId;
                     const quantity = form.dataset.quantity;
-                    console.log(productId)
                     const addButton = document.querySelector(
                         `#add-to-bag-btn-qty-${productId}`);
                     await this.addToBag(quantity, productId, addButton);
