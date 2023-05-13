@@ -1,13 +1,17 @@
 <script type="text/javascript">
     const addToShoppingBag = {
         // Function to add an item to bag
-        addToBag: async function (quantity, productId) {
+        addToBag: async function (quantity, productId, addButton) {
             const formData = this.createFormData(productId, quantity);
             const response = await this.addToBagRequest(formData);
 
             // If the request is successful
             if (response.ok) {
                 const responseData = await response.json();
+                // Update the quantity of items in the shopping bag
+                this.updateBagQuantity(responseData.total_quantity);
+                // Update the add button to indicate that the item has been added to bag
+                this.updateAddButton(addButton);
             } else {
                 alert('There was an error adding to the bag.');
             }
@@ -32,14 +36,32 @@
             });
         },
 
+        // Function to update the quantity of items in the shopping bag
+        updateBagQuantity: function (totalQuantity) {
+            const bagQuantityElement = document.querySelector('#qty-in-bag');
+            if (bagQuantityElement) {
+                bagQuantityElement.textContent = totalQuantity;
+            }
+        },
+
+        // Function to update the add button to indicate that the item has been added to bag
+        updateAddButton: function (addButton) {
+            const addButtonWidth = addButton.getBoundingClientRect().width;
+            addButton.innerHTML = '<i class="fa-solid fa-check"></i> Added';
+            addButton.style.width = `${addButtonWidth}px`;
+        },
+
         // Function to initialize the add to bag functionality
         initialize: function () {
+            const addToBagButton = document.querySelector('#add-to-bag-btn');
             // Event listener for the Add to Bag button on the PDP
             addToBagButton.addEventListener('click', async event => {
                 event.preventDefault();
                 const quantityInput = document.querySelector('input[name="quantity"]');
                 const quantity = quantityInput.value;
-                await this.addToBag(quantity, productId);
+                const productId = '{{ product.id }}';
+                const addButton = addToBagButton;
+                await this.addToBag(quantity, productId, addButton);
             });
 
             const addToBagForms = document.querySelectorAll('.add-to-bag-form');
@@ -49,7 +71,9 @@
                     event.preventDefault();
                     const productId = form.dataset.productId;
                     const quantity = form.dataset.quantity;
-                    await this.addToBag(quantity, productId);
+                    const addButton = document.querySelector(
+                        `#add-to-bag-btn-qty-${productId}`);
+                    await this.addToBag(quantity, productId, addButton);
                 });
             });
         }
