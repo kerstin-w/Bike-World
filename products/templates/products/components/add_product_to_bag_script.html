@@ -4,7 +4,6 @@
         addToBag: async function (quantity, productId, addButton) {
             const formData = this.createFormData(productId, quantity);
             const response = await this.addToBagRequest(formData);
-            console.log(formData)
             // If the request is successful
             if (response.ok) {
                 const responseData = await response.json();
@@ -56,14 +55,18 @@
         initialize: function () {
             const addToBagButton = document.querySelector('#add-to-bag-btn');
             // Event listener for the Add to Bag button on the PDP
-            addToBagButton.addEventListener('click', async event => {
-                event.preventDefault();
-                const quantityInput = document.querySelector('input[name="quantity"]');
-                const quantity = quantityInput.value;
-                const productId = '{{ product.id }}';
-                const addButton = addToBagButton;
-                await this.addToBag(quantity, productId, addButton);
-            });
+            // Event listener for the Add to Bag button on the PDP
+            if (addToBagButton) {
+                addToBagButton.addEventListener('click', async event => {
+                    event.preventDefault();
+                    const quantityInput = document.querySelector('input[name="quantity"]');
+                    const quantity = quantityInput.value;
+                    const productId = '{{ product.id }}';
+                    const addButton = addToBagButton;
+                    await this.addToBag(quantity, productId, addButton);
+                });
+            }
+
 
             const addToBagForms = document.querySelectorAll('.add-to-bag-form');
             // Event listener for the add to bag forms on CLP and Related Products

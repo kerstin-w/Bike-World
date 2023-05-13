@@ -65,3 +65,9 @@ Find your Mountain for your adventure.
     </section>
 </main>
 {% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<!-- Products JS -->
+{% include 'products/components/add_product_to_bag_script.html' %}
+{% endblock %}
