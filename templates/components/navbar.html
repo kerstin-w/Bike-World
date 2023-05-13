@@ -137,14 +137,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'view_bag' %}">
                         <i class="fa-solid fa-bag-shopping fs-4 position-relative mx-2">
-                            {% if product_count > 0 %}
                             <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-orange"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-orange{% if product_count == 0 %} visually-hidden{% endif %}"
                                 id="qty-in-bag">
                                 {{ product_count }}
                                 <span class="visually-hidden">Items in bag</span>
                             </span>
-                            {% endif %}
                         </i>
                     </a>
                 </li>

@@ -41,6 +41,9 @@
             const bagQuantityElement = document.querySelector('#qty-in-bag');
             if (bagQuantityElement) {
                 bagQuantityElement.textContent = totalQuantity;
+                if (totalQuantity > 0) {
+                    bagQuantityElement.classList.remove('visually-hidden');
+                }
             }
         },
 
