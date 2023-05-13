@@ -1,9 +1,6 @@
-<form class="form" action="{% url 'add_to_bag' product.id %}?{{ request.GET.urlencode }}" method="POST">
-    {% csrf_token %}
-    <input class="form-control qty_input" type="number" name="quantity" value="1" style="display:none;"
-        aria-label="Add 1 to shopping bag" required>
-    <input type="hidden" name="redirect_url" value="{{ request.path }}">
-    <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end">
+<form class="form add-to-bag-form" data-product-id="{{ product.id }}" data-quantity="1">
+    <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end"
+        id="add-to-bag-btn-qty-{{ product.id }}">
         <i class="fa-solid fa-cart-shopping"></i> Add to Bag
     </button>
 </form>

@@ -1,15 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-
 {% block extra_css %}
 <!-- Products CSS -->
 <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 <link rel="stylesheet" href="{% static 'css/quantity_input.css' %}">
 {% endblock %}
-
 {% block title %}{{ title }}{% endblock %}
-
 {% block content %}
 <section id="product-detail" class="margin-top">
     <div class="container">
@@ -84,7 +81,6 @@
 {% endif %}
 <!-- Delete Product -->
 {% include 'products/components/product_delete_modal.html' %}
-
 {% endblock %}
 {% block extra_js %}
 <script>
@@ -96,4 +92,5 @@
 {% block postloadjs %}
 {{ block.super }}
 {% include 'products/components/quantity_input_script.html' %}
+{% include 'products/components/add_product_to_bag_script.html' %}
 {% endblock %}

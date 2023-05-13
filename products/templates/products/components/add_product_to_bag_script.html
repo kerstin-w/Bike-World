@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    const addToShoppingBag = {
+        // Function to add an item to bag
+        addToBag: async function (quantity, productId) {
+            const formData = this.createFormData(productId, quantity);
+            const response = await this.addToBagRequest(formData);
+
+            // If the request is successful
+            if (response.ok) {
+                const responseData = await response.json();
+            } else {
+                alert('There was an error adding to the bag.');
+            }
+        },
+
+        // Function to create form data
+        createFormData: function (productId, quantity) {
+            const formData = new FormData();
+            formData.append('item_id', productId);
+            formData.append('quantity', quantity);
+            return formData;
+        },
+
+        // Function to send a request to add an item to bag
+        addToBagRequest: function (formData) {
+            return fetch('{% url "add_to_bag" product.id %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                }
+            });
+        },
+
+        // Function to initialize the add to bag functionality
+        initialize: function () {
+            // Event listener for the Add to Bag button on the PDP
+            addToBagButton.addEventListener('click', async event => {
+                event.preventDefault();
+                const quantityInput = document.querySelector('input[name="quantity"]');
+                const quantity = quantityInput.value;
+                await this.addToBag(quantity, productId);
+            });
+
+            const addToBagForms = document.querySelectorAll('.add-to-bag-form');
+            // Event listener for the add to bag forms on CLP and Related Products
+            addToBagForms.forEach(form => {
+                form.addEventListener('submit', async event => {
+                    event.preventDefault();
+                    const productId = form.dataset.productId;
+                    const quantity = form.dataset.quantity;
+                    await this.addToBag(quantity, productId);
+                });
+            });
+        }
+    };
+
+    // Call the initialize function to set up the add to bag functionality
+    addToShoppingBag.initialize();
+</script>
