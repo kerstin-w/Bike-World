@@ -18,7 +18,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from checkout.admin import DashboardView
+from home.views import Error403View, Error404View
 
+# Custom Error Page Handlers
+handler403 = Error403View.as_view()
+handler404 = Error404View.as_view()
 
 urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
@@ -30,4 +34,9 @@ urlpatterns = [
     path('checkout/', include('checkout.urls')),
     path('profile/', include('profiles.urls')),
     path('support/', include('support.urls')),
+
+    # Custom Error Page Handlers
+    path("403/", handler403, name="handler403"),
+    path("404/", handler403, name="handler404"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

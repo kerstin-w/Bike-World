@@ -18,3 +18,17 @@ class HomePageView(WishlistProductsMixin, TemplateView):
         context["top_rated_products"] = top_rated_products
         context["wishlist_products"] = self.get_wishlist_products()
         return context
+
+
+class Error403View(TemplateView):
+    """
+    Render 403 Error Page
+    """
+    template_name = "errors/403.html"
+
+
+class Error404View(TemplateView):
+    """
+    Render 404 Error Page
+    """
+    template_name = "errors/404.html"
