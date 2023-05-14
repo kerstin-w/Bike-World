@@ -1,36 +1,29 @@
-const dropdownHoverElems = document.querySelectorAll(".dropdown-hover");
-const navbar = document.querySelector(".navbar");
-const toggleButton = document.querySelector(".navbar-toggler");
-const body = document.querySelector("body");
+$(document).ready(function () {
+    const dropdownHoverElems = $(".dropdown-hover");
+    const navbar = $(".navbar");
+    const toggleButton = $(".navbar-toggler");
+    const body = $("body");
 
-// For each dropdown element, add a click event listener
-dropdownHoverElems.forEach(function (dropdownHoverElem) {
-    dropdownHoverElem.addEventListener("click", function (event) {
-
+    // For each dropdown element, add a click event listener
+    dropdownHoverElems.click(function () {
         // Toggle the visibility of the dropdown menu for this element
-        const dropdownMenu = this.querySelector(".dropdown-menu");
-        dropdownMenu.classList.toggle("show");
+        const dropdownMenu = $(this).find(".dropdown-menu");
+        dropdownMenu.toggleClass("show");
     });
-});
 
-// Add a click event listener to the toggle button
-toggleButton.addEventListener("click", function () {
-    // Toggle the "position-absolute" class of the navbar
-    if (navbar.classList.contains("position-absolute")) {
-        navbar.classList.remove("position-absolute");
-    } else {
-        navbar.classList.add("position-absolute");
-    }
-});
+    // Add a click event listener to the toggle button
+    toggleButton.click(function () {
+        // Toggle the "position-absolute" class of the navbar
+        navbar.toggleClass("position-absolute");
+    });
 
-// Add a click event listener to the body that closes the category and brand dropdowns when the user clicks outside
-body.addEventListener("click", function (event) {
-    if (!event.target.closest('.dropdown-hover')) {
-        const dropdownMenusFilter = document.querySelectorAll('.dropdown-hover > .dropdown-menu');
-        dropdownMenusFilter.forEach(function (dropdownMenusFilter) {
-            dropdownMenusFilter.classList.remove('show');
-        });
-    }
+    // Add a click event listener to the body that closes the category and brand dropdowns when the user clicks outside
+    body.click(function (event) {
+        if (!$(event.target).closest('.dropdown-hover').length) {
+            const dropdownMenusFilter = $('.dropdown-hover > .dropdown-menu');
+            dropdownMenusFilter.removeClass('show');
+        }
+    });
 });
 
 // Activate the modal tab on click and store the tab ID in session
@@ -47,24 +40,24 @@ $('#auth-modal').on('hide.bs.modal', function () {
 });
 
 // Toasts
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function () {
     // Get all the toast elements and create a toast object for each
-    const toastElList = Array.from(document.querySelectorAll('.toast'));
-    const toastList = toastElList.map(toastEl => new bootstrap.Toast(toastEl));
+    const toastElList = $('.toast');
+    const toastList = toastElList.map((i, toastEl) => new bootstrap.Toast(toastEl));
 
     // Function to show all toast messages
-    const showAllToasts = () => toastList.forEach(toast => toast.show());
+    const showAllToasts = () => toastList.each((i, toast) => toast.show());
 
     // Function to hide all toast messages
-    const hideAllToasts = () => toastList.forEach(toast => toast.hide());
+    const hideAllToasts = () => toastList.each((i, toast) => toast.hide());
 
     // Show all toast messages on page load
     showAllToasts();
 
     // When the user clicks anywhere on the page
-    document.addEventListener('click', event => {
+    $(document).click(function (event) {
         // Hide all toast messages if the clicked element is not in a toast
-        if (!toastElList.some(toastEl => toastEl.contains(event.target))) {
+        if (!toastElList.is(event.target) && !toastElList.has(event.target).length) {
             hideAllToasts();
         }
     });
