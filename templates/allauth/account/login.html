@@ -1,6 +1,6 @@
 {% extends "account/base.html" %}
 
-{% load i18n %}
+{% load i18n socialaccount %}
 {% load crispy_forms_tags %}
 {% load account socialaccount %}
 
@@ -18,9 +18,9 @@
 
 <div class="socialaccount_ballot">
 
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
+  <a href="{% provider_login_url 'google' %}" id="customButton" class="mb-4"><img
+      src="{{ MEDIA_URL }}homepage-images/google-icon.png" alt="Google Logo"><span>Login with
+      Google</span></a>
 
   <div class="login-or">{% trans 'or' %}</div>
 
@@ -32,7 +32,6 @@
 <p>{% blocktrans %}If you have not created an account yet, then please
   <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
 {% endif %}
-
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
   {{ form|crispy }}
