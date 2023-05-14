@@ -1,0 +1,49 @@
+{% load humanize %}
+<!-- Offcanvas for bag contents -->
+<div id="bag-contents">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBag" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Shopping Bag</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p class="logo-font bg-white text-black mt-2 liner">Your Bag ({{ product_count }})&nbsp;</p>
+            <div class="bag-notification-wrapper">
+                {% for item in bag_items %}
+                <div class="row">
+                    <div class="col-3 my-1">
+                        {% if item.product.image %}
+                        <img class="w-100" src="{{ MEDIA_URL }}{{ item.product.image }}">
+                        {% else %}
+                        <img class="w-100" src="{{ MEDIA_URL }}products/default-no-image.webp">
+                        {% endif %}
+                    </div>
+                    <div class="col-9">
+                        <p class="my-0"><strong>{{ item.product.title }}</strong></p>
+                        <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col">
+                    <strong>
+                        <p class="mt-3 mb-1 text-black">
+                            Total{% if free_delivery_delta > 0 %} (Exc. delivery){% endif %}:
+                            <span class="float-right">{{ total|intcomma }}&nbsp;€</span>
+                        </p>
+                    </strong>
+                    {% if free_delivery_delta > 0 %}
+                    <p class="mb-1 text-orange text-center">
+                        Spending just <strong>{{ free_delivery_delta|intcomma }}&nbsp;€</strong> more and get free
+                        delivery!
+                    </p>
+                    {% endif %}
+                    <a href="{% url 'view_bag' %}" class="btn btn-black btn-block rounded-0 w-100">
+                        <span class="btn btn-shop-now bg-orange text-center">Place your Order!</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

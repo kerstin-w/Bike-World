@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.views.generic import TemplateView
+from django.template.loader import render_to_string
 from django.views import View
 from django.shortcuts import (
     render,
@@ -47,11 +48,18 @@ class AddToBagView(View):
         request.session["bag"] = bag
         # Indicate that an item was added to the bag in this request
         request.session["item_added"] = item_added
-        product_count = bag_contents(request)['product_count']
+
+        bag_content = bag_contents(request)
+        product_count = bag_content["product_count"]
         request.session["item_added"] = item_added
         response_data = {
-            'quantity': bag[item_id],
-            'total_quantity': product_count,
+            "quantity": bag[item_id],
+            "total_quantity": product_count,
+            "bag_contents": render_to_string(
+                "components/bag_offcanvas.html",
+                {"bag": bag_content},
+                request=request,
+            ),
         }
         return JsonResponse(response_data)
 
