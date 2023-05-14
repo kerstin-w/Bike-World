@@ -40,18 +40,13 @@ class AddToBagView(View):
         # to the existing quantity
         if item_id in list(bag.keys()):
             bag[item_id] += quantity
-            item_added = True
         # If the item is not yet in the bag, add it with the new quantity
         else:
             bag[item_id] = quantity
-            item_added = True
         request.session["bag"] = bag
-        # Indicate that an item was added to the bag in this request
-        request.session["item_added"] = item_added
 
         bag_content = bag_contents(request)
         product_count = bag_content["product_count"]
-        request.session["item_added"] = item_added
         response_data = {
             "quantity": bag[item_id],
             "total_quantity": product_count,
