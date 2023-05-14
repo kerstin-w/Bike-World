@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from checkout.admin import DashboardView
 from home.views import Error403View, Error404View
+from .views import robots_txt
 
 # Custom Error Page Handlers
 handler403 = Error403View.as_view()
@@ -34,6 +35,7 @@ urlpatterns = [
     path('checkout/', include('checkout.urls')),
     path('profile/', include('profiles.urls')),
     path('support/', include('support.urls')),
+    path("robots.txt", robots_txt),
 
     # Custom Error Page Handlers
     path("403/", handler403, name="handler403"),
