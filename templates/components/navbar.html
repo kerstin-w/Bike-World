@@ -135,7 +135,8 @@
             </div>
             <ul class="navbar-nav d-flex flex-row user-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'view_bag' %}">
+                    <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBag"
+                        aria-controls="offcanvasBag">
                         <i class="fa-solid fa-bag-shopping fs-4 position-relative mx-2">
                             <span
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-orange{% if product_count == 0 %} visually-hidden{% endif %}"
