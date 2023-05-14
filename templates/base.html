@@ -13,11 +13,20 @@
         content="Discover high-performance mountain bikes from top brands. Shop now for durable frames, advanced suspensions, and reliable components. Buy online today!">
     <meta name="keywords" content="Bikes, Mountainbikes">
     <meta name="author" content="Kerstin Weibeler">
+    <!-- Google Verification -->
     <meta name="google-site-verification" content="dzRYMMetjbhvqtaQEcd2-xUGd3USb5U5zsozwPuJmMs" />
     {% endblock %}
 
     {% block extra_meta %}
     {% endblock %}
+
+    <title>Bike World | {% block title %}{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ MEDIA_URL }}homepage-images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ MEDIA_URL }}homepage-images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ MEDIA_URL }}homepage-images/favicon-16x16.png">
+
 
     {% block corecss %}
     <!-- Bootstrap -->
@@ -47,7 +56,6 @@
     {% block extra_js %}
     {% endblock %}
 
-    <title>Bike World | {% block title %}{% endblock %}</title>
 </head>
 
 <body>
