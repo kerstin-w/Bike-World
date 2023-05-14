@@ -13,20 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
 from django.views.generic import TemplateView
 
 from checkout.admin import DashboardView
 from home.views import Error403View, Error404View
-
 from .views import robots_txt
-
-# Custom Error Page Handlers
-handler403 = Error403View.as_view()
-handler404 = Error404View.as_view()
 
 urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
@@ -41,9 +36,8 @@ urlpatterns = [
     path("robots.txt", robots_txt),
     path('sitemap.xml', TemplateView.as_view(
         template_name='sitemap.xml', content_type='text/xml')),
-
-    # Custom Error Page Handlers
-    path("403/", handler403, name="handler403"),
-    path("404/", handler403, name="handler404"),
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Custom Error Page Handlers
+handler403 = Error403View.as_view()
+handler404 = Error404View.as_view()
