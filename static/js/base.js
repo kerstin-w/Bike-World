@@ -45,3 +45,27 @@ $('.login-link, .register-link').click(function () {
 $('#auth-modal').on('hide.bs.modal', function () {
     sessionStorage.removeItem('activeTabId');
 });
+
+// Toasts
+document.addEventListener('DOMContentLoaded', () => {
+    // Get all the toast elements and create a toast object for each
+    const toastElList = Array.from(document.querySelectorAll('.toast'));
+    const toastList = toastElList.map(toastEl => new bootstrap.Toast(toastEl));
+
+    // Function to show all toast messages
+    const showAllToasts = () => toastList.forEach(toast => toast.show());
+
+    // Function to hide all toast messages
+    const hideAllToasts = () => toastList.forEach(toast => toast.hide());
+
+    // Show all toast messages on page load
+    showAllToasts();
+
+    // When the user clicks anywhere on the page
+    document.addEventListener('click', event => {
+        // Hide all toast messages if the clicked element is not in a toast
+        if (!toastElList.some(toastEl => toastEl.contains(event.target))) {
+            hideAllToasts();
+        }
+    });
+});
