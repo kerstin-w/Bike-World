@@ -1,5 +1,12 @@
 <script type="text/javascript">
     const addToShoppingBag = {
+        // Function to update the bag contents in the off-canvas
+        updateBagContents: function (bagContents) {
+            const offcanvasBagContents = document.querySelector('#bag-contents');
+            if (offcanvasBagContents) {
+                offcanvasBagContents.innerHTML = bagContents;
+            }
+        },
         // Function to add an item to bag
         addToBag: async function (quantity, productId, addButton) {
             const formData = this.createFormData(productId, quantity);
@@ -11,6 +18,8 @@
                 this.updateBagQuantity(responseData.total_quantity);
                 // Update the add button to indicate that the item has been added to bag
                 this.updateAddButton(addButton);
+                // Update teh Bag Content for the off-canvas
+                this.updateBagContents(responseData.bag_contents);
             } else {
                 alert('There was an error adding to the bag.');
             }
