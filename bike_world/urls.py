@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
+
 from checkout.admin import DashboardView
 from home.views import Error403View, Error404View
+
 from .views import robots_txt
 
 # Custom Error Page Handlers
@@ -36,6 +39,8 @@ urlpatterns = [
     path('profile/', include('profiles.urls')),
     path('support/', include('support.urls')),
     path("robots.txt", robots_txt),
+    path('sitemap.xml', TemplateView.as_view(
+        template_name='sitemap.xml', content_type='text/xml')),
 
     # Custom Error Page Handlers
     path("403/", handler403, name="handler403"),
