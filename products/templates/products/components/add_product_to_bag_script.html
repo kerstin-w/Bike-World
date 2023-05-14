@@ -2,10 +2,7 @@
     const addToShoppingBag = {
         // Function to update the bag contents in the off-canvas
         updateBagContents: function (bagContents) {
-            const offcanvasBagContents = document.querySelector('#bag-contents');
-            if (offcanvasBagContents) {
-                offcanvasBagContents.innerHTML = bagContents;
-            }
+            $('#bag-contents').html(bagContents);
         },
         // Function to add an item to bag
         addToBag: async function (quantity, productId, addButton) {
@@ -47,47 +44,44 @@
 
         // Function to update the quantity of items in the shopping bag
         updateBagQuantity: function (totalQuantity) {
-            const bagQuantityElement = document.querySelector('#qty-in-bag');
+            const bagQuantityElement = $('#qty-in-bag');
             if (bagQuantityElement) {
-                bagQuantityElement.textContent = totalQuantity;
+                bagQuantityElement.text(totalQuantity);
                 if (totalQuantity > 0) {
-                    bagQuantityElement.classList.remove('visually-hidden');
+                    bagQuantityElement.removeClass('visually-hidden');
                 }
             }
         },
 
         // Function to update the add button to indicate that the item has been added to bag
         updateAddButton: function (addButton) {
-            const addButtonWidth = addButton.getBoundingClientRect().width;
-            addButton.innerHTML = '<i class="fa-solid fa-check"></i> Added';
-            addButton.style.width = `${addButtonWidth}px`;
+            const addButtonWidth = addButton.get(0).getBoundingClientRect().width;
+            addButton.html('<i class="fa-solid fa-check"></i> Added').css('width', `${addButtonWidth}px`);
         },
 
         // Function to initialize the add to bag functionality
         initialize: function () {
-            const addToBagButton = document.querySelector('#add-to-bag-btn');
+            const addToBagButton = $('#add-to-bag-btn');
             // Event listener for the Add to Bag button on the PDP
-            if (addToBagButton) {
-                addToBagButton.addEventListener('click', async event => {
+            if (addToBagButton.length > 0) {
+                addToBagButton.on('click', async event => {
                     event.preventDefault();
-                    const quantityInput = document.querySelector('input[name="quantity"]');
-                    const quantity = quantityInput.value;
+                    const quantityInput = $('input[name="quantity"]');
+                    const quantity = quantityInput.val();
                     const productId = '{{ product.id }}';
                     const addButton = addToBagButton;
                     await this.addToBag(quantity, productId, addButton);
                 });
             }
 
-
-            const addToBagForms = document.querySelectorAll('.add-to-bag-form');
+            const addToBagForms = $('.add-to-bag-form');
             // Event listener for the add to bag forms on CLP and Related Products
-            addToBagForms.forEach(form => {
-                form.addEventListener('submit', async event => {
+            addToBagForms.each((index, form) => {
+                $(form).on('submit', async event => {
                     event.preventDefault();
-                    const productId = form.dataset.productId;
-                    const quantity = form.dataset.quantity;
-                    const addButton = document.querySelector(
-                        `#add-to-bag-btn-qty-${productId}`);
+                    const productId = $(form).data('productId');
+                    const quantity = $(form).data('quantity');
+                    const addButton = $(`#add-to-bag-btn-qty-${productId}`);
                     await this.addToBag(quantity, productId, addButton);
                 });
             });
