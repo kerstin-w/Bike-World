@@ -99,3 +99,59 @@ class AddToBagViewTest(TestCase):
             request.session.get("bag"),
             {(self.product.id): 3},
         )
+
+    def test_add_to_bag_view_existing_item(self):
+        """
+        Test that an existing item is added correctly to the bag
+        and the quantity is updated correctly
+        """
+        # Add an initial item to the bag
+        initial_quantity = 2
+        request = self.factory.post(
+            reverse("add_to_bag", args=[self.product.id]),
+            {"quantity": initial_quantity},
+        )
+        request.user = AnonymousUser()
+        middleware = SessionMiddleware()
+        middleware.process_request(request)
+        request.session.save()
+
+        response = AddToBagView.as_view()(request, self.product.id)
+        # Check if the session bag is updated with the initial quantity
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.__class__, JsonResponse)
+        self.assertEqual(
+            request.session.get("bag"),
+            {self.product.id: initial_quantity},
+        )
+
+        # Set the 'bag' key in the session
+        request.session["bag"] = {self.product.id: initial_quantity}
+
+        # Add the same item with a different quantity
+        existing_item_quantity = request.session["bag"].get(self.product.id, 0)
+        new_quantity = 3
+        request = self.factory.post(
+            reverse("add_to_bag", args=[self.product.id]),
+            {"quantity": new_quantity},
+        )
+        request.user = AnonymousUser()
+        middleware.process_request(request)
+        request.session.save()
+
+        # Set the 'bag' key in the session
+        request.session["bag"] = {self.product.id: initial_quantity}
+        # Update existing_item_quantity with the current quantity in the bag
+        existing_item_quantity = request.session["bag"].get(self.product.id, 0)
+        response = AddToBagView.as_view()(request, self.product.id)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.__class__, JsonResponse)
+
+        updated_quantity = existing_item_quantity + new_quantity
+        # Check if the session bag is updated with the updated quantity
+        expected_bag = {self.product.id: updated_quantity}
+        self.assertEqual(
+            request.session.get("bag"),
+            expected_bag,
+        )
