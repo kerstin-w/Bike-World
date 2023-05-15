@@ -267,3 +267,32 @@ class AdjustBagViewTest(TestCase):
         self.assertTrue(
             any(expected_message in message for message in messages)
         )
+
+    def test_adjust_bag_view_update_product_quantity(self):
+        """
+        Test that the quantity can be updated
+        """
+        # Add an item to the bag
+        self.client.post(
+            reverse("adjust_bag", args=[self.product.id]), {"quantity": 2}
+        )
+
+        # Send a POST request to update the quantity of the item in the bag
+        response = self.client.post(
+            reverse("adjust_bag", args=[self.product.id]), {"quantity": 3}
+        )
+
+        # Verify the response status code and redirection
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("view_bag"))
+
+        # Verify that the bag has been updated
+        bag = self.client.session.get("bag", {})
+        self.assertEqual(bag.get(str(self.product.id)), 3)
+
+        # Verify success message
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        expected_message = f"You updated <strong>{self.product.title}</strong> quantity to <strong>3</strong>!"
+        self.assertTrue(
+            any(expected_message in message for message in messages)
+        )
