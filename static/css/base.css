@@ -412,6 +412,17 @@ footer ul {
     width: 10rem;
 }
 
+.social-icon {
+    font-size: 2rem;
+    color: #cd4c1e;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #000;
+    transform: scale(1.2);
+}
+
 /*=============== Product List ===============*/
 .product-content {
     height: 100%;
