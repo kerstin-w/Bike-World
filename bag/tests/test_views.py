@@ -4,9 +4,7 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test.utils import setup_test_environment
 from django.http import JsonResponse
-from django.conf import settings
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import AnonymousUser
 from django.template.loader import render_to_string
 import json
@@ -189,3 +187,21 @@ class AddToBagViewTest(TestCase):
                 ),
             },
         )
+
+    def test_add_to_bag_view_nonexistent_product(self):
+        """
+        Test adding a non-existent product to the bag
+        """
+        # Create a request with the necessary data
+        item_id = 9999  # ID of a non-existent product
+        quantity = 1
+        url = reverse("add_to_bag", args=[item_id])
+        request = self.factory.post(url, {"quantity": quantity})
+
+        # Call the view
+        response = AddToBagView.as_view()(request, item_id)
+
+        # Verify the response
+        self.assertEqual(response.status_code, 400)
+        expected_data = {"error": "The product does not exist."}
+        self.assertJSONEqual(response.content, expected_data)
