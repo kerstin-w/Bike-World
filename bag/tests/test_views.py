@@ -2,6 +2,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.contrib.messages import get_messages
 from django.test.utils import setup_test_environment
 from django.http import JsonResponse
 from django.contrib.auth.models import User
@@ -205,3 +206,64 @@ class AddToBagViewTest(TestCase):
         self.assertEqual(response.status_code, 400)
         expected_data = {"error": "The product does not exist."}
         self.assertJSONEqual(response.content, expected_data)
+
+
+class AdjustBagViewTest(TestCase):
+    """
+    Test that a new item is added correctly to the bag
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.user = User.objects.create_user(
+            username="testuser", password="testpassword"
+        )
+        self.client.login(username="testuser", password="testpassword")
+
+        self.category = Category.objects.create(
+            name="category",
+            friendly_name="Friendly category name",
+        )
+        self.product = Product.objects.create(
+            title="product",
+            sku="111",
+            category=self.category,
+            description="product description",
+            wheel_size='26"',
+            retail_price="100",
+            sale_price="50",
+            sale=True,
+            brand="Brand",
+            bike_type="Bike type",
+            gender="0",
+            material="Material",
+            derailleur="Derailleur",
+            stock="10",
+            rating="4.8",
+        )
+
+    def test_adjust_bag_view_add_product_to_bag(self):
+        """
+        Test that a product already in the bag is added again and
+        updates quantity
+        """
+        response = self.client.post(
+            reverse("adjust_bag", args=[self.product.id]), {"quantity": 2}
+        )
+
+        # Verify the response status code and redirection
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("view_bag"))
+
+        # Verify that the bag has been updated
+        bag = self.client.session.get("bag", {})
+        self.assertEqual(bag.get(str(self.product.id)), 2)
+
+        # Verify success message
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        expected_message = f"You updated <strong>{self.product.title}</strong> quantity to <strong>2</strong>!"
+        self.assertTrue(
+            any(expected_message in message for message in messages)
+        )
