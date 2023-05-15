@@ -414,6 +414,16 @@ footer ul {
     width: 10rem;
 }
 
+.footer-support a {
+    color: #000000;
+    transition: color 0.3s ease;
+}
+
+.footer-support a:hover {
+    color: #cd4c1e;
+    transform: scale(1.2);
+}
+
 .social-icon {
     font-size: 2rem;
     color: #cd4c1e;

@@ -35,49 +35,53 @@
                     </form>
                 </div>
                 <!--End mc_embed_signup-->
-                <!-- Social Media -->
+            </div>
+            <div class="col-sm-4 col-12 footer-support">
                 <div class="row">
-                    <div class="col">
-                        <h3 class="upper">We like to exchange experiences!</h3>
-                        <ul class="social d-flex justify-content-center justify-content-md-start">
-                            <li>
-                                <a href="https://www.facebook.com/people/BIKE-WORLD/100092583005998/" target="_blank"
-                                    rel="noopener" aria-label="Go to the Facebook Bike World page">
-                                    <i class="fa-brands fa-facebook social-icon mx-4 my-3"></i><span
-                                        class="d-none">Facebook</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/" target="_blank" rel="noopener"
-                                    aria-label="Go to the Instagram Bike World page">
-                                    <i class="fa-brands fa-instagram social-icon mx-4 my-3"></i><span
-                                        class="d-none">Instagram</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.twitter.com/" target="_blank" rel="noopener"
-                                    aria-label="Go to the Twitter Bike World page">
-                                    <i class="fa-brands fa-twitter social-icon mx-4 my-3"></i><span
-                                        class="d-none">Twitter</span>
-                                </a>
-                            </li>
+                    <div class="col-6">
+                        <h3 class="upper">Support</h3>
+                        <ul>
+                            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                            <li><a href="{% url 'faq' %}">FAQs</a></li>
+                            <li><a href="{% url 'return_policy' %}">Return Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="upper">About Us</h3>
+                        <ul>
+                            <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                            <li><a href="{% url 'terms_and_conditions' %}">Terms & Conditions</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-12">
-                <h3 class="upper">Help and Support</h3>
-                <ul>
-                    <li><a href="{% url 'contact' %}" class="text-dark">Contact Us</a></li>
-                    <li><a href="{% url 'faq' %}" class="text-dark">FAQs</a></li>
-                    <li><a href="{% url 'return_policy' %}" class="text-dark">Return Policy</a></li>
-                </ul>
-                <h3 class="upper">About Us</h3>
-                <ul>
-                    <li><a href="{% url 'privacy_policy' %}" class="text-dark">Privacy Policy</a></li>
-                    <li><a href="{% url 'terms_and_conditions' %}" class="text-dark">Terms & Conditions</a></li>
-                </ul>
-            </div>
+
+        </div>
+        <!-- Social Media -->
+        <div class="d-flex flex-column">
+            <p class="upper text-center mt-5 mb-1">We like to exchange experiences!</p>
+            <ul class="social d-flex justify-content-center">
+                <li>
+                    <a href="https://www.facebook.com/people/BIKE-WORLD/100092583005998/" target="_blank" rel="noopener"
+                        aria-label="Go to the Facebook Bike World page">
+                        <i class="fa-brands fa-facebook social-icon mx-4 my-3"></i><span class="d-none">Facebook</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener"
+                        aria-label="Go to the Instagram Bike World page">
+                        <i class="fa-brands fa-instagram social-icon mx-4 my-3"></i><span
+                            class="d-none">Instagram</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.twitter.com/" target="_blank" rel="noopener"
+                        aria-label="Go to the Twitter Bike World page">
+                        <i class="fa-brands fa-twitter social-icon mx-4 my-3"></i><span class="d-none">Twitter</span>
+                    </a>
+                </li>
+            </ul>
+
         </div>
     </div>
 </footer>
