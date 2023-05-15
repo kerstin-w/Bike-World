@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, Http404, HttpResponseNotFound
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     DeleteView,
@@ -160,7 +160,10 @@ class OrderHistoryView(LoginRequiredMixin, TemplateView):
         """
         Get the order with the order_number specified in the URL
         """
-        return get_object_or_404(Order, order_number=self.kwargs["order_number"])
+        return get_object_or_404(
+            Order,
+            order_number=self.kwargs["order_number"]
+        )
 
     def has_permission(self, order):
         """
@@ -237,20 +240,45 @@ class AddToWishlistView(LoginRequiredMixin, View):
         user = request.user
 
         # Check if the product is already in the user's wishlist
-        if Wishlist.objects.filter(user=user, product=product).exists():
-            messages.warning(
-                request, f"{product} is already in your wishlist!"
-            )
+        if self.is_product_in_wishlist(user, product):
+            self.add_already_in_wishlist_message(product)
+
         else:
             # Add the product to the user's wishlist
-            wishlist_item = Wishlist(user=user, product=product)
-            wishlist_item.save()
-            messages.success(
-                request, f"<strong>{product}</strong> added to your wishlist!"
-            )
+            self.add_product_to_wishlist(user, product)
+            self.add_success_message(product)
 
         # Redirect the user back to the same page
         return redirect(request.META.get("HTTP_REFERER", "index"))
+
+    def is_product_in_wishlist(self, user, product):
+        """
+        Check if the product is already in the user's wishlist
+        """
+        return Wishlist.objects.filter(user=user, product=product).exists()
+
+    def add_already_in_wishlist_message(self, product):
+        """
+        Add a warning message if the product is already in the wishlist
+        """
+        messages.warning(
+            self.request, f"{product} is already in your wishlist!"
+        )
+
+    def add_product_to_wishlist(self, user, product):
+        """
+        Add the product to the user's wishlist
+        """
+        wishlist_item = Wishlist(user=user, product=product)
+        wishlist_item.save()
+
+    def add_success_message(self, product):
+        """
+        Add a success message when the product is added to the wishlist
+        """
+        messages.success(
+            self.request, f"<strong>{product}</strong> added to your wishlist!"
+        )
 
 
 class WishlistView(LoginRequiredMixin, ListView):
