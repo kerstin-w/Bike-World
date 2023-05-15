@@ -155,3 +155,37 @@ class AddToBagViewTest(TestCase):
             request.session.get("bag"),
             expected_bag,
         )
+
+    def test_add_to_bag_view_with_bag_contents(self):
+        """
+        Test that bag_contents is updated correctly
+        """
+        request = self.factory.post(
+            reverse("add_to_bag", args=[self.product.id]),
+            {"quantity": 1},
+        )
+        request.user = AnonymousUser()
+        middleware = SessionMiddleware()
+        middleware.process_request(request)
+        request.session.save()
+
+        response = AddToBagView.as_view()(request, self.product.id)
+        bag_content = bag_contents(request)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.__class__, JsonResponse)
+
+        response_data = json.loads(response.content.decode("utf-8"))
+
+        self.assertEqual(
+            response_data,
+            {
+                "quantity": 1,
+                "total_quantity": 1,
+                "bag_contents": render_to_string(
+                    "components/bag_offcanvas.html",
+                    {"bag": bag_content},
+                    request=request,
+                ),
+            },
+        )
