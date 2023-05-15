@@ -48,6 +48,7 @@ Please note that at this stage, **Bike World** is a fictitious store which has b
     - [Social Media](#social-media)
     - [User Needs](#user-needs)
     - [Promotions](#promotions)
+    - [Budget](#budget)
     - [Facebook Page](#watches--clocks---facebook-page)
 - [Privacy Policy](#privacy-policy)
 - [Search Engine Optimization](#search-engine-optimization)
@@ -162,3 +163,6 @@ By providing useful content, **Bike World** can meet their needs and establish i
 * **Emails**: Bike World utilize newsletters to notify subscribers about upcoming sales and exclusive discount codes. This allows Bike World to reach users directly in their inboxes, providing personalized offers and building a sense of exclusivity.
 * **Social Media**: Bike world will use social media platforms like Facebook and Instagram to announce sales and discounts. Bike World will create engaging posts and stories to generate excitement and encourage users to take advantage of the promotional offers. By leveraging the reach and sharing capabilities of social media, Bike World can potentially reach a broader audience and benefit from viral sharing.
 * **Ad Campaigns**: In the beginning Bike World has fairly small marketing budget but will allocate a large portion of the budget to online advertising campaigns to target users who are likely to be interested in mountain biking. Bike World plans on spending budget into display ads and search ads which can be utilized to promote the sales and discounts. This ensures that Bike World reaches users actively searching for relevant products or browsing related content.
+
+## <a name="Budget">Budget</a>
+**Bike World** has a limited marketing budget at the beginning and therefore has to be very selective and choose the most efficient low-cost marketing options. This is also why Bike World will leverage social media platforms to build brand awareness and engage with the target audience. Bike World will develope a content strategy entered around creating high-quality, informative, and engaging content related to mountain biking. This will include a blog, how-to-videos and video tutorials. By providing valuable content that resonates with your audience, Bike World will attract organic traffic to the website, establish credibility, and foster customer loyalty. Bike world is continuously conducting keyword research to understand the terms and phrases your target audience is searching for and to incerase organic traffic. Email Marketing is very cost-efficient and will be used to nurture customer relationships and drive sales.
