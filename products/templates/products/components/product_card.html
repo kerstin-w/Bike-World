@@ -31,7 +31,7 @@
         {% else %}
         <p class="price">{{ product.retail_price|intcomma }}€</p>
         {% endif %}
-
+        <div id="error-container-bag" class="error-container"></div>
         <div class="d-flex justify-content-center">
             {% include 'products/components/add_to_cart_qty_1.html' %}
             {% if user.is_authenticated %}

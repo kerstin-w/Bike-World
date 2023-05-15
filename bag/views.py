@@ -32,6 +32,11 @@ class AddToBagView(View):
         """
         Add quantity of the product to the shopping bag
         """
+        if not Product.objects.filter(id=item_id).exists():
+            response_data = {
+                'error': 'The product does not exist.',
+            }
+            return JsonResponse(response_data, status=400)
         # get the quantity of the item from the form data
         quantity = int(request.POST.get("quantity"))
         # get the current bag dictionary from the user's session data

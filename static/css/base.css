@@ -528,6 +528,15 @@ footer ul {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
 
+#error-container-bag {
+    display: none;
+    background-color: #ffcccc;
+    color: #cc0000;
+    padding: 10px;
+    border: 1px solid #cc0000;
+    margin-bottom: 10px;
+}
+
 /*=============== Toast Messages ===============*/
 .message-container {
     position: fixed;
