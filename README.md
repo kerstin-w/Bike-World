@@ -49,7 +49,8 @@ Please note that at this stage, **Bike World** is a fictitious store which has b
     - [User Needs](#user-needs)
     - [Promotions](#promotions)
     - [Budget](#budget)
-    - [Facebook Page](#watches--clocks---facebook-page)
+    - [Facebook Business Page](#facebook-business-page)
+    - [Mailchimp](#mailchimp)
 - [Privacy Policy](#privacy-policy)
 - [Search Engine Optimization](#search-engine-optimization)
     - [sitemap.xml](#sitemapxml)
@@ -166,3 +167,21 @@ By providing useful content, **Bike World** can meet their needs and establish i
 
 ## <a name="Budget">Budget</a>
 **Bike World** has a limited marketing budget at the beginning and therefore has to be very selective and choose the most efficient low-cost marketing options. This is also why Bike World will leverage social media platforms to build brand awareness and engage with the target audience. Bike World will develope a content strategy entered around creating high-quality, informative, and engaging content related to mountain biking. This will include a blog, how-to-videos and video tutorials. By providing valuable content that resonates with your audience, Bike World will attract organic traffic to the website, establish credibility, and foster customer loyalty. Bike world is continuously conducting keyword research to understand the terms and phrases your target audience is searching for and to incerase organic traffic. Email Marketing is very cost-efficient and will be used to nurture customer relationships and drive sales.
+
+## <a name="facebook-business-page">Facebook Business Page</a>
+
+Market research was undertaken to decide on the appropriate marketing strategy to promote Bike World. For social media marketing, Facebook is still the best option to promote brands to potential customers. It is one of the most used social media platforms with for users aged between 18 - 24 and users aged between 25 - 34 and very populare by male user. These categories are the main target audience for Bike World.
+
+<img src="documentation/facebook/statista.png" width="800px" style="margin: 20px;">
+
+Therefore a facebbok business page has been created to share updates, promotions, and engage with users through comments and messages. On the Facebook business page a "Buy Now" (Jetzt Kaufen) button has been set up which leads users directly to the Shop and interesting posts have already been shared.
+
+![Facebook Business Page](documentation/facebook/facebook-page.png)
+
+Unfortunately, it was not possible to create an ad for the webshop already, as this is chargeable. However, here is a preview of the potential ad.
+
+![Facebook Ad](documentation/facebook/facebook-ad.png)
+
+In order to improve the website services, I have set a Meta Pixel service to track the Bike World audience. This will be especially relevant for future Facebook campaigns to track the success.
+
+![Facebook Pixel](documentation/facebook/facebook-pixel.png)
