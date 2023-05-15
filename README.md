@@ -43,6 +43,8 @@ Please note that at this stage, **Bike World** is a fictitious store which has b
     - [Implemented Features](#implemented-features)
     - [Future Features](#future-features)
 - [Marketing and Social Media](#marketing-and-social-media)
+    - [User Group](#user-group)
+    - [Online Platforms](#online-platforms)
     - [Facebook Page](#watches--clocks---facebook-page)
 - [Privacy Policy](#privacy-policy)
 - [Search Engine Optimization](#search-engine-optimization)
@@ -112,3 +114,11 @@ Overall, using a consistent font helps to create a polished and professional loo
 
 In an online shop, images are an essential element of the user experience. They provide visual cues and help users understand what the products look like in real life. In my shop, I have used images in the hero banner and category callouts to showcase the bikes in action. The hero banner is the first thing that users see when they arrive on the site. By using an image that shows a bike in action, users can quickly understand the main purpose of the site and the type of products that are being sold. This helps to create an emotional connection with the user and encourages them to explore the site further. Similarly, the category callouts use images to showcase the different types of bikes that are available. By showing the bikes in action, users can understand how they might use the bikes in their own lives. This helps to make the products more relatable and can encourage users to make a purchase.
 Product images from the [**Kegel**](https://www.kaggle.com/datasets/tysonpo/bike-ads-images-prices-specifications?select=data_bike_exchange.json) data set were used for the PDPs. Improvements are still desirable in this regard. In an ideal scenario, there would be several pictures of the bike with detail shots. The format would be webp and the quality a slightly better so that a zoom could also be built in. 
+
+# <a name="marketing-and-social-media">Marketing and Social media</a>
+
+## <a name="user-group">User Group</a>
+
+As already mentioned in [Target Audience](#target-audience) the users of **Bike World** would primarily be individuals who are interested in purchasing high-class mountain bikes. They are likely to be cycling enthusiasts, outdoor adventurers, sports enthusiasts, and individuals who value quality and performance. They may range from beginners looking for their first mountain bike to experienced riders seeking top-of-the-line models.
+
+## <a name="online-platforms">Online Platforms</a>
