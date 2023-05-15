@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
@@ -138,35 +138,67 @@ class OrderHistoryView(LoginRequiredMixin, TemplateView):
     template_name = "checkout/checkout_success.html"
 
     def get(self, request, *args, **kwargs):
-        # Get the Order with the specified order_number
-        order = get_object_or_404(
-            Order, order_number=self.kwargs["order_number"]
+        # Try to get the order and render it if successful
+        try:
+            order = self.get_order()
+            if not self.has_permission(order):
+                # If user does not have permission to access the order
+                return self.handle_permission_denied()
+            # Add success and confirmation messages and
+            # render the template with the order details
+            self.add_confirmation_message(order)
+            context = {
+                "order": order,
+                "from_profile": True,
+            }
+
+            return self.render_to_response(context)
+        except Http404:
+            return self.handle_not_found()
+
+    def get_order(self):
+        """
+        Get the order with the order_number specified in the URL
+        """
+        return get_object_or_404(Order, order_number=self.kwargs["order_number"])
+
+    def has_permission(self, order):
+        """
+        Check if the user has permission to view the order
+        """
+        user_profile = UserProfile.objects.get(user=self.request.user)
+        return order.user_profile == user_profile
+
+    def handle_permission_denied(self):
+        """
+        Handle cases where user does not have permission to access the order
+        """
+        messages.error(
+            self.request,
+            "You do not have permission to access this Order Summary.",
         )
+        return HttpResponseRedirect("/")
 
-        # Check if the user who is trying to access this page is the same
-        # user who placed the order
-        user_profile = UserProfile.objects.get(user=request.user)
-        if order.user_profile != user_profile:
-            messages.error(
-                self.request,
-                "You do not have permission to access this Order Summary.",
-            )
-            return HttpResponseRedirect("/")
-
-        messages.info(
-            request,
-            (
-                f"This is a past confirmation for order number "
-                f'{self.kwargs["order_number"]}. A confirmation '
-                f"email was sent to you on the order date."
-            ),
+    def add_confirmation_message(self, order):
+        """
+        Add a confirmation message to the response
+        """
+        confirmation_message = (
+            f"This is a past confirmation for order number "
+            f'{self.kwargs["order_number"]}. A confirmation '
+            f"email was sent to you on the order date."
         )
-        context = {
-            "order": order,
-            "from_profile": True,
-        }
+        messages.info(self.request, confirmation_message)
 
-        return self.render_to_response(context)
+    def handle_not_found(self):
+        """
+        Handle cases where the order is not found
+        """
+        messages.error(
+            self.request,
+            "The order you are trying to access does not exist.",
+        )
+        return HttpResponseNotFound()
 
 
 class DeleteAccountView(LoginRequiredMixin, View):
