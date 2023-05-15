@@ -1,21 +1,16 @@
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
-from django.contrib.sessions.backends.db import SessionStore
+from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.contrib.messages import get_messages
-from django.test.utils import setup_test_environment
 from django.http import JsonResponse
-from django.contrib.auth.models import User
-from django.contrib.auth.models import AnonymousUser
 from django.template.loader import render_to_string
 import json
-from decimal import Decimal
 
-
+from products.models import Category, Product
+from bag.views import AddToBagView, RemoveItemFromBagView
 from bag.context_processors import bag_contents
-from bag.views import AddToBagView
-from bag.context_processors import bag_contents
-from products.models import Product, Category
 
 
 class BagViewTest(TestCase):
@@ -210,7 +205,7 @@ class AddToBagViewTest(TestCase):
 
 class AdjustBagViewTest(TestCase):
     """
-    Test that a new item is added correctly to the bag
+    Test Case for AdjustBagView
     """
 
     def setUp(self):
@@ -263,7 +258,10 @@ class AdjustBagViewTest(TestCase):
 
         # Verify success message
         messages = [m.message for m in get_messages(response.wsgi_request)]
-        expected_message = f"You updated <strong>{self.product.title}</strong> quantity to <strong>2</strong>!"
+        expected_message = (
+            f"You updated <strong>{self.product.title}</strong> "
+            f"quantity to <strong>2</strong>!"
+        )
         self.assertTrue(
             any(expected_message in message for message in messages)
         )
@@ -292,7 +290,10 @@ class AdjustBagViewTest(TestCase):
 
         # Verify success message
         messages = [m.message for m in get_messages(response.wsgi_request)]
-        expected_message = f"You updated <strong>{self.product.title}</strong> quantity to <strong>3</strong>!"
+        expected_message = (
+            f"You updated <strong>{self.product.title}</strong> "
+            f"quantity to <strong>3</strong>!"
+        )
         self.assertTrue(
             any(expected_message in message for message in messages)
         )
@@ -327,3 +328,81 @@ class AdjustBagViewTest(TestCase):
         self.assertTrue(
             any(expected_message in message for message in messages)
         )
+
+
+class RemoveItemFromBagViewTest(TestCase):
+    """
+    Test Case for Remove Item From Bag View
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.user = User.objects.create_user(
+            username="testuser", password="testpassword"
+        )
+
+        self.category = Category.objects.create(
+            name="category",
+            friendly_name="Friendly category name",
+        )
+        self.product = Product.objects.create(
+            title="product",
+            sku="111",
+            category=self.category,
+            description="product description",
+            wheel_size='26"',
+            retail_price="100",
+            sale_price="50",
+            sale=True,
+            brand="Brand",
+            bike_type="Bike type",
+            gender="0",
+            material="Material",
+            derailleur="Derailleur",
+            stock="10",
+            rating="4.8",
+        )
+        self.factory = RequestFactory()
+        self.request = self.factory.post(
+            reverse("remove_from_bag", args=[self.product.pk])
+        )
+        self.request.user = self.user
+        middleware = SessionMiddleware()
+        middleware.process_request(self.request)
+        message_middleware = MessageMiddleware()
+        message_middleware.process_request(self.request)
+        self.request.session.save()
+
+    def test_remove_item_from_bag_view_remove(self):
+        """
+        Test that item can be removed successfully
+        """
+        # Add the item to the bag
+        self.request.session["bag"] = {(self.product.pk): 1}
+        self.request.session.save()
+
+        # Call the view
+        response = RemoveItemFromBagView.as_view()(
+            self.request, self.product.pk
+        )
+
+        # Check the response status code
+        self.assertEqual(response.status_code, 200)
+
+        # Check if the item is removed from the bag
+        bag = self.request.session.get("bag", {})
+        self.assertNotIn((self.product.pk), bag)
+
+    def test_remove_item_from_bag_error_removing_item(self):
+        """
+        Test the exception
+        """
+        url = reverse("remove_from_bag", args=[1])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 405)
+
+        url = reverse("remove_from_bag", args=[1])
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 500)
