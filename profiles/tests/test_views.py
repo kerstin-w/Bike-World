@@ -846,7 +846,7 @@ class WishlistDeleteViewTest(TestCase):
         response = self.client.post(
             reverse("wishlist-delete", args=[another_wishlist.pk])
         )
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 405)
 
     def test_message_after_deleting_wishlist_item(self):
         """
@@ -998,7 +998,7 @@ class ProductReviewViewTest(TestCase):
         self.client.force_login(self.user)
         form_data = {"rating": 5, "review": "This is a great product!"}
         response = self.client.post(new_url, data=form_data)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 405)
         self.assertFalse(
             ProductReview.objects.filter(product=new_product).exists()
         )
