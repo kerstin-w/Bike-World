@@ -296,3 +296,34 @@ class AdjustBagViewTest(TestCase):
         self.assertTrue(
             any(expected_message in message for message in messages)
         )
+
+    def test_adjust_bag_view_remove_product_from_bag(self):
+        """
+        Test that a product can be removed
+        """
+        # Add an item to the bag
+        self.client.post(
+            reverse("adjust_bag", args=[self.product.id]), {"quantity": 2}
+        )
+
+        # Send a POST request to remove the item from the bag
+        response = self.client.post(
+            reverse("adjust_bag", args=[self.product.id]), {"quantity": 0}
+        )
+
+        # Verify the response status code and redirection
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("view_bag"))
+
+        # Verify that the item has been removed from the bag
+        bag = self.client.session.get("bag", {})
+        self.assertNotIn(str(self.product.id), bag)
+
+        # Verify success message
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        expected_message = (
+            f"You removed <strong>{self.product.title}</strong>!"
+        )
+        self.assertTrue(
+            any(expected_message in message for message in messages)
+        )
