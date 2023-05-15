@@ -47,6 +47,7 @@ Please note that at this stage, **Bike World** is a fictitious store which has b
     - [Online Platforms](#online-platforms)
     - [Social Media](#social-media)
     - [User Needs](#user-needs)
+    - [Promotions](#promotions)
     - [Facebook Page](#watches--clocks---facebook-page)
 - [Privacy Policy](#privacy-policy)
 - [Search Engine Optimization](#search-engine-optimization)
@@ -155,3 +156,9 @@ By providing useful content, **Bike World** can meet their needs and establish i
 * **Email Newsletters**: Bike World offers a newsletter subscription option on the website. Users who signup will receive regular newsletters featuring curated content, exclusive offers, product updates, and relevant industry news. By leveraging email marketing, **Bike World** will provide tailored content directly to users' inboxes, keeping them informed and engaged.
 
 
+## <a name="promotions">Promotions</a>
+**Bike World** has already established a sales segment and plans to run more sessional sales in the future. Bike World does not aim to be known for low prices only, but low prices are also important to get in touch with a more price-conscious user group. In addition, sales can be used to sell overstock. Bike World plans to introduce discount promotions with discount codes in the future, which will either be sent exclusively to newsletter subscribers, sent through social media channels or will be visible on the website. It is importent to consider the most effective channels for reaching the target audience to inform users about sales and discount codes. 
+
+* **Emails**: Bike World utilize newsletters to notify subscribers about upcoming sales and exclusive discount codes. This allows Bike World to reach users directly in their inboxes, providing personalized offers and building a sense of exclusivity.
+* **Social Media**: Bike world will use social media platforms like Facebook and Instagram to announce sales and discounts. Bike World will create engaging posts and stories to generate excitement and encourage users to take advantage of the promotional offers. By leveraging the reach and sharing capabilities of social media, Bike World can potentially reach a broader audience and benefit from viral sharing.
+* **Ad Campaigns**: In the beginning Bike World has fairly small marketing budget but will allocate a large portion of the budget to online advertising campaigns to target users who are likely to be interested in mountain biking. Bike World plans on spending budget into display ads and search ads which can be utilized to promote the sales and discounts. This ensures that Bike World reaches users actively searching for relevant products or browsing related content.
