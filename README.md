@@ -122,3 +122,10 @@ Product images from the [**Kegel**](https://www.kaggle.com/datasets/tysonpo/bike
 As already mentioned in [Target Audience](#target-audience) the users of **Bike World** would primarily be individuals who are interested in purchasing high-class mountain bikes. They are likely to be cycling enthusiasts, outdoor adventurers, sports enthusiasts, and individuals who value quality and performance. They may range from beginners looking for their first mountain bike to experienced riders seeking top-of-the-line models.
 
 ## <a name="online-platforms">Online Platforms</a>
+
+To reach a wide range of users, **Bike World** considers using various online platforms to reach the target audiance. Some potential platforms to target users are include:
+* **eCommerce Platform**: Creating a dedicated website for Bike World is essential. This allows users to browse and purchase bikes directly the store and connect with **Bike World**
+* **Online marketplaces**: Listing products on popular marketplaces such as Amazon or eBay, can help you reach a broader audience.
+* **Social Media**: Engaging with users on social media platforms can be highly effective. **Bike World** considers leveraging platforms such as Facebook, Instagram, Twitter, Strava and YouTube to showcase products, share relevant content, and interact with potential customers.
+* **Cycling forums and communities**: Participating in online cycling forums, communities, and discussion boards can help establish a presence among the target audience. **Bike World** will provide valuable insights, answers questions, and shares information about products.
+
