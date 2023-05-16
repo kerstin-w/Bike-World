@@ -1,7 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, Http404, HttpResponseNotFound, JsonResponse
+from django.http import (
+    HttpResponseRedirect,
+    Http404,
+    HttpResponseNotFound,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
@@ -161,8 +166,7 @@ class OrderHistoryView(LoginRequiredMixin, TemplateView):
         Get the order with the order_number specified in the URL
         """
         return get_object_or_404(
-            Order,
-            order_number=self.kwargs["order_number"]
+            Order, order_number=self.kwargs["order_number"]
         )
 
     def has_permission(self, order):
@@ -234,7 +238,10 @@ class AddToWishlistView(LoginRequiredMixin, View):
 
     def post(self, request, product_id):
         # Get the product that the user wants to add to their wishlist
-        product = get_object_or_404(Product, id=product_id)
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            raise Http404("Product was not found")
 
         # Get the current user
         user = request.user
