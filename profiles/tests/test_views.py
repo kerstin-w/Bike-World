@@ -1036,3 +1036,81 @@ class ProductReviewViewTest(TestCase):
         self.assertIn("order_item", response.context)
         order_item = response.context["order_item"]
         self.assertEqual(order_item, self.order_line_item)
+
+
+class ProductDeleteViewTest(TestCase):
+    """
+    Test Case for ProductDeleteView
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.category = Category.objects.create(name="test category")
+        self.product = Product.objects.create(
+            title="test product",
+            sku="SK123",
+            category=self.category,
+            description="test description",
+            wheel_size='18"',
+            retail_price=500.00,
+            brand="Trek",
+            bike_type="Mountain Bike",
+            gender=0,
+        )
+        self.url = reverse(
+            "delete_product", kwargs={"product_id": self.product.id}
+        )
+        self.user = User.objects.create_superuser(
+            username="admin", email="admin@test.com", password="adminpassword"
+        )
+
+    def test_product_delete_view_redirect_unauthendicated_user(self):
+        """
+        Test that an unauthenticated user gets redirected
+        """
+        response = self.client.get(self.url)
+        self.assertRedirects(response, "/", fetch_redirect_response=False)
+
+    def test_product_delete_view_redirect_if_logged_in_but_not_superuser(self):
+        """
+        Test that a user which is not superuser gets redirected
+        """
+        self.client.force_login(
+            User.objects.create_user(
+                username="user", email="user@test.com", password="testpassword"
+            )
+        )
+        response = self.client.get(self.url)
+        self.assertRedirects(response, "/", fetch_redirect_response=False)
+        self.assertEqual(response.status_code, 302)
+
+    def test_product_delete_view_delete_product_success(self):
+        """
+        Test that a superuser can successfully delete a product
+        """
+        self.client.force_login(self.user)
+        response = self.client.post(
+            self.url,
+        )
+        # Test that success message is displayed
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), f"{self.product.title} deleted!")
+        # Test that user is redirected to correct URL
+        self.assertRedirects(
+            response, "/products/", fetch_redirect_response=False
+        )
+        self.assertEqual(response.status_code, 302)
+        # Test that product is deleted from database
+        self.assertFalse(Product.objects.filter(pk=self.product.pk).exists())
+
+    def test_product_delete_view_get_object(self):
+        """
+        Test that the correct product is returned by get_object method
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.context_data["object"], self.product)
