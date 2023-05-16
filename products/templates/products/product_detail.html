@@ -91,6 +91,7 @@
 {% endblock %}
 {% block postloadjs %}
 {{ block.super }}
+<script src="{% static 'products/js/add_to_wishlist.js' %}"></script>
 {% include 'products/components/quantity_input_script.html' %}
 {% include 'products/components/add_product_to_bag_script.html' %}
 {% endblock %}

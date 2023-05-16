@@ -44,12 +44,13 @@
     </div>
     <!-- Add to Wishlist-->
     {% if user.is_authenticated %}
+    <p id="wishlist-error-message" style="display: none;"></p>
     {% if product.id in wishlist_products %}
     <a class="btn btn-wishlist btn-shop-lg disabled" href="#" aria-label="Item is already in your Wishlist">
         <i class="fa-solid fa-heart fa-lg"></i>
     </a>
     {% else %}
-    <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+    <form id="add-to-wishlist-form" data-url="{% url 'add_to_wishlist' product.id %}">
         {% csrf_token %}
         <button class="btn btn-wishlist btn-shop-lg" type="submit" aria-label="Add to Wishlist">
             <i class="fa-regular fa-heart fa-lg"></i>
