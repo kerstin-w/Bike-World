@@ -1,12 +1,14 @@
 // Create a new Chart.js line chart with the daily revenue data
-const dailyRevenueChart = new Chart(document.getElementById('daily-revenue-chart'), {
+const dailyRevenueChart = new Chart($('#daily-revenue-chart'), {
     type: 'line',
     data: {
         // Use the array of daily revenue data as the chart data
-        labels: [...Array(dailyRevenueData.length).keys()].map(i => i + 1),
+        labels: [...Array(window.dailyRevenueData.length).keys()].map(function (i) {
+            return i + 1;
+        }),
         datasets: [{
             label: 'Daily Revenue',
-            data: dailyRevenueData,
+            data: window.dailyRevenueData,
             fill: false,
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 2,
@@ -24,9 +26,8 @@ const dailyRevenueChart = new Chart(document.getElementById('daily-revenue-chart
             tooltip: {
                 callbacks: {
                     label: function (context) {
-                        const euroSymbol = '\u20AC';
-                        return euroSymbol + context.parsed.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g,
-                            '$&,');
+                        let euroSymbol = '\u20AC';
+                        return euroSymbol + context.parsed.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                     }
                 }
             }
@@ -52,9 +53,8 @@ const dailyRevenueChart = new Chart(document.getElementById('daily-revenue-chart
                     stepSize: 5000,
                     callback: function (value, index, values) {
                         // Add a Euro symbol to the y-axis ticks and format them as currency
-                        const euroSymbol = '\u20AC';
-                        return euroSymbol + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g,
-                            '$&,');
+                        let euroSymbol = '\u20AC';
+                        return euroSymbol + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                     }
                 }
             }]
@@ -63,16 +63,23 @@ const dailyRevenueChart = new Chart(document.getElementById('daily-revenue-chart
 });
 
 // Get the country revenue data from the data attribute of the revenue-by-country-chart canvas element
-const countryRevenueData = JSON.parse(document.getElementById('revenue-by-country-chart').getAttribute(
-    'data-country-revenue'));
+const countryRevenueData = JSON.parse($('#revenue-by-country-chart').attr('data-country-revenue'));
 
 // Sort the country revenue data in descending order
-const sortedCountryRevenueData = Object.entries(countryRevenueData).sort((a, b) => b[1] - a[1]);
+const sortedCountryRevenueData = Object.entries(countryRevenueData).sort(function (a, b) {
+    return b[1] - a[1];
+});
 
 // Get the top 6 countries and group the remaining into "Others"
-const topCountries = sortedCountryRevenueData.slice(0, 6).map(([country, revenue]) => country);
-const topRevenues = sortedCountryRevenueData.slice(0, 6).map(([country, revenue]) => revenue);
-const remainingRevenue = sortedCountryRevenueData.slice(6).reduce((sum, [country, revenue]) => sum + revenue, 0);
+const topCountries = sortedCountryRevenueData.slice(0, 6).map(function (entry) {
+    return entry[0];
+});
+const topRevenues = sortedCountryRevenueData.slice(0, 6).map(function (entry) {
+    return entry[1];
+});
+const remainingRevenue = sortedCountryRevenueData.slice(6).reduce(function (sum, entry) {
+    return sum + entry[1];
+}, 0);
 
 const backgroundColor = [
     '#FF6384',
@@ -83,7 +90,7 @@ const backgroundColor = [
     '#DE9E36',
 ];
 
-// Add a "Others" category to the data
+// Add an "Others" category to the data
 if (sortedCountryRevenueData.length > 6) {
     topCountries.push("Others");
     topRevenues.push(remainingRevenue);
@@ -91,7 +98,7 @@ if (sortedCountryRevenueData.length > 6) {
 }
 
 // Create a new Chart.js pie chart with the country revenue data
-const countryRevenueChart = new Chart(document.getElementById('revenue-by-country-chart'), {
+const countryRevenueChart = new Chart($('#revenue-by-country-chart'), {
     type: 'pie',
     data: {
         labels: topCountries,
@@ -119,8 +126,8 @@ const countryRevenueChart = new Chart(document.getElementById('revenue-by-countr
                         value = value.toFixed(2);
                     }
                     // Add the Euro symbol and country name to the tooltip
-                    const euroSymbol = '\u20AC';
-                    return `${label}: ${value} ${euroSymbol}`;
+                    let euroSymbol = '\u20AC';
+                    return label + ': ' + value + ' ' + euroSymbol;
                 }
             }
         }

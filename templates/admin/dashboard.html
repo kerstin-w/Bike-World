@@ -11,6 +11,8 @@
 {# Load the Chart.js library #}
 <!-- JS FOR CHART.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<!--jQuery-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -76,7 +78,7 @@
 <script>
     // Define a JavaScript variable containing the daily revenue data
     // Parse the daily revenue data from a string to an array of floats
-    const dailyRevenueData = JSON.parse("[{{ daily_revenue|join:', ' }}]").map(parseFloat);
+    window.dailyRevenueData = JSON.parse("[{{ daily_revenue|join:', ' }}]").map(parseFloat);
 </script>
 <script src="{% static 'js/admin.js' %}"></script>
 {% endblock %}
