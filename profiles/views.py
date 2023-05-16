@@ -258,9 +258,6 @@ class AddToWishlistView(LoginRequiredMixin, View):
             self.add_product_to_wishlist(user, product)
             return JsonResponse({"success": True})
 
-        # Redirect the user back to the same page
-        return redirect(request.META.get("HTTP_REFERER", "index"))
-
     def is_product_in_wishlist(self, user, product):
         """
         Check if the product is already in the user's wishlist
