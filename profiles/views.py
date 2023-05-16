@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, Http404, HttpResponseNotFound
+from django.http import HttpResponseRedirect, Http404, HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
@@ -241,12 +241,11 @@ class AddToWishlistView(LoginRequiredMixin, View):
 
         # Check if the product is already in the user's wishlist
         if self.is_product_in_wishlist(user, product):
-            self.add_already_in_wishlist_message(product)
-
+            message = f"{product} is already in your wishlist!"
+            return JsonResponse({"success": False, "message": message})
         else:
-            # Add the product to the user's wishlist
             self.add_product_to_wishlist(user, product)
-            self.add_success_message(product)
+            return JsonResponse({"success": True})
 
         # Redirect the user back to the same page
         return redirect(request.META.get("HTTP_REFERER", "index"))
@@ -257,28 +256,12 @@ class AddToWishlistView(LoginRequiredMixin, View):
         """
         return Wishlist.objects.filter(user=user, product=product).exists()
 
-    def add_already_in_wishlist_message(self, product):
-        """
-        Add a warning message if the product is already in the wishlist
-        """
-        messages.warning(
-            self.request, f"{product} is already in your wishlist!"
-        )
-
     def add_product_to_wishlist(self, user, product):
         """
         Add the product to the user's wishlist
         """
         wishlist_item = Wishlist(user=user, product=product)
         wishlist_item.save()
-
-    def add_success_message(self, product):
-        """
-        Add a success message when the product is added to the wishlist
-        """
-        messages.success(
-            self.request, f"<strong>{product}</strong> added to your wishlist!"
-        )
 
 
 class WishlistView(LoginRequiredMixin, ListView):
