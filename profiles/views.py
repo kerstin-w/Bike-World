@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import (
     HttpResponseRedirect,
     Http404,
@@ -19,7 +19,6 @@ from django.views.generic import (
 
 from checkout.models import Order, OrderLineItem
 from products.models import Product
-from products.views import PermissionRequiredMixin
 
 from .forms import ProductReviewForm, UserProfileForm
 from .models import ProductReview, UserProfile, Wishlist
@@ -374,7 +373,7 @@ class ProductReviewView(ProfileView, LoginRequiredMixin, FormView):
         return redirect(reverse("profile"))
 
 
-class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
+class ProductReviewDeleteView(UserPassesTestMixin, DeleteView):
     """
     View to delete a product review
     """
@@ -408,3 +407,23 @@ class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
         return reverse_lazy(
             "product_detail", kwargs={"pk": self.object.product.pk}
         )
+
+    def test_func(self):
+        """
+        Check if the user is allowed to delete the review.
+        Superuser or the user who wrote the review are allowed to delete
+        the review.
+        """
+        review = self.get_object()
+        user = self.request.user
+        return user == review.user or user.is_superuser
+
+    def handle_no_permission(self):
+        """
+        Handles the scenario when the user does not have
+        permission to delete the review.
+        """
+        messages.error(
+            self.request, "You do not have permission to delete this review."
+        )
+        return redirect(self.request.META.get('HTTP_REFERER', 'products'))
