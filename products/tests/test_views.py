@@ -4,9 +4,8 @@ from unittest.mock import Mock, patch
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.core.exceptions import PermissionDenied
-from django.db.models import Avg
 from django.test import RequestFactory, TestCase, Client
-from django.urls import reverse, resolve
+from django.urls import reverse
 
 from products.forms import ProductForm
 from products.models import Category, Product
@@ -15,7 +14,6 @@ from products.views import (
     PermissionRequiredMixin,
 )
 from profiles.models import Wishlist, ProductReview
-from profiles.views import ProductReviewDeleteView
 
 
 class WishlistProductsMixinTest(TestCase):
@@ -511,131 +509,6 @@ class ProductDetailViewTest(TestCase):
         self.assertIn(self.related_product_2, related_products)
 
 
-class ProductReviewDeleteViewTest(TestCase):
-    """
-    Test Case for ProductReviewDeleteView
-    """
-
-    def setUp(self):
-        """
-        Test Data
-        """
-        self.client = Client()
-        self.user = User.objects.create_user(
-            username="testuser", password="12345"
-        )
-        self.admin = User.objects.create_superuser(
-            username="admin", password="admin"
-        )
-        self.other_user = User.objects.create_user(
-            username="Other User", email="other@test.com", password="password"
-        )
-        # create test category
-        self.category1 = Category.objects.create(
-            name="TestCategory1", friendly_name="Test Category1"
-        )
-        # create test product
-        self.product = Product.objects.create(
-            title="Test Product1",
-            sku="12345",
-            category=self.category1,
-            description="Test Description",
-            wheel_size="Test Wheel Size",
-            retail_price=50.00,
-            sale_price=45.00,
-            sale=True,
-            brand="Test Brand1",
-            bike_type="Test Bike Type",
-            gender=0,
-            material="Test Material",
-            derailleur="Test Derailleur",
-            stock=100,
-            rating=3.5,
-        )
-        self.review = ProductReview.objects.create(
-            user=self.user,
-            product=self.product,
-            rating=5,
-            review="This is a test review.",
-        )
-        self.url = reverse("review_delete", kwargs={"pk": self.review.pk})
-
-    def test_product_review_delete_view_permissions(self):
-        """
-        Test that the view extends from PermissionRequiredMixin
-        """
-        resolved_view = resolve(self.url)
-        self.assertEqual(
-            resolved_view.func.__name__,
-            ProductReviewDeleteView.as_view().__name__,
-        )
-        self.assertEqual(
-            resolved_view.func.view_class, ProductReviewDeleteView
-        )
-        self.assertEqual(
-            resolved_view.func.__module__, ProductReviewDeleteView.__module__
-        )
-        self.assertTrue(
-            issubclass(ProductReviewDeleteView, PermissionRequiredMixin)
-        )
-
-    def test_product_review_delete_view_handle_no_permission(self):
-        """
-        Test that checks if the handle_no_permission returns
-        the expected error message and redirects to the homepage
-        """
-        self.client.force_login(self.other_user)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/")
-        storage = get_messages(response.wsgi_request)
-        self.assertIn(
-            "You do not have permission to access this page.",
-            [msg.message for msg in storage],
-        )
-
-    def test_product_review_delete_view_get_object(self):
-        """
-        Test that get_object returns the expected object
-        instance based on the kwargs
-        """
-        view = ProductReviewDeleteView()
-        view.kwargs = {"pk": self.review.pk}
-        obj = view.get_object()
-        self.assertEqual(obj, self.review)
-
-    def test_product_review_delete_view_delete(self):
-        """
-        Test that a review and its rating is deleted successfully
-        """
-        self.client.force_login(self.admin)
-        response = self.client.delete(self.url)
-        self.assertEqual(response.status_code, 302)
-        # Recalculate the product's rating after deleting the review
-        product = Product.objects.get(id=self.product.id)
-        rating = product.reviews.aggregate(Avg("rating"))["rating__avg"]
-        product.rating = rating if rating else 0
-        self.assertEqual(ProductReview.objects.count(), 0)
-        self.assertAlmostEqual(product.rating, 0, places=4)
-        storage = get_messages(response.wsgi_request)
-        self.assertIn(
-            "The review and associated rating have been deleted successfully.",
-            [msg.message for msg in storage],
-        )
-
-    def test_product_review_delete_view_get_success_url(self):
-        """
-        Test that the get_success_url returns the correct URL
-        """
-        view = ProductReviewDeleteView()
-        view.object = self.review
-        url = view.get_success_url()
-        self.assertEqual(
-            url,
-            reverse("product_detail", kwargs={"pk": self.review.product.pk}),
-        )
-
-
 class ProductCreateViewTest(TestCase):
     """
     Test Case for ProductCreateView
@@ -874,3 +747,81 @@ class ProductEditViewTest(TestCase):
             "Failed to update product. Please ensure the form is valid.",
         )
         self.assertContains(response, "This field is required.")
+
+
+class ProductDeleteViewTest(TestCase):
+    """
+    Test Case for ProductDeleteView
+    """
+
+    def setUp(self):
+        """
+        Test Data
+        """
+        self.client = Client()
+        self.category = Category.objects.create(name="test category")
+        self.product = Product.objects.create(
+            title="test product",
+            sku="SK123",
+            category=self.category,
+            description="test description",
+            wheel_size='18"',
+            retail_price=500.00,
+            brand="Trek",
+            bike_type="Mountain Bike",
+            gender=0,
+        )
+        self.url = reverse(
+            "delete_product", kwargs={"product_id": self.product.id}
+        )
+        self.user = User.objects.create_superuser(
+            username="admin", email="admin@test.com", password="adminpassword"
+        )
+
+    def test_product_delete_view_redirect_unauthendicated_user(self):
+        """
+        Test that an unauthenticated user gets redirected
+        """
+        response = self.client.get(self.url)
+        self.assertRedirects(response, "/", fetch_redirect_response=False)
+
+    def test_product_delete_view_redirect_if_logged_in_but_not_superuser(self):
+        """
+        Test that a user which is not superuser gets redirected
+        """
+        self.client.force_login(
+            User.objects.create_user(
+                username="user", email="user@test.com", password="testpassword"
+            )
+        )
+        response = self.client.get(self.url)
+        self.assertRedirects(response, "/", fetch_redirect_response=False)
+        self.assertEqual(response.status_code, 302)
+
+    def test_product_delete_view_delete_product_success(self):
+        """
+        Test that a superuser can successfully delete a product
+        """
+        self.client.force_login(self.user)
+        response = self.client.post(
+            self.url,
+        )
+        # Test that success message is displayed
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), f"{self.product.title} deleted!")
+        # Test that user is redirected to correct URL
+        self.assertRedirects(
+            response, "/products/", fetch_redirect_response=False
+        )
+        self.assertEqual(response.status_code, 302)
+        # Test that product is deleted from database
+        self.assertFalse(Product.objects.filter(pk=self.product.pk).exists())
+
+    def test_product_delete_view_get_object(self):
+        """
+        Test that the correct product is returned by get_object method
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.context_data["object"], self.product)

@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
-from django.db.models import QuerySet
+from django.db.models import Avg, QuerySet
 from django.http import HttpRequest
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse, reverse_lazy
@@ -10,7 +10,12 @@ from django.urls import reverse, reverse_lazy
 from checkout.models import Order, OrderLineItem
 from profiles.forms import UserProfileForm, ProductReviewForm
 from profiles.models import UserProfile, Wishlist, ProductReview
-from profiles.views import ProfileView, ProfileUpdateView, WishlistView
+from profiles.views import (
+    ProfileView,
+    ProfileUpdateView,
+    WishlistView,
+    ProductReviewDeleteView,
+)
 from products.models import Product, Category
 
 
@@ -621,7 +626,7 @@ class AddToWishlistViewTest(TestCase):
         invalid_product_id = 99999
         response = self.client.post(
             reverse("add_to_wishlist", args=[invalid_product_id]),
-            content_type="application/json"
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 404)
         json_response = response.json()
@@ -1038,9 +1043,9 @@ class ProductReviewViewTest(TestCase):
         self.assertEqual(order_item, self.order_line_item)
 
 
-class ProductDeleteViewTest(TestCase):
+class ProductReviewDeleteViewTest(TestCase):
     """
-    Test Case for ProductDeleteView
+    Test Case for ProductReviewDeleteView
     """
 
     def setUp(self):
@@ -1048,69 +1053,113 @@ class ProductDeleteViewTest(TestCase):
         Test Data
         """
         self.client = Client()
-        self.category = Category.objects.create(name="test category")
+        self.user = User.objects.create_user(
+            username="testuser", password="12345"
+        )
+        self.admin = User.objects.create_superuser(
+            username="admin", password="admin"
+        )
+        self.other_user = User.objects.create_user(
+            username="Other User", email="other@test.com", password="password"
+        )
+        # create test category
+        self.category1 = Category.objects.create(
+            name="TestCategory1", friendly_name="Test Category1"
+        )
+        # create test product
         self.product = Product.objects.create(
-            title="test product",
-            sku="SK123",
-            category=self.category,
-            description="test description",
-            wheel_size='18"',
-            retail_price=500.00,
-            brand="Trek",
-            bike_type="Mountain Bike",
+            title="Test Product1",
+            sku="12345",
+            category=self.category1,
+            description="Test Description",
+            wheel_size="Test Wheel Size",
+            retail_price=50.00,
+            sale_price=45.00,
+            sale=True,
+            brand="Test Brand1",
+            bike_type="Test Bike Type",
             gender=0,
+            material="Test Material",
+            derailleur="Test Derailleur",
+            stock=100,
+            rating=3.5,
         )
-        self.url = reverse(
-            "delete_product", kwargs={"product_id": self.product.id}
+        self.review = ProductReview.objects.create(
+            product=self.product,
+            user=self.user,
+            review="Test review",
+            rating=4,
         )
-        self.user = User.objects.create_superuser(
-            username="admin", email="admin@test.com", password="adminpassword"
-        )
+        self.url = reverse("review_delete", kwargs={"pk": self.review.pk})
 
-    def test_product_delete_view_redirect_unauthendicated_user(self):
+    def test_product_review_delete_view_handle_no_permission(self):
         """
-        Test that an unauthenticated user gets redirected
+        Test that checks if the handle_no_permission returns
+        the expected error message and redirects to the homepage
         """
+        self.client.force_login(self.other_user)
         response = self.client.get(self.url)
-        self.assertRedirects(response, "/", fetch_redirect_response=False)
-
-    def test_product_delete_view_redirect_if_logged_in_but_not_superuser(self):
-        """
-        Test that a user which is not superuser gets redirected
-        """
-        self.client.force_login(
-            User.objects.create_user(
-                username="user", email="user@test.com", password="testpassword"
-            )
-        )
-        response = self.client.get(self.url)
-        self.assertRedirects(response, "/", fetch_redirect_response=False)
         self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/products/")
+        storage = get_messages(response.wsgi_request)
+        self.assertIn(
+            "You do not have permission to delete this review.",
+            [msg.message for msg in storage],
+        )
 
-    def test_product_delete_view_delete_product_success(self):
+    def test_product_review_delete_view_get_object(self):
         """
-        Test that a superuser can successfully delete a product
+        Test that get_object returns the expected object
+        instance based on the kwargs
         """
-        self.client.force_login(self.user)
-        response = self.client.post(
-            self.url,
-        )
-        # Test that success message is displayed
-        messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), f"{self.product.title} deleted!")
-        # Test that user is redirected to correct URL
-        self.assertRedirects(
-            response, "/products/", fetch_redirect_response=False
-        )
+        view = ProductReviewDeleteView()
+        view.kwargs = {"pk": self.review.pk}
+        obj = view.get_object()
+        self.assertEqual(obj, self.review)
+
+    def test_product_review_delete_view_delete(self):
+        """
+        Test that a review and its rating is deleted successfully
+        """
+        self.client.force_login(self.admin)
+        response = self.client.delete(self.url)
         self.assertEqual(response.status_code, 302)
-        # Test that product is deleted from database
-        self.assertFalse(Product.objects.filter(pk=self.product.pk).exists())
+        # Recalculate the product's rating after deleting the review
+        product = Product.objects.get(id=self.product.id)
+        rating = product.reviews.aggregate(Avg("rating"))["rating__avg"]
+        product.rating = rating if rating else 0
+        self.assertEqual(ProductReview.objects.count(), 0)
+        self.assertAlmostEqual(product.rating, 0, places=4)
+        storage = get_messages(response.wsgi_request)
+        self.assertIn(
+            "The review and associated rating have been deleted successfully.",
+            [msg.message for msg in storage],
+        )
 
-    def test_product_delete_view_get_object(self):
+    def test_product_review_delete_view_get_success_url(self):
         """
-        Test that the correct product is returned by get_object method
+        Test that the get_success_url returns the correct URL
         """
-        self.client.force_login(self.user)
-        response = self.client.get(self.url)
-        self.assertEqual(response.context_data["object"], self.product)
+        view = ProductReviewDeleteView()
+        view.object = self.review
+        url = view.get_success_url()
+        self.assertEqual(
+            url,
+            reverse("product_detail", kwargs={"pk": self.review.product.pk}),
+        )
+
+    def test_product_review_delete_view_review_by_user(self):
+        """
+        Test deleting a review by the user who wrote it
+        """
+        self.client.login(username="testuser", password="12345")
+        response = self.client.post(self.url)
+        # Redirect after successful delete
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url,
+            reverse("product_detail", kwargs={"pk": self.review.product.pk}),
+        )
+        self.assertEqual(
+            ProductReview.objects.filter(pk=self.review.pk).exists(), False
+        )
