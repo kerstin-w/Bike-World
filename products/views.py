@@ -1,19 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.template.loader import render_to_string
-from django.core.mail import send_mail
 from django.db.models import Q, Case, When, F, DecimalField
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import AccessMixin
-from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 
-from django.db.models import Avg
 from django.urls import reverse, reverse_lazy
-from django.conf import settings
-
 
 from .models import Product, Category
 from .forms import ProductForm
@@ -227,42 +220,6 @@ class ProductDetailView(WishlistProductsMixin, DetailView):
         context["related_products"] = related_products
 
         return context
-
-
-class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
-    """
-    View to delete a product review
-    """
-
-    model = ProductReview
-
-    def get_object(self):
-        """
-        Get the review based on the pk
-        """
-        review_pk = self.kwargs.get("pk")
-        return get_object_or_404(ProductReview, pk=review_pk)
-
-    def delete(self, request, *args, **kwargs):
-        """
-        Delete the review and associated rating
-        """
-        # Delete the review
-        response = super().delete(request, *args, **kwargs)
-        # Show a success message
-        messages.success(
-            self.request,
-            "The review and associated rating have been deleted successfully.",
-        )
-        return response
-
-    def get_success_url(self):
-        """
-        Returns the URL to redirect to after a successful delete.
-        """
-        return reverse_lazy(
-            "product_detail", kwargs={"pk": self.object.product.pk}
-        )
 
 
 class ProductCreateView(

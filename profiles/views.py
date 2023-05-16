@@ -19,6 +19,7 @@ from django.views.generic import (
 
 from checkout.models import Order, OrderLineItem
 from products.models import Product
+from products.views import PermissionRequiredMixin
 
 from .forms import ProductReviewForm, UserProfileForm
 from .models import ProductReview, UserProfile, Wishlist
@@ -374,3 +375,39 @@ class ProductReviewView(ProfileView, LoginRequiredMixin, FormView):
             "Failed to submit your Review. Please ensure the form is valid.",
         )
         return redirect(reverse("profile"))
+
+
+class ProductReviewDeleteView(PermissionRequiredMixin, DeleteView):
+    """
+    View to delete a product review
+    """
+
+    model = ProductReview
+
+    def get_object(self):
+        """
+        Get the review based on the pk
+        """
+        review_pk = self.kwargs.get("pk")
+        return get_object_or_404(ProductReview, pk=review_pk)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Delete the review and associated rating
+        """
+        # Delete the review
+        response = super().delete(request, *args, **kwargs)
+        # Show a success message
+        messages.success(
+            self.request,
+            "The review and associated rating have been deleted successfully.",
+        )
+        return response
+
+    def get_success_url(self):
+        """
+        Returns the URL to redirect to after a successful delete.
+        """
+        return reverse_lazy(
+            "product_detail", kwargs={"pk": self.object.product.pk}
+        )
