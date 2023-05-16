@@ -29,6 +29,7 @@
         <p class="product-sale-price price mb-0">{{ product.sale_price|intcomma }}€</p>
         <p class="strike-price">{{ product.retail_price|intcomma }}€</p>
         {% else %}
+        <p class="product-sale-price price mb-0 invisible">0</p>
         <p class="price">{{ product.retail_price|intcomma }}€</p>
         {% endif %}
         <div id="error-container-bag" class="error-container"></div>
