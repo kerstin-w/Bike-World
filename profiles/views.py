@@ -241,7 +241,10 @@ class AddToWishlistView(LoginRequiredMixin, View):
         try:
             product = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
-            raise Http404("Product was not found")
+            return JsonResponse(
+                {"success": False, "message": "Product was not found"},
+                status=404,
+            )
 
         # Get the current user
         user = request.user

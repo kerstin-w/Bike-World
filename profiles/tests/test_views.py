@@ -542,17 +542,15 @@ class AddToWishlistViewTest(TestCase):
         Test that a user who is logged in can add a product to their wishlist
         """
         self.client.force_login(self.user)
-        product_detail_url = reverse("product_detail", args=[self.product.id])
-        response = self.client.post(
-            self.url, HTTP_REFERER=product_detail_url, follow=True
-        )
-        messages = get_messages(response.wsgi_request)
-
+        response = self.client.post(self.url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "products/product_detail.html")
-        self.assertIn(
-            "<strong>Test Product</strong> added to your wishlist!",
-            [str(m) for m in messages],
+        self.assertJSONEqual(
+            response.content.decode("utf-8"), {"success": True}
+        )
+        self.assertTrue(
+            Wishlist.objects.filter(
+                user=self.user, product=self.product
+            ).exists()
         )
 
         # Check if the product was added to the user's wishlist
@@ -561,8 +559,6 @@ class AddToWishlistViewTest(TestCase):
         )
         self.assertEqual(wishlist_item.user, self.user)
         self.assertEqual(wishlist_item.product, self.product)
-        self.assertEqual(response.status_code, 200)
-        self.assertRedirects(response, product_detail_url)
 
     def test_add_to_wishlist_view_logged_out_user_cannot_add_to_wishlist(self):
         """
@@ -583,7 +579,7 @@ class AddToWishlistViewTest(TestCase):
         self.client.force_login(self.user)
         response = self.client.post(self.url)
 
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
         # Check if a new Wishlist object is added to the database
         self.assertTrue(
@@ -607,18 +603,30 @@ class AddToWishlistViewTest(TestCase):
         response = self.client.post(self.url)
 
         # Check that the warning message is displayed
-        messages = get_messages(response.wsgi_request)
-        messages = list(messages)
-        self.assertEqual(len(messages), 1)
-        self.assertEqual(
-            str(messages[0]),
-            "Test Product is already in your wishlist!",
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(
+            response.content.decode("utf-8"),
+            {
+                "success": False,
+                "message": f"{self.product} is already in your wishlist!",
+            },
         )
-        self.assertEqual(messages[0].tags, "warning")
 
-        # Check that no new wishlist items were created
-        wishlist_items = Wishlist.objects.filter(user=self.user)
-        self.assertEqual(len(wishlist_items), 1)
+    def test_add_to_wishlist_view_product_not_found(self):
+        """
+        Test that a JSON response is returned if
+        the product does not exist
+        """
+        self.client.force_login(self.user)
+        invalid_product_id = 99999
+        response = self.client.post(
+            reverse("add_to_wishlist", args=[invalid_product_id]),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 404)
+        json_response = response.json()
+        self.assertEqual(json_response.get("success"), False)
+        self.assertEqual(json_response.get("message"), "Product was not found")
 
 
 class WishlistViewTest(TestCase):
@@ -778,7 +786,8 @@ class WishlistViewTest(TestCase):
 
         # assert that the queryset contains the expected item
         self.assertQuerysetEqual(
-            queryset, Wishlist.objects.filter(user=self.user), ordered=False)
+            queryset, Wishlist.objects.filter(user=self.user), ordered=False
+        )
 
 
 class WishlistDeleteViewTest(TestCase):
