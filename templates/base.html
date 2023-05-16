@@ -9,17 +9,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Discover high-performance mountain bikes from top brands. Explore our Bike Shop with a wide range of MTB. Shop Now!">
     <meta name="keywords"
         content="Bikes, Mountain bikes, MTB, Mountain bike shop, Mountain biking, Hardtail mountainbikes bikes, Full suspension bikes, Bike shop, Outdoor adventure, Bike sales, Bike trails, Cross-country bikes, Enduro Bikes, Outdoor sports equipment">
     <meta name="author" content="Kerstin Weibeler">
-
     <!-- Google Verification -->
     <meta name="google-site-verification" content="dzRYMMetjbhvqtaQEcd2-xUGd3USb5U5zsozwPuJmMs">
     {% endblock %}
 
     {% block extra_meta %}
+    {% if product.description %}
+    <meta name="description" content="{{ product.description|cut:'.'|first|safe }}">
+    {% else %}
+    <meta name="description"
+        content="Discover high-performance mountain bikes from top brands. Explore our Bike Shop with a wide range of MTB. Shop Now!">
+    {% endif %}
+
     {% endblock %}
 
     <title>Bike World | {% block title %}{% endblock %}</title>
