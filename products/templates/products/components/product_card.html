@@ -32,11 +32,11 @@
         <p class="product-sale-price price mb-0 invisible">0</p>
         <p class="price">{{ product.retail_price|intcomma }}€</p>
         {% endif %}
-        <div id="error-container-bag" class="error-container"></div>
+        <div id="error-container-bag" class="error-container-bag"></div>
+        <p id="wishlist-error-message-{{ product.id }}" class="error-container-bag" style="display: none;"></p>
         <div class="d-flex justify-content-center">
             {% include 'products/components/add_to_cart_qty_1.html' %}
             {% if user.is_authenticated %}
-            <p id="wishlist-error-message" style="display: none;"></p>
             {% if product.id in wishlist_products %}
             <a class="add-wishlist disabled" href="#" aria-label="Item is already in your Wishlist">
                 <i class="fa-solid fa-heart fa-sm"></i>

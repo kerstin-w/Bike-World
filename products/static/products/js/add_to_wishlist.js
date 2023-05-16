@@ -8,7 +8,7 @@ $(document).ready(function () {
         const productId = form.data("wishlistProductId");
         const url = form.attr("data-url");
         const wishlistButton = form.find(".btn-wishlist, .add-wishlist");
-        const errorMessage = $("#wishlist-error-message");
+        const errorMessage = $("#wishlist-error-message-" + productId);
 
         // Submit Wishlist Form
         form.submit(function (event) {
@@ -41,7 +41,8 @@ $(document).ready(function () {
                 },
                 error: function (error) {
                     // Log any error occurred during adding item to wishlist
-                    console.error("Error:", error);
+                    errorMessage.text("We are sorry, an error occurred");
+                    errorMessage.show();
                 }
             });
         });

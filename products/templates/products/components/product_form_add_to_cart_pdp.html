@@ -1,4 +1,5 @@
 <!-- Add Product to Bag-->
+<p id="wishlist-error-message-{{ product.id }}" class="error-container-bag"></p>
 <div class="d-flex align-items-end">
     <div class="d-flex align-items-center">
         <form class="form add-to-bag-form" data-product-id="{{ product.id }}" data-quantity="1" method="POST">
@@ -30,7 +31,7 @@
                         </div>
                     </div>
                     <!-- Add to Bag -->
-                    <div id="error-container-bag" class="error-container"></div>
+                    <div id="error-container-bag" class="error-container-bag"></div>
                     <div class="d-flex align-items-center">
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end"
@@ -44,7 +45,6 @@
     </div>
     <!-- Add to Wishlist-->
     {% if user.is_authenticated %}
-    <p id="wishlist-error-message" style="display: none;"></p>
     {% if product.id in wishlist_products %}
     <a class="btn btn-wishlist btn-shop-lg disabled" href="#" aria-label="Item is already in your Wishlist">
         <i class="fa-solid fa-heart fa-lg"></i>
