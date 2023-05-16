@@ -56,6 +56,7 @@ Please note that at this stage, **Bike World** is a fictitious store which has b
     - [sitemap.xml](#sitemapxml)
     - [robots.txt](#robotstxt)
     - [Sitemap Google Registration](#sitemap-google-registration)
+    - [Googel Search Snippets](#google-search-snippets)
 - [AWS Setup Process](#aws-setup-process)
     - [AWS S3 Bucket](#aws-s3-bucket)
     - [IAM Set Up](#iam-set-up)
@@ -201,8 +202,25 @@ With the help of [XML-Sitemaps.com](https://www.xml-sitemaps.com/), a site map w
 ![Sitemap](documentation/seo/sitemap.png)
 
 ## <a name="robotstxt">robots.txt</a>
+
 A robots.txt was created to allow crawlers to crawl the page and also to specify which pages should not be crawled. This of course has a beneficial impact on the SEO rating. However, so that crawlers can really use the robots.txt, a view was created and included in the urls. The robots.txt file was saved in the roots directory, as it was a requirement for this project, but it is not in actual use, as the view sets the parameters for the crawler. As a resource [this](https://adamj.eu/tech/2020/02/10/robots-txt/) acrticle has been used. 
 
-![SEO Keywords](documentation/seo/robots-file.png)
+![robots.txt](documentation/seo/robots-file.png)
 
-![SEO Keywords](documentation/seo/robots-view.png)
+![Robots View](documentation/seo/robots-view.png)
+
+## <a name="sitemap-google-registration">Sitemap Google Registration</a>
+
+The Bike World page has been verified in **Google Search Console**. For this it was necessary to include a `meta tag` in the head. 
+
+![Google Meta Tag](documentation/seo/google-verification.png)
+
+![Google Search Console](documentation/seo/search-console.png)
+
+After that, the sitemap was submitted to Google Search Console to ensure that the search engine can interact with our site.
+
+![Google Search Console Sitemap Submit](documentation/seo/search-console-sitemap.png)
+
+![Google Search Console Index](documentation/seo/google-index.png)
+
+(I apologize for the german screenshots, but my google account is set to german.)
