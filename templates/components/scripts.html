@@ -4,3 +4,51 @@
 <script src="https://kit.fontawesome.com/db4afc7d29.js" crossorigin="anonymous"></script>
 <!-- Custom JS -->
 <script src="{% static 'js/base.js' %}"></script>
+<!-- MailChimp -->
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'>
+</script>
+<script type='text/javascript'>
+    (function ($) {
+        window.fnames = new Array();
+        window.ftypes = new Array();
+        fnames[0] = 'EMAIL';
+        ftypes[0] = 'email';
+        fnames[1] = 'FNAME';
+        ftypes[1] = 'text';
+        fnames[2] = 'LNAME';
+        ftypes[2] = 'text';
+        fnames[3] = 'ADDRESS';
+        ftypes[3] = 'address';
+        fnames[4] = 'PHONE';
+        ftypes[4] = 'phone';
+        fnames[5] = 'BIRTHDAY';
+        ftypes[5] = 'birthday';
+    }(jQuery));
+    var $mcj = jQuery.noConflict(true);
+</script>
+<!-- Meta Pixel Code -->
+<script>
+    ! function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '3480356328904532');
+    fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=3480356328904532&ev=PageView&noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
