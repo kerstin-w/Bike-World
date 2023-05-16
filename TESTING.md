@@ -38,3 +38,23 @@ A total of **226** **Unit Tests** have been written. All **226** tests ran succe
 </details>
 
 <br>
+
+## <a name="user-stories-testing">User Stories Testing</a>
+
+## <a name="validator-testing">Validator Testing</a>
+
+### <a name="html">HTML</a>
+### <a name="css">CSS</a>
+### <a name="js">JavaScript</a>
+### <a name="Python">Python</a>
+
+## <a name="performance-testing">Performance Testing</a>
+
+### <a name="desktop-results">Desktop Results</a>
+### <a name="mobile-results">Mobile Results</a>
+
+## <a name="browser-compatibility">Browser Compatibility</a>
+
+## <a name="responsivity">Responsivity</a>
+
+## <a name="issues-bugs">Issues/ Bugs Found & Resolved</a>
