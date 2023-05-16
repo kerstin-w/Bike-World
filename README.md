@@ -224,3 +224,11 @@ After that, the sitemap was submitted to Google Search Console to ensure that th
 ![Google Search Console Index](documentation/seo/google-index.png)
 
 (I apologize for the german screenshots, but my google account is set to german.)
+
+## <a name="google-search-snippets">Google Search Snippets</a>
+
+In addition, the Google Search Snippets were tested in order to appear relevant and engaging for the users among the search results. These use the page `title` and the `meta description` and are limited on characters. These snippets are currently only outstanding for the homepage but not for subpages. I attempted to set an automation in the template at least for the PDPs in order to use the first sentence of the product description as meta description on PDPs. This was unfortunately not fruitful and would not have been the ideal solution, because the maximum number of characters can not be controlled and also no optimization with keyword can be taken yet. Therefore I have taken this out again. It exceeds the scope of this project, but there is still potential for optimization.
+
+[Created with SISTRIX:](https://app.sistrix.com/en/serp-snippet-generator)
+
+![Google Search Snippet](documentation/seo/snippet.png)
