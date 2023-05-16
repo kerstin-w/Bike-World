@@ -137,7 +137,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBag"
                         aria-controls="offcanvasBag">
-                        <i class="fa-solid fa-bag-shopping fs-4 position-relative mx-2">
+                        <i class="fa-solid fa-bag-shopping fs-4 position-relative nav-icon mx-2">
                             <span
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-orange{% if product_count == 0 %} visually-hidden{% endif %}"
                                 id="qty-in-bag">
@@ -150,7 +150,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="user-options" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <i class="fa-regular fa-user fs-4 mx-2"><span class="visually-hidden">Profile</span></i>
+                        <i class="fa-regular fa-user nav-icon fs-4 mx-2"><span
+                                class="visually-hidden">Profile</span></i>
                     </a>
                     <div class="dropdown-menu user-options" aria-labelledby="user-options">
                         {% if request.user.is_authenticated %}

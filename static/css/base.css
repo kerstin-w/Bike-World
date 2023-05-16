@@ -196,6 +196,15 @@ a {
     text-align: right;
 }
 
+.nav-icon {
+    transition: color 0.3s ease;
+}
+
+.nav-icon:hover {
+    color: #000;
+    transform: scale(1.2);
+}
+
 /*=============== Hero Banner ===============*/
 .hero {
     background: url("/media/homepage-images/hero.webp") no-repeat;
