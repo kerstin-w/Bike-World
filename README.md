@@ -185,3 +185,24 @@ Unfortunately, it was not possible to create an ad for the webshop already, as t
 In order to improve the website services, I have set a Meta Pixel service to track the Bike World audience. This will be especially relevant for future Facebook campaigns to track the success.
 
 ![Facebook Pixel](documentation/facebook/facebook-pixel.png)
+
+# <a name="privacy-policy">Privacy Policy</a>
+
+# <a name="search-engine-optimization">Search Engine Optimization</a>
+
+A detailed keyword selection was performed around mountain bike. All key words are important and relevant in relation to the topic mountain bike and store. The chosen keywords stem from the understanding of the business. The chosen keywords are common terms and topics around the mountain bike and outdoor industry. The keywords were tested with [Wordtracker](https://www.wordtracker.com/) for their volume and competition. Crossed out keywords were removed because either the volume was too low or the competition was too high. The keywords were included in the meta tag key words. In meta description one long-tail keyword was used and the rest of the keywords were tried to be distributed naturally on the page. 
+
+![SEO Keywords](documentation/seo/keywords.png)
+
+## <a name="sitemapxml">Sitemap.XML</a>
+
+With the help of [XML-Sitemaps.com](https://www.xml-sitemaps.com/), a site map was created for Bike World, which includes all relevant pages. The sitemap was downloaded and added to the root directory. To ensure that Google and other services indeed have access to the sitemap, it was added as `TemplateView` to the urls. For this the [sitemap](templates/sitemap.xml) was moved to the templates folder.
+
+![Sitemap](documentation/seo/sitemap.png)
+
+## <a name="robotstxt">robots.txt</a>
+A robots.txt was created to allow crawlers to crawl the page and also to specify which pages should not be crawled. This of course has a beneficial impact on the SEO rating. However, so that crawlers can really use the robots.txt, a view was created and included in the urls. The robots.txt file was saved in the roots directory, as it was a requirement for this project, but it is not in actual use, as the view sets the parameters for the crawler. As a resource [this](https://adamj.eu/tech/2020/02/10/robots-txt/) acrticle has been used. 
+
+![SEO Keywords](documentation/seo/robots-file.png)
+
+![SEO Keywords](documentation/seo/robots-view.png)
