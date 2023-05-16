@@ -48,7 +48,13 @@ class PermissionRequiredMixin(AccessMixin):
         """
         Returns True if the user has the required permission
         """
-        return self.request.user.is_superuser
+        if self.request.user.is_superuser:
+            return True
+
+        # For Reviews: Check if the user is the author of the review
+        review_pk = self.kwargs.get("pk")
+        review = get_object_or_404(ProductReview, pk=review_pk)
+        return review.user == self.request.user
 
     def handle_no_permission(self):
         """
