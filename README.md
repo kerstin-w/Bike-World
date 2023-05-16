@@ -10,11 +10,11 @@ Our user-friendly website allows you to browse our extensive collection of mount
 Please note that at this stage, **Bike World** is a fictitious store which has been created for the purposes of satisfying the requirements for the **Code Institute** Full Stack Development Course Project 5.
 
 
-![Mockup]()
+![Mockup](documentation/mockup.jpg)
 
 # Live Project
 
-[View live project here]()
+[View live project here](https://bike-world.herokuapp.com/)
 
 ## Contents
 
