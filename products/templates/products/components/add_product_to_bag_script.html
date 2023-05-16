@@ -16,7 +16,7 @@
         addToBag: async function (quantity, productId, addButton) {
             const formData = this.createFormData(productId, quantity);
             const response = await this.addToBagRequest(formData);
-            const errorContainer = $('#error-container-bag');
+            const errorContainer = $('#error-container-bag-' + productId);
 
             // If input is invalid show error message
             if (!addToShoppingBag.validateQuantity(quantity)) {
@@ -39,9 +39,9 @@
             } else {
                 const errorData = await response.json();
                 if (errorData && errorData.error) {
-                    const errorContainer = document.getElementById('error-container-bag');
-                    errorContainer.innerHTML = errorData.error; // Display the error message
-                    errorContainer.style.display = 'block';
+                    errorContainer.html(errorData.error);
+                    errorContainer.css('display', 'block');
+
                 } else {
                     alert('There was an error adding to the bag.');
                 }
