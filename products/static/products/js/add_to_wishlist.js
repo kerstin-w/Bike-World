@@ -1,13 +1,13 @@
 $(document).ready(function () {
-    // Get the wishlist form element using its ID
-    const form = $("#add-to-wishlist-form");
+    // Get all forms with IDs starting with "add-to-wishlist-form-"
+    const forms = $('[id^="add-to-wishlist-form-"]');
 
-    // Check if wishlist form element is present on the DOM
-    if (form.length) {
-        // Get the URL for adding the item to the wishlist
+    // Iterate over each form
+    forms.each(function () {
+        const form = $(this);
+        const productId = form.data("wishlistProductId");
         const url = form.attr("data-url");
-        // Get the wishlist button element inside the form
-        const wishlistButton = form.find(".btn-wishlist");
+        const wishlistButton = form.find(".btn-wishlist, .add-wishlist");
         const errorMessage = $("#wishlist-error-message");
 
         // Submit Wishlist Form
@@ -45,7 +45,7 @@ $(document).ready(function () {
                 }
             });
         });
-    }
+    });
 });
 
 // Function to get the value of a cookie by name

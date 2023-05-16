@@ -36,12 +36,14 @@
         <div class="d-flex justify-content-center">
             {% include 'products/components/add_to_cart_qty_1.html' %}
             {% if user.is_authenticated %}
+            <p id="wishlist-error-message" style="display: none;"></p>
             {% if product.id in wishlist_products %}
             <a class="add-wishlist disabled" href="#" aria-label="Item is already in your Wishlist">
                 <i class="fa-solid fa-heart fa-sm"></i>
             </a>
             {% else %}
-            <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+            <form id="add-to-wishlist-form-{{ product.id }}" data-wishlist-product-id="{{ product.id }}"
+                data-url="{% url 'add_to_wishlist' product.id %}">
                 {% csrf_token %}
                 <button class="add-wishlist btn btn-icon" type="submit" aria-label="Add to Wishlist">
                     <i class="fa-regular fa-heart fa-sm"></i>
