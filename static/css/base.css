@@ -517,6 +517,13 @@ footer ul {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+#wishlist-error-message {
+    display: none;
+    color: red;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
 .add-wishlist {
     width: 40px;
     height: 40px;

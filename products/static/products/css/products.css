@@ -99,7 +99,8 @@
     padding: 1.3rem;
 }
 
-.btn-wishlist .fa-heart {
+.btn-wishlist i {
+    color: #cd4c1e;
     transition: transform 0.3s ease-in-out;
     will-change: transform;
     position: absolute;
@@ -108,13 +109,9 @@
     transform: translate(-50%, -50%);
 }
 
-.btn-wishlist:hover .fa-heart {
+.btn-wishlist:hover i {
     font-size: 1.2em;
     transform: translate(-50%, -50%) scale(1.2);
-}
-
-.btn-wishlist i {
-    color: #cd4c1e;
 }
 
 .back-button:hover {
