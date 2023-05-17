@@ -87,7 +87,9 @@
     </div>
 
     {% include 'components/footer.html' %}
+    {% if not user.is_authenticated %}
     {% include "components/auth_modal.html" %}
+    {% endif %}
     {% include "components/bag_offcanvas.html" %}
     {% include 'components/scripts.html' %}
 
