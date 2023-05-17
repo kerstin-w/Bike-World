@@ -65,10 +65,8 @@ Shopping Bag
             <!-- Order Summary -->
             <div class="order-summary p-lg-5 ms-md-2 ms-0 mb-4">
                 {% include 'components/order_summary.html' %}
-                <a href="{% url 'checkout' %}">
-                    <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg mb-2">
-                        Place Order
-                    </button>
+                <a href="{% url 'checkout' %}" class="btn btn-shop-now bg-orange btn-shop-lg mb-2">
+                    <span class="text-center">Place your Order!</span>
                 </a>
                 {% if free_delivery_delta > 0 %}
                 <p class="mb-1 text-orange">
@@ -81,10 +79,9 @@ Shopping Bag
     {% else %}
     <div class="d-flex flex-column align-items-center p-5">
         <p>Your bag is empty.</strong></p>
-        <button class="btn btn-cta upper"><a href="{% url 'products' %}">Find a Bike</a></button>
+        <a href="{% url 'products' %}" class="btn btn-cta upper">Find a Bike</a>
     </div>
     {% endif %}
-    </div>
 </main>
 {% endblock content %}
 
