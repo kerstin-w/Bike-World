@@ -17,9 +17,7 @@ Checkout
     <!-- Checkout -->
     <div class="margin-top shopping-cart mx-3">
         <h1 class="liner upper">Checkout</h1>
-        <a href="{% url 'view_bag' %}">
-            <button class="btn pb-4 back-button">&larr; Back to Shopping Bag</button>
-        </a>
+        <a href="{% url 'view_bag' %}" class="btn pb-4 back-button">&larr;Back to Shopping Bag</a>
         <div class="d-flex flex-column flex-md-row justify-content-around mt-md-3">
             <div class="d-flex flex-row checkout-details p-lg-5 p-md-4 p-3 mb-4">
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
@@ -36,7 +34,16 @@ Checkout
                             </div>
                         </div>
                         <div class="w-100 text-start">
-                            {{ order_form.email | as_crispy_field }}
+                            <div id="checkout_email_div" class="w-100 text-start mb-3">
+                                {{ order_form.email }}
+                                {% if order_form.email.errors %}
+                                <div class="text-danger">
+                                    {% for error in order_form.email.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </fieldset>
                     <fieldset class="rounded mb-4">

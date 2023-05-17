@@ -3,6 +3,7 @@ from .models import Order
 
 
 class OrderForm(forms.ModelForm):
+
     class Meta:
         model = Order
         fields = (
@@ -33,6 +34,8 @@ class OrderForm(forms.ModelForm):
         }
 
         self.fields["full_name"].widget.attrs["autofocus"] = True
+        self.fields['email'].widget.attrs['id'] = 'checkout_email_div'
+
         for field in self.fields:
             if field != "country":
                 if self.fields[field].required:
@@ -43,3 +46,4 @@ class OrderForm(forms.ModelForm):
                 self.fields[field].widget.attrs["aria-label"] = placeholder
             self.fields[field].widget.attrs["class"] = "stripe-style-input"
             self.fields[field].label = False
+        self.fields['email'].widget.attrs["class"] += " form-control"
