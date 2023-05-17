@@ -129,7 +129,7 @@ As already mentioned in [Target Audience](#target-audience) the users of **Bike 
 
 ## <a name="online-platforms">Online Platforms</a>
 
-To reach a wide range of users, **Bike World** considers using various online platforms to reach the target audiance. Some potential platforms to target users are include:
+To reach a wide range of users, **Bike World** considers using various online platforms to reach the target audiance. Some potential platforms to target users are:
 * **eCommerce Platform**: Creating a dedicated website for Bike World is essential. This allows users to browse and purchase bikes directly the store and connect with **Bike World**
 * **Online marketplaces**: Listing products on popular marketplaces such as Amazon or eBay, can help you reach a broader audience.
 * **Social Media**: Engaging with users on social media platforms can be highly effective. **Bike World** considers leveraging platforms such as Facebook, Instagram, Twitter, Strava and YouTube to showcase products, share relevant content, and interact with potential customers.
@@ -141,10 +141,13 @@ Cyclists and outdoor enthusiasts are known to be active on social media platform
 
 * **Instagram**: Cyclists often share their biking experiences and post pictures of their rides on Instagram. This platform allows **Bike World**to visually showcase your products and engage with potential customers.
 <br>
+
 * **Facebook**: Facebook provides a broad user base, including cycling groups and communities. **Bike World** has create a [Business Page](#watches--clocks---facebook-page) to share updates, promotions, and engage with users through comments and messages. Facebook offers powerful advertising tools that allow businesses to target specific demographics, interests, and behaviors. **Bike World** can leverage these tools to reach individuals who have shown interest in cycling, outdoor activities, or related topics. By narrowing down the target audience, **Bike World** can ensure that its marketing efforts are more focused and effective. Facebook allows businesses to run promotions, contests, and offer exclusive discounts to their audience. **Bike World** can leverage this feature to announce sales, launch new products, or reward loyal customers. The ability to target these promotions to a specific audience ensures that the offers are seen by individuals who are more likely to be interested in purchasing mountain bikes.
 <br>
+
 * **Strava**: Strava is a popular social fitness platform specifically designed for cyclists and runners. By being present on Strava, **Bike World** can directly target a community of active cyclists who are passionate about their sport and likely to be interested in high-class mountain bikes. This focused audience ensures that marketing efforts reach individuals who are already engaged in the cycling community. Strava fosters a sense of community among its users, allowing cyclists to connect, share their activities, and engage with one another. **Bike World** can tap into this community and actively participate in discussions, offer insights, and showcase  products. This helps in building brand awareness, fostering loyalty, and creating a positive brand image among dedicated cyclists. Strava also allows users to add and showcase the gear they use, including bikes. By encouraging **Bike World** customers to add their purchased bikes to their Strava profiles, **Bike World** can effectively showcase products to a wider audience. Additionally, positive reviews and endorsements from Strava users can serve as powerful social proof, influencing potential customers' purchasing decisions.
 <br>
+
 * **YouTube**: YouTube is an excellent platform for sharing informative videos related to biking, maintenance tips, trail guides, and showcasing the features of different mountain bikes. YouTube is a popular platform for product demonstrations and reviews. **Bike Worl**d** can create videos showcasing the performance, features, and benefits of its high-class mountain bikes. Detailed reviews by experts or influencers within the cycling community can help potential customers make informed purchasing decisions. Positive reviews and testimonials can also serve as powerful social proof, further enhancing the credibility and desirability of Bike World's products.
 
 ## <a name="user-needs">User Needs</a>
@@ -160,7 +163,7 @@ By providing useful content, **Bike World** can meet their needs and establish i
 
 
 ## <a name="promotions">Promotions</a>
-**Bike World** has already established a sales segment and plans to run more sessional sales in the future. Bike World does not aim to be known for low prices only, but low prices are also important to get in touch with a more price-conscious user group. In addition, sales can be used to sell overstock. Bike World plans to introduce discount promotions with discount codes in the future, which will either be sent exclusively to newsletter subscribers, sent through social media channels or will be visible on the website. It is importent to consider the most effective channels for reaching the target audience to inform users about sales and discount codes. 
+**Bike World** has already established a sales segment and plans to run more seasonal sales in the future. Bike World does not aim to be known for low prices only, but low prices are also important to get in touch with a more price-conscious user group. In addition, sales can be used to sell overstock. Bike World plans to introduce discount promotions with discount codes in the future, which will either be sent exclusively to newsletter subscribers, sent through social media channels or will be visible on the website. It is importent to consider the most effective channels for reaching the target audience to inform users about sales and discount codes. 
 
 * **Emails**: Bike World utilize newsletters to notify subscribers about upcoming sales and exclusive discount codes. This allows Bike World to reach users directly in their inboxes, providing personalized offers and building a sense of exclusivity.
 * **Social Media**: Bike world will use social media platforms like Facebook and Instagram to announce sales and discounts. Bike World will create engaging posts and stories to generate excitement and encourage users to take advantage of the promotional offers. By leveraging the reach and sharing capabilities of social media, Bike World can potentially reach a broader audience and benefit from viral sharing.
@@ -175,7 +178,7 @@ Market research was undertaken to decide on the appropriate marketing strategy t
 
 <img src="documentation/facebook/statista.png" width="800px" style="margin: 20px;">
 
-Therefore a facebbok business page has been created to share updates, promotions, and engage with users through comments and messages. On the Facebook business page a "Buy Now" (Jetzt Kaufen) button has been set up which leads users directly to the Shop and interesting posts have already been shared.
+Therefore a facebook business page has been created to share updates, promotions, and engage with users through comments and messages. On the Facebook business page a "Buy Now" (Jetzt Kaufen) button has been set up which leads users directly to the Shop and interesting posts have already been shared.
 
 ![Facebook Business Page](documentation/facebook/facebook-page.png)
 
