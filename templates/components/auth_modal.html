@@ -27,7 +27,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="login" role="tabpanel">
                         {% if socialaccount_providers%}
-                        <a href="{% provider_login_url 'google' %}" id="customButton" class="mb-4"><img
+                        <a href="{% provider_login_url 'google' %}" id="google-button-login" class="mb-4"><img
                                 src="{{ MEDIA_URL }}homepage-images/google-icon.png" alt="Google Logo"><span>Login with
                                 Google</span></a>
                         {% endif %}
@@ -43,7 +43,7 @@
                     </div>
                     <div class="tab-pane" id="register" role="tabpanel">
                         {% if socialaccount_providers%}
-                        <a href="{% provider_login_url 'google' %}" id="customButton" class="mb-4"><img
+                        <a href="{% provider_login_url 'google' %}" id="google-button-signup" class="mb-4"><img
                                 src="{{ MEDIA_URL }}homepage-images/google-icon.png" alt="Google Logo"><span>Login with
                                 Google</span></a>
                         {% endif %}

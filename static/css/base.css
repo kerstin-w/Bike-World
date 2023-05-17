@@ -658,7 +658,8 @@ footer ul {
     display: none;
 }
 
-#customButton {
+#google-button-login,
+#google-button-signup {
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -672,19 +673,22 @@ footer ul {
     cursor: pointer;
 }
 
-#customButton img {
+#google-button-login img,
+#google-button-signup img {
     float: left;
     margin-right: 10px;
     width: 32px;
     height: 32px;
 }
 
-#customButton span {
+#google-button-login span,
+#google-button-signup span {
     float: left;
     line-height: 20px;
 }
 
-#customButton:hover {
+#google-button-login:hover,
+#google-button-signup:hover {
     background-color: #3367D6;
 }
 
