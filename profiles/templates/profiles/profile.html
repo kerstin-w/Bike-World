@@ -280,9 +280,14 @@ Your Profile
 {% endblock %}
 {% block postloadjs %}
 {{ block.super }}
+<!-- Toggle JS for Profile Buttons-->
 <script type="text/javascript" src="{% static 'profiles/js/profile_btn_toggle.js' %}"></script>
+<!-- Country Fields JS-->
 <script type="text/javascript" src="{% static 'profiles/js/countryfield.js' %}"></script>
+<!-- Rating JS-->
 <script type="text/javascript" src="{% static 'profiles/js/star_rating.js' %}"></script>
+<!-- Products JS - Add Product to Cart-->
+{% include 'products/components/add_product_to_bag_script.html' %}
 <!-- Back To Top Script-->
 <script src="{% static 'js/back_to_top.js' %}"></script>
 {% endblock %}
