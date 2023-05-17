@@ -80,6 +80,10 @@ a {
     box-shadow: 0 0 0 0.25rem rgb(205 76 30 / 46%);
 }
 
+.asteriskField {
+    color: #cd4c1e;
+}
+
 /*=============== Navbar ===============*/
 .navbar {
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);

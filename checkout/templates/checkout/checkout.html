@@ -22,7 +22,7 @@ Checkout
             <div class="d-flex flex-row checkout-details p-lg-5 p-md-4 p-3 mb-4">
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
                     {% csrf_token %}
-                    <p class="text-muted">Please enter your Details to complete your order.</p>
+                    <p>Please enter your Details to complete your order.</p>
                     <fieldset class="rounded mb-4 d-flex flex-column align-items-center">
                         <legend class="fieldset-label small px-2 auto text-black mb-2">Details</legend>
                         <div class="d-flex w-100 flex-column flex-sm-row">
