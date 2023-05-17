@@ -10,11 +10,15 @@ $(document).ready(function () {
     // Check and open collapse containers based on URL parameters
     checkAndOpenCollapse('#collapseWishlist', 'collapseWishlist');
     checkAndOpenCollapse('#collapseReview', 'collapseReview');
+
     // Select the collapse buttons
     let collapseButtons = $('button[data-bs-toggle="collapse"]');
 
     // Select all the collapse containers
     let collapseContainers = $('.collapse');
+
+    // Create a variable to store the last opened collapsible container
+    let lastOpenedCollapse = null;
 
     // Add a click event listener to each button
     collapseButtons.on('click', function () {
@@ -26,10 +30,14 @@ $(document).ready(function () {
         collapseContainers.not(targetId).removeClass('show');
 
         if (!isOpen) {
-            scrollToContent(container);
+            if (lastOpenedCollapse !== targetId) {
+                scrollToContent(container);
+                lastOpenedCollapse = targetId;
+            }
         } else {
             // If the collapsible is already open, scroll to the top of the container
             scrollToTop(container);
+            lastOpenedCollapse = null;
         }
     });
 
