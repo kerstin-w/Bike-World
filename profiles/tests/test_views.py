@@ -842,7 +842,7 @@ class WishlistDeleteViewTest(TestCase):
         """
         self.client.login(username="testuser", password="testpass")
         response = self.client.post(self.delete_url)
-        self.assertRedirects(response, "/profile/")
+        self.assertRedirects(response, "/profile/?collapseWishlist=true")
         self.assertFalse(Wishlist.objects.filter(pk=self.wishlist.pk).exists())
 
     def test_wishlist_delete_view_only_delete_own_wishlist_items(self):
@@ -956,7 +956,7 @@ class ProductReviewViewTest(TestCase):
         form_data = {"rating": 5, "review": "This is a great product!"}
         response = self.client.post(self.url, data=form_data)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse("profile"))
+        self.assertRedirects(response, "/profile/?collapseReview=true")
         self.assertTrue(ProductReview.objects.exists())
         product_review = ProductReview.objects.first()
         self.assertEqual(product_review.product, self.product)
