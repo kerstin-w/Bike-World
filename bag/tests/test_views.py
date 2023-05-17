@@ -202,6 +202,26 @@ class AddToBagViewTest(TestCase):
         expected_data = {"error": "The product does not exist."}
         self.assertJSONEqual(response.content, expected_data)
 
+    def test_add_to_bag_view_invalid_quantity(self):
+        """
+        Test adding item with an invalid quantity
+        """
+        url = reverse("add_to_bag", args=[self.product.id])
+        request = self.factory.post(url, {"quantity": "0"})
+
+        # Add session middleware to the request
+        middleware = SessionMiddleware()
+        middleware.process_request(request)
+        request.session.save()
+
+        response = AddToBagView.as_view()(request, item_id=self.product.id)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertJSONEqual(
+            response.content.decode("utf-8"),
+            {"error": "Please enter a valid quantity between 1-99."},
+        )
+
 
 class AdjustBagViewTest(TestCase):
     """
