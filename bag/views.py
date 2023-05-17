@@ -37,8 +37,19 @@ class AddToBagView(View):
                 'error': 'The product does not exist.',
             }
             return JsonResponse(response_data, status=400)
-        # get the quantity of the item from the form data
-        quantity = int(request.POST.get("quantity"))
+        quantity = request.POST.get("quantity")
+
+        # Validate the input quantity
+        try:
+            quantity = int(quantity)
+            if quantity < 1 or quantity > 99:
+                raise ValueError('Invalid quantity')
+        except ValueError:
+            response_data = {
+                'error': 'Please enter a valid quantity between 1-99.',
+            }
+            return JsonResponse(response_data, status=400)
+
         # get the current bag dictionary from the user's session data
         bag = request.session.get("bag", {})
         # If the item is already in the bag, add the new quantity

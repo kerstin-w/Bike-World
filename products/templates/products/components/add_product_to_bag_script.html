@@ -4,29 +4,13 @@
         updateBagContents: function (bagContents) {
             $('#bag-contents').html(bagContents);
         },
-        // Function to validate the quantity input
-        validateQuantity: function (quantity) {
-            const parsedQuantity = parseInt(quantity);
-            if (isNaN(parsedQuantity) || parsedQuantity < 1 || parsedQuantity > 99) {
-                return false;
-            }
-            return true;
-        },
+
         // Function to add an item to bag
         addToBag: async function (quantity, productId, addButton) {
             const formData = this.createFormData(productId, quantity);
             const response = await this.addToBagRequest(formData);
             const errorContainer = $('#error-container-bag-' + productId);
 
-            // If input is invalid show error message
-            if (!addToShoppingBag.validateQuantity(quantity)) {
-                errorContainer.html('Please enter a quantity between 1-99.');
-                errorContainer.css('display', 'block');
-                return;
-            } else {
-                // Hide the error container if the quantity is valid
-                errorContainer.css('display', 'none');
-            }
             // If the request is successful
             if (response.ok) {
                 const responseData = await response.json();
