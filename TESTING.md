@@ -24,7 +24,6 @@ Back to the [README](README.md)<br>
 ## <a name="manual-testing">Manual Testing</a>
 
 ## <a name="automated-testing">Automated Testing</a>
-## <a name="automated-testing">Automated Testing</a>
 
 Python **Automated Unit Testing** was implemented using the [Django Unit Testing](https://docs.djangoproject.com/en/3.2/topics/testing/overview/) framework.  
 **Unit Tests** have been written to cover all major parts of the code like **Forms**, **Models**, **Views**, **Admin**, **Context-Processors** and **Fields**. The tests were created to cover all key aspects of the code. Only the checkout app has a moderate coverage, but here manual testing was applied.
@@ -44,6 +43,8 @@ A total of **226** **Unit Tests** have been written. All **226** tests ran succe
 ## <a name="validator-testing">Validator Testing</a>
 
 ### <a name="html">HTML</a>
+All **HTML** code was validated using the [W3C Markup Validation Service](https://validator.w3.org/) regularly during the development process. **The HTML Source Code** was regularly viewed for each page using **Google Chrome** and passed through the [W3C Markup Validation Service](https://validator.w3.org/). Various minor errors were encountered and corrected during the final **HTML** validation check. 
+
 ### <a name="css">CSS</a>
 ### <a name="js">JavaScript</a>
 ### <a name="Python">Python</a>
