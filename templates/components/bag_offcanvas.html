@@ -15,9 +15,10 @@
                 <div class="row mb-3">
                     <div class="col-3 my-1">
                         {% if item.product.image %}
-                        <img class="w-100" src="{{ MEDIA_URL }}{{ item.product.image }}">
+                        <img class="w-100" src="{{ MEDIA_URL }}{{ item.product.image }}" alt="{{ product.title }}">
                         {% else %}
-                        <img class="w-100" src="{{ MEDIA_URL }}products/default-no-image.webp">
+                        <img class="w-100" src="{{ MEDIA_URL }}products/default-no-image.webp"
+                            alt="{{ product.title }}">
                         {% endif %}
                     </div>
                     <div class="col-9">
