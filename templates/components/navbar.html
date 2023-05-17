@@ -158,8 +158,8 @@
                         <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
                         <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                         {% else %}
-                        <a href="#" class="login-link dropdown-item" data-bs-toggle="modal" data-bs-target="#auth-modal"
-                            data-tab-target="#login">Login</a>
+                        <a href="#" id="auth-modal-label" class="login-link dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#auth-modal" data-tab-target="#login">Login</a>
                         <a href="#" class="register-link dropdown-item" data-bs-toggle="modal"
                             data-bs-target="#auth-modal" data-tab-target="#register">Register</a>
                         {% endif %}
