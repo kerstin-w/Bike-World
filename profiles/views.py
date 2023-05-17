@@ -293,7 +293,6 @@ class WishlistDeleteView(LoginRequiredMixin, DeleteView):
     """
 
     model = Wishlist
-    success_url = reverse_lazy("profile")
 
     def get_queryset(self):
         """
@@ -313,6 +312,13 @@ class WishlistDeleteView(LoginRequiredMixin, DeleteView):
             f"<strong>{product}</strong> has been removed from your wishlist!",
         )
         return super().delete(request, *args, **kwargs)
+
+    def get_success_url(self):
+        """
+        Return the URL to redirect to after successful deletion,
+        including the collapseWishlist parameter in the URL
+        """
+        return f"{reverse('profile')}?collapseWishlist=true"
 
 
 class ProductReviewView(ProfileView, LoginRequiredMixin, FormView):

@@ -169,7 +169,8 @@ Your Profile
                                             <i class="fa-solid fa-cart-shopping"></i> Add to Bag
                                         </button>
                                     </form>
-                                    <form method="post" action="{% url 'wishlist-delete' item.id %}">
+                                    <form method="post"
+                                        action="{% url 'wishlist-delete' item.id %}?collapseWishlist=true">
                                         {% csrf_token %}
                                         <button class="btn btn-secondary rounded-0 m-3 text-nowrap" type="submit"><i
                                                 class="fa-regular fa-trash-can"></i> Delete</button>
