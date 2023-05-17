@@ -211,7 +211,7 @@ Your Profile
                             </div>
                         </div>
                         <form id="product-review-form-{{ item.product.id }}" method="POST"
-                            action="{% url 'product_review' item.order_number item.product.id %}"
+                            action="{% url 'product_review' item.order_number item.product.id %}?collapseReview=true"
                             class="px-sm-4 px-0 pt-2 my-4 w-100">
                             {% csrf_token %}
                             <div class="rating mb-4">

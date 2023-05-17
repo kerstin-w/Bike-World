@@ -1,4 +1,15 @@
+function checkAndOpenCollapse(collapseId, collapseParam) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const collapseValue = urlParams.get(collapseParam);
+    if (collapseValue === 'true') {
+        $(collapseId).addClass('show');
+    }
+}
+
 $(document).ready(function () {
+    // Check and open collapse containers based on URL parameters
+    checkAndOpenCollapse('#collapseWishlist', 'collapseWishlist');
+    checkAndOpenCollapse('#collapseReview', 'collapseReview');
     // Select the collapse buttons
     let collapseButtons = $('button[data-bs-toggle="collapse"]');
 
@@ -32,12 +43,5 @@ $(document).ready(function () {
     function scrollToTop(container) {
         // Scroll to the top of the container
         container.scrollTop = 0;
-    }
-    // Check if the collapseWishlist parameter is present in the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const collapseWishlist = urlParams.get('collapseWishlist');
-    if (collapseWishlist === 'true') {
-        // Open the wishlist collapsible
-        $('#collapseWishlist').addClass('show');
     }
 });

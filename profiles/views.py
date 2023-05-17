@@ -16,6 +16,7 @@ from django.views.generic import (
     TemplateView,
     View,
 )
+from urllib.parse import urlencode
 
 from checkout.models import Order, OrderLineItem
 from products.models import Product
@@ -318,7 +319,9 @@ class WishlistDeleteView(LoginRequiredMixin, DeleteView):
         Return the URL to redirect to after successful deletion,
         including the collapseWishlist parameter in the URL
         """
-        return f"{reverse('profile')}?collapseWishlist=true"
+        parameter = {"collapseWishlist": "true"}
+        query_string = urlencode(parameter)
+        return f"{reverse('profile')}?{query_string}"
 
 
 class ProductReviewView(ProfileView, LoginRequiredMixin, FormView):
@@ -351,6 +354,15 @@ class ProductReviewView(ProfileView, LoginRequiredMixin, FormView):
             order__user_profile__user=self.request.user,
         )
 
+    def get_success_url(self):
+        """
+        Return the URL to redirect to after successful review submission,
+        including the collapseReview parameter in the URL
+        """
+        parameter = {"collapseReview": "true"}
+        query_string = urlencode(parameter)
+        return f"{reverse('profile')}?{query_string}"
+
     def form_valid(self, form):
         """
         Process valid form data
@@ -366,7 +378,7 @@ class ProductReviewView(ProfileView, LoginRequiredMixin, FormView):
             f"Your review for <strong>{review.product}</strong> "
             "has been submitted!",
         )
-        return redirect(reverse("profile"))
+        return redirect(self.get_success_url())
 
     def form_invalid(self, form):
         """
@@ -432,4 +444,4 @@ class ProductReviewDeleteView(UserPassesTestMixin, DeleteView):
         messages.error(
             self.request, "You do not have permission to delete this review."
         )
-        return redirect(self.request.META.get('HTTP_REFERER', 'products'))
+        return redirect(self.request.META.get("HTTP_REFERER", "products"))
