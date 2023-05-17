@@ -4,7 +4,7 @@
 <!-- Image Preview -->
 <div class="image-preview mx-auto">
     <a href="{{ widget.value.url }}">
-        <img class="product-img" src="{{ widget.value.url }}">
+        <img class="product-img" src="{{ widget.value.url }}" alt="Product Image Preview">
     </a>
 </div>
 {% if not widget.required %}
@@ -18,7 +18,7 @@
 {% endif %}
 <!-- Select Image Button -->
 <span class="btn btn-file btn-cta text-white">
-    Select Image <input id="new-image" type="{{ widget.type }}" name="{{ widget.name }}"
+    Select Image <input type="{{ widget.type }}" name="{{ widget.name }}"
         {% include "django/forms/widgets/attrs.html" %}>
 </span>
 <div id="message"></div>
