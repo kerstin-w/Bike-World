@@ -9,8 +9,8 @@
         </div>
         <div class="offcanvas-body">
             <p class="logo-font bg-white text-black mt-2 liner">Your Bikes ({{ product_count }})&nbsp;</p>
+            {% if bag_items %}
             <div class="bag-notification-wrapper">
-                {% if bag_items %}
                 {% for item in bag_items %}
                 <div class="row mb-3">
                     <div class="col-3 my-1">
