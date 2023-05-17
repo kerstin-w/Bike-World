@@ -235,3 +235,13 @@ In addition, the Google Search Snippets were tested in order to appear relevant 
 [Created with SISTRIX:](https://app.sistrix.com/en/serp-snippet-generator)
 
 ![Google Search Snippet](documentation/seo/snippet.png)
+
+## <a name="mailchimp">Mailchimp</a>
+
+Newsletters are still an important marketing tool and relatively cost-effective. Therefore Bike World has integrated a newsletter signup from MailChimp on the site. It is important for Bike World to grow the subscriber base quickly for reaching more users. But not at any price. Thus it was decided to not integrate a pop up for the newsletter signup on the homepage in the sense of an excellent and positive user experience. This would naturally bring far more users to sign up for the newsletter. However, a pop up is just irritating for many users and leads to a higher bounce rate. As a result, a signup was added to the footer where users can sign up for a newsletter. The newsletter signup will also be promoted via Facebook in the future and as soon as the coupon code feature is implemented, a 10€ discount code will be offered as an incentive. The email subscription service is run through Mailchimp, allowing the website admin to send marketing emails through the platform, increasing engagement within the site.
+
+![Mailchimp Signups](documentation/mailchimp/mailchimp-signup.png)
+
+Unfortunately it was not possible to configure an automatic welcome email for all subscribers in Mail Chimp without paying. However, below is a draft of its possible appearance. 
+
+![Mailchimp Signups](documentation/mailchimp/welcome-newsletter.png)
