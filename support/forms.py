@@ -5,7 +5,6 @@ from django import forms
 # and textarea tags respectively.
 text_input_attrs = {
     "class": "border-black",
-    "autofocus": True,
 }
 textarea_attrs = {
     "class": "border-black",
