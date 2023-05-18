@@ -43,7 +43,28 @@ A total of **226** **Unit Tests** have been written. All **226** tests ran succe
 ## <a name="validator-testing">Validator Testing</a>
 
 ### <a name="html">HTML</a>
-All **HTML** code was validated using the [W3C Markup Validation Service](https://validator.w3.org/) regularly during the development process. **The HTML Source Code** was regularly viewed for each page using **Google Chrome** and passed through the [W3C Markup Validation Service](https://validator.w3.org/). Various minor errors were encountered and corrected during the final **HTML** validation check. 
+All **HTML** code was validated using the [W3C Markup Validation Service](https://validator.w3.org/) regularly during the development process. **The HTML Source Code** was regularly viewed for each page using **Google Chrome** and passed through the [W3C Markup Validation Service](https://validator.w3.org/). Various minor errors were encountered and corrected during the final **HTML** validation check.
+A slightly unpleasant error was the duplicate of the `div_id_email` that occurred in the checkout. Crispy Forms creates a wrapper DIV around the input element and assigns the DIV ID `div_id_email` for email. Since I have two forms on the page with email, one being the `OrderForm` and the other being the `login/signup modal`, there was a conflict here. I haven't found a really convinient solution to control the ID of the wrapper DIV with the existing OrderForm setup. One solution would have been to create the OrderForm entirely new with the `Crispy Form Helpers and Layout`. This would have given me the possibility to give the wrapper DIV its own ID. The other option would have been to manually create this input field in the HTML code. This is the solution I chose in the end, as it was less invasive. 
+
+### Errors during validation check
+
+<details>
+    <summary>Home Page</summary>
+    <img src="documentation/testing/validator/html/validator-error-w3-homepage.png">
+</details>
+<details>
+    <summary>CLP</summary>
+    <img src="documentation/testing/validator/html/validator-error-w3-clp.png">
+</details>
+<details>
+    <summary>Checkout</summary>
+    <img src="documentation/testing/validator/html/validator-error-w3-checkout.png">
+</details>
+<details>
+    <summary>Profile</summary>
+    <img src="documentation/testing/validator/html/validator-error-w3-profile.png">
+</details>
+
 
 ### <a name="css">CSS</a>
 ### <a name="js">JavaScript</a>
