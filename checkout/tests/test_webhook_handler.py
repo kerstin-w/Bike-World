@@ -2,9 +2,8 @@ from django.core import mail
 from django.http import HttpRequest
 from django.test import TestCase
 
-from checkout.models import Order, OrderLineItem
+from checkout.models import Order
 from checkout.webhook_handler import StripeWH_Handler
-from products.models import Category, Product
 
 
 class TestStripeWebhookHandler(TestCase):
