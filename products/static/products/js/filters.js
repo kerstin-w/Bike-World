@@ -125,11 +125,10 @@ $(document).ready(function () {
             }
         }
         return queryParams;
-    }
+    };
 
     // Update the selected filters containers
     const updateSelectedFilters = function () {
-        const queryParams = getCurrentQueryParams();
         const selectedCategories = $('input[name="category"][type="radio"]:checked')
             .map(function () {
                 if ($(this).val() !== 'all') {
@@ -172,7 +171,7 @@ $(document).ready(function () {
         } else {
             selectedBrandFiltersContainer.empty();
         }
-    }
+    };
 
     // Reset all filters and selected sorting option
     const resetFilters = function () {
@@ -180,7 +179,7 @@ $(document).ready(function () {
         $('#sort-by').prop('selectedIndex', 0);
 
         window.location.href = '/products/';
-    }
+    };
 
     // Set initial filter states on page load
     const queryParams = getCurrentQueryParams();
