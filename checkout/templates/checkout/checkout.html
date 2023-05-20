@@ -34,16 +34,7 @@ Checkout
                             </div>
                         </div>
                         <div class="w-100 text-start">
-                            <div id="checkout_email_div" class="w-100 text-start mb-3">
-                                {{ order_form.email }}
-                                {% if order_form.email.errors %}
-                                <div class="text-danger">
-                                    {% for error in order_form.email.errors %}
-                                    {{ error }}
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                            </div>
+                            {{ order_form.email | as_crispy_field }}
                         </div>
                     </fieldset>
                     <fieldset class="rounded mb-4">

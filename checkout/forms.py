@@ -34,7 +34,6 @@ class OrderForm(forms.ModelForm):
         }
 
         self.fields["full_name"].widget.attrs["autofocus"] = True
-        self.fields['email'].widget.attrs['id'] = 'checkout_email'
 
         for field in self.fields:
             if field != "country":
@@ -46,4 +45,3 @@ class OrderForm(forms.ModelForm):
                 self.fields[field].widget.attrs["aria-label"] = placeholder
             self.fields[field].widget.attrs["class"] = "stripe-style-input"
             self.fields[field].label = False
-        self.fields['email'].widget.attrs["class"] += " form-control"
