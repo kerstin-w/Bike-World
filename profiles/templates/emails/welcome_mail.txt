@@ -3,7 +3,7 @@ Hi {{ user.username }},
 welcome to BIKE WORLD!
 
 We're glad you joined our community of Mountain Bikers.
-To get started, check out our latest products at {{ shop_url }}.
+To get started, check out our latest products at https://bike-world.herokuapp.com/.
 
 Enjoy the ride!
 
