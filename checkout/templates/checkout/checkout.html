@@ -22,7 +22,18 @@ Checkout
             <div class="d-flex flex-row checkout-details p-lg-5 p-md-4 p-3 mb-4">
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form" class="w-100">
                     {% csrf_token %}
-                    <p>Please enter your Details to complete your order.</p>
+                    {% if not user.is_authenticated %}
+                    <div class="d-flex ps-0 w-100 justify-content-center">
+                        <a class="btn btn btn-outline-dark rounded-0 text-center mx-2 d-flex align-items-center justify-content-center"
+                            href="{% url 'account_signup' %}">Create account</a>
+                        <a class="btn btn btn-outline-dark rounded-0 text-center mx-2"
+                            href="{% url 'account_login' %}"><i class="fa-regular fa-user p-2"></i>Login</a>
+                    </div>
+                    <div class="horizontal-line mb-3">
+                        <span>or</span>
+                    </div>
+                    {% endif %}
+                    <p class="text-center">Enter your Details to complete your order.</p>
                     <fieldset class="rounded mb-4 d-flex flex-column align-items-center">
                         <legend class="fieldset-label small px-2 auto text-black mb-2">Details</legend>
                         <div class="d-flex w-100 flex-column flex-sm-row">
@@ -50,19 +61,14 @@ Checkout
                             </div>
                         </div>
                         {{ order_form.country | as_crispy_field }}
+                        {% if user.is_authenticated %}
                         <div class="form-check form-check-inline float-right mr-0">
-                            {% if user.is_authenticated %}
                             <label class="form-check-label" for="id-save-info">Save this delivery information to my
                                 profile</label>
                             <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info"
                                 checked>
-                            {% else %}
-                            <label class="form-check-label" for="id-save-info">
-                                <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
-                                <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
-                            </label>
-                            {% endif %}
                         </div>
+                        {% endif %}
                     </fieldset>
                     <fieldset class="mb-4">
                         <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>

@@ -658,7 +658,8 @@ footer ul {
 }
 
 #google-button-login,
-#google-button-signup {
+#google-button-signup,
+#google-button-login-page {
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -673,7 +674,8 @@ footer ul {
 }
 
 #google-button-login img,
-#google-button-signup img {
+#google-button-signup img,
+#google-button-login-page img {
     float: left;
     margin-right: 10px;
     width: 32px;

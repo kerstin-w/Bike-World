@@ -10,9 +10,9 @@
 }
 
 #payment-form .form-control,
+#payment-form .form-control,
 #card-element {
     color: #000;
-    border: 1.5px solid #717171;
     background-color: #fff;
 }
 
@@ -29,10 +29,11 @@ select option {
 
 select:invalid {
     color: #6c757d;
+    padding-bottom: .2rem;
 }
 
 .form-select:focus {
-    border: 1px solid #717171;
+    border: 1.5px solid #717171;
 }
 
 .StripeElement,
@@ -75,6 +76,25 @@ select:invalid {
     justify-content: center;
     margin: 0;
     height: 100%;
+}
+
+.horizontal-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.horizontal-line::before,
+.horizontal-line::after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: black;
+}
+
+.horizontal-line span {
+    padding: 0 10px;
 }
 
 /*=============== Media ===============*/
