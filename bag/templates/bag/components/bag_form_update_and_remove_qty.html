@@ -7,17 +7,20 @@
                 <div class="input-group mb-3 d-flex flex-nowrap align-items-center">
                     <div class="input-group-prepend pe-2">
                         <button class="decrement-qty btn btn-black btn-outline-dark btn-sm"
-                            data-item_id="{{ item.item_id }}" id="decrement-qty_{{ item.item_id }}">
+                            data-item_id="{{ item.item_id }}" id="decrement-qty_{{ item.item_id }}"
+                            aria-label="Decrement quantity for {{ product.name }}">
                             <span class="icon">
                                 <i class="fas fa-minus"></i>
                             </span>
                         </button>
                     </div>
                     <input class="form-control qty_input" type="number" name="quantity" value="{{ item.quantity }}"
-                        min="1" max="99" data-item_id="{{ item.item_id }}" id="id_qty_{{ item.item_id }}" required>
+                        min="1" max="99" data-item_id="{{ item.item_id }}" id="id_qty_{{ item.item_id }}"
+                        aria-label="Quantity for {{ product.name }}" required>
                     <div class="input-group-append ps-2">
                         <button class="increment-qty btn btn-black btn-outline-dark btn-sm"
-                            data-item_id="{{ item.item_id }}" id="increment-qty_{{ item.item_id }}">
+                            data-item_id="{{ item.item_id }}" id="increment-qty_{{ item.item_id }}"
+                            aria-label="Increment quantity for {{ product.name }}">
                             <span class="icon">
                                 <i class="fas fa-plus"></i>
                             </span>
