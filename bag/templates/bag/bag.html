@@ -75,10 +75,10 @@ Shopping Bag
                 {% endif %}
             </div>
         </div>
+        {% else %}
     </div>
-    {% else %}
     <div class="d-flex flex-column align-items-center p-5">
-        <p>Your bag is empty.</strong></p>
+        <p><strong>Your bag is empty.</strong></p>
         <a href="{% url 'products' %}" class="btn btn-cta upper">Find a Bike</a>
     </div>
     {% endif %}
