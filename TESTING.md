@@ -134,24 +134,35 @@ No errors were generated.
 
 <details>
     <summary>Base.css</summary>
+    <img src="documentation/testing/validator/css/base_css.png">
 </details>
 <details>
     <summary>Admin.css</summary>
+    <img src="documentation/testing/validator/css/admin_css.png">
 </details>
 <details>
     <summary>Bag.css</summary>
+    <img src="documentation/testing/validator/css/bag_css.png">
 </details>
 <details>
     <summary>Checkout.css</summary>
+    <img src="documentation/testing/validator/css/checkout_css.png">
 </details>
 <details>
     <summary>Products.css</summary>
+    <img src="documentation/testing/validator/css/products_css.png">
 </details>
 <details>
     <summary>Profiles.css</summary>
+    <img src="documentation/testing/validator/css/profiles_css.png">
 </details>
 <details>
     <summary>Support.css</summary>
+    <img src="documentation/testing/validator/css/support_css.png">
+</details>
+<details>
+    <summary>quantity_input.css</summary>
+    <img src="documentation/testing/validator/css/quantity_input_css.png">
 </details>
 
 ### <a name="js">JavaScript</a>
