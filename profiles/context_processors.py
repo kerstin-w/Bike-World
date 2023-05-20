@@ -1,14 +1,5 @@
-from allauth.account.forms import LoginForm, SignupForm
-
-
-class CustomLoginForm(LoginForm):
-    """
-    Custom Login Form to turn of the auto focus
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['login'].widget.attrs.pop('autofocus', None)
+from allauth.account.forms import SignupForm
+from .forms import CustomLoginForm
 
 
 def login_tag(request):
@@ -16,7 +7,7 @@ def login_tag(request):
     Context processor that adds a login form to the context
     of every template that's rendered.
     """
-    return {"logintag": CustomLoginForm()}
+    return {"logintag": CustomLoginForm(auto_id="login_id_%s")}
 
 
 def signup_tag(request):
@@ -24,4 +15,4 @@ def signup_tag(request):
     Context processor that adds a signup form to the context
     of every template that's rendered.
     """
-    return {"signuptag": SignupForm()}
+    return {"signuptag": SignupForm(auto_id="signup_id_%s")}
