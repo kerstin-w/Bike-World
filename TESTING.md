@@ -143,6 +143,27 @@ In checkout a warning was displayed that the variable Stripe is undefined. Howev
 
 ### <a name="Python">Python</a>
 
+All **Python Code** was thoroughly de-bugged and tested at the command line during the development process, and has been validated 
+using [Flake8](https://flake8.pycqa.org/). [flake8-django](https://pypi.org/project/flake8-django/) was also installed to assist with validation.  
+**Flake8** was configured by creating a `setup.cfg` file in the root of the project, which contains the following settings:
+```
+[flake8]
+exclude = */migrations/*.py, *__init__.py, *_pychache_*, .vscode, *settings.py*,
+per-file-ignores = *apps.py:F401, *env.py:E501,
+```
+The settings exclude **django** migrations, `__init__.py`, `.vscode` and `_pychache_` files, as these are system generated files and do not need to be checked.  
+*settings.py* (line too long) errors are ignored as it is not possible to shorten the affected lines of code without causing application errors.  
+*env.py* (line too long) errors are ignored as it is not possible to shorten the affected lines of code without causing application errors.
+*F401* (imported but unused) errors are ignored for *apps.py, as **Flake8** was generating an error on **Django** signals being imported but unused. 
+Signals need to be imported into the **app** config files to ensure correct operation of the code.  
+
+<details>
+    <summary>Result</summary>
+    <img src="documentation/testing/validator/python/flake8.png">
+</details>
+
+<br>
+
 ## <a name="performance-testing">Performance Testing</a>
 
 ### <a name="desktop-results">Desktop Results</a>
