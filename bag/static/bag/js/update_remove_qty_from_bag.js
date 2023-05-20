@@ -24,4 +24,4 @@ $('.remove-item').on('click', function (e) {
     $.post(url, data, () => {
         location.reload();
     });
-})
+});
