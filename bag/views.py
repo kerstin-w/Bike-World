@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 from django.template.loader import render_to_string
 from django.views import View
 from django.shortcuts import (
-    render,
     redirect,
     reverse,
     HttpResponse,
