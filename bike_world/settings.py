@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['bike-world.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['bike-world.herokuapp.com', 'localhost', '8000-kerstinw-bikeworld-17uhl7utqlp.ws-eu97.gitpod.io']
 
 
 # Application definition

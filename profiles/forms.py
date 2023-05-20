@@ -29,6 +29,8 @@ class UserProfileForm(forms.ModelForm):
         if self.instance and self.instance.user.email:
             self.initial["default_email"] = self.instance.user.email
 
+        # Set autofocus on the first field
+        self.fields["default_street_address1"].widget.attrs["autofocus"] = True
         for field in self.fields:
             if field != "default_country":
                 if self.fields[field].required:
