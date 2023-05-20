@@ -77,6 +77,51 @@ A slightly unpleasant error was the duplicate of the `div_id_email` that occurre
 
 ### Results validation check
 
+<details>
+    <summary>Home Page</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-homepage.png">
+</details>
+<details>
+    <summary>CLP</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-clp.png">
+</details>
+<details>
+    <summary>PDP</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-pdp.png">
+</details>
+<details>
+    <summary>Shopping Bag</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-bag.png">
+</details>
+<details>
+    <summary>Checkout</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-checkout.png">
+</details>
+<details>
+    <summary>Profile</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-profile.png">
+</details>
+<details>
+    <summary>Contact Us</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-contact.png">
+</details>
+<details>
+    <summary>FAQs</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-faqs.png">
+</details>
+<details>
+    <summary>Return Policy</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-returns.png">
+</details>
+<details>
+    <summary>PrivacyPolicy</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-privacy-policy.png">
+</details>
+<details>
+    <summary>TCs</summary>
+    <img src="documentation/testing/validator/html/validator-w3-result-tcs.png">
+</details>
+
 
 ### <a name="css">CSS</a>
 
