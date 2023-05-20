@@ -79,6 +79,36 @@ A slightly unpleasant error was the duplicate of the `div_id_email` that occurre
 
 
 ### <a name="css">CSS</a>
+
+**Custom CSS Styling** from [admin.css](admin/static/admin/css/admin.css), [base.css](static/css/base.css), [bag.css](bag/static/bag/css/bag.css), 
+[checkout.css](checkout/static/checkout/css/checkout.css), [products.css](products/static/products/css/products.css), [profiles.css](profiles/static/profiles/css/profiles.css) and [support.css](support/static/support/css/support.css).
+was validated using the [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/).  
+No errors were generated.
+
+### Results
+
+<details>
+    <summary>Base.css</summary>
+</details>
+<details>
+    <summary>Admin.css</summary>
+</details>
+<details>
+    <summary>Bag.css</summary>
+</details>
+<details>
+    <summary>Checkout.css</summary>
+</details>
+<details>
+    <summary>Products.css</summary>
+</details>
+<details>
+    <summary>Profiles.css</summary>
+</details>
+<details>
+    <summary>Support.css</summary>
+</details>
+
 ### <a name="js">JavaScript</a>
 ### <a name="Python">Python</a>
 
