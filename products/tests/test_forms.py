@@ -5,7 +5,7 @@ from io import BytesIO
 from PIL import Image
 
 from products.forms import ProductForm
-from products.models import Category, Product
+from products.models import Category
 
 
 class ProductFormTest(TestCase):

@@ -1,5 +1,5 @@
 from django.test import RequestFactory, TestCase
-from allauth.account.forms import LoginForm, SignupForm
+from allauth.account.forms import SignupForm
 
 from profiles.context_processors import login_tag, signup_tag
 from profiles.forms import CustomLoginForm
