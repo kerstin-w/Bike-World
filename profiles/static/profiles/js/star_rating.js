@@ -34,6 +34,6 @@ ratingContainers.forEach(container => {
 
             // Enable the submit button
             submitButton.disabled = false;
-        })
+        });
     });
 });
