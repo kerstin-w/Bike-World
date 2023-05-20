@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from allauth.account.forms import LoginForm
 from .models import UserProfile, ProductReview
 
 
@@ -107,3 +108,13 @@ class ProductReviewForm(forms.ModelForm):
                 attrs={"class": "form-control, border-black"}
             ),
         }
+
+
+class CustomLoginForm(LoginForm):
+    """
+    Custom Login Form to turn of the auto focus
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["login"].widget.attrs.pop("autofocus", None)
