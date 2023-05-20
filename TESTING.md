@@ -110,6 +110,37 @@ No errors were generated.
 </details>
 
 ### <a name="js">JavaScript</a>
+
+The custom scripts, were validated using the [JSHint](https://jshint.com/about/) static code analysis tool. Due to the lack of complexity of **JavaScript** code implemented on the project, **Automated Unit Testing** of the **JavaScript** code was considered unnecessary. All **JavaScript** functions and event handlers in the custom **JavaScript Code Libraries** have been thoroughly manually debugged and tested in the console.
+
+In checkout a warning was displayed that the variable Stripe is undefined. However, this is defined by the Stripe JS and therefore this message was not pursued further.
+
+### Results
+
+<details>
+    <summary>Bag</summary>
+    <img src="documentation/testing/validator/js/update_remove_qty_from_bag.png">
+</details>
+<details>
+    <summary>Checkout</summary>
+    <img src="documentation/testing/validator/js/stripe_elements.png">
+</details>
+<details>
+    <summary>Products</summary>
+    <img src="documentation/testing/validator/js/add_product_to_bag.png">
+    <img src="documentation/testing/validator/js/add_to_wishlist.png">
+    <img src="documentation/testing/validator/js/filters.png">
+    <img src="documentation/testing/validator/js/quantity_input.png">
+</details>
+<details>
+    <summary>Profiles</summary>
+    <img src="documentation/testing/validator/js/countryfield.png">
+    <img src="documentation/testing/validator/js/profile_btn_toggle.png">
+    <img src="documentation/testing/validator/js/star_rating.png">
+</details>
+<br>
+
+
 ### <a name="Python">Python</a>
 
 ## <a name="performance-testing">Performance Testing</a>
