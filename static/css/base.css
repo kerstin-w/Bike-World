@@ -199,10 +199,6 @@ a {
     border-bottom-left-radius: 0;
 }
 
-.search-box .btn-outline-secondary {
-    color: none !important;
-}
-
 .user-options {
     right: 5px;
     text-align: right;
@@ -551,14 +547,13 @@ footer ul {
 
 .add-wishlist.disabled:hover {
     color: #cd4c1d;
-    font-size: auto;
     transition: none;
 }
 
 .add-wishlist:hover,
 .add-wishlist:active {
     color: #cd4c1d;
-    font-size: calc(.8vw + .8vh + .8vmin);
+    font-size: calc(1.1vw + 1.1vh + 1.1vmin);
     transition: all 0.3s ease;
 }
 
