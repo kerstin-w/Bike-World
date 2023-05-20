@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from allauth.account.forms import LoginForm
 
 from profiles.models import UserProfile
-from profiles.forms import UserProfileForm, ProductReviewForm
+from profiles.forms import UserProfileForm, ProductReviewForm, CustomLoginForm
 from products.models import Product
 
 
@@ -247,3 +248,17 @@ class ProductReviewFormTest(TestCase):
             form.errors["rating"][0],
             "Ensure this value is less than or equal to 5.",
         )
+
+
+class CustomLoginFormTest(TestCase):
+    """
+    Test Case for Custom Login Form
+    """
+
+    def test_autofocus_disabled(self):
+        """
+        Test form disables autofocus
+        """
+        form = CustomLoginForm()
+        self.assertIsInstance(form, LoginForm)
+        self.assertFalse("autofocus" in form.fields["login"].widget.attrs)
