@@ -686,13 +686,15 @@ footer ul {
 }
 
 #google-button-login span,
-#google-button-signup span {
+#google-button-signup span,
+#google-button-login-page span {
     float: left;
     line-height: 20px;
 }
 
 #google-button-login:hover,
-#google-button-signup:hover {
+#google-button-signup:hover,
+#google-button-login-page:hover {
     background-color: #3367D6;
 }
 
