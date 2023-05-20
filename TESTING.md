@@ -222,8 +222,116 @@ Signals need to be imported into the **app** config files to ensure correct oper
 
 ## <a name="performance-testing">Performance Testing</a>
 
+Lighthouse was used (accessed through Developer Tools in Chrome) to analyzee for the following:
+
+- Performance
+- Accessibility
+- Best practice
+- SEO
+
+To improve the score I converted all product pictures to webp, which resulted in slightly better performance scores.
+
+On the **Shopping Bag** page the SEO score raised an issue related to the *Page is blocked from indexing* and *Links are not crawlable*. This related to the robots.txt and this page beeing disallowed to be crawled. 
+
+On several pages for **mobile** the performance score raised issues related to Bootstrap and Heroku: *Eliminate render-blocking resources.* As Bootstrap and Heroku are not replaceable at this point, I have decided not to pursue any further. To further improve performance, consideration should be given in a **Future Development Phase** to optimising **Bootstrap** by only importing the required components. See this [Link](https://getbootstrap.com/docs/5.0/customize/optimize/) for further information. Another cause for the lower performance score on mobile is *unused JavaScript**. This is caused partly by **Stripe**. The Stripe script must be loaded on all pages, so that Stripe can fully track the activity of the users and make a valid fraud assessment. Therefore, this script cannot only be placed in the checkout but is loaded on all pages. The script for newsletters is also referenced, but this must also be available on all pages, as the newsletter signup is provided in the footer. Only the script which is loaded with the facebook pixel could have been removed. Since no actual facebook advertising measures are carried out yet, the facebook pixel is rather installed for demonsatration purposes, but has no added value for the page and could therefore be removed. However, I decided to leave it in for the completeness of the marketing part. The analysis also indicated that **HTTP/2** should be used. This needs to be setup on the server side. An attempt was made to set this up on Heroku. However, this feature does not seem to be supported by heroku yet. [Link](https://github.com/heroku/roadmap/issues/34)
+I am conscious that PageSpeed is an important factor in eCommerce and a slow website quickly results in customers abandoning the site. The page has an acceptable PageSpeed on mobile and sufficient for the scope of this project. For a real-world project, however, the voice actions would have to be made here. 
+
 ### <a name="desktop-results">Desktop Results</a>
+
+<details>
+<summary>Homepage</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for homepage](documentation/testing/performance-testing/desktop-home.png)
+
+</details>
+<details>
+<summary>CLP</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for CLP](documentation/testing/performance-testing/desktop-clp.png)
+
+</details>
+<details>
+<summary>PDP</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for PDP](documentation/testing/performance-testing/desktop-pdp.png)
+</details>
+<details>
+<summary>Bag</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for Bag](documentation/testing/performance-testing/desktop-bag1.png)
+![Screenshot of Lighthouse Desktop Validator Results for Bag](documentation/testing/performance-testing/desktop-bag2.png)
+</details>
+<details>
+<summary>Checkout</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for Checkout](documentation/testing/performance-testing/desktop-checkout.png)
+</details>
+<details>
+<summary>Profile</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for Profile](documentation/testing/performance-testing/desktop-profile.png)
+</details>
+<details>
+<summary>Contact Us</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for Contact Us](documentation/testing/performance-testing/desktop-contact.png)
+</details>
+<details>
+<summary>FAQs</summary>
+
+![Screenshot of Lighthouse Desktop Validator Results for Contact Us](documentation/testing/performance-testing/desktop-faqs.png)
+</details>
+
 ### <a name="mobile-results">Mobile Results</a>
+
+<details>
+<summary>Homepage</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for homepage](documentation/testing/performance-testing/mobile-home1.png)
+![Screenshot of Lighthouse Mobile Validator Results for homepage](documentation/testing/performance-testing/mobile-home2.png)
+
+</details>
+<details>
+<summary>CLP</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for CLP](documentation/testing/performance-testing/mobile-clp1.png)
+![Screenshot of Lighthouse Mobile Validator Results for CLP](documentation/testing/performance-testing/mobile-clp2.png)
+
+</details>
+<details>
+<summary>PDP</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for PDP](documentation/testing/performance-testing/mobile-pdp1.png)
+![Screenshot of Lighthouse Mobile Validator Results for PDP](documentation/testing/performance-testing/mobile-pdp2.png)
+
+</details>
+<details>
+<summary>Bag</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for Bag](documentation/testing/performance-testing/mobile-bag1.png)
+![Screenshot of Lighthouse Mobile Validator Results for Bag](documentation/testing/performance-testing/mobile-bag2.png)
+</details>
+<details>
+<summary>Checkout</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for Checkout](documentation/testing/performance-testing/mobile-checkout.png)
+</details>
+<details>
+<summary>Profile</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for Profile](documentation/testing/performance-testing/mobile-profile.png)
+</details>
+<details>
+<summary>Contact Us</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for Contact Us](documentation/testing/performance-testing/mobile-contact.png)
+</details>
+<details>
+<summary>FAQs</summary>
+
+![Screenshot of Lighthouse Mobile Validator Results for Contact Us](documentation/testing/performance-testing/mobile-faqs.png)
+</details>
+
 
 ## <a name="browser-compatibility">Browser Compatibility</a>
 
