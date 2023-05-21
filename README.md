@@ -809,6 +809,41 @@ The deployed project uses AWS S3 Bucket to store the webpages static and media f
 
 ## <a name="iam-set-up">IAM Setup</a>
 
+### IAM Set Up
+
+1. Navigate to IAM within the AWS.
+2. Click **"User Groups"** that can be seen in the side bar and then click **"Create group"** and name the group.
+3. Click "Policies" and then **"Create policy"**.
+4. Navigate to the JSON tab and click **"Import Managed Policy"**, within here search "S3" and select "AmazonS3FullAccess" and "Import".
+5. Navigate to the S3 bucket and copy "ARN Number". Go back to "This Policy" and update the **"Resource Key"** to include your ARN Number, and another line with your ARN followed by a "/*".
+   
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*",
+                "s3-object-lambda:*"
+            ],
+            "Resource": [
+                "YOUR-ARN-NO-HERE",
+                "YOUR-ARN-NO-HERE/*"
+            ]
+        }
+    ]
+}
+
+```
+
+6. Ensure the policy has been given a name and a short description, then click "Create Policy".
+7. Click **"User groups"**, and then the group created earlier. Under permissions click **"Add Permission"** and from the dropdown click **"Attach Policies"**.
+8. Select "Users" from the sidebar and click **"Add User"**.
+9. Provide a username and check **"Programmatic Access"**.
+10. Ensure your policy is selected and navigate through until you click "Add User".
+11. Download the "CSV file", which contains the user's access key and secret access key.
+
 # <a name="testing">Testing</a>
 
 See [TESTING.md](TESTING.md) for an overview of website testing and debugging.
