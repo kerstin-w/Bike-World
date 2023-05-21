@@ -11,12 +11,6 @@ $(document).ready(function () {
         dropdownMenu.toggleClass("show");
     });
 
-    // Add a click event listener to the toggle button
-    toggleButton.click(function () {
-        // Toggle the "position-absolute" class of the navbar
-        navbar.toggleClass("position-absolute");
-    });
-
     // Add a click event listener to the body that closes the category and brand dropdowns when the user clicks outside
     body.click(function (event) {
         if (!$(event.target).closest('.dropdown-hover').length) {
