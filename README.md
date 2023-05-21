@@ -245,3 +245,8 @@ Newsletters are still an important marketing tool and relatively cost-effective.
 Unfortunately it was not possible to configure an automatic welcome email for all subscribers in Mail Chimp without paying. However, below is a draft of its possible appearance. 
 
 ![Mailchimp Signups](documentation/mailchimp/welcome-newsletter.png)
+
+
+## <a name="testing">Testing</a>
+
+See [TESTING.md](TESTING.md) for an overview of website testing and debugging.
