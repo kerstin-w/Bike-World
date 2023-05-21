@@ -416,6 +416,18 @@ In order to improve the website services, I have set a Meta Pixel service to tra
 
 # <a name="privacy-policy">Privacy Policy</a>
 
+## Privacy Policy
+
+In order to add a page with Bike World´s Privacy Policy I used the service [Privacy Policy Generator](https://www.privacypolicygenerator.info/) to ensure 
+that the website is compliant with the European Privacy Policy Rules.
+
+<details>
+<summary>Privacy Policy</summary>
+
+![Screenshot of Bike World Privacy Policy](documentation/privacy_policy.png)
+
+</details>
+
 # <a name="search-engine-optimization">Search Engine Optimization</a>
 
 A detailed keyword selection was performed around mountain bike. All key words are important and relevant in relation to the topic mountain bike and store. The chosen keywords stem from the understanding of the business. The chosen keywords are common terms and topics around the mountain bike and outdoor industry. The keywords were tested with [Wordtracker](https://www.wordtracker.com/) for their volume and competition. Crossed out keywords were removed because either the volume was too low or the competition was too high. The keywords were included in the meta tag key words. In meta description one long-tail keyword was used and the rest of the keywords were tried to be distributed naturally on the page. 
