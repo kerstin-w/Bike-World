@@ -312,9 +312,38 @@ The details are as follows:
     | Issue # | User Story | Prioritisation | Points |
     | :-----------: | :---------: | :-----------: | :-----------: |
     | [#39](https://github.com/kerstin-w/Bike-World/issues/39) | As a registered user I can create and add products to my wishlist so that I can keep track of products that I am interested in and plan future purchases more easily | Must Have | 4 |
-    
+
 <br>
 
+### <a name="iterations">Iterations</a>
+
+The project was carried out over 4 iterations and each iteration lasted 7-8 days. For personal and professional reasons, I had only limited time for iterations 5 and 6, so few story points were awarded here. And between iteration 5 and 6, the story points for story #37 and #38 were adjusted as well due to the complexity becoming known. 
+
+- **Iteration 1 (Closed points 20 / Planned points 20)**
+
+    ![Iteration 1](documentation/agile/iteration1.png)
+
+- **Iteration 2 (Closed points 20 / Planned points 20)**
+
+    ![Iteration 2](documentation/agile/iteration2.png)
+
+- **Iteration 3 (Closed points 20 / Planned points 20)**
+
+    ![Iteration 3](documentation/agile/iteration3.png)
+
+- **Iteration 4 (Closed points 20 / Planned points 20)**
+
+    ![Iteration 4](documentation/agile/iteration4.png)
+
+- **Iteration 5 (Closed points 12 / Planned points 9)**
+
+    ![Iteration 5](documentation/agile/iteration5.png)
+
+- **Iteration 6 (Closed points 18 / Planned points 12)**
+
+    ![Iteration 6](documentation/agile/iteration6.png)
+
+As already stated, two User Stories ([#37](https://github.com/kerstin-w/Bike-World/issues/37), [#38](https://github.com/kerstin-w/Bike-World/issues/38)) were not completed at all. They were first not closed in Iteration 5 and then pushed to Iteration 6, where they were also not closed. This feature was a `Could Have` from the beginning. I put some thought into the implementation of this feature, but due to its complexity I decided to use the remaining time to improve the features I had and overall user experience, instead of adding another feature. Read more in [Future Features](#future-features).
 
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
