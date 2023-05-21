@@ -698,6 +698,16 @@ In order to improve the website services, I have set a Meta Pixel service to tra
 
 ![Facebook Pixel](documentation/facebook/facebook-pixel.png)
 
+## <a name="mailchimp">Mailchimp</a>
+
+Newsletters are still an important marketing tool and relatively cost-effective. Therefore Bike World has integrated a newsletter signup from MailChimp on the site. It is important for Bike World to grow the subscriber base quickly for reaching more users. But not at any price. Thus it was decided to not integrate a pop up for the newsletter signup on the homepage in the sense of an excellent and positive user experience. This would naturally bring far more users to sign up for the newsletter. However, a pop up is just irritating for many users and leads to a higher bounce rate. As a result, a signup was added to the footer where users can sign up for a newsletter. The newsletter signup will also be promoted via Facebook in the future and as soon as the coupon code feature is implemented, a 10€ discount code will be offered as an incentive. The email subscription service is run through Mailchimp, allowing the website admin to send marketing emails through the platform, increasing engagement within the site.
+
+![Mailchimp Signups](documentation/mailchimp/mailchimp-signup.png)
+
+Unfortunately it was not possible to configure an automatic welcome email for all subscribers in Mail Chimp without paying. However, below is a draft of its possible appearance. 
+
+![Mailchimp Signups](documentation/mailchimp/welcome-newsletter.png)
+
 # <a name="privacy-policy">Privacy Policy</a>
 
 ## Privacy Policy
@@ -756,17 +766,49 @@ In addition, the Google Search Snippets were tested in order to appear relevant 
 
 ![Google Search Snippet](documentation/seo/snippet.png)
 
-## <a name="mailchimp">Mailchimp</a>
+# <a name="aws-setup-process">AWS Setup process</a>
 
-Newsletters are still an important marketing tool and relatively cost-effective. Therefore Bike World has integrated a newsletter signup from MailChimp on the site. It is important for Bike World to grow the subscriber base quickly for reaching more users. But not at any price. Thus it was decided to not integrate a pop up for the newsletter signup on the homepage in the sense of an excellent and positive user experience. This would naturally bring far more users to sign up for the newsletter. However, a pop up is just irritating for many users and leads to a higher bounce rate. As a result, a signup was added to the footer where users can sign up for a newsletter. The newsletter signup will also be promoted via Facebook in the future and as soon as the coupon code feature is implemented, a 10€ discount code will be offered as an incentive. The email subscription service is run through Mailchimp, allowing the website admin to send marketing emails through the platform, increasing engagement within the site.
+The deployed project uses AWS S3 Bucket to store the webpages static and media files. More information on how you can set up an AWS S3 Bucket can be found below:
 
-![Mailchimp Signups](documentation/mailchimp/mailchimp-signup.png)
+## <a name="aws-s3-bucket">AWS S3 Bucket</a>
 
-Unfortunately it was not possible to configure an automatic welcome email for all subscribers in Mail Chimp without paying. However, below is a draft of its possible appearance. 
+1. Create an AWS account [here](https://portal.aws.amazon.com/).
+2. Login to your account and navigate to **"S3"**.
+3. Within the S3 page click on the button **"Create Bucket"**.
+4. Give Bucket a name and select the region which is closest to you.
+5. Underneath **"Object Ownership"** select **"ACLs enabled"**.
+6. Uncheck **"Block Public Access"** and acknowledge that the bucket will be made public, then click **"Create Bucket"**.
+7. Inside the bucket click on the **"Properties"** tab. At the bottmo find **"Static Website Hosting"** and click "Edit".
+8. Change the **Static website hosting** option to "Enabled". Copy the default values for the index and error documents and click "Save Changes".
+9. Click on the **"Permissions"** tab, below **"Cross-origin Resource Sharing (CORS)"**, click "Edit" and then paste in the following code:
 
-![Mailchimp Signups](documentation/mailchimp/welcome-newsletter.png)
+  ```
+    [
+        {
+            "AllowedHeaders": [
+            "Authorization"
+            ],
+            "AllowedMethods": [
+            "GET"
+            ],
+            "AllowedOrigins": [
+            "*"
+            ],
+            "ExposeHeaders": []
+        }
+    ]
+  ```
 
+10. Within the **"Bucket Policy"** section. Click "Edit" and then "Policy Generator". 
+11. Click the **"Select Type of Policy"** dropdown and select **"S3 Bucket Policy"** and within "Principle" allow all principals by typing "*".
+12. Within the **"Actions"** dropdown menu select "Get Object" and in the previous tab copy the **"Bucket ARN number"**. Paste this within the policy generator within the field labelled "Amazon Resource Name (ARN)".
+13. Click "Add statement > Generate Policy" and copy the policy that's been generated and paste this into the "Bucket Policy Editor".
+14. Before saving, add /* at the end of your "Resource Key", this will allow access to all resources within the bucket.
+15. Once saved, scroll down to the **"Access Control List (ACL)"** and click "Edit".
+16. Next to "Everyone (public access)", check the "list" checkbox and save your changes.
 
-## <a name="testing">Testing</a>
+## <a name="iam-set-up">IAM Setup</a>
+
+# <a name="testing">Testing</a>
 
 See [TESTING.md](TESTING.md) for an overview of website testing and debugging.
