@@ -430,12 +430,26 @@ The database has been switched to [ElephantSQL](https://www.elephantsql.com/).
          return self.order_number
         ```
 
-Order Model is related to OrderLineItem and UserProfile. It saves Orders after successful checkout. Order order_number field is automatically added on save. Order_total, grand_total, and delivery fields are automatically updated using a Django signal when an OrderLineItem is added or deleted.
+Order Model is related to OrderLineItem and UserProfile. It saves Orders after successful checkout. Order order_number field is automatically added on save. Order_total, grand_total, and delivery fields are automatically updated using a Django signal when an OrderLineItem is added or deleted. Max_Lenght for shipping information is stored in settings to make it easier to find and update them.
+
+        ```
+        FREE_DELIVERY_THRESHOLD = 1000
+        STANDARD_DELIVERY_COST = 10
+
+        FULL_NAME_MAX_LENGTH = 50
+        PHONE_NUMBER_MAX_LENGTH = 20
+        COUNTRY_MAX_LENGTH = 40
+        POSTCODE_MAX_LENGTH = 20
+        TOWN_OR_CITY_MAX_LENGTH = 40
+        STREET_ADDRESS1_MAX_LENGTH = 80
+        STREET_ADDRESS2_MAX_LENGTH = 80
+        ```
+
 
 - OrderLineItem
     | Field Name | Type | Arguments |
     | :--------: | :--: | :-------: |
-    | order | ForeignKey| Order, null=False, blank=False, on_delete=models.CASCADE, related_name="lineitems" |
+    | order | ForeignKey | Order, null=False, blank=False, on_delete=models.CASCADE, related_name="lineitems" |
     | product | ForeignKey | Product, null=False, blank=False, on_delete=models.CASCADE |
     | quantity | IntegerField | null=False, blank=False, default=0 |
     | lineitem_total | DecimalField | max_digits=6, decimal_places=2, null=False, blank=False, editable=False |
@@ -455,8 +469,88 @@ Order Model is related to OrderLineItem and UserProfile. It saves Orders after s
         def __str__(self):
             return f"SKU {self.product.sku} on order {self.order.order_number}"
         ```
-OrderLineItem Model is related to Order and Product. It stores each OrderLineItem after successful checkout.
-OrderLineItem line_item_total field is automatically calculated on save.
+OrderLineItem Model is related to Order and Product. It stores each OrderLineItem after successful checkout. OrderLineItem line_item_total field is automatically calculated on save.
+
+- **Products App:**
+- Category
+    | Field Name | Type | Arguments |
+    | :--------: | :--: | :-------: |
+    | name | CharField | max_length=254 |
+    | friendly_name | Charfield | max_length=254 |
+
+    - Metadata
+
+        ```
+        class Meta:
+            verbose_name_plural = "Categories"
+        ```
+
+    - Methods
+
+        ```
+        def __str__(self):
+            return self.friendly_name
+        ```
+        ```
+        def get_friendly_name(self):
+            return self.friendly_name
+        ```
+Category stores the category name, which is one of different types of mountainbike activities.
+
+- Product
+    | Field Name | Type | Arguments |
+    | :--------: | :--: | :-------: |
+    | title | CharField | max_length=254 |
+    | sku | Charfield | max_length=254, null=True, blank=True |
+    | category | ForeignKey | "Category", null=True, blank=True, on_delete=models.SET_NULL |
+    | description | TextField | |
+    | wheel_size | CharField |max_length=100, null=True, blank=True |
+    | retail_price | DecimalField | max_digits=7, decimal_places=2 |
+    | sale_price | DecimalField | max_digits=6, decimal_places=2, null=True, blank=True |
+    | sale | BooleanField | default=False, null=True, blank=True |
+    | image | ImageField | null=True, blank=True, upload_to="products/" |
+    | brand | CharField | max_length=100 |
+    | bike_type | CharField | max_length=200 |
+    | gender | IntegerField | choices=GENDER, default=0 |
+    | material | CharField | max_length=100, null=True, blank=True |
+    | derailleur | CharField | max_length=100, null=True, blank=True |
+    | stock | IntegerField | default=99 |
+    | rating | FloatField | null=True, blank=True |
+
+        ```
+        GENDER = ((0, "Unisex"), (1, "Womens"), (2, "Mens"))
+        ```
+
+    - Methods
+
+        ```
+        def __str__(self):
+            return self.title
+        ```
+
+        ```
+        def get_gender_display(self):
+            return dict(GENDER)[self.gender]
+        ```
+
+        ```
+        def image_tag(self):
+            if self.image:
+                return mark_safe(
+                    '<img src="/media/%s" style="width:150px;height:120px;'
+                    'object-fit:contain;">' % (self.image)
+                )
+            else:
+                return "No Image Found"
+        ```
+
+        ```
+        def get_related_products(self):
+            return Product.objects.filter(category=self.category).exclude(
+                id=self.id
+            )[:4]
+        ```
+Product Model is related to Category. It represents the essential attributes and methods required to store and retrieve information about products. The get_gender_display method returns a display value for gender. The image_tag method generates a HTML image tag for the product image an is used in the Admin Panel. The get_related_products method retrives the first four products that belong to the same category as the current product and excludes the current product. 
 
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
