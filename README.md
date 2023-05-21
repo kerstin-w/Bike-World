@@ -809,8 +809,6 @@ The deployed project uses AWS S3 Bucket to store the webpages static and media f
 
 ## <a name="iam-set-up">IAM Setup</a>
 
-### IAM Set Up
-
 1. Navigate to IAM within the AWS.
 2. Click **"User Groups"** that can be seen in the side bar and then click **"Create group"** and name the group.
 3. Click "Policies" and then **"Create policy"**.
@@ -843,6 +841,73 @@ The deployed project uses AWS S3 Bucket to store the webpages static and media f
 9. Provide a username and check **"Programmatic Access"**.
 10. Ensure your policy is selected and navigate through until you click "Add User".
 11. Download the "CSV file", which contains the user's access key and secret access key.
+
+## <a name="connecting-aws-to-the-project">Connecting AWS to the Project</a>
+
+1. Within the terminal install the following packages:
+
+```
+  pip3 install boto3
+  pip3 install django-storages 
+```  
+
+2. Freeze the requirements:
+
+```
+pip3 freeze > requirements.txt
+```
+
+3. Add **"storages"** to installed apps within settings.py file.
+4. In settings.py file add the following code:
+
+```
+if 'USE_AWS' in os.environ:
+    AWS_STORAGE_BUCKET_NAME = 'bucket-name-here'
+    AWS_S3_REGION_NAME = 'your-region-here'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+```
+5. Add the following keys within Heroku: `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. These can be found in CSV file downloaded at the end of the IAM Setup.
+6. Add the key `USE_AWS`, and set the value to True within Heroku.
+6. Remove the `DISABLE_COLLECTSTAIC` variable from Heroku.
+7. Within settings.py file inside the code just written add: 
+
+```
+  AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+```
+8. Inside the settings.py file inside the bucket config if statement add the following lines of code:
+
+```
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+STATICFILES_LOCATION = 'static'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+MEDIAFILES_LOCATION = 'media'
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+```
+
+9. In the root directory of your project create a file called **custom_storages.py**. Insert the following code into custom_storages.py:
+
+```
+  from django.conf import settings
+  from storages.backends.s3boto3 import S3Boto3Storage
+
+  class StaticStorage(S3Boto3Storage):
+    location = settings.STATICFILES_LOCATION
+
+  class MediaStorage(S3Boto3Storage):
+    location = settings.MEDIAFILES_LOCATION
+```
+
+10. Navigate back to you AWS S3 Bucket and click on "Create Folder" name folder "media", within the media file click "Upload > Add Files" and select the images for your site.
+11. Under "Permissions" select the option "Grant public-read access" and click "Upload".
+
 
 # <a name="testing">Testing</a>
 
