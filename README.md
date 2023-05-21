@@ -1072,3 +1072,32 @@ DATABASES = {
 5. Scroll to the bottom of the deploy page and select the preferred deployment type
 6. Click either Enable Automatic Deploys for automatic deployment when you push updates to Github
 
+## Final Deployment 
+
+1. When development is complete change the debug setting to: `DEBUG = False` in settings.py
+2. In this project the summernote editor was used so for this to work in Heroku add: `X_FRAME_OPTIONS = SAMEORIGIN `to
+   settings.py.
+3. In Heroku settings, delete the config vars for `DISABLE_COLLECTSTATIC = 1`
+4. Make sure all Config Vars for `DATABASE_URL`, `EMAIL_HOST_PASSWORD`, `EMAIL_HOST_USER` and `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` are added.
+
+<details>
+<summary>To Fork the project:</summary>
+
+1. Go to the [Project Code Repository Location](https://github.com/kerstin-w/Bike-World) on [GitHub](https://github.com/).
+2. In the top-right corner of the page, click *Fork*.  
+
+</details>
+
+<details>
+<summary>To Clone the project:</summary>
+
+1. Go to the [Project Code Repository Location](https://github.com/kerstin-w/Bike-World) on [GitHub](https://github.com/).
+2. You will be provided with three options to choose from, HTTPS, SSH or GitHub CLI, click the clipboard icon in order
+to copy the URL
+3. Once you click the button the fork will be in your repository
+4. Open a new terminal
+5. Change the current working directory to the location that you want the cloned directory
+6. Type `git clone` and paste the URL copied in step 2
+7. Press `Enter` and the project is cloned
+
+</details>
