@@ -952,6 +952,52 @@ Stripe utilizes webhooks to send notifications to your application whenever an e
 
 ![ Stripe Webhooks](documentation/stripe/stripe_webhook.png)
 
+# <a name="technologies-used">Technologies Used</a>
+
+## <a name="languages">Languages</a>
+
+- [Python](https://www.python.org/)
+- [HTML](https://en.wikipedia.org/wiki/HTML) with [Jinja](https://jinja.palletsprojects.com/en/3.1.x/)
+- [CSS](https://en.wikipedia.org/wiki/CSS) 
+- [JavaScript](https://en.wikipedia.org/wiki/JavaScript) & ( [jQuery](https://jquery.com/) )
+
+## <a name="framework">Framework</a>
+
+- [Django](https://www.djangoproject.com/)
+- [Bootstrap](https://getbootstrap.com/)
+
+### Django Packages
+
+* [Gunicorn](https://gunicorn.org/)- was used as the server for Heroku
+* [Dj_database_url](https://pypi.org/project/dj-database-url/) - was used to parse the database URL from the environment variables in Heroku
+* [Psycopg2](https://pypi.org/project/psycopg2/) - was used as an adaptor for Python and PostgreSQL databases
+* [Allauth](https://django-allauth.readthedocs.io/en/latest/installation.html) - was used for authentication, registration, account management
+* [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/) - was used to style the forms
+* [Stripe](https://pypi.org/project/stripe/) - was used for processing all online and credit card purchases on the website
+* [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) - Amazon Web Services SDK for python. Was used to configure Amazon Web Services S3 storage of static files.
+* [django-storages](https://django-storages.readthedocs.io/en/latest/) - was ued to configure Amazon Web Services S3 storage of static files.
+* [pillow](https://pillow.readthedocs.io/en/stable/) - was used for Python imaging library.
+* [coverage](https://django-testing-docs.readthedocs.io/en/latest/coverage.html) - was used to see testing progress and coverage of automated testing.
+* [django-countries](https://pypi.org/project/django-countries/) - was used to populate country choices on the Country dropdowns.
+* [humanize](https://docs.djangoproject.com/en/4.2/ref/contrib/humanize/) - was used to set templates filter to convert integer to a string containing commas every three digits.
+* [flake8-django](https://pypi.org/project/flake8-django/) - was used for python code validation. 
+
+## <a name="programs">Programs</a>
+
+- [AWS](https://aws.amazon.com/) - was used to store static files.
+- [Balsamiq](https://balsamiq.com/) - was used to create the wireframes.
+- [CANVA](https://www.canva.com/) - was used to create the logo
+- [Chrome DevTools](https://developer.chrome.com/docs/devtools/) - was used to view the site's styling, debug during development and check runtime performance.
+- [Diagrams.net](https://app.diagrams.net/) - was used to create the ERD.
+- [Favicon.io](https://favicon.io/) - was used to create the favicon.
+- [Font Awesome](https://fontawesome.com/) - was used for the icons.
+- [GitHub](https://github.com/) - was used to store and deploy the project's code.
+- [Gitpod](https://www.gitpod.io/) - was used to develop and test my code.
+- [Google Fonts](https://fonts.google.com/) - was used to import Fonts to the style.css file.
+- [Heroku](https://heroku.com/) - was initially used to deploy the project.
+- [Kegel](https://www.kaggle.com/datasets) - was used to find a data set for products.
+- [Tiny PNG](https://tinypng.com/) - was used to compress pictures.
+- [Visual Studio Code](https://code.visualstudio.com/) - was used to edit my code.
 
 # <a name="testing">Testing</a>
 
