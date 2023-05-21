@@ -92,6 +92,9 @@ The user demographics for Bike World are diverse, as mountain biking is a sport 
 Bike World customers require a comprehensive selection of high-quality mountain bikes, ranging from entry-level to premium models, with detailed product information and competitive pricing. We also recognize the importance of customer service and support, providing responsive and knowledgeable assistance to answer any questions or concerns. Additionally, customers require a secure and easy-to-use online platform, with a streamlined checkout process. To enhance the user experience, Bike World understands the importance of providing a wishlist feature to save products for later purchase and an intuitive platform that is easy to navigate.
 
 ## <a name="site-map">Site Map</a>
+[_Sourced via Octopus_](https://octopus.do/)
+
+![Sitemap](documentation/sitemap.png)
 
 ## <a name="user-stories">User Stories</a>
 
