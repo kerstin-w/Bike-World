@@ -216,6 +216,104 @@ Product images from the [**Kegel**](https://www.kaggle.com/datasets/tysonpo/bike
     <img src="documentation/wireframes/add_edit_product.png">
 </details>
 
+# <a name="agile-methodology">Agile methodology</a>
+
+All functionality and development of this project were managed using GitHub which Projects can be found
+[here](https://github.com/users/kerstin-w/projects/7)
+
+## <a name="moscow-method-and-story-points">MoSCoW method and story points</a>
+
+To implement agile methodology, the Kanban board and Issues feature on GitHub Projects were utilized. 
+8 Epics were created which were then further developed into User Stories. User stories were first created and then prioritized using the MoSCoW method. The points were assigned to each story based on their complexity, amount of work, and repetition using a modified Fibonacci sequence (1, 2, 3, 5, and so on). Each User Story was assigned a classification of `Must Have`, `Should Have`, `Could Have` or `Won't Have` and re-evaluated in each Iteration.  In practice, some of the User Stories were completed quicker than anticipated and other User Stories took longer.
+
+[One EPIC](https://github.com/kerstin-w/Bike-World/issues/7) and two User Stories ([#37](https://github.com/kerstin-w/Bike-World/issues/37), [#38](https://github.com/kerstin-w/Bike-World/issues/38)) were not completed at all. This feature was a `Could Have` from the beginning. I put some thought into the implementation of this feature, but due to its complexity I decided to use the remaining time to improve the features I had and overall user experience, instead of adding another feature. Read more in [Future Features](#future-features).
+
+The details are as follows:
+
+- [EPIC: Landing Page](https://github.com/kerstin-w/Bike-World/issues/1)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#9](https://github.com/kerstin-w/Bike-World/issues/9) | As a Site User I want to navigate to the landing page firstly so that I can see what the store is about | Must Have | 4 |
+    | [#10](https://github.com/kerstin-w/Bike-World/issues/10) | As a Site User I can navigate through the site from the navbar so that it is easy to access the key components of the site | Must Have | 2 |
+    | [#14](https://github.com/kerstin-w/Bike-World/issues/14) | As a Unregistered User I can select a category so that I can only view relevant posts. | Must Have | 2 |
+
+<br>
+
+- [EPIC: Create and View Products](https://github.com/kerstin-w/Bike-World/issues/2)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#11](https://github.com/kerstin-w/Bike-World/issues/11) | As a Superuser I can add a new product to the database so that I can expand my assortment | Should Have | 3 |
+    | [#12](https://github.com/kerstin-w/Bike-World/issues/12) | As a Superuser I can Edit products so that I can keep all information updated | Should Have | 3 |
+    | [#13](https://github.com/kerstin-w/Bike-World/issues/13) | As a superuser I can delete products from the database so that remove obsolete products | Could Have | 2 |
+    | [#14](https://github.com/kerstin-w/Bike-World/issues/14) | As a Site User I can search for a product by a keyword so that I can find products relative to the keyword | Must Have | 2 |
+    | [#21](https://github.com/kerstin-w/Bike-World/issues/21) | As a Site User I can select a certain segment so that I can only view relevant products | Could Have | 1 |
+    | [#22](https://github.com/kerstin-w/Bike-World/issues/22) | As a Site user I can sort and filter products so that I can see relevant products to purchase and make a better decision | Should Have | 4 |
+
+<br>
+
+- [EPIC: User Profile](https://github.com/kerstin-w/Bike-World/issues/3)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#15](https://github.com/kerstin-w/Bike-World/issues/15) | As a Site User I can create an account so that sign in and make use of the site full functionality | Could Have | 3 |
+    | [#16](https://github.com/kerstin-w/Bike-World/issues/16) | As a registered user I can log in and out so that so that I can protect my account and use the sites full functionality | Must Have | 3 |
+    | [#17](https://github.com/kerstin-w/Bike-World/issues/17) | As a registered user I can reset my password so that I can always access my account and my account stays secure | Could Have | 2 |
+    | [#18](https://github.com/kerstin-w/Bike-World/issues/18) | As a Site User I can log in with my social media accounts so that it is very easy to create an account to use the site | Must Have | 3 |
+    | [#19](https://github.com/kerstin-w/Bike-World/issues/19) | As a Registered User I can a welcome email so that I am assured that my account was created successfully | Must Have | 2 |
+    | [#30](https://github.com/kerstin-w/Bike-World/issues/30) | As a Registered User I can edit my account so that personal data stays up to date | Must Have | 3 |
+    | [#31](https://github.com/kerstin-w/Bike-World/issues/31) | As a Registered User I can delete my account so that I can remove my footprint from the website if I am no longer useing it | Must Have | 2 |
+
+<br>
+
+- [EPIC: Shopping Cart and Checkout](https://github.com/kerstin-w/Bike-World/issues/4)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#20](https://github.com/kerstin-w/Bike-World/issues/20) | As a Site User I can See a list of products with the ability to click on each item for more information so that I can make informed purchases. | Must Have | 3 |
+    | [#23](https://github.com/kerstin-w/Bike-World/issues/23) | As a Site User I can add products to my cart so that can review my selected products and make a purchase | Could Have | 4 |
+    | [#24](https://github.com/kerstin-w/Bike-World/issues/24) | As a Site User I can view my shopping cart so that I have an overview of the items I want to purchase | Must Have | 4 |
+    | [#25](https://github.com/kerstin-w/Bike-World/issues/25) | As a Site User I can adjust the quantity of a product in my cart so that purchase the quantity I desire | Must Have | 2 |
+    | [#26](https://github.com/kerstin-w/Bike-World/issues/26) | As a Site User I can delete products from my cart so that I don't have to purchase the product in case I changed my mind | Must Have | 2 |
+    | [#28](https://github.com/kerstin-w/Bike-World/issues/28) | As a Site User I am redirected to a checkout page so that I can make a purchase | Could Have | 6 |
+    | [#29](https://github.com/kerstin-w/Bike-World/issues/29) | As a Site User I can see a confirmation of my purchase so that I am assured the purchase was successful | Must Have | 2 |
+
+<br>
+
+- [EPIC: User Feedback](https://github.com/kerstin-w/Bike-World/issues/5)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#27](https://github.com/kerstin-w/Bike-World/issues/27) | As a Site User I am always informed about actions I take so that I am assured they were successful or receive supportive information in case of an error | Should Have | 3 |
+
+<br>
+
+- [EPIC: Customer Review](https://github.com/kerstin-w/Bike-World/issues/6)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#35](https://github.com/kerstin-w/Bike-World/issues/35) | As a Site User I can view reviews of products on the online store so that I can make an informed decision before making a purchase | Could Have | 2 |
+    | [#36](https://github.com/kerstin-w/Bike-World/issues/36) | As a registered user I can leave a review for a product I have purchased so that I can share my experience with others | Could Have | 4 |
+
+<br>
+
+- [EPIC: Discount Code](https://github.com/kerstin-w/Bike-World/issues/7)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#37](https://github.com/kerstin-w/Bike-World/issues/37) | As a site user I can receive a discount code when I sign up for the newsletter so that I can use it towards my first purchase | Will Not Have | 1 |
+    | [#38](https://github.com/kerstin-w/Bike-World/issues/38) | As a Site user I can easily apply my discount code to my purchase so that I can receive the discount | Will Not Have | 5 |
+
+<br>
+
+- [EPIC: Wishlist](https://github.com/kerstin-w/Bike-World/issues/8)
+
+    | Issue # | User Story | Prioritisation | Points |
+    | :-----------: | :---------: | :-----------: | :-----------: |
+    | [#39](https://github.com/kerstin-w/Bike-World/issues/39) | As a registered user I can create and add products to my wishlist so that I can keep track of products that I am interested in and plan future purchases more easily | Must Have | 4 |
+    
+<br>
 
 
 # <a name="marketing-and-social-media">Marketing and Social media</a>
