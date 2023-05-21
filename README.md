@@ -359,8 +359,9 @@ The database has been switched to [ElephantSQL](https://www.elephantsql.com/).
 <br>
 
 ## <a name="entity-relationship-diagram">Entity Relationship Diagram</a>
+[Created with diagrams.net](https://app.diagrams.net/)
 
-![Entity Relationship Diagram](documentation/edr.jpg)
+![Entity Relationship Diagram](documentation/edr.png)
 
 <br>
 
