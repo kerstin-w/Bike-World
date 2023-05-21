@@ -348,6 +348,116 @@ The project was carried out over 4 iterations and each iteration lasted 7-8 days
 
 As already stated, two User Stories ([#37](https://github.com/kerstin-w/Bike-World/issues/37), [#38](https://github.com/kerstin-w/Bike-World/issues/38)) were not completed at all. They were first not closed in Iteration 5 and then pushed to Iteration 6, where they were also not closed. This feature was a `Could Have` from the beginning. I put some thought into the implementation of this feature, but due to its complexity I decided to use the remaining time to improve the features I had and overall user experience, instead of adding another feature. Read more in [Future Features](#future-features).
 
+# <a name="database-model">Database Model</a>
+
+## <a name="database">Database</a>
+
+[PostgreSQL](https://www.postgresql.org/) was used for the main database from the earliest stage of development.
+
+The database has been switched to [ElephantSQL](https://www.elephantsql.com/).
+
+<br>
+
+## <a name="entity-relationship-diagram">Entity Relationship Diagram</a>
+
+![Entity Relationship Diagram](documentation/edr.jpg)
+
+<br>
+
+## <a name="models">Models</a>
+
+- **Checkout App:**
+- Order
+    | Field Name | Type | Arguments |
+    | :--------: | :--: | :-------: |
+    | order_number | CharField | max_length=10, null=False, editable=False |
+    | user_profile | ForeignKey | max_length=30, UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name="orders", |
+    | full_name | CharField | max_length=settings.FULL_NAME_MAX_LENGTH, null=False, blank=False |
+    | email | EmailField | max_length=254, null=False, blank=False |
+    | phone_number | CharField | max_length=settings.PHONE_NUMBER_MAX_LENGTH, null=False, blank=False|
+    | country | CountryField | blank_label="Country *", null=False, blank=False |
+    | postcode | Charfield | max_length=settings.POSTCODE_MAX_LENGTH, null=True, blank=True |
+    | town_or_city | Charfield | max_length=settings.TOWN_OR_CITY_MAX_LENGTH, null=False, blank=False |
+    | street_address1 | Charfield | max_length=settings.STREET_ADDRESS1_MAX_LENGTH, null=False, blank=False |
+    | street_address2 | Charfield | max_length=settings.STREET_ADDRESS2_MAX_LENGTH, null=False, blank=False |
+    | date | DateTimeField | auto_now_add=True |
+    | delivery_cost | DecimalField | max_digits=6, decimal_places=2, null=False, default=0 |
+    | order_total | DecimalField | max_digits=10, decimal_places=2, null=False, default=0 |
+    | grand_total | DecimalField | max_digits=10, decimal_places=2, null=False, default=0 |
+    | original_bag | TextField| null=False, blank=False, default="" |
+    | stripe_pid | TextField| max_length=254, null=False, blank=False, default="" |
+
+    - Metadata
+
+        ```
+        class Meta:
+            ordering = ['-date']
+        ```
+
+    - Methods
+
+        ```
+        def _generate_order_number(self):
+            return uuid.uuid4().hex.upper()[:10]
+        ```
+
+        ```
+        def update_total(self):
+
+            self.order_total = (
+                self.lineitems.aggregate(Sum("lineitem_total"))[
+                    "lineitem_total__sum"
+                ]
+                or 0
+            )
+            if 0 < self.order_total < settings.FREE_DELIVERY_THRESHOLD:
+                self.delivery_cost = settings.STANDARD_DELIVERY_COST
+            else:
+                self.delivery_cost = 0
+            self.grand_total = self.order_total + self.delivery_cost
+            self.save()
+        ```
+
+        ```
+        def save(self, *args, **kwargs):
+            if not self.order_number:
+                self.order_number = self._generate_order_number()
+            super().save(*args, **kwargs)
+        ```
+
+        ```
+        def __str__(self):
+         return self.order_number
+        ```
+
+Order Model is related to OrderLineItem and UserProfile. It saves Orders after successful checkout. Order order_number field is automatically added on save. Order_total, grand_total, and delivery fields are automatically updated using a Django signal when an OrderLineItem is added or deleted.
+
+- OrderLineItem
+    | Field Name | Type | Arguments |
+    | :--------: | :--: | :-------: |
+    | order | ForeignKey| Order, null=False, blank=False, on_delete=models.CASCADE, related_name="lineitems" |
+    | product | ForeignKey | Product, null=False, blank=False, on_delete=models.CASCADE |
+    | quantity | IntegerField | null=False, blank=False, default=0 |
+    | lineitem_total | DecimalField | max_digits=6, decimal_places=2, null=False, blank=False, editable=False |
+
+    - Methods
+
+        ```
+        def save(self, *args, **kwargs):
+            if self.product.sale:
+                self.lineitem_total = self.product.sale_price * self.quantity
+            else:
+                self.lineitem_total = self.product.retail_price * self.quantity
+            super().save(*args, **kwargs)
+        ```
+
+        ```
+        def __str__(self):
+            return f"SKU {self.product.sku} on order {self.order.order_number}"
+        ```
+OrderLineItem Model is related to Order and Product. It stores each OrderLineItem after successful checkout.
+OrderLineItem line_item_total field is automatically calculated on save.
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
