@@ -909,6 +909,49 @@ AWS_S3_OBJECT_PARAMETERS = {
 10. Navigate back to you AWS S3 Bucket and click on "Create Folder" name folder "media", within the media file click "Upload > Add Files" and select the images for your site.
 11. Under "Permissions" select the option "Grant public-read access" and click "Upload".
 
+# <a name="stripe-payments">Stripe Payments</a>
+
+Stripe was chosen as the payment provider for the online, as it is one of the most widely trusted payment providers in the world, offering a wide range of different payment methods. In the development instance, only Credit Card was enabled as a payment method. You will need a stripe account which you can sign up for [here](https://stripe.com/en-ie).
+
+## <a name="payments">Payments</a>
+
+Stripe offers a very well written and structured documentation on how to setup Stripe Payment. [See here](https://stripe.com/docs/payments/accept-a-payment#web-collect-card-details)
+
+## <a name="webhooks">Webhooks</a>
+
+Stripe utilizes webhooks to send notifications to your application whenever an event occurs within your account. Webhooks prove to be exceptionally valuable for handling asynchronous events such as receiving confirmation from a customer's bank regarding a payment, managing customer charge disputes, successfully processing recurring payments, or collecting subscription payments.
+
+### Webhook Setup:
+
+1. To set up a webhook, sign into your stripe account and click **Developers** located in the top right of the navbar.
+2. Then in the side navigation under the Developers, click on **Webhooks** and **Add endpoint**.
+3. On the next page you will need to input the link to your project followed by /checkout/wh/. For example:
+   
+    ```
+    https://your-app-name.herokuapp.com/checkout/wh/
+    ```
+
+4. Then click **+ Select events** and check the **Select all events** checkbox at the top before clicking **Add events** at the bottom. Once this is done finish the form by clicking **Add endpoint**.
+5. The webhook is now created and you should see that it has generated a **Secret Key**. You will need this to add to your heroku config vars as well as the **Publick Key**.
+6. Add these values under these keys:
+   
+    ```
+    STRIPE_PUBLIC_KEY = 'stripe publishable key'
+    STRIPE_SECRET_KEY = 'stripe secret key'
+    STRIPE_WH_SECRET = 'stripe webhooks secret key'
+
+    ```
+7. In settings.py file in django, insert the following near the bottom of the file:  
+    ```
+    STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
+    STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+    STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+    ```
+
+![ Stripe Payments](documentation/stripe/stripe_dashboard.png)
+
+![ Stripe Webhooks](documentation/stripe/stripe_webhook.png)
+
 
 # <a name="testing">Testing</a>
 
