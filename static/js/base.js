@@ -1,7 +1,5 @@
 $(document).ready(function () {
     const dropdownHoverElems = $(".dropdown-hover");
-    const navbar = $(".navbar");
-    const toggleButton = $(".navbar-toggler");
     const body = $("body");
 
     // For each dropdown element, add a click event listener
