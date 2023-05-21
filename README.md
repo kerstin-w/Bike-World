@@ -1101,3 +1101,26 @@ to copy the URL
 7. Press `Enter` and the project is cloned
 
 </details>
+
+# <a name="#references-credit">References & Credit</a>
+
+## Media & Fonts
+
+- [tiny.png](https://tinypng.com/): Used to compress media files
+- [Font Awesome](https://fontawesome.com/): Resource for icons
+- [Google Fonts](https://fonts.google.com): Used as font library
+- [RealFaviconGenerator](https://realfavicongenerator.net/): Used to create a Favicon
+- [Kegel](https://www.kaggle.com/datasets/tysonpo/bike-ads-images-prices-specifications?select=data_bike_exchange.json): Used to find a data set for products.
+
+
+## Code
+
+- [Code Institute Boutique Ado](https://github.com/Code-Institute-Solutions/boutique_ado_v1): Used as guidance for the project and highly relied on it during teh developement of the stripe payment checkout funtionality.
+- [Django 3.2 documentation](https://docs.djangoproject.com/en/3.2/): I highly relied upon the Django documentation throughout the project.
+- [django-allauth documentation](https://django-allauth.readthedocs.io/en/latest/installation.html): I relied upon the Django Allauth documentation for user authentication, registration and user management.
+- [Django-crispy documentation](https://django-crispy-forms.readthedocs.io/en/latest/): As source to handle forms.
+- [Cloudwithdjango](https://www.cloudwithdjango.com/django-shorts-3-sending-emails/): As source for sending emails.
+- [Betterprogramming](https://betterprogramming.pub/django-quick-tips-context-processors-da74f887f1fc): As source for Context Processors.
+- [Stackoverflow](https://stackoverflow.com/questions/16307307/django-admin-show-image-from-imagefield): As source to display product image in the admin list_display
+- [Adam Johnson](https://adamj.eu/tech/2020/02/10/robots-txt/): As source for setting up a robot.txt in Django
+
