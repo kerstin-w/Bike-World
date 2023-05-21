@@ -552,6 +552,83 @@ Category stores the category name, which is one of different types of mountainbi
         ```
 Product Model is related to Category. It represents the essential attributes and methods required to store and retrieve information about products. The get_gender_display method returns a display value for gender. The image_tag method generates a HTML image tag for the product image an is used in the Admin Panel. The get_related_products method retrives the first four products that belong to the same category as the current product and excludes the current product. 
 
+- **Profiles App:**
+- UserProfile
+    | Field Name | Type | Arguments |
+    | :--------: | :--: | :-------: |
+    | user | OneToOneField | User, on_delete=models.CASCADE |
+    | default_full_name | Charfield | max_length=settings.FULL_NAME_MAX_LENGTH, null=False, blank=False |
+    | default_email | EmailField | max_length=254, null=False, blank=False |
+    | default_phone_number | CharField | max_length=20, null=True, blank=True |
+    | default_country | CountryField | blank_label="Country", null=True, blank=True |
+    | default_postcode | Charfield | max_length=20, null=True, blank=True |
+    | default_town_or_city | Charfield | max_length=40, null=True, blank=True |
+    | default_street_address1 | Charfield | mmax_length=80, null=True, blank=True |
+    | default_street_address2 | Charfield | max_length=80, null=True, blank=True |
+
+    - Methods
+
+        ```
+        def __str__(self):
+            return self.user.username
+        ```
+
+UserProfile Model is related to User and allows the storage of user-specific shipping information and provides a link between the user and their profile, enabling easy access to default information for shipping orders.
+
+- Wishlist
+    | Field Name | Type | Arguments |
+    | :--------: | :--: | :-------: |
+    | user | ForeignKey | User, on_delete=models.CASCADE, related_name="wishlist" |
+    | product | ForeignKey | Product, on_delete=models.CASCADE |
+
+    - Methods
+
+        ```
+        def is_product_in_wishlist(self):
+            return Wishlist.objects.filter(
+                user=self.user, product=self.product
+            ).exists()
+        ```
+Wishlist Model is related to User and Product and allows users to add products to their wishlist and provides a way to associate users with their desired products. It enables easy retrieval of wishlist products for a specific user and the ability to check if a product is already in the wishlist. The is_product_in_wishlsit method checks if a Wishlist object is matching with user and product in the database and returns a boolean indicating whether the associated product is present in the user's wishlist.
+
+- ProductReview
+    | Field Name | Type | Arguments |
+    | :--------: | :--: | :-------: |
+    | product | ForeignKey | Product, on_delete=models.CASCADE, related_name="reviews" |
+    | user | ForeignKey | User, on_delete=models.CASCADE |
+    | review | TextField | |
+    | rating | PositiveIntegerField | default=1, validators=[MinValueValidator(1), MaxValueValidator(5)], null=True, blank=True |
+    | created_at | DateTimeField | auto_now_add=True |
+
+    - Methods
+
+        ```
+        def __str__(self):
+            return f"{self.user.username} - {self.product.title}"
+        ```
+
+        ```
+        def save(self, *args, **kwargs):
+            super(ProductReview, self).save(*args, **kwargs)
+
+            # Update the rating field of the Product instance
+            # with the average rating.
+            self.product.rating = self.product.reviews.aggregate(Avg("rating"))[
+                "rating__avg"
+            ]
+
+            # Save the Product instance with the new rating.
+            self.product.save()
+        ```
+
+        ```
+        @classmethod
+        def get_reviews_for_product(cls, product):
+            return cls.objects.filter(product=product).order_by('-created_at')
+        ```
+
+ProductReview Model is related to User and Product allows users to submit reviews for products, associate reviews with specific products and users, and update the average rating of the associated product based on the submitted reviews. The get_reviews_for_product method retrieves all reviews for a specific product, ordered by the creation date in descending order. Additionally, there is a signal receiver function that creates or updates the associated UserProfile object when a User is saved. It creates a new UserProfile object if the User was just created.
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
