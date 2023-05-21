@@ -54,9 +54,16 @@ class Product(Model):
         return self.title
 
     def get_gender_display(self):
+        """
+        Returns the display value of the gender field
+        based on the choices defined in GENDER
+        """
         return dict(GENDER)[self.gender]
 
     def image_tag(self):
+        """
+        Generates an HTML image tag for the product image
+        """
         if self.image:
             return mark_safe(
                 '<img src="/media/%s" style="width:150px;height:120px;'
