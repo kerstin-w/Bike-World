@@ -807,6 +807,28 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <br>
 
+### Checkout
+
+- Users who are not registered can enter their complete data in the checkout to finalize the purchase. In addition, they have the option to log in, or to register. To avoid distracting the user from the purchase, the buttons are designed rather subtle and if they are utilized, the user is directly redirected back to the checkout. 
+
+<img src="documentation/features/checkout-guest.png" width="700px" style="margin: 20px;">
+
+- For registered users, the form is prefilled at least with the email and if other data was stored in the profile, then also with these. This enables an extremely fast and smooth checkout process.
+
+<img src="documentation/features/checkout-loggedin.png" width="700px" style="margin: 20px;">
+
+- For users who wish to log in or register, a modal will open.
+
+<img src="documentation/features/auth-modal.png" width="300px" style="margin: 20px;">
+
+- Input errors are displayed once again, if they occur.
+- Should a user click on "Save Info" and use an email address of an existing user, no error message will be displayed in order not to interrupt the ordering process unnecessarily. However, the address is not saved in the profile.
+
+<img src="documentation/features/checkout-error.png" width="300px" style="margin: 20px;">
+
+<br>
+
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
