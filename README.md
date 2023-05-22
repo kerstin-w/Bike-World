@@ -916,6 +916,12 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/contact-mail.png" width="400px" style="margin: 20px;">
 
+### FAQs
+
+- In the FAQs all recurring questions of the customer are answered and serves as a source of information for the customer to be sure about the purchase. 
+
+<img src="documentation/features/faqs.png" width="600px" style="margin: 20px;">
+
 
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
