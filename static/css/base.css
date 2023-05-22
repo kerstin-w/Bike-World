@@ -574,7 +574,7 @@ footer ul {
     color: #cc0000;
     padding: 10px;
     border: 1px solid #cc0000;
-    margin-bottom: 10px;
+    width: fit-content;
 }
 
 /*=============== Toast Messages ===============*/
