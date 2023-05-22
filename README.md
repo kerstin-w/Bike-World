@@ -942,6 +942,36 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/admin-userprofile.png" width="600px" style="margin: 20px;">
 
+## <a name="future-features">Future Features</a>
+
+- This project was built to produce a minimum viable product. Nevertheless there are still some features to be implemented in the future. See [here](https://github.com/kerstin-w/Bike-World/issues?q=is%3Aopen+is%3Aissue)
+
+#### [#7](https://github.com/kerstin-w/Bike-World/issues/7) - EPIC: Discount Code
+#### [#37](https://github.com/kerstin-w/Bike-World/issues/37) - USER STORY: Send discount code
+#### [#38](https://github.com/kerstin-w/Bike-World/issues/38) - USER STORY: Redeem discount code
+
+I have already put a lot of thought into implementing the coupon code. Two approaches are conceivable to me.
+
+The first approach is to create a custom data model for the coupon codes, which generates random codes and stores their values. This code can then be redeemed at checkout, and the discount amount will be deducted from the grand total.
+
+The other approach (and my preferred option) would be to use Stripe Promotions, where coupons can be created with a percentage discount or a fixed amount. This would also be redeemed at checkout. For this, an additional view would need to be created for `apply_promo` that handles a JSON Respone. The promo code would be validated using `stripe.Coupon.retrieve(promo_code)`. The payment intent would need to be adjusted accordingly, and the discount amount would be stored in the Order Model to track how the payment amount was calculated.
+
+![Stripe Prootions](documentation/features/stripe.png)
+
+Due to its complexity I decided to use the remaining time to improve the features I had and overall user experience, instead of adding another feature.
+
+<br>
+
+#### Inventory Management:
+
+Currently, the shop is using a default inventory of 99. For now, I haven't removed the field from the data model, although I'm aware that it is not needed. It may be required for future developments.
+
+Inventory management is an essential component of eCommerce stores. I have also considered working with inventory in the project. However, the topic is quite complex. Firstly, a strategy needs to be devised regarding how long and whether to reserve items in the shopping bag or when to flush the user's shopping bag, which is never pleasant for the customer. The inventory needs to be reduced when an item is reserved in the shopping bag or when it is sold. Similarly, it should be adjusted accordingly when an item is no longer in the shopping bag. Efficiently incorporating inventory into the shop is another challenge. In reality, this is usually done through an import job from the ERP system.
+
+Unfortunately, the sum of these points exceed the scope of this project, which is why inventory management has been omitted in this project. However, I see it as a good challenge and will add this feature in the next phase.
+
+<br>
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
