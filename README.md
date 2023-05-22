@@ -785,6 +785,28 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <br>
 
+### Shopping Bag
+
+- By clicking on the shopping bag icon, an off-canvas opens in where the user can preview their shopping bag. Here the customer can choose to go directly to the checkout, thus shortening the way to the checkout, or they can choose to look at the shopping bag. 
+
+<img src="documentation/features/bag-off-canvas.png" width="600px" style="margin: 20px;">
+
+- If the customer decides to look at the shopping bag, they will see an overview of all the products in the shopping bag.
+- As it is vital to always have the Call-To-Action button in view, the CTA was not only inserted in the summary on mobile, but also on top.
+
+<img src="documentation/features/bag-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/bag-mobile.png" width="300px" style="margin: 20px;">
+
+- The customer has the option to adjust the quantity or remove the product from the bag.
+- Using the input field, the user can define the quantity of the product and if it is not a number between 1-99, an error message will be displayed.
+
+<img src="documentation/features/bag-update.png" width="300px" style="margin: 20px;">
+<img src="documentation/features/bag-delete.png" width="300px" style="margin: 20px;">
+<img src="documentation/features/bag-error.png" width="300px" style="margin: 20px;">
+
+<br>
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
