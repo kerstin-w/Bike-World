@@ -630,6 +630,36 @@ Wishlist Model is related to User and Product and allows users to add products t
 
 ProductReview Model is related to User and Product allows users to submit reviews for products, associate reviews with specific products and users, and update the average rating of the associated product based on the submitted reviews. The get_reviews_for_product method retrieves all reviews for a specific product, ordered by the creation date in descending order. Additionally, there is a signal receiver function that creates or updates the associated UserProfile object when a User is saved. It creates a new UserProfile object if the User was just created.
 
+# <a name="features">Features</a>
+
+## <a name="implemented-features">Implemented Features</a>
+
+### Navbar
+On the page a navbar has been implemented and is responsive and sticky on top. It was essential to create a tidy navbar design that is intuitive for the user and not overloaded with selections that would overwhelm the user. In addition, it was important to create a direct point through which the user has an uncomplicated checkout. This is achieved when the user clicks on the shopping bag icon and has direct access to the checkout option. It is important that the customer has as few clicks as possible to finalize the checkout process. 
+
+- Navbar items **All Bikes, Activity, Brands, Sale, Logo, Search, Bag and Login/Register** are available for unregistered/not logged in users.
+- Registered Users, when logged in can also see their Profile, by clicking on the account icon and selecting **My Profile**
+- The Navbar is fixed to the top of the screen even when the user is scrolling down the page to allow easier navigation.
+- The logo is linked to the Homepage and each menu item is linked to each segmentation respectively to allow easier navigation.
+- The search bar allows users to easily search for a keyword they are looking for.
+- The navigation menu collapses on small/medium devices to optimise the menu for smaller screen sizes.
+- The Bag Icon in the Navbar shows the number of products in the bag via a little badge. 
+
+<details>
+    <summary>Navbar Desktop</summary>
+
+![Navbar Desktop](documentation/features/navbar-desktop.png)
+
+</details>
+
+<details>
+    <summary>Navbar Mobile</summary>
+
+![Navbar registered users](documentation/features/navbar-mobile.png)
+![Navbar registered users](documentation/features/navbar-mobile-extended.png)
+
+</details>
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
