@@ -644,11 +644,13 @@ On the page a navbar has been implemented and is responsive and sticky on top. I
 - The search bar allows users to easily search for a keyword they are looking for.
 - The navigation menu collapses on small/medium devices to optimise the menu for smaller screen sizes.
 - The Bag Icon in the Navbar shows the number of products in the bag via a little badge. 
+- When the user hovers over the menu items Activity or Brand, a menu is opened for the user to choose from.
 
 <details>
     <summary>Navbar Desktop</summary>
 
 ![Navbar Desktop](documentation/features/navbar-desktop.png)
+![Navbar Desktop](documentation/features/navbar-dropdown.png)
 
 </details>
 
@@ -712,6 +714,36 @@ Of course, it is important to display products to the customer on the first page
 <img src="documentation/features/footer-mobile.png" width="300px" style="margin: 20px;">
 
 <img src="documentation/features/footer-newsletter.png" width="300px" style="margin: 20px;">
+
+<br>
+
+### CLP (Category Landing Page)
+
+- The CLP shows all products of the selected category. 
+- Products can be added directly to the shopping cart, making it as effortless as possible for the customer to add products to the cart and purchase them. 
+- By clicking on the article the user is redirected to the PDP
+- Registered users will see a heart in the upper right corner. By clicking on it, users can add the item to their wishlist.
+
+<img src="documentation/features/clp-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/clp-mobile.png" width="300px" style="margin: 20px;">
+
+- There is also a small arrow at the bottom right which brings the user back to the top.
+
+<img src="documentation/features/clp-top.png" width="600px" style="margin: 20px;">
+
+- The user has the option to sort products or filter by category and/or brand. By clicking on the X, the filters can be reset. 
+
+<img src="documentation/features/clp-filters1.png" width="500px" style="margin: 20px;">
+
+<img src="documentation/features/clp-filters2.png" width="300px" style="margin: 20px;">
+<img src="documentation/features/clp-filters3.png" width="300px" style="margin: 20px;">
+<img src="documentation/features/clp-filters4.png" width="300px" style="margin: 20px;">
+
+- The admin has the possibility on the CLP already to make the selection to edit or delete an article.
+
+<img src="documentation/features/clp-admin.png" width="300px" style="margin: 20px;">
+<img src="documentation/features/clp-delete.png" width="300px" style="margin: 20px;">
 
 <br>
 
