@@ -916,12 +916,31 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/contact-mail.png" width="400px" style="margin: 20px;">
 
+<br>
+
 ### FAQs
 
 - In the FAQs all recurring questions of the customer are answered and serves as a source of information for the customer to be sure about the purchase. 
 
 <img src="documentation/features/faqs.png" width="600px" style="margin: 20px;">
 
+<br>
+
+### Admin Panel
+
+- The superuser finds a dashboard in the admin panel with important KPIs about the daily business to see at a glance how the business is performing. 
+
+<img src="documentation/features/admin-panel.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/admin-dashboard.png" width="600px" style="margin: 20px;">
+
+- In Product, product images are added to the list_display to make the management of products more convenient and clear.
+
+<img src="documentation/features/admin-product.png" width="600px" style="margin: 20px;">
+
+- In the UserProfile the user's orders can be found to make the user management easier, especially if there are support requests and you need to find the user's order quickly.
+
+<img src="documentation/features/admin-userprofile.png" width="600px" style="margin: 20px;">
 
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
