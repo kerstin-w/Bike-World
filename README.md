@@ -660,6 +660,61 @@ On the page a navbar has been implemented and is responsive and sticky on top. I
 
 </details>
 
+### Home Page
+
+The home page is divided into multiple segments. The **Hero Banner, Category Callouts and Top Products**. 
+
+### Home Page - Hero Banner
+
+- The Hero banner is designed to be visually appealing and provide a direct call-to-action with the "Shop Now" button so the customer can start shopping right away. In addition, below the Hero banner, but still in the first direct view of the user, is the **Reason-Why banner**, which gives the user reasons to shop at Bike World.
+
+<img src="documentation/features/hero-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/hero-mobile.png" width="300px" style="margin: 20px;">
+
+<br>
+
+### Home Page - Category Callouts
+
+- The category callout area is used to highlight specific parts of the product range or promotions. When clicking on one of these callouts, the customer will be redirected to the corresponding CLP. 
+
+<img src="documentation/features/category-callout-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/category-callout-mobile.png" width="300px" style="margin: 20px;">
+
+<br>
+
+### Home Page - Category Callouts
+
+Of course, it is important to display products to the customer on the first page. Therefore, there is the **Top Products** segment. The best rated products are listed here. On desktop there are four products and on mobile correspondingly less. 
+
+- Products can be added directly to the shopping cart, making it as effortless as possible for the customer to add products to the cart and purchase them. 
+- By clicking on the article the user is redirected to the PDP
+- Registered users will see a heart in the upper right corner. By clicking on it, users can add the item to their wishlist.
+
+
+<img src="documentation/features/top-products-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/top-products-mobile.png" width="300px" style="margin: 20px;">
+
+<img src="documentation/features/top-products-added.png" width="150px" style="margin: 20px;">
+<img src="documentation/features/top-products-wishlist.png" width="150px" style="margin: 20px;">
+
+<br>
+
+### Footer
+
+- In the footer, users can sign up for the newsletter.
+- In the footer you can access further pages about **Support** and **About** Bike World.
+
+<img src="documentation/features/footer-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/footer-mobile.png" width="300px" style="margin: 20px;">
+
+<img src="documentation/features/footer-newsletter.png" width="300px" style="margin: 20px;">
+
+<br>
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
