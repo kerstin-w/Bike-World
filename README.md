@@ -828,6 +828,13 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <br>
 
+### Checkout Success
+
+- After the user has successfully purchased the product, a confirmation page is displayed. A toast message is displayed with the confirmation and a summary of the order. 
+
+<img src="documentation/features/checkout-success-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/checkout-success-mobile.png" width="300px" style="margin: 20px;">
 
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
