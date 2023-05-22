@@ -8,6 +8,7 @@ function checkAndOpenCollapse(collapseId, collapseParam) {
 
 $(document).ready(function () {
     // Check and open collapse containers based on URL parameters
+    checkAndOpenCollapse('#collapseInfo', 'collapseInfo');
     checkAndOpenCollapse('#collapseWishlist', 'collapseWishlist');
     checkAndOpenCollapse('#collapseReview', 'collapseReview');
 

@@ -91,7 +91,6 @@ class ProfileUpdateView(ProfileView, FormView):
 
     form_class = UserProfileForm
     template_name = "profiles/profile.html"
-    success_url = reverse_lazy("profile")
 
     def get_context_data(self, **kwargs):
         """
@@ -134,6 +133,15 @@ class ProfileUpdateView(ProfileView, FormView):
             "Failed to update your profile. Please ensure the form is valid.",
         )
         return super().form_invalid(form)
+
+    def get_success_url(self):
+        """
+        Return the URL to redirect to after successful deletion,
+        including the collapseWishlist parameter in the URL
+        """
+        parameter = {"collapseInfo": "true"}
+        query_string = urlencode(parameter)
+        return f"{reverse('profile')}?{query_string}"
 
 
 class OrderHistoryView(LoginRequiredMixin, TemplateView):
