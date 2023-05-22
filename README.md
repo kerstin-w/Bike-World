@@ -747,6 +747,44 @@ Of course, it is important to display products to the customer on the first page
 
 <br>
 
+### PDP (Product Detail Page)
+
+On the PDP all relevant information is displayed and the user has the possibility to buy the product. It was important to place a prominent Call-To-Action button on the PDP and to minimize distractions from the Call-To-Action with other interactions, so that it is as easy as possible for the user to add products to the shopping cart and cause as little disruption as possible. 
+
+<img src="documentation/features/pdp-desktop.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/pdp-mobile.png" width="300px" style="margin: 20px;">
+
+- Products can be added directly to the shopping cart. 
+
+<img src="documentation/features/pdp-added.png" width="300px" style="margin: 20px;">
+
+- Registered users will see a heart in the button. By clicking on it, users can add the item to their wishlist.
+
+<img src="documentation/features/pdp-wishlist1.png" width="200px" style="margin: 20px;">
+<img src="documentation/features/pdp-wishlist2.png" width="200px" style="margin: 20px;">
+<img src="documentation/features/pdp-wishlist3.png" width="200px" style="margin: 20px;">
+
+- The admin has the possibility on the CLP already to make the selection to edit or delete an article. Also here, a modal will open in case the user clicked on delete to confirm this.
+
+<img src="documentation/features/pdp-admin.png" width="300px" style="margin: 20px;">
+
+- Using the input field, the user can define the quantity of the product and if it is not a number between 1-99, an error message will be displayed.
+
+<img src="documentation/features/pdp-error.png" width="300px" style="margin: 20px;">
+
+- In the Accordion, useful information about the product is provided without overloading customers at first glance. The customer can read the product description, study the tech specs, or read the reviews of other customers.
+
+<img src="documentation/features/pdp-accordion1.png" width="500px" style="margin: 20px;">
+<img src="documentation/features/pdp-accordion2.png" width="500px" style="margin: 20px;">
+<img src="documentation/features/pdp-accordion3.png" width="500px" style="margin: 20px;">
+
+- Superuser and the author of the review also have the opportunity to delete the review.
+
+<img src="documentation/features/pdp-review.png" width="300px" style="margin: 20px;">
+
+<br>
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
