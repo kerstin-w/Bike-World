@@ -836,6 +836,10 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/checkout-success-mobile.png" width="300px" style="margin: 20px;">
 
+- The user receives a order confirmation mail.
+
+<img src="documentation/features/order-confirmation.png" width="600px" style="margin: 20px;">
+
 <br>
 
 ### Profile
@@ -848,6 +852,10 @@ On the PDP all relevant information is displayed and the user has the possibilit
 - The user also has the option to log in with his Google account.
 
 <img src="documentation/features/auth-modal.png" width="300px" style="margin: 20px;">
+
+- Once a new user registered they will receive a welcome email.
+
+<img src="documentation/features/welcome-mail.png" width="700px" style="margin: 20px;">
 
 - In the profile itself are five buttons between which the user can toggle. 
 
@@ -882,6 +890,10 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/profile-review-error.png" width="300px" style="margin: 20px;">
 
+- If a review was delete by the admin, the user will receive an email informing about the action taken.
+
+<img src="documentation/features/review-delete.png" width="700px" style="margin: 20px;">
+
 - The user can delete his account via the **Delete Account button**. A modal opens to confirm this again. 
 
 <img src="documentation/features/profile-delete.png" width="300px" style="margin: 20px;">
@@ -891,6 +903,18 @@ On the PDP all relevant information is displayed and the user has the possibilit
 <img src="documentation/features/profile-admin.png" width="300px" style="margin: 20px;">
 
 <img src="documentation/features/add-product.png" width="600px" style="margin: 20px;">
+
+<br>
+
+### Contact Us
+
+- Customers can contact support via the Contact Form. For registered users, at least the email is prefilled and if the name is also saved, this is also prefilled. 
+
+- After the message is submitted, an email is sent to the store owner with the message.
+
+<img src="documentation/features/contact.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/contact-mail.png" width="400px" style="margin: 20px;">
 
 
 # <a name="marketing-and-social-media">Marketing and Social media</a>
