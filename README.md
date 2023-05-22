@@ -836,6 +836,63 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/checkout-success-mobile.png" width="300px" style="margin: 20px;">
 
+<br>
+
+### Profile
+
+- Users can log in or register via the account icon in the navbar
+
+<img src="documentation/features/profile-login.png" width="300px" style="margin: 20px;">
+
+- A modal with two tabs opens. If the user clicks on Login, the modal opens with the Login tab open. If the user clicks on Register, the modal opens with the Register tab open.
+- The user also has the option to log in with his Google account.
+
+<img src="documentation/features/auth-modal.png" width="300px" style="margin: 20px;">
+
+- In the profile itself are five buttons between which the user can toggle. 
+
+<img src="documentation/features/profile.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/profile-mobile.png" width="300px" style="margin: 20px;">
+
+- Under **Profile Info** the user can save his data. Errors are displayed here accordingly with a toast message and also a note in the form.
+
+<img src="documentation/features/profile-info1.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/profile-info2.png" width="500px" style="margin: 20px;">
+<img src="documentation/features/profile-info-error.png" width="300px" style="margin: 20px;">
+
+- In the **order history**, past orders are displayed and a link can be used to reach the order confirmation page. 
+
+<img src="documentation/features/profile-history.png" width="600px" style="margin: 20px;">
+
+- The **Wishlist** displays all the items that the user has added to the Wishlist.
+- These can be added directly to the shopping cart from there. 
+- If items are deleted from the Wishlist, a toast message is displayed
+
+<img src="documentation/features/profile-wishlist.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/profile-wishlist-delete.png" width="300px" style="margin: 20px;">
+
+- Under **review**, all items are displayed that the user has purchased and not yet rated. If an item was bought twice, it will still be listed there only once. 
+- If a review has been deleted, the article will reappear there so that the user has another opportunity to write a appropriate review. 
+- By default the Sumbit button is disabled.
+
+<img src="documentation/features/profile-review.png" width="600px" style="margin: 20px;">
+
+<img src="documentation/features/profile-review-error.png" width="300px" style="margin: 20px;">
+
+- The user can delete his account via the **Delete Account button**. A modal opens to confirm this again. 
+
+<img src="documentation/features/profile-delete.png" width="300px" style="margin: 20px;">
+
+- The **admin** has the option to access the product management and create an product via the profile. 
+
+<img src="documentation/features/profile-admin.png" width="300px" style="margin: 20px;">
+
+<img src="documentation/features/add-product.png" width="600px" style="margin: 20px;">
+
+
 # <a name="marketing-and-social-media">Marketing and Social media</a>
 
 ## <a name="user-group">User Group</a>
