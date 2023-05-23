@@ -5,7 +5,7 @@ from io import BytesIO
 from PIL import Image
 
 from products.forms import ProductForm
-from products.models import Category
+from products.models import Category, Product
 
 
 class ProductFormTest(TestCase):
@@ -85,3 +85,32 @@ class ProductFormTest(TestCase):
                 "border-black",
                 f"{field_name} widget is wrong.",
             )
+
+    def test_product_form_clean_method_existing_title(self):
+        """
+        Test that a product with the same title cannot be created
+        """
+        # Create a product with the same title as in the form data
+        Product.objects.create(
+            title="Test Title",
+            sku="98765",
+            category=self.category,
+            description="Test Description",
+            wheel_size="Test Wheel Size",
+            retail_price=50.00,
+            sale_price=45.00,
+            sale=True,
+            brand="Test Brand",
+            bike_type="Test Bike Type",
+            gender=0,
+            material="Test Material",
+            derailleur="Test Derailleur",
+            stock=100,
+            rating=3.5,
+        )
+
+        form = ProductForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn(
+            "A product with this title already exists.", form.errors["title"]
+        )
