@@ -23,6 +23,23 @@ Back to the [README](README.md)<br>
 
 ## <a name="manual-testing">Manual Testing</a>
 
+The original Google sheet file for the test case report can be found [here](https://docs.google.com/spreadsheets/d/116U8ZYF5RuEg5WTYexFzaFPc--CidQxJqSWv5VdAQPo/edit?usp=sharing).
+
+[Download Manual Testing PDF](documentation/testing/manual-testing/manual-testing.pdf)
+
+![Test Case](documentation/testing/manual-testing/manual-testing-1.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-2.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-3.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-4.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-5.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-6.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-7.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-8.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-9.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-10.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-11.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-12.png)
+
 ## <a name="automated-testing">Automated Testing</a>
 
 Python **Automated Unit Testing** was implemented using the [Django Unit Testing](https://docs.djangoproject.com/en/3.2/topics/testing/overview/) framework.  
