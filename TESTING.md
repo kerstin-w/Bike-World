@@ -62,7 +62,7 @@ A total of **230** **Unit Tests** have been written. All **230** tests ran succe
 ### <a name="html">HTML</a>
 All **HTML** code was validated using the [W3C Markup Validation Service](https://validator.w3.org/) regularly during the development process. **The HTML Source Code** was regularly viewed for each page using **Google Chrome** and passed through the [W3C Markup Validation Service](https://validator.w3.org/). Various minor errors were encountered and corrected during the final **HTML** validation check.
 
-A slightly tricky error was the error to the auto-focus. For login/signup I created a modal that loads on all pages. This modal has two tabs: one tab for login and one tab for signup. Accordingly, two forms load in one modal and Crispy Froms automatically sets an auto-focus for each form. Thus I had more than one auto-focus on the page. I could have manipulated the DOM to enable auto-focus for only the from that is open and disable it otherwise. However, the form would still have been rendered with auto-focus and the test would have returned an error. In the tutoring support we came up with the idea to create a context processor that handles the tags for signup and login. For this I have created a `CustomLoginForm` which disables the auto-focus. The context processor will then load the corresponding `CustomLoginForm` in the `logintag`
+A slightly tricky error was the error to the auto-focus. For login/signup I created a modal that loads on all pages. This modal has two tabs: one tab for login and one tab for signup. Accordingly, two forms load in one modal and Crispy Froms automatically sets an auto-focus for each form. Thus, I had more than one auto-focus on the page. I could have manipulated the DOM to enable auto-focus for only the from that is open and disable it otherwise. However, the form would still have been rendered with auto-focus and the test would have returned an error. In the tutoring support we came up with the idea to create a context processor that handles the tags for signup and login. For this I have created a `CustomLoginForm` which disables the auto-focus. The context processor will then load the corresponding `CustomLoginForm` in the `logintag`
 
 A slightly unpleasant error was the duplicate of the `div_id_email` that occurred in the checkout. Crispy Forms creates a wrapper DIV around the input element and assigns the DIV ID `div_id_email` for email. Since I have two forms on the page with email, one being the `OrderForm` and the other being the `login/signup modal`, there was a conflict here. I haven't found a really convinient solution to control the ID of the wrapper DIV with the existing OrderForm setup. One solution would have been to create the OrderForm entirely new with the `Crispy Form Helpers and Layout`. This would have given me the possibility to give the wrapper DIV its own ID. The other option would have been to manually create this input field in the HTML code. This was the solution I chose, as it was less invasive. Later on, I found the proper solution in the Django documentation. With the paramater `auto_id` I was able to control the Id of the wrapper DIV. I reversed the changes from before and the email field is rendered normally again and the DIV ID is now unique for the Login and Signup fields. 
 
@@ -380,3 +380,24 @@ Responsiveness was tested through Chrome Developer tools. The devices tested inc
 I was able to directly test the website on an **iPhone 13** mini and an **iPad**.
 
 ## <a name="issues-bugs">Issues/ Bugs Found & Resolved</a>
+
+- **Data Base Issue**:
+
+I wanted to move the `ProductReview* form the Profiles app to the Products app. I created the ProductReview first in the profiles app. When moving, I changed the "rating" field of the Product Data model to a foreignkey field which caused an issue in the data base:
+```
+django.db.utils.IntegrityError: The row in table 'products_product' with primary key '1' has an invalid foreign key: products_product.rating_id contains a value '4' that does not have a corresponding value in products_productreview.id.
+```
+
+To fix this, I had to delete the complete data base and also delete all migrations. Afterwards, I ran migrations again and uploaded fixtures again.
+
+- **Button hover effect**:
+
+I implemented a hover effect for CTA Buttons which would scale them bigger. `Scale` caused the text inside the button to be blurry whilste the size of the buttons was still in the scaling process (getting larger). To solve this I tried using `translateZ(0)`, `backface-visibility: hidden` and `transform-style: preserve-3d` and achived a slight improvement, but nothing made the text really crispy sharp. Therefore, I decided to go for a `box-shadow`effect instead. 
+
+- **Input validation for quantity out of range for add to bag input**:
+
+In my JavaScript (add_products_to_bag_script.html) file an error message in place, which would display if the input was out of range. The issue was, that the quantity was still submitted. eg. a User enters Quantity: -11, it would add -11 of a certain product to the bag. Therefore, I added validation to the `AddToBagView` to handle non-numeric input and restrict the quantity within the range of 1-99. This ensures that only valid quantities are added to the shopping bag. The error messages are returned as JSON responses with appropriate status codes for better user feedback.
+
+- **image_url for image tag**:
+
+In the Product data model I implemented a method `image_tag`that generates an HTML image tag for the product image in the admin panel list_display. The image src for the image tag had a hard coded path and would not work in the live admin panel, as the path was not leading to AWS. This was fixed by adding `settings_MEDIA_URL` to construct the complete URL for the product image
