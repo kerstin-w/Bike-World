@@ -352,6 +352,31 @@ I am conscious that PageSpeed is an important factor in eCommerce and a slow web
 
 ## <a name="browser-compatibility">Browser Compatibility</a>
 
+This App was tested on Chrome, Microsoft Edge, and Firefox for desktop.
+
+The App was tested on Safari for mobile and tablet.
+
+I was able to directly test the website on a **MacBook Air**.
+
+<br>
+
 ## <a name="responsivity">Responsivity</a>
+
+Responsiveness was tested through Chrome Developer tools. The devices tested include:
+
+- iPhone SE
+- iPhone XR
+- iPhone 12 Pro
+- Pixel 5
+- Samsung Galaxy S8+
+- Samsung Galaxy S20 Ultra
+- iPad Air
+- iPad Mini
+- Surface Pro 7
+- Surface Duo
+- Galaxy Fold
+- Samsung Galaxy A51
+
+I was able to directly test the website on an **iPhone 13** mini and an **iPad**.
 
 ## <a name="issues-bugs">Issues/ Bugs Found & Resolved</a>
