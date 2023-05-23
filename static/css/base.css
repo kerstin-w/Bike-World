@@ -84,6 +84,12 @@ a {
     color: #cd4c1e;
 }
 
+.no-result {
+    width: fit-content;
+    background-color: #dfdfdf45;
+    border: #dfdfdf 1px solid;
+}
+
 /*=============== Navbar ===============*/
 .navbar {
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);

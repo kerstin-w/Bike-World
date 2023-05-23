@@ -1,9 +1,3 @@
-.no-search-result {
-    width: fit-content;
-    background-color: #dfdfdf45;
-    border: #dfdfdf 1px solid;
-}
-
 /*=============== Sorting and Filters ===============*/
 #sort-form select {
     background-color: #6c757d;
