@@ -5,7 +5,7 @@ from django.contrib.messages import get_messages
 from django.db.models import Avg, QuerySet
 from django.http import HttpRequest
 from django.test import TestCase, RequestFactory, Client
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 
 from checkout.models import Order, OrderLineItem
 from profiles.forms import UserProfileForm, ProductReviewForm
@@ -250,11 +250,7 @@ class ProfileUpdateViewTest(TestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(
-            response,
-            reverse_lazy("profile"),
-            status_code=302,
-            target_status_code=200,
-        )
+            response, "/profile/?collapseInfo=true")
 
         user_profile = UserProfile.objects.get(user=self.user)
         self.assertEqual(user_profile.default_full_name, "Test User")
