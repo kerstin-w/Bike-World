@@ -29,8 +29,8 @@ class Product(Model):
     Data Model for Products
     """
 
-    title = models.CharField(max_length=254)
-    sku = models.CharField(max_length=254, null=True, blank=True)
+    title = models.CharField(max_length=254, unique=True)
+    sku = models.CharField(max_length=254, null=True, blank=True, unique=True)
     category = models.ForeignKey(
         "Category", null=True, blank=True, on_delete=models.SET_NULL
     )
