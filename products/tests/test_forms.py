@@ -88,7 +88,7 @@ class ProductFormTest(TestCase):
 
     def test_product_form_clean_method_existing_title(self):
         """
-        Test that a product with the same title cannot be created
+        Test that a product with the existing title cannot be created
         """
         # Create a product with the same title as in the form data
         Product.objects.create(
@@ -114,3 +114,31 @@ class ProductFormTest(TestCase):
         self.assertIn(
             "A product with this title already exists.", form.errors["title"]
         )
+
+    def test_product_form__clean_method_existing_sku(self):
+        """
+        Test that a product with the existing sku cannot be created
+        """
+        # Create a product with the same SKU as in the form data
+        Product.objects.create(
+            title="Another Title",
+            sku="12345",
+            category=self.category,
+            description="Test Description",
+            wheel_size="Test Wheel Size",
+            retail_price=50.00,
+            sale_price=45.00,
+            sale=True,
+            brand="Test Brand",
+            bike_type="Test Bike Type",
+            gender=0,
+            material="Test Material",
+            derailleur="Test Derailleur",
+            stock=100,
+            rating=3.5,
+        )
+
+        form = ProductForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("A product with this SKU already exists.",
+                      form.errors["sku"])
