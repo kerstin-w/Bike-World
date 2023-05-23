@@ -123,7 +123,7 @@ class WishlistProductsMixinTest(TestCase):
         # Create a new product that is not in the wishlist
         product2 = Product.objects.create(
             title="test product 2",
-            sku="12345",
+            sku="123456",
             category=self.category,
             description="Test Description 2",
             wheel_size="Test Wheel Size",
@@ -212,7 +212,7 @@ class ProductListViewTest(TestCase):
 
         self.product2 = Product.objects.create(
             title="Test Product2",
-            sku="12345",
+            sku="123456",
             category=self.category2,
             description="Test Description",
             wheel_size="Test Wheel Size",
@@ -351,7 +351,7 @@ class ProductListViewTest(TestCase):
         for i in range(25):
             Product.objects.create(
                 title=f"Test Product {i+3}",
-                sku="12345",
+                sku=f"SKU000{i}",
                 category=self.category2,
                 description="Test Description",
                 wheel_size="Test Wheel Size",

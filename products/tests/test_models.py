@@ -246,7 +246,7 @@ class ProductModelTest(TestCase):
         for i in range(5):
             Product.objects.create(
                 title=f"Product B{i}",
-                sku=f"SKU00{i}",
+                sku=f"SKU000{i}",
                 category=self.category,
                 description=f"Test description B{i}",
                 wheel_size="26 inches",
