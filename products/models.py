@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import Model
 from django.utils.html import mark_safe
@@ -65,9 +66,10 @@ class Product(Model):
         Generates an HTML image tag for the product image
         """
         if self.image:
+            image_url = f"{settings.MEDIA_URL}{self.image}"
             return mark_safe(
-                '<img src="/media/%s" style="width:150px;height:120px;'
-                'object-fit:contain;">' % (self.image)
+                f'<img src="{image_url}" style="width:150px;height:120px;'
+                'object-fit:contain;">'
             )
         else:
             return "No Image Found"
