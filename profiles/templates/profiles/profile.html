@@ -159,15 +159,11 @@ Your Profile
 
                                 </div>
                                 <div class="d-flex flex-column flex-md-row align-items-center">
-                                    <form class="form"
-                                        action="{% url 'add_to_bag' item.product.pk %}?{{ request.GET.urlencode }}"
-                                        method="POST">
-                                        {% csrf_token %}
-                                        <input class="form-control qty_input" type="number" name="quantity" value="1"
-                                            style="display:none;" aria-label="Add 1 to shopping bag" required>
-                                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                                    <form class="form add-to-bag-form" data-product-id="{{ item.product.id }}"
+                                        data-quantity="1">
                                         <button type="submit"
-                                            class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end m-3">
+                                            class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end m-3"
+                                            id="add-to-bag-btn-qty-{{ item.product.id }}">
                                             <i class="fa-solid fa-cart-shopping"></i> Add to Bag
                                         </button>
                                     </form>
