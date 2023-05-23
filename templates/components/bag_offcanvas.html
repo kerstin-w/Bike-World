@@ -25,10 +25,10 @@
                         <p class="my-0"><strong>{{ item.product.title }}</strong></p>
                         <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
                         {% if item.product.sale %}
-                        <p class="">Total:
+                        <p class="my-0">Total:
                             {{ item.product.sale_price | multiply_price_by_quantity:item.quantity |intcomma}}€</p>
                         {% else %}
-                        <p class="my-0 small">Total:
+                        <p class="my-0">Total:
                             {{ item.product.retail_price| multiply_price_by_quantity:item.quantity|intcomma  }}€</p>
                         {% endif %}
                     </div>
