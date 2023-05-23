@@ -182,7 +182,7 @@ class ProductListView(WishlistProductsMixin, ListView):
 
         # Add available categories and brands to the context
         context["categories"] = Category.objects.all()
-        context["brands"] = Product.objects.values_list(
+        context["brands"] = Product.objects.order_by("brand").values_list(
             "brand", flat=True
         ).distinct()
 

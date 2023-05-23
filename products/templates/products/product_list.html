@@ -15,7 +15,7 @@ Our Mountainbikes
 <section>
     <div class="container-fluid margin-top">
         <div class="row justify-content-center">
-            {% include "products/filter.html" %}
+            {% include "products/components/filter.html" %}
             {% if products %}
             <p class="ps-3">Results: {{ request.GET.q|title }} ({{ products.paginator.count  }} products found)</p>
             {% for product in products %}
