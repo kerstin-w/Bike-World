@@ -27,7 +27,7 @@ Back to the [README](README.md)<br>
 
 Python **Automated Unit Testing** was implemented using the [Django Unit Testing](https://docs.djangoproject.com/en/3.2/topics/testing/overview/) framework.  
 **Unit Tests** have been written to cover all major parts of the code like **Forms**, **Models**, **Views**, **Admin**, **Context-Processors** and **Fields**. The tests were created to cover all key aspects of the code. Only the checkout app has a moderate coverage, but here manual testing was applied.
-A total of **228** **Unit Tests** have been written. All **228** tests ran successfully without errors or warnings.   
+A total of **230** **Unit Tests** have been written. All **230** tests ran successfully without errors or warnings.   
 
 <details>
     <summary>Coverage Automated Testing</summary>
