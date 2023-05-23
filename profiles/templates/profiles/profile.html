@@ -160,6 +160,7 @@ Your Profile
                                 <div class="d-flex flex-column flex-md-row align-items-center">
                                     <form class="form add-to-bag-form" data-product-id="{{ item.product.id }}"
                                         data-quantity="1">
+                                        {% csrf_token %}
                                         <button type="submit"
                                             class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end m-3"
                                             id="add-to-bag-btn-qty-{{ item.product.id }}">

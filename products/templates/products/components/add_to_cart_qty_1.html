@@ -1,4 +1,5 @@
 <form class="form add-to-bag-form" data-product-id="{{ product.id }}" data-quantity="1">
+    {% csrf_token %}
     <button type="submit" class="btn btn-shop-now bg-orange btn-shop-lg justify-content-end"
         id="add-to-bag-btn-qty-{{ product.id }}">
         <i class="fa-solid fa-cart-shopping"></i> Add to Bag
