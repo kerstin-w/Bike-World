@@ -501,8 +501,8 @@ Category stores the category name, which is one of different types of mountainbi
 - Product
     | Field Name | Type | Arguments |
     | :--------: | :--: | :-------: |
-    | title | CharField | max_length=254 |
-    | sku | Charfield | max_length=254, null=True, blank=True |
+    | title | CharField | max_length=254, unique=True |
+    | sku | Charfield | max_length=254, null=True, blank=True, unique=True |
     | category | ForeignKey | "Category", null=True, blank=True, on_delete=models.SET_NULL |
     | description | TextField | |
     | wheel_size | CharField |max_length=100, null=True, blank=True |
@@ -537,9 +537,10 @@ Category stores the category name, which is one of different types of mountainbi
         ```
         def image_tag(self):
             if self.image:
+                image_url = f"{settings.MEDIA_URL}{self.image}"
                 return mark_safe(
-                    '<img src="/media/%s" style="width:150px;height:120px;'
-                    'object-fit:contain;">' % (self.image)
+                    f'<img src="{image_url}" style="width:150px;height:120px;'
+                    'object-fit:contain;">'
                 )
             else:
                 return "No Image Found"
