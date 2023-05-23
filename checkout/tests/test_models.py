@@ -253,8 +253,8 @@ class OrderLineItemTest(TestCase):
         """
         # Create a product with a retail price of 500 and a sale price of 400
         product = Product.objects.create(
-            title="Test Product",
-            sku="TESTSKU1234",
+            title="Test Product 1",
+            sku="TESTSKU123456",
             category=self.category,
             description="Test description",
             retail_price=Decimal("500.00"),
