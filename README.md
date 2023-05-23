@@ -977,7 +977,7 @@ Unfortunately, the sum of these points exceed the scope of this project, which i
 
 ## <a name="user-group">User Group</a>
 
-As already mentioned in [Target Audience](#target-audience) the users of **Bike World** would primarily be individuals who are interested in purchasing high-class mountain bikes. They are likely to be cycling enthusiasts, outdoor adventurers, sports enthusiasts, and individuals who value quality and performance. They may range from beginners looking for their first mountain bike to experienced riders seeking top-of-the-line models.
+As already mentioned in [Target Audience](#target-audience) the users of **Bike World** would primarily be individuals who are interested in purchasing high-class mountain bikes. They are likely to be cycling enthusiasts, outdoor adventurers, sports enthusiasts, and individuals who value quality and performance. They may range from beginners looking for their first mountain bike to experienced riders seeking top-of-the-line models. With regard to the age of users, the main focus is on age 18 - 34. This user group is the most active in mountain biking / outdoor and also mostly firmly in professional life, so that a particular financial strength is given. 
 
 ## <a name="online-platforms">Online Platforms</a>
 
