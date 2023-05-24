@@ -299,12 +299,36 @@ class ProductModelTest(TestCase):
             derailleur="Test Derailleur B",
             stock=3,
         )
-
         with self.assertRaises(ValidationError):
             product.full_clean()
-
         # Add a sale_price when sale is True
         product.sale_price = Decimal("14.99")
-
         # No ValidationError should be raised
         product.full_clean()
+
+    def test_save_method(self):
+        """
+        Test the save method of the Product model
+        """
+        # Create a product with sale=True
+        product = Product(
+            title="Product C",
+            sku="SKU003",
+            category=self.category,
+            description="Test description C",
+            wheel_size="20 inches",
+            retail_price=12.99,
+            sale_price=9.99,
+            sale=True,
+            rating=5,
+            brand="Trek",
+            bike_type="Hybrid Bike",
+            gender=2,
+            material="Test Material C",
+            derailleur="Test Derailleur C",
+            stock=2,
+        )
+        # Save the product
+        product.save()
+        # Check if the category is set to "sale"
+        self.assertEqual(product.category.name, "sale")
