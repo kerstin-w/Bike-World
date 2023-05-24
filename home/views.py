@@ -32,3 +32,10 @@ class Error404View(TemplateView):
     Render 404 Error Page
     """
     template_name = "errors/404.html"
+
+
+class Error405View(TemplateView):
+    """
+    Render 405 Error Page
+    """
+    template_name = "errors/405.html"
