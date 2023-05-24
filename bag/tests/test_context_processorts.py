@@ -24,10 +24,14 @@ class BagContentsTest(TestCase):
             name="category",
             friendly_name="Friendly category name",
         )
+        self.category2 = Category.objects.create(
+            name="sale",
+            friendly_name="Sale",
+        )
         self.product = Product.objects.create(
             title="product",
             sku="111",
-            category=self.category,
+            category=self.category2,
             description="product description",
             wheel_size='26"',
             retail_price="100",

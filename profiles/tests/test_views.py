@@ -1071,7 +1071,7 @@ class ProductReviewDeleteViewTest(TestCase):
             wheel_size="Test Wheel Size",
             retail_price=50.00,
             sale_price=45.00,
-            sale=True,
+            sale=False,
             brand="Test Brand1",
             bike_type="Test Bike Type",
             gender=0,

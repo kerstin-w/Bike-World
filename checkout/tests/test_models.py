@@ -177,7 +177,7 @@ class OrderLineItemTest(TestCase):
             default_email=self.user.email,
         )
         self.category = Category.objects.create(
-            name="TestCategory", friendly_name="Test Category"
+            name="sale", friendly_name="Sale"
         )
         self.product = Product.objects.create(
             title="Test Product",

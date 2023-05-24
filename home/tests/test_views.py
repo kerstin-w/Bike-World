@@ -25,7 +25,7 @@ class HomePageViewTest(TestCase):
             wheel_size="26 inches",
             retail_price=Decimal("399.00"),
             sale_price=Decimal("349.00"),
-            sale=True,
+            sale=False,
             rating=4,
             image="Image.jpg",
             brand="Scott",

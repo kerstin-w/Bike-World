@@ -35,7 +35,7 @@ class SignalsTest(TestCase):
             wheel_size="26 inches",
             retail_price=999.99,
             sale_price=799.99,
-            sale=True,
+            sale=False,
             image="path/to/test/image.jpg",
             brand="Test Brand",
             bike_type="Test Bike Type",

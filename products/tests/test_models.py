@@ -42,7 +42,7 @@ class ProductModelTest(TestCase):
         Test Data
         """
         self.category = Category.objects.create(
-            name="test_category", friendly_name="Test friendly name"
+            name="sale", friendly_name="Sale"
         )
         self.product = Product.objects.create(
             title="Product A",
@@ -78,7 +78,7 @@ class ProductModelTest(TestCase):
         """
         Test category of the product
         """
-        self.assertEquals(str(self.product.category), "Test friendly name")
+        self.assertEquals(str(self.product.category), "Sale")
 
     def test_product_has_description(self):
         """
@@ -181,7 +181,7 @@ class ProductModelTest(TestCase):
             wheel_size="24 inches",
             retail_price=10.99,
             sale_price=5.99,
-            sale=True,
+            sale=False,
             rating=3,
             brand="Trek",
             bike_type="Road Bike",
@@ -199,7 +199,7 @@ class ProductModelTest(TestCase):
             wheel_size="27 inches",
             retail_price=20.99,
             sale_price=15.99,
-            sale=True,
+            sale=False,
             rating=5,
             brand="Giant",
             bike_type="Hybrid Bike",
@@ -217,7 +217,7 @@ class ProductModelTest(TestCase):
             wheel_size="27 inches",
             retail_price=20.99,
             sale_price=15.99,
-            sale=True,
+            sale=False,
             rating=5,
             brand="Giant",
             bike_type="Hybrid Bike",
@@ -252,7 +252,7 @@ class ProductModelTest(TestCase):
                 wheel_size="26 inches",
                 retail_price=15.99,
                 sale_price=10.99,
-                sale=True,
+                sale=False,
                 rating=4,
                 brand="Scott",
                 bike_type="Mountain Bike",

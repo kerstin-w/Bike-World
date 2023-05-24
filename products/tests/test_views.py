@@ -47,7 +47,7 @@ class WishlistProductsMixinTest(TestCase):
             wheel_size="Test Wheel Size",
             retail_price=50.00,
             sale_price=45.00,
-            sale=True,
+            sale=False,
             brand="Test Brand",
             bike_type="Test Bike Type",
             gender=0,
@@ -129,7 +129,7 @@ class WishlistProductsMixinTest(TestCase):
             wheel_size="Test Wheel Size",
             retail_price=50.00,
             sale_price=45.00,
-            sale=True,
+            sale=False,
             brand="Test Brand",
             bike_type="Test Bike Type",
             gender=0,
@@ -196,7 +196,7 @@ class ProductListViewTest(TestCase):
             wheel_size="Test Wheel Size",
             retail_price=50.00,
             sale_price=45.00,
-            sale=True,
+            sale=False,
             brand="Test Brand1",
             bike_type="Test Bike Type",
             gender=1,
@@ -218,7 +218,7 @@ class ProductListViewTest(TestCase):
             wheel_size="Test Wheel Size",
             retail_price=150.00,
             sale_price=145.00,
-            sale=True,
+            sale=False,
             brand="Test Brand2",
             bike_type="Test Bike Type",
             gender=2,
@@ -415,7 +415,7 @@ class ProductDetailViewTest(TestCase):
             wheel_size="Test Wheel Size",
             retail_price=50.00,
             sale_price=45.00,
-            sale=True,
+            sale=False,
             brand="Test Brand1",
             bike_type="Test Bike Type",
             gender=0,
@@ -440,7 +440,7 @@ class ProductDetailViewTest(TestCase):
             wheel_size="24 inches",
             retail_price=10.99,
             sale_price=5.99,
-            sale=True,
+            sale=False,
             rating=3,
             brand="Trek",
             bike_type="Road Bike",
@@ -458,7 +458,7 @@ class ProductDetailViewTest(TestCase):
             wheel_size="27 inches",
             retail_price=20.99,
             sale_price=15.99,
-            sale=True,
+            sale=False,
             rating=5,
             brand="Giant",
             bike_type="Hybrid Bike",
@@ -592,7 +592,7 @@ class ProductCreateViewTest(TestCase):
             "wheel_size": "26 inch",
             "retail_price": "100.00",
             "sale_price": "90.00",
-            "sale": True,
+            "sale": False,
             "brand": "Test Brand",
             "bike_type": "Test Bike Type",
             "gender": 1,
@@ -617,7 +617,7 @@ class ProductCreateViewTest(TestCase):
         self.assertEqual(product.wheel_size, "26 inch")
         self.assertEqual(product.retail_price, 100.00)
         self.assertEqual(product.sale_price, 90.00)
-        self.assertEqual(product.sale, True)
+        self.assertEqual(product.sale, False)
         self.assertEqual(product.brand, "Test Brand")
         self.assertEqual(product.bike_type, "Test Bike Type")
         self.assertEqual(product.gender, 1)
@@ -676,7 +676,7 @@ class ProductEditViewTest(TestCase):
             "wheel_size": "26 inch",
             "retail_price": "100.00",
             "sale_price": "90.00",
-            "sale": True,
+            "sale": False,
             "brand": "Test Brand",
             "bike_type": "Test Bike Type",
             "gender": 1,
@@ -713,7 +713,7 @@ class ProductEditViewTest(TestCase):
             self.product.bike_type, form.cleaned_data["bike_type"]
         )
         self.assertEqual(self.product.gender, form.cleaned_data["gender"])
-        self.assertTrue(self.product.sale)
+        self.assertFalse(self.product.sale)
 
     def test_edit_product_view_invalid_form(self):
         """
