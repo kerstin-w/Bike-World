@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Model
 from django.utils.html import mark_safe
@@ -83,3 +84,8 @@ class Product(Model):
         return Product.objects.filter(category=self.category).exclude(
             id=self.id
         )[:4]
+
+    def clean(self):
+        super().clean()
+        if self.sale and not self.sale_price:
+            raise ValidationError("Sale price is required.")

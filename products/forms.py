@@ -41,6 +41,8 @@ class ProductForm(forms.ModelForm):
         cleaned_data = super().clean()
         title = cleaned_data.get("title")
         sku = cleaned_data.get("sku")
+        sale = cleaned_data.get("sale")
+        sale_price = cleaned_data.get("sale_price")
         # Get the current product instance being edited
         instance = self.instance
 
@@ -72,4 +74,8 @@ class ProductForm(forms.ModelForm):
         ):
             self.add_error("sku", "A product with this SKU already exists.")
 
+        # Check if sale was set to true and return error if sale_price is blank
+        if sale and not sale_price:
+            self.add_error(
+                "sale_price", "Sale price is required.")
         return cleaned_data
