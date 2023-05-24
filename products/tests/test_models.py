@@ -1,4 +1,7 @@
 from django.test import TestCase
+from django.core.exceptions import ValidationError
+from decimal import Decimal
+
 from products.models import Category, Product
 
 
@@ -274,3 +277,34 @@ class ProductModelTest(TestCase):
 
         # Check that the test product is not in the related products list
         self.assertNotIn(self.product, related_products)
+
+    def test_clean_method(self):
+        """
+        Test the clean method of the Product model
+        """
+        # Create a product without sale_price
+        product = Product(
+            title="Product B",
+            sku="SKU002",
+            category=self.category,
+            description="Test description B",
+            wheel_size="24 inches",
+            retail_price=Decimal("15.99"),
+            sale=True,
+            rating=3,
+            brand="Giant",
+            bike_type="Road Bike",
+            gender=1,
+            material="Test Material B",
+            derailleur="Test Derailleur B",
+            stock=3,
+        )
+
+        with self.assertRaises(ValidationError):
+            product.full_clean()
+
+        # Add a sale_price when sale is True
+        product.sale_price = Decimal("14.99")
+
+        # No ValidationError should be raised
+        product.full_clean()
