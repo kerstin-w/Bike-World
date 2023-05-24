@@ -86,6 +86,18 @@ class Product(Model):
         )[:4]
 
     def clean(self):
+        """
+        Make sale_price a required field when product is on sale
+        """
         super().clean()
         if self.sale and not self.sale_price:
             raise ValidationError("Sale price is required.")
+
+    def save(self, *args, **kwargs):
+        """
+        Check if the product is on sale and if it is save it in category sale
+        """
+        if self.sale:
+            sale_category = Category.objects.get(name="sale")
+            self.category = sale_category
+        super().save(*args, **kwargs)
