@@ -552,7 +552,14 @@ Category stores the category name, which is one of different types of mountainbi
                 id=self.id
             )[:4]
         ```
-Product Model is related to Category. It represents the essential attributes and methods required to store and retrieve information about products. The get_gender_display method returns a display value for gender. The image_tag method generates a HTML image tag for the product image an is used in the Admin Panel. The get_related_products method retrives the first four products that belong to the same category as the current product and excludes the current product. 
+
+        ````
+        def clean(self):
+        super().clean()
+        if self.sale and not self.sale_price:
+            raise ValidationError("Sale price is required.")
+        ```
+Product Model is related to Category. It represents the essential attributes and methods required to store and retrieve information about products. The get_gender_display method returns a display value for gender. The image_tag method generates a HTML image tag for the product image an is used in the Admin Panel. The get_related_products method retrives the first four products that belong to the same category as the current product and excludes the current product. The clean method makes sale_price a required field in case sale was set to true
 
 - **Profiles App:**
 - UserProfile
