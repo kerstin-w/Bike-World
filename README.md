@@ -993,7 +993,7 @@ Unfortunately, the sum of these points exceed the scope of this project, which i
 
 ## <a name="user-group">User Group</a>
 
-As already mentioned in [Target Audience](#target-audience) the users of **Bike World** would primarily be individuals who are interested in purchasing high-class mountain bikes. They are likely to be cycling enthusiasts, outdoor adventurers, sports enthusiasts, and individuals who value quality and performance. They may range from beginners looking for their first mountain bike to experienced riders seeking top-of-the-line models. With regard to the age of users, the main focus is on age 18 - 34. This user group is the most active in mountain biking / outdoor and also mostly firmly in professional life, so that a particular financial strength is given. 
+As already mentioned in [Target Audience](#target-audience) the users of **Bike World** would primarily be individuals who are interested in purchasing high-class mountain bikes. They are likely to be cycling enthusiasts, outdoor adventurers, sports enthusiasts, and individuals who value quality and performance. They may range from beginners looking for their first mountain bike to experienced riders seeking top-of-the-line models. With regard to the age of users, the main focus is on age 18 - 43. This user group is the most active in mountain biking / outdoor and also mostly firmly in professional life, so that a particular financial strength is given. 
 
 ## <a name="online-platforms">Online Platforms</a>
 
@@ -1042,7 +1042,7 @@ By providing useful content, **Bike World** can meet their needs and establish i
 
 ## <a name="facebook-business-page">Facebook Business Page</a>
 
-Market research was undertaken to decide on the appropriate marketing strategy to promote Bike World. For social media marketing, Facebook is still the best option to promote brands to potential customers. It is one of the most used social media platforms with for users aged between 18 - 24 and users aged between 25 - 34 and very populare by male user. These categories are the main target audience for Bike World.
+Market research was undertaken to decide on the appropriate marketing strategy to promote Bike World. For social media marketing, Facebook is still the best option to promote brands to potential customers. It is one of the most used social media platforms for users age between 18 - 24, users age between 25 - 34 and user age between 35-44 and very populare by male user. These categories are the main target audience for Bike World.
 
 <img src="documentation/facebook/statista.png" width="800px" style="margin: 20px;">
 
