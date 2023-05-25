@@ -57,6 +57,150 @@ A total of **232** **Unit Tests** have been written. All **232** tests ran succe
 
 ## <a name="user-stories-testing">User Stories Testing</a>
 
+All functionalities have been tested and they work as expected. You can find more about [Manual Testing](#manual-testing). 
+
+- **As a site user**,
+  - [#9](https://github.com/kerstin-w/Bike-World/issues/9) I want to navigate to the landing page firstly so that I can see what the store is about
+    
+    This was achieved through an appealing and clearly structured homepage. The user instantly views an attractive herobanner with a call to action. Below that, another reason-why banner. The next section shows the user special category callouts and below that the top products are presented.
+    
+    ![Homepage](documentation/testing/user-stories-testing/homepage.png)
+
+  - [#10](https://github.com/kerstin-w/Bike-World/issues/10) I can navigate through the site from the navbar so that it is easy to access the key components of the site
+    
+    A responsive navbar was implemented, which is sticky on top, allowing the customer to have the navigation in view at all times. All important navigation points of the site are listed in the navbar. Hover effects have been introduced to make the sub-items even easier to access.
+    
+    ![Navbar](documentation/testing/user-stories-testing/navbar-1.png)
+    ![Navbar](documentation/testing/user-stories-testing/navbar-2.png)
+    ![Navbar](documentation/testing/user-stories-testing/navbar-3.png)
+
+  - [#14](https://github.com/kerstin-w/Bike-World/issues/14) I can search for a product by a keyword so that I can find products relative to the keyword
+    
+    To accomplish this, a search box was created in the navabar and the customer can search for relevant keywords.
+
+    ![Search Box](documentation/testing/user-stories-testing/search-1.png)
+    ![Search Box](documentation/testing/user-stories-testing/search-2.png)
+
+  - [#15](https://github.com/kerstin-w/Bike-World/issues/15) I can create an account so that sign in and make use of the site full functionality
+
+    Django Allauth was used for this purpose. The user can register via the navbar. A modal opens where the user can enter their user data. Afterwards the account is created automatically. A confirmation of the email address is not required to minimize the hurdle of registration. 
+
+    <img src="documentation/testing/user-stories-testing/register-1.png" width="500px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/register-2.png" width="500px" style="margin: 20px;">
+
+  - [#18](https://github.com/kerstin-w/Bike-World/issues/18) I can log in with my social media accounts so that it is very easy to create an account to use the site
+
+    This is achieved by allowing the user to log in with his google account by clicking on the Google button.
+
+    <img src="documentation/testing/user-stories-testing/google-login.png" width="500px" style="margin: 20px;">
+
+  - [#20](https://github.com/kerstin-w/Bike-World/issues/20) I can See a list of products with the ability to click on each item for more information so that I can make informed purchases.
+
+    This was achieved through the category landing pages, which list the products. From the CLP, the user can click on the product and is redirected to the PDP, where detailed information is provided.
+    
+    ![CLP](documentation/testing/user-stories-testing/clp.png)
+
+  - [#21](https://github.com/kerstin-w/Bike-World/issues/21) I can select a certain segment so that I can only view relevant products
+
+    This was accomplished using the Activity, Brands & Sale items in the Navabr, as well as the Category Callouts on the homepage. By clicking on a selection, the customer only sees the corresponding products of the respective Activity, Brand or Sale products.
+
+    <img src="documentation/testing/user-stories-testing/activity.png" width="500px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/brands.png" width="500px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/category-callouts.png" width="500px" style="margin: 20px;">
+
+  - [#22](https://github.com/kerstin-w/Bike-World/issues/22) I can sort and filter products so that I can see relevant products to purchase and make a better 
+  
+    For this purpose, Sort and Filter Function were introduced on CLP. The user can choose a sorting and at the same time filter according to a category and brand. Subsequently, only products that meet the respective criteria are displayed. If no product matches the criteria, the user will be notified. 
+
+    <img src="documentation/testing/user-stories-testing/filter-1.png" width="800px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/filter-2.png" width="800px" style="margin: 20px;">
+
+  - [#23](https://github.com/kerstin-w/Bike-World/issues/23) I can add products to my cart so that can review my selected products and make a purchase
+
+    The customer can add products directly to the shopping bag on the home page, through the CLP, the PDP or the Wishlist. By clicking on the CTA on the home page, the CLP or the wishlist, the customer promptly adds one product to the shopping bag. On the PDP the customer can determine the quantity. 
+
+    <img src="documentation/testing/user-stories-testing/add-to-bag-1.png" width="800px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/add-to-bag-2.png" width="800px" style="margin: 20px;">
+
+  - [#24](https://github.com/kerstin-w/Bike-World/issues/24) I can view my shopping cart so that I have an overview of the items I want to purchase
+
+    For this purpose, the customer can click on the bag icon in the navbar. This will open an off canvas showing the contents of the bag. By clicking on the button "Go to Shopping Bag" the customer reaches the complete overview of the bag where also quantities can be modified.
+
+    <img src="documentation/testing/user-stories-testing/bag-1.png" width="300px" style="margin: 20px;">
+
+    <img src="documentation/testing/user-stories-testing/bag-2.png" width="600px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/bag-3.png" width="800px" style="margin: 20px;">
+
+  - [#25](https://github.com/kerstin-w/Bike-World/issues/25) I can adjust the quantity of a product in my cart so that purchase the quantity I desire
+
+    In the shopping bag itself, the customer can increase or decrease the number of items. Also, an item can be deleted directly from the shopping bag. Input errors are displayed accordingly.
+
+    <img src="documentation/testing/user-stories-testing/qty-bag-1.png" width="600px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/qty-bag-2.png" width="300px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/qty-bag-3.png" width="300px" style="margin: 20px;">
+
+  - [#26](https://github.com/kerstin-w/Bike-World/issues/26) I can delete products from my cart so that I don't have to purchase the product in case I changed my mind
+
+    By clicking on the Trash can icon, the user can completely remove the product from the shopping bag.
+
+    <img src="documentation/testing/user-stories-testing/qty-bag-1.png" width="600px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/qty-bag-4.png" width="300px" style="margin: 20px;">
+
+  - [#27](https://github.com/kerstin-w/Bike-World/issues/27) I am always informed about actions I take so that I am assured they were successful or receive supportive information in case of an error
+
+    To achieve this, toast messages were used as well as direct messages in the forms that inform the customer about all actions. 
+
+    <img src="documentation/testing/user-stories-testing/messages-1.png" width="300px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/messages-2.png" width="300px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/messages-3.png" width="300px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/messages-4.png" width="300px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/messages-5.png" width="600px" style="margin: 20px;">
+
+  - [#28](https://github.com/kerstin-w/Bike-World/issues/28) I am redirected to a checkout page so that I can make a purchase
+
+    By clicking on "Place Your Order" in the off canvas, the customer is taken directly to the checkout where they can enter their details to submit the order.
+
+    <img src="documentation/testing/user-stories-testing/bag-2.png" width="600px" style="margin: 20px;">
+
+    ![Checkout](documentation/testing/user-stories-testing/checkout.png)
+
+  - [#29](https://github.com/kerstin-w/Bike-World/issues/29) I can see a confirmation of my purchase so that I am assured the purchase was successful
+    
+  - [#32](https://github.com/kerstin-w/Bike-World/issues/32) I can Sign Up for the newsletter so that I can keep up to date with deals and events
+
+    In the footer, the customer can sign up for the newsletter. This registration is registered via MailChimp and the customer is added to the list of subscribers.
+    
+    <img src="documentation/testing/user-stories-testing/newsletter-1.png" width="600px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/newsletter-2.png" width="600px" style="margin: 20px;">
+
+  - [#33](https://github.com/kerstin-w/Bike-World/issues/33) I can see an option to get in contact with the shop so that reach out for support
+
+    For this purpose, the Support item with the Contact Us subitem was added to the footer. When the customer clicks on it, a contact form is displayed where the customer can enter their concerns. This then sends an email to the store owner. 
+
+    <img src="documentation/testing/user-stories-testing/contact-us-1.png" width="300px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/contact-us-2.png" width="600px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/contact-us-3.png" width="300px" style="margin: 20px;">
+
+  - [#34](https://github.com/kerstin-w/Bike-World/issues/34) I can find answers to frequently asked questions easily so that I can quickly resolve my queries
+    
+    For this purpose, the item Support with the subitem FAQs was added in the footer. When the customer clicks on it, they come to all frequently asked questions and this should serve the customer as a help before and after the purchase.
+
+    <img src="documentation/testing/user-stories-testing/contact-us-1.png" width="300px" style="margin: 20px;">
+    <img src="documentation/testing/user-stories-testing/faqs.png" width="600px" style="margin: 20px;">
+
+  - [#35](https://github.com/kerstin-w/Bike-World/issues/35) I can view reviews of products on the online store so that I can make an informed decision before making a purchase
+
+    On the PDP in the Accordion, the customer is shown the reviews section where the customer can read all the written reviews.
+
+    <img src="documentation/testing/user-stories-testing/review.png" width="800px" style="margin: 20px;">
+
+  - [#42](https://github.com/kerstin-w/Bike-World/issues/42) I can be routed to a error page in case a page is not found so that I understand the error and click on a link to get back to the homepage
+
+    This was achieved with error pages which inform the customer about errors and provide a link back to the homepage.
+
+    <img src="documentation/testing/user-stories-testing/error.png" width="800px" style="margin: 20px;">
+
+
 ## <a name="validator-testing">Validator Testing</a>
 
 ### <a name="html">HTML</a>
