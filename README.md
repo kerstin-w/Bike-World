@@ -52,6 +52,7 @@ Please note that at this stage, **Bike World** is a fictitious store which has b
     - [Facebook Business Page](#facebook-business-page)
     - [Mailchimp](#mailchimp)
 - [Privacy Policy](#privacy-policy)
+- [Error Pages](#error-pages)
 - [Search Engine Optimization](#search-engine-optimization)
     - [sitemap.xml](#sitemapxml)
     - [robots.txt](#robotstxt)
@@ -1081,6 +1082,17 @@ that the website is compliant with the European Privacy Policy Rules.
 ![Screenshot of Bike World Privacy Policy](documentation/privacy_policy.png)
 
 </details>
+
+# <a name="error-pages">Error Pages</a>
+
+Custom error pages have been created to handle errors more gracefully and provide guidance for the user. Custom error pages for following errors have been created:
+
+* 403 - Permission denied
+* 404 - Page not found
+* 405 - Method not allowed
+* 500 - Server Error
+
+In order to ensure 405 errors are handled correctly, I added `HTTP_ERROR_405 = /error/405/`in the Heroku config vars. 
 
 # <a name="search-engine-optimization">Search Engine Optimization</a>
 
