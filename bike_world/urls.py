@@ -20,8 +20,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 
 from checkout.admin import DashboardView
-from home.views import Error403View, Error404View
-from .views import robots_txt
+from .views import Error403View, Error404View, handler500, robots_txt
 
 urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
@@ -41,3 +40,4 @@ urlpatterns = [
 # Custom Error Page Handlers
 handler403 = Error403View.as_view()
 handler404 = Error404View.as_view()
+handler500 = handler500
