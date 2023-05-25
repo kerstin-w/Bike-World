@@ -122,6 +122,10 @@ a {
     height: 40px;
 }
 
+.dropdown-toggle {
+    cursor: default;
+}
+
 .dropdown-toggle::after {
     display: none;
 }
@@ -176,6 +180,10 @@ a {
     text-align: center;
 }
 
+.dropdown-item p {
+    transition: all 0.2s ease-in-out;
+}
+
 .dropdown-item p:hover {
     transform: scale(1.1);
     -moz-transition: all 0.2s ease-in-out;
@@ -208,6 +216,14 @@ a {
 .user-options {
     right: 5px;
     text-align: right;
+}
+
+.navbar-hover {
+    transition: color 0.3s ease;
+}
+
+.navbar-hover:hover {
+    color: #000 !important;
 }
 
 .nav-icon {
