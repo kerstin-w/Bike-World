@@ -200,6 +200,68 @@ All functionalities have been tested and they work as expected. You can find mor
 
     <img src="documentation/testing/user-stories-testing/error.png" width="800px" style="margin: 20px;">
 
+- **As a registered user**,
+
+    - [#16](https://github.com/kerstin-w/Bike-World/issues/16) I can log in and out so that so that I can protect my account and use the sites full functionality
+
+      The user can log in and out via the account icon in the navbar.
+
+      <img src="documentation/testing/user-stories-testing/logout-1.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/logout-2.png" width="400px" style="margin: 20px;">
+
+      <img src="documentation/testing/user-stories-testing/login-1.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/login-2.png" width="400px" style="margin: 20px;">
+
+    - [#17](https://github.com/kerstin-w/Bike-World/issues/17) I can reset my password so that I can always access my account and my account stays secure
+
+      In the login area, the user can reset his password if he has forgotten it. An email with a link will be sent to the user. Clicking on the link will take the user to a page where a new password can be entered.
+
+      <img src="documentation/testing/user-stories-testing/login-2.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/reset-password-1.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/reset-password-2.png" width="600px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/reset-password-3.png" width="600px" style="margin: 20px;">
+
+    - [#19](https://github.com/kerstin-w/Bike-World/issues/19) I can receive a welcome email so that I am assured that my account was created successfully
+
+      After a customer has registered, a welcome email is automatically sent to the customer to welcome them to Bike World.
+
+      <img src="documentation/testing/user-stories-testing/welcome-mail.png" width="600px" style="margin: 20px;">
+
+    - [#30](https://github.com/kerstin-w/Bike-World/issues/30) I can edit my account so that personal data stays up to date
+
+      In the User Profile under User Info the customer can enter and save their data, or update data already saved.
+
+      <img src="documentation/testing/user-stories-testing/profile-update.png" width="600px" style="margin: 20px;">
+
+    - [#31](https://github.com/kerstin-w/Bike-World/issues/31) I can delete my account so that I can remove my footprint from the website if I am no longer useing it
+
+      In the User Profile under Delete account a user can delete an account. A modal opens to confirm this decision.
+
+      <img src="documentation/testing/user-stories-testing/delete-account-1.png" width="600px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/delete-account-2.png" width="600px" style="margin: 20px;">
+
+    - [#36](https://github.com/kerstin-w/Bike-World/issues/36) I can leave a review for a product I have purchased so that I can share my experience with others
+
+      In the User Profile under review, all items are displayed that the user has purchased and not yet rated. If an item was bought twice, it will still be listed there only once. The user can rate the product and write a review.
+
+      <img src="documentation/testing/user-stories-testing/write-review.png" width="600px" style="margin: 20px;">
+
+    - [#39](https://github.com/kerstin-w/Bike-World/issues/39) I can create and add products to my wishlist so that I can keep track of products that I am interested in and plan future purchases more easily
+
+      Items can be added to Wishlist via the CLP and PDP by clicking on the regular heart icon/button. The customer can then find this wishlist via the profile under Wishlist. 
+
+      <img src="documentation/testing/user-stories-testing/wishlist-1.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/wishlist-2.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/wishlist-3.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/wishlist-4.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/wishlist-5.png" width="600px" style="margin: 20px;">
+
+    - [#40](https://github.com/kerstin-w/Bike-World/issues/40) I can see related products on the product detail page (PDP) so that I can easily discover alternative products
+
+      At the end of each PDP the user will find four related products of the same category.
+
+      <img src="documentation/testing/user-stories-testing/related-products.png" width="600px" style="margin: 20px;">
+
 
 ## <a name="validator-testing">Validator Testing</a>
 
