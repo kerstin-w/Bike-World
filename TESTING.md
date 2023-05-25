@@ -262,6 +262,37 @@ All functionalities have been tested and they work as expected. You can find mor
 
       <img src="documentation/testing/user-stories-testing/related-products.png" width="600px" style="margin: 20px;">
 
+- As a **Superuser**,
+
+    - [#11](https://github.com/kerstin-w/Bike-World/issues/11) I can add a new product to the database so that I can expand my assortment
+
+      The Super User can create a new product via Product Management. A form opens that queries all relevant fields.
+
+      <img src="documentation/testing/user-stories-testing/add-product-1.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/add-product-2.png" width="800px" style="margin: 20px;">
+
+    - [#12](https://github.com/kerstin-w/Bike-World/issues/12) I can Edit products so that I can keep all information updated
+
+      Via the CLP or the PDP, the superuser can click Edit and will be redirected to the same form as for Add Products, but it is already pre-filled with the saved data which can then be changed.
+
+      <img src="documentation/testing/user-stories-testing/edit-product-1.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/edit-product-2.png" width="800px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/edit-product-3.png" width="800px" style="margin: 20px;">
+
+    - [#13](https://github.com/kerstin-w/Bike-World/issues/13) I can delete products from the database so that remove obsolete products
+
+      Via the CLP or the PDP, the superuser can click Delete, which will open a Modal to confirm. Afterwards the product is removed from the database.
+
+      <img src="documentation/testing/user-stories-testing/edit-product-1.png" width="300px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/edit-product-2.png" width="800px" style="margin: 20px;">
+      <img src="documentation/testing/user-stories-testing/delete-product.png" width="600px" style="margin: 20px;">
+
+    - [#41](https://github.com/kerstin-w/Bike-World/issues/41) I can have a dashbaord in the admin panel so that I can view and manage key metrics
+
+    In the admin panel in the top bar, the superuser can click "dashboard" and gets redirected to a dashboard that shows all the important KIPs of the day-to-day business.
+
+    <img src="documentation/testing/user-stories-testing/admin-dashboard.png" width="800px" style="margin: 20px;">
+
 
 ## <a name="validator-testing">Validator Testing</a>
 
