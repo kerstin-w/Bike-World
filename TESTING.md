@@ -293,6 +293,30 @@ All functionalities have been tested and they work as expected. You can find mor
 
     <img src="documentation/testing/user-stories-testing/admin-dashboard.png" width="800px" style="margin: 20px;">
 
+- As a **store owner**,
+    - [#43](https://github.com/kerstin-w/Bike-World/issues/43) I want to create a sitemap and robots.txt file for my website so that search engines can properly index and crawl my pages
+
+      A site map was created for Bike World, which includes all relevant pages. The sitemap was downloaded and added to the root directory. To ensure that Google and other services indeed have access to the sitemap, it was added as `TemplateView` to the urls. For this the [sitemap](templates/sitemap.xml) was moved to the templates folder.
+
+      ![Sitemap](documentation/seo/sitemap.png)
+
+      A robots.txt was created to allow crawlers to crawl the page and also to specify which pages should not be crawled. In order to ensure crawlers can really use the robots.txt, a view was created and included in the urls. The robots.txt file was saved in the roots directory, as it was a requirement for this project, but it is not in actual use, as the view sets the parameters for the crawler.
+
+      ![robots.txt](documentation/seo/robots-file.png)
+
+      ![Robots View](documentation/seo/robots-view.png)
+
+    - [#44](https://github.com/kerstin-w/Bike-World/issues/44) I want to create a Facebook page for my e-commerce business so that I can increase visibility and engage with customers
+      
+      A facebook business page has been created to share updates, promotions, and engage with users through comments and messages.
+
+      ![Facebook Business Page](documentation/facebook/facebook-page.png)
+
+    - [#45](https://github.com/kerstin-w/Bike-World/issues/45) I want to quickly understand, how the page works. I need the README file to provide clear and concise instructions and documentation.
+
+      A detailed [README](README.md) file has been created. 
+
+
 
 ## <a name="validator-testing">Validator Testing</a>
 
