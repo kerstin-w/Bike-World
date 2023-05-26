@@ -920,7 +920,9 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/profile-admin.png" width="300px" style="margin: 20px;">
 
-<img src="documentation/features/add-product.png" width="600px" style="margin: 20px;">
+<img src="documentation/features/add-product-1.png" width="800px" style="margin: 20px;">
+
+<img src="documentation/features/add-product-2.png" width="800px" style="margin: 20px;">
 
 <br>
 
