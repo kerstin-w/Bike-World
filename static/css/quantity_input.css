@@ -19,7 +19,7 @@
 .qty_input:focus+.qty-label,
 .qty_input:not(:placeholder-shown)+.qty-label {
     top: -10px;
-    left: 56px;
+    left: 50px;
     font-size: .9rem;
     color: #000;
     background-color: white;
