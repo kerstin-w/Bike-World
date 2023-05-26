@@ -16,7 +16,6 @@
 - [Browser Compatibility](#browser-compatibility)
 - [Responsivity](#responsivity)
 - [Issues/ Bugs Found & Resolved](#issues-bugs)
-- [Unresolved](#unresolved)
 
 ---
 Back to the [README](README.md)<br>
