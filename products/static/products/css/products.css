@@ -101,11 +101,6 @@
     transform: translate(-50%, -50%) scale(1.2);
 }
 
-.back-button:hover {
-    font-weight: bold;
-    transition: all 500ms;
-}
-
 .accordion-item {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }

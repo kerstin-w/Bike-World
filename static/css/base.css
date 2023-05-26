@@ -24,6 +24,11 @@ a {
     border-radius: 50%;
 }
 
+.back-button:hover {
+    font-weight: bold;
+    transition: all 500ms;
+}
+
 .page-container {
     min-height: 70vh;
 }
