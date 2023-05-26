@@ -916,7 +916,7 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 <img src="documentation/features/profile-delete.png" width="300px" style="margin: 20px;">
 
-- The **admin** has the option to access the product management and create an product via the profile. 
+- The **admin** has the option to access the product management and create an product via the profile. The form verifies that the Product title and SKU are unique. If the sale field is set to true, the form automatically saves the product in the sale category.
 
 <img src="documentation/features/profile-admin.png" width="300px" style="margin: 20px;">
 
