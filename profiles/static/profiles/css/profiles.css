@@ -1,3 +1,12 @@
+select,
+select option {
+    color: #000;
+}
+
+select:invalid {
+    color: #6c757d;
+}
+
 #profile-update-form {
     max-width: 800px;
 }
@@ -18,15 +27,6 @@
 .fieldset-label {
     position: relative;
     right: .5rem;
-}
-
-select,
-select option {
-    color: #000;
-}
-
-select:invalid {
-    color: #6c757d;
 }
 
 .form-select:focus {
