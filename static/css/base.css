@@ -717,6 +717,9 @@ footer ul {
     background-color: #3367D6;
 }
 
+.tab-pane input {
+    border: 1px solid #717171;
+}
 
 /*=============== Media ===============*/
 /* For mobile */
