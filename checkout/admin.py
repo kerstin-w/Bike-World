@@ -1,10 +1,11 @@
-from django.utils import timezone
-from django.db.models import Sum, Avg
-from django.shortcuts import render
-from django.views import View
 from django.contrib import admin
-from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Avg, Sum
+from django.shortcuts import render
+from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.views import View
+from django.contrib.admin.views.decorators import staff_member_required
+
 import json
 
 from .models import Order, OrderLineItem
