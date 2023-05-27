@@ -1,15 +1,19 @@
 from django.contrib import messages
-from django.db.models import Q, Case, When, F, DecimalField
+from django.core.exceptions import PermissionDenied
+from django.db.models import Case, DecimalField, F, Q, When
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import (
+    ListView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+)
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import AccessMixin
-from django.core.exceptions import PermissionDenied
 
-from django.urls import reverse, reverse_lazy
-
-from .models import Product, Category
 from .forms import ProductForm
+from .models import Product, Category
 from profiles.models import Wishlist, ProductReview
 
 
