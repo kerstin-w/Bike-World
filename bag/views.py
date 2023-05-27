@@ -1,14 +1,14 @@
 from django.contrib import messages
-from django.views.generic import TemplateView
-from django.template.loader import render_to_string
-from django.views import View
+from django.http import JsonResponse
 from django.shortcuts import (
-    redirect,
-    reverse,
     HttpResponse,
     get_object_or_404,
+    redirect,
+    reverse,
 )
-from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.views import View
+from django.views.generic import TemplateView
 
 from bag.context_processors import bag_contents
 from products.models import Product
