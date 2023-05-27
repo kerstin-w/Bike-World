@@ -321,7 +321,7 @@ The details are as follows:
 
 ### <a name="iterations">Iterations</a>
 
-The project was carried out over 4 iterations and each iteration lasted 7-8 days. For personal and professional reasons, I had only limited time for iterations 5 and 6, so few story points were awarded here. And between iteration 5 and 6, the story points for story #37 and #38 were adjusted as well due to the complexity becoming known. 
+The project was carried out over 6 iterations and each iteration lasted 7-8 days. For personal and professional reasons, I had only limited time for iterations 5 and 6, so few story points were awarded here. And between iteration 5 and 6, the story points for story #37 and #38 were adjusted as well due to the complexity becoming known. 
 
 - **Iteration 1 (Closed points 20 / Planned points 20)**
 
@@ -608,7 +608,7 @@ UserProfile Model is related to User and allows the storage of user-specific shi
                 user=self.user, product=self.product
             ).exists()
         ```
-Wishlist Model is related to User and Product and allows users to add products to their wishlist and provides a way to associate users with their desired products. It enables easy retrieval of wishlist products for a specific user and the ability to check if a product is already in the wishlist. The is_product_in_wishlsit method checks if a Wishlist object is matching with user and product in the database and returns a boolean indicating whether the associated product is present in the user's wishlist.
+Wishlist Model is related to User and Product and allows users to add products to their wishlist and provides a way to associate users with their desired products. It enables easy retrieval of wishlist products for a specific user and the ability to check if a product is already in the wishlist. The is_product_in_wishlist method checks if a Wishlist object is matching with user and product in the database and returns a boolean indicating whether the associated product is present in the user's wishlist.
 
 - ProductReview
     | Field Name | Type | Arguments |
@@ -704,7 +704,7 @@ The home page is divided into multiple segments. The **Hero Banner, Category Cal
 
 <br>
 
-### Home Page - Category Callouts
+### Home Page - Top Products
 
 Of course, it is important to display products to the customer on the first page. Therefore, there is the **Top Products** segment. The best rated products are listed here. On desktop there are four products and on mobile correspondingly less. 
 
@@ -779,9 +779,9 @@ On the PDP all relevant information is displayed and the user has the possibilit
 
 - Registered users will see a heart in the button. By clicking on it, users can add the item to their wishlist.
 
-<img src="documentation/features/pdp-wishlist1.png" width="200px" style="margin: 20px;">
-<img src="documentation/features/pdp-wishlist2.png" width="200px" style="margin: 20px;">
-<img src="documentation/features/pdp-wishlist3.png" width="200px" style="margin: 20px;">
+<img src="documentation/features/pdp-wishlist1.png" width="150px" style="margin: 20px;">
+<img src="documentation/features/pdp-wishlist2.png" width="150px" style="margin: 20px;">
+<img src="documentation/features/pdp-wishlist3.png" width="150px" style="margin: 20px;">
 
 - The admin has the possibility on the CLP already to make the selection to edit or delete an article. Also here, a modal will open in case the user clicked on delete to confirm this.
 
@@ -840,9 +840,9 @@ On the PDP all relevant information is displayed and the user has the possibilit
 <img src="documentation/features/auth-modal.png" width="300px" style="margin: 20px;">
 
 - Input errors are displayed once again, if they occur.
-- Should a user click on "Save Info" and use an email address of an existing user, no error message will be displayed in order not to interrupt the ordering process unnecessarily. However, the address is not saved in the profile. The reasons for that behavior are, that we want to have as few potential errors in the checkout process as possible that may irritate the user and lead to an abort. On the other hand, we don't want the user to change their login email address unintentionally and then not be able to access their account. Thus, the email address can only be changed in the profile itself. 
-
 <img src="documentation/features/checkout-error.png" width="300px" style="margin: 20px;">
+
+- Should a user click on "Save Info" and use an email address of an existing user, no error message will be displayed in order not to interrupt the ordering process unnecessarily. However, the address is not saved in the profile. The reasons for that behavior are, that we want to have as few potential errors in the checkout process as possible that may irritate the user and lead to an abort. On the other hand, we don't want the user to change their login email address unintentionally and then not be able to access their account. Thus, the email address can only be changed in the profile itself. 
 
 <br>
 
