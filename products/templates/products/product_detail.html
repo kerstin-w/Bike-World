@@ -83,6 +83,7 @@
 {% include 'products/components/product_delete_modal.html' %}
 {% endblock %}
 {% block extra_js %}
+<!-- Go Back to previous page JS -->
 <script>
     function goBack() {
         window.history.back();
@@ -91,7 +92,10 @@
 {% endblock %}
 {% block postloadjs %}
 {{ block.super }}
+<!-- Wishlist JS-->
 <script src="{% static 'products/js/add_to_wishlist.js' %}"></script>
+<!-- Quantity Input JS-->
 {% include 'products/components/quantity_input_script.html' %}
+<!-- Add Product to bag JS-->
 {% include 'products/components/add_product_to_bag_script.html' %}
 {% endblock %}
