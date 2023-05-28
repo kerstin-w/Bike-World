@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponse
 from django.conf import settings
@@ -344,6 +345,8 @@ class CheckoutSuccessViewTest(TestCase):
         """
         Test that a user profile is correctly attached to an order
         """
+        self.request.session["checkout_completed"] = True
+        self.request.session.save()
         # Add user profile to the order
         try:
             user_profile = UserProfile.objects.get(user=self.user)
@@ -371,6 +374,8 @@ class CheckoutSuccessViewTest(TestCase):
         """
         Test that a success message is displayed on the success page
         """
+        self.request.session["checkout_completed"] = True
+        self.request.session.save()
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(
@@ -384,6 +389,8 @@ class CheckoutSuccessViewTest(TestCase):
         """
         Test that the order is displayed correctly on the success page
         """
+        self.request.session["checkout_completed"] = True
+        self.request.session.save()
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertIn("order", response.context)
@@ -393,6 +400,8 @@ class CheckoutSuccessViewTest(TestCase):
         """
         Test that the order totals are displayed correctly on the success page
         """
+        self.request.session["checkout_completed"] = True
+        self.request.session.save()
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertIn("order", response.context)
@@ -402,3 +411,22 @@ class CheckoutSuccessViewTest(TestCase):
         self.assertEqual(
             response.context["order"].grand_total, Decimal("50.00")
         )
+
+    def test_checkout_success_view_checkout_not_completed(self):
+        """
+        Test that the checkout_success view can only be access if
+        checkout_completed
+        """
+
+        # Call the view function
+        response = self.client.get(self.url)
+
+        # Assert that the user is redirected to the index page
+        self.assertRedirects(response, reverse("index"))
+        self.assertEqual(response.status_code, 302)
+
+        # Assert that an error message is stored in the messages framework
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]), "You dont have permission to visit this page.")
