@@ -102,6 +102,8 @@ def checkout(request):
                     return redirect(reverse("view_bag"))
             # Update the save_info flag in the session
             request.session["save_info"] = "save-info" in request.POST
+            # Set a flag to indicate that user is coming from the checkout process
+            request.session["checkout_completed"] = True
             # Redirect to checkout success page with order number as arguments
             return redirect(
                 reverse("checkout_success", args=[order.order_number])
@@ -186,6 +188,18 @@ def checkout_success(request, order_number):
     save_info = request.session.get("save_info")
     # Get the order
     order = get_object_or_404(Order, order_number=order_number)
+
+    # Check if the user came from the checkout process
+    if not request.session.get("checkout_completed"):
+        messages.error(
+            request,
+            "You dont have permission to visit this page."
+        )
+        # Redirect the user to an appropriate page
+        return redirect("index")
+
+    # Remove the session variable indicating completion of the checkout process
+    del request.session["checkout_completed"]
 
     # Check if the user is authenticated
     if request.user.is_authenticated:
