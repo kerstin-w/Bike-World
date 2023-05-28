@@ -102,7 +102,8 @@ def checkout(request):
                     return redirect(reverse("view_bag"))
             # Update the save_info flag in the session
             request.session["save_info"] = "save-info" in request.POST
-            # Set a flag to indicate that user is coming from the checkout process
+            # Set a flag to indicate that user is coming from
+            # the checkout process
             request.session["checkout_completed"] = True
             # Redirect to checkout success page with order number as arguments
             return redirect(
