@@ -47,6 +47,10 @@ select:invalid {
     transition: box-shadow 150ms ease;
 }
 
+select#id_country.stripe-style-input {
+    padding: 1px 12px;
+}
+
 .StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
 }
