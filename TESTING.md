@@ -33,6 +33,7 @@ The original Google sheet file for the test case report can be found [here](http
 ![Test Case](documentation/testing/manual-testing/manual-testing-5.png)
 ![Test Case](documentation/testing/manual-testing/manual-testing-6.png)
 ![Test Case](documentation/testing/manual-testing/manual-testing-7.png)
+![Test Case](documentation/testing/manual-testing/manual-testing-7-1.png)
 ![Test Case](documentation/testing/manual-testing/manual-testing-8.png)
 ![Test Case](documentation/testing/manual-testing/manual-testing-9.png)
 ![Test Case](documentation/testing/manual-testing/manual-testing-10.png)
