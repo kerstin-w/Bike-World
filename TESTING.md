@@ -327,6 +327,10 @@ A slightly tricky error was the error to the auto-focus. For login/signup I crea
 
 A slightly unpleasant error was the duplicate of the `div_id_email` that occurred in the checkout. Crispy Forms creates a wrapper DIV around the input element and assigns the DIV ID `div_id_email` for email. Since I have two forms on the page with email, one being the `OrderForm` and the other being the `login/signup modal`, there was a conflict here. I haven't found a really convinient solution to control the ID of the wrapper DIV with the existing OrderForm setup. One solution would have been to create the OrderForm entirely new with the `Crispy Form Helpers and Layout`. This would have given me the possibility to give the wrapper DIV its own ID. The other option would have been to manually create this input field in the HTML code. This was the solution I chose, as it was less invasive. Later on, I found the proper solution in the Django documentation. With the paramater `auto_id` I was able to control the Id of the wrapper DIV. I reversed the changes from before and the email field is rendered normally again and the DIV ID is now unique for the Login and Signup fields. 
 
+During the validation there was also an error regarding the facebook tracking pixel.
+`& did not start a character reference. (& probably should have been escaped as &amp;.)`
+However, since the pixel was provided by Facebook and there was a risk that the pixel will no longer track if changes are made. I replaced the `&` sign with `&amp;`, tested through all events and they were tracked by facebook. Thus, the function of the pixel should still be ensured. 
+
 ### Errors during validation check
 
 <details>
@@ -351,7 +355,10 @@ A slightly unpleasant error was the duplicate of the `div_id_email` that occurre
     <img src="documentation/testing/validator/html/validator-error-w3-profile-1.png">
     <img src="documentation/testing/validator/html/validator-error-w3-profile-2.png">
 </details>
-
+<details>
+    <summary>Facebook Pixel</summary>
+    <img src="documentation/testing/validator/html/validator-error-w3-facebook.png">
+</details>
 
 ### Results validation check
 
