@@ -1,0 +1,19 @@
+<div id="signOutModal" class="modal" tabindex="-1" aria-labelledby="signOutModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Log Out</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ user }}, are you sure you want to log out?</p>
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %} {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <button type="submit" class="btn btn-cta upper text-white">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

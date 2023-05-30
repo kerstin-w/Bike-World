@@ -86,12 +86,19 @@
         {% endblock %}
 
     </div>
-
+    <!-- Footer -->
     {% include 'components/footer.html' %}
     {% if not user.is_authenticated %}
+    <!-- Login/Register Modal -->
     {% include "components/auth_modal.html" %}
     {% endif %}
+    {% if user.is_authenticated %}
+    <!-- Logout Modal -->
+    {% include "components/logout_modal.html" %}
+    {% endif %}
+    <!-- Shopping Bag Offcanvas -->
     {% include "components/bag_offcanvas.html" %}
+    <!-- JS Scripts -->
     {% include 'components/scripts.html' %}
 
     {% block postloadjs %}
